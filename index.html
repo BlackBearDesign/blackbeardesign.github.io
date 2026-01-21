@@ -21,41 +21,6 @@
     <!-- Theme Style -->
     <link rel="stylesheet" href="css/style.css">
 
-    <style>
-      /* Video fijo al fondo de la pantalla */
-      .video-bg-global {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        z-index: -1;
-        background-color: #000;
-      }
-      .video-bg-global video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.5;
-      }
-
-      /* Transparencia para ver el video en las secciones negras */
-      body, 
-      .unslate_co--site-wrap, 
-      .unslate_co--site-inner, 
-      .unslate_co--section {
-        background-color: transparent !important;
-      }
-
-      /* EL FOOTER: Se queda abajo, es gris sólido y tapa el video al scrollear */
-      .unslate_co--footer {
-        background-color: #191919 !important; /* El gris de tu imagen */
-        position: relative;
-        z-index: 2; /* Para que pase por encima del video al llegar al final */
-        margin-top: 0;
-      }
-    </style>
-
   </head>
   <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
 
