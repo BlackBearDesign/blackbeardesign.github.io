@@ -682,20 +682,17 @@
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        const typedElement = document.querySelector('.typed');
-        if (typedElement) {
-          let items = typedElement.getAttribute('data-typed-items');
-          items = items.split(',');
-          new Typed('.typed', {
-            strings: items,
-            typeSpeed: 60,      // Velocidad al escribir
-            backSpeed: 40,      // Velocidad al borrar
-            backDelay: 2000,    // Tiempo que se queda la palabra escrita
-            loop: true,
-            smartBackspace: true, // No borra las letras que son iguales al inicio
-            cursorChar: '|'
-          });
-        }
+        new Typed('.typed', {
+          // Ponemos las palabras directo aquí para evitar errores de espacios
+          strings: ['VIDEO EDITOR', 'VISUAL EFFECTS', 'DESIGNER', 'DESIGN MOTION', 'CREATIVE MIND', 'COMPOSITION'],
+          typeSpeed: 50,
+          backSpeed: 30,
+          backDelay: 2000,
+          loop: true,
+          smartBackspace: true, // ESTO activa el efecto de recorte que querías
+          cursorChar: '|',
+          autoInsertCss: true
+        });
       });
     </script>
   </body>
