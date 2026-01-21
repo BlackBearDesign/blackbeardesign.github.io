@@ -94,8 +94,8 @@
   <div class="container" style="position: relative; z-index: 1;">
     <div class="row align-items-center" style="height: 100vh;">
       <div class="col-md-10 mx-auto text-center">
-        <h1 class="heading gsap-reveal-hero">BlackBear</h1>
-        <h2 class="subheading gsap-reveal-hero"><span class="typed" data-typed-items="VIDEO EDITOR, VISUAL EFFECTS, DESIGNER, DESIGN MOTION, CREATIVE MIND, COMPOSITION"></span></h2>
+        <h1 class="heading">BlackBear</h1>
+<h2 class="subheading"><span class="typed" data-typed-items="VIDEO EDITOR, VISUAL EFFECTS, DESIGNER, DESIGN MOTION, CREATIVE MIND, COMPOSITION"></span></h2>
       </div>
     </div>
   </div>
@@ -682,17 +682,22 @@
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        new Typed('.typed', {
-          // Ponemos las palabras directo aquí para evitar errores de espacios
-          strings: ['VIDEO EDITOR', 'VISUAL EFFECTS', 'DESIGNER', 'DESIGN MOTION', 'CREATIVE MIND', 'COMPOSITION'],
-          typeSpeed: 50,
-          backSpeed: 30,
-          backDelay: 2000,
-          loop: true,
-          smartBackspace: true, // ESTO activa el efecto de recorte que querías
-          cursorChar: '|',
-          autoInsertCss: true
-        });
+        const typedElement = document.querySelector('.typed');
+        if (typedElement) {
+          // Esta línea limpia los espacios extras entre las palabras
+          let items = typedElement.getAttribute('data-typed-items').split(',').map(item => item.trim());
+          
+          new Typed('.typed', {
+            strings: items,
+            typeSpeed: 50,
+            backSpeed: 30,
+            backDelay: 2000,
+            loop: true,
+            smartBackspace: true, // Efecto de recorte inteligente que querías
+            cursorChar: '|',
+            autoInsertCss: true
+          });
+        }
       });
     </script>
   </body>
