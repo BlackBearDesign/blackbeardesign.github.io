@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* Video fijo detrás de toda la página */
+      /* Video fijo al fondo de la pantalla */
       .video-bg-global {
         position: fixed;
         top: 0;
@@ -47,11 +47,12 @@
         background-color: transparent !important;
       }
 
-      /* Footer sólido que tapa el video al final */
+      /* EL FOOTER: Se queda abajo, es gris sólido y tapa el video al scrollear */
       .unslate_co--footer {
-        background-color: #191919 !important; /* El gris de la imagen */
+        background-color: #191919 !important; /* El gris de tu imagen */
         position: relative;
-        z-index: 10;
+        z-index: 2; /* Para que pase por encima del video al llegar al final */
+        margin-top: 0;
       }
     </style>
 
