@@ -91,17 +91,17 @@
 }
       .swipe-lottie-container {
   text-align: center;
-  margin-top: -120px !important; /* Lo sube para que esté cerca de las fotos */
+  margin-top: -180px !important; /* Valor aumentado para subirlo más */
   width: 100%;
   position: relative;
-  z-index: 5;
+  z-index: 10;
 }
 
 dotlottie-player {
-  width: 250px !important; /* Tamaño más grande */
-  height: 250px !important;
+  width: 350px !important; /* Tamaño aumentado */
+  height: 350px !important;
   display: inline-block;
-  transform: rotate(90deg); /* Lo gira a vertical */
+  transform: rotate(90deg);
 }
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
@@ -528,7 +528,7 @@ dotlottie-player {
 
   <div class="swipe-lottie-container" data-aos="fade-in" data-aos-duration="3000">
     <dotlottie-player 
-      src="images/scrol.dotlottie" 
+      src="images/scrol.lottie" 
       background="transparent" 
       speed="1" 
       loop 
