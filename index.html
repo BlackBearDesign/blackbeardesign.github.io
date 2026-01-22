@@ -481,7 +481,8 @@
           </div>
         </div>
 
-        <div class="owl-carousel testimonial-slider" id="testimonial-container" data-aos="fade-up">
+        <div class="owl-carousel" id="dynamic-carousel" data-aos="fade-up" style="display: block; width: 100%;">
+  </div>
   </div>
 
       </div>
@@ -695,7 +696,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const googleSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKmvmO9lY24-_9fMoPRSKJzApwjQKC69bVdwseuQjaAoGbvs1LtuUEJ9k26gaIvRo03gDMN8pXKMDS/pub?gid=0&single=true&output=csv";
-  const contenedor = document.querySelector('#testimonial-container');
+  const $carousel = $('#dynamic-carousel');
 
   Papa.parse(googleSheetURL, {
     download: true,
@@ -703,19 +704,19 @@ document.addEventListener('DOMContentLoaded', function() {
     complete: function(results) {
       let datos = results.data;
       
-      // 1. Filtrar filas vacías
+      // 1. Filtrar filas vacías para evitar cuadros negros
       const reseñasValidas = datos.filter(fila => fila.Texto && fila.Texto.trim() !== "");
 
-      // 2. Mezclar aleatoriamente
+      // 2. Mezclar aleatoriamente para que siempre sea diferente
       reseñasValidas.sort(() => Math.random() - 0.5);
 
-      // 3. Crear el HTML de cada reseña
+      // 3. Generar el HTML interno (usamos <div> simples como el original)
       let htmlFinal = "";
       reseñasValidas.forEach(reseña => {
         let fotoURL = reseña.Foto && reseña.Foto.trim() !== "" ? reseña.Foto : "images/person_man_1.jpg";
         
         htmlFinal += `
-          <div class="item">
+          <div>
             <div class="testimonial-v1">
               <div class="testimonial-inner-bg">
                 <span class="quote">&ldquo;</span>
@@ -730,23 +731,21 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>`;
       });
 
-      // 4. Inyectar el HTML
-      contenedor.innerHTML = htmlFinal;
+      // 4. Inyectar el contenido en el contenedor
+      $carousel.html(htmlFinal);
 
-      // 5. Inicializar el Carrusel (Ajustado a 10 segundos y loop)
-      if ($.fn.owlCarousel) {
-        $(contenedor).owlCarousel({
-          items: 1,           // Solo se ve una reseña a la vez
-          loop: true,          // Carrusel infinito
-          margin: 30,
-          autoplay: true,      // Movimiento automático
-          autoplayTimeout: 10000, // 10 segundos entre cada slide
-          smartSpeed: 1000,    // Velocidad de la transición
-          nav: false,          // Quitamos flechas (opcional)
-          dots: true,          // Puntitos de navegación abajo
-          autoplayHoverPause: true // Se pausa si pones el mouse encima
-        });
-      }
+      // 5. INICIALIZAR EL CARRUSEL (Solo después de cargar los datos)
+      $carousel.owlCarousel({
+        items: 1,               // Solo una reseña visible a la vez
+        loop: true,              // Carrusel infinito (loop)
+        margin: 30,
+        autoplay: true,          // Movimiento automático
+        autoplayTimeout: 10000,  // 10 segundos por reseña
+        smartSpeed: 1000,        // Velocidad de la transición
+        nav: false,
+        dots: true,              // Puntitos de navegación activados
+        autoplayHoverPause: true // Se detiene si pasas el mouse
+      });
     }
   });
 });
