@@ -473,13 +473,17 @@
       </div>
       <!-- END .counter -->
 
-      <div class="unslate_co--section" id="testimonial-section">
+    <div class="unslate_co--section" id="testimonial-section">
         <div class="container">
           <div class="section-heading-wrap text-center mb-5">
             <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Happy Clients</span></h2>
             <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
           </div>
+          
+          <div class="owl-carousel testimonial-slider" id="dynamic-carousel" data-aos="fade-up">
+            </div>
         </div>
+      </div>
 
        <div class="owl-carousel testimonial-slider" id="dynamic-carousel" data-aos="fade-up">
   </div>
@@ -703,13 +707,16 @@ document.addEventListener('DOMContentLoaded', function() {
     header: true,
     complete: function(results) {
       let datos = results.data;
+      
+      // Filtramos para ignorar filas vacías de tu Excel
       const reseñasValidas = datos.filter(fila => fila.Texto && fila.Texto.trim() !== "");
 
-      // Aleatorio
+      // Mezclamos aleatoriamente para que el orden cambie siempre
       reseñasValidas.sort(() => Math.random() - 0.5);
 
       let htmlFinal = "";
       reseñasValidas.forEach(reseña => {
+        // Si no hay foto, usa la genérica de tu carpeta
         let fotoURL = reseña.Foto && reseña.Foto.trim() !== "" ? reseña.Foto : "images/person_man_1.jpg";
         
         htmlFinal += `
@@ -728,21 +735,24 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>`;
       });
 
+      // Insertamos el contenido y forzamos el inicio del carrusel
       $carousel.html(htmlFinal);
 
-      // INICIALIZACIÓN CON FLECHAS Y PUNTOS
-      $carousel.owlCarousel({
-        items: 1,
-        loop: true,
-        margin: 30,
-        autoplay: true,
-        autoplayTimeout: 10000, // 10 segundos
-        smartSpeed: 1000,
-        nav: true,  // ACTIVA FLECHAS
-        dots: true, // ACTIVA PUNTITOS
-        navText: ['<span class="icon-keyboard_arrow_left"></span>', '<span class="icon-keyboard_arrow_right"></span>'],
-        autoplayHoverPause: true
-      });
+      // Iniciamos el carrusel con la configuración exacta que pediste
+      if ($.fn.owlCarousel) {
+        $carousel.owlCarousel({
+          items: 1,               // Solo una reseña a la vez
+          loop: true,              // Bucle infinito
+          margin: 30,
+          autoplay: true,          // Movimiento automático
+          autoplayTimeout: 10000,  // 10 Segundos de espera
+          smartSpeed: 1000,        // Velocidad del deslizamiento
+          nav: true,               // Activa las Flechas
+          dots: true,              // Activa los Puntos
+          navText: ['<span class="icon-keyboard_arrow_left"></span>', '<span class="icon-keyboard_arrow_right"></span>'],
+          autoplayHoverPause: true
+        });
+      }
     }
   });
 });
