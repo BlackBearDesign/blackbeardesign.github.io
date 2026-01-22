@@ -481,59 +481,7 @@
           </div>
         </div>
 
-        <div class="owl-carousel testimonial-slider" data-aos="fade-up">
-          <div>
-            <div class="testimonial-v1">
-              <div class="testimonial-inner-bg">
-                <span class="quote">&ldquo;</span>
-                <blockquote>
-                  Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-                </blockquote>
-              </div>
-              
-              <div class="testimonial-author-info">
-                <img src="images/person_man_1.jpg" alt="Image">
-                <h3>Eric Ingram</h3>
-                <span class="d-block position">Product Designer @facebook</span>
-              </div>
-
-            </div>
-          </div>
-          <div>
-            <div class="testimonial-v1">
-              <div class="testimonial-inner-bg">
-                <span class="quote">&ldquo;</span>
-                <blockquote>
-                  Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-                </blockquote>
-              </div>
-              
-              <div class="testimonial-author-info">
-                <img src="images/person_man_2.jpg" alt="Image">
-                <h3>Ryan Mullins</h3>
-                <span class="d-block position">Product Designer @Shopify</span>
-              </div>
-
-            </div>
-          </div>
-          <div>
-            <div class="testimonial-v1">
-              <div class="testimonial-inner-bg">
-                <span class="quote">&ldquo;</span>
-                <blockquote>
-                  Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-                </blockquote>
-              </div>
-              
-              <div class="testimonial-author-info">
-                <img src="images/person_woman_1.jpg" alt="Image">
-                <h3>Erica Miller</h3>
-                <span class="d-block position">Product Designer @Twitter</span>
-              </div>
-
-            </div>
-          </div>
-        </div>
+        <div class="owl-carousel testimonial-slider" id="testimonial-container" data-aos="fade-up"></div>
 
       </div>
       <!-- END testimonial -->
@@ -741,6 +689,65 @@
         }
       });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Tu link de Google Sheets
+  const googleSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKmvmO9lY24-_9fMoPRSKJzApwjQKC69bVdwseuQjaAoGbvs1LtuUEJ9k26gaIvRo03gDMN8pXKMDS/pub?gid=0&single=true&output=csv";
+  const contenedor = document.querySelector('#testimonial-container');
+
+  Papa.parse(googleSheetURL, {
+    download: true,
+    header: true,
+    complete: function(results) {
+      let datos = results.data;
+      
+      // FILTRO: Ignora filas vacías (como las que hay debajo de mau 3)
+      const reseñasValidas = datos.filter(fila => fila.Texto && fila.Texto.trim() !== "");
+
+      // RANDOM: Mezcla el orden de las reseñas automáticamente
+      reseñasValidas.sort(() => Math.random() - 0.5);
+
+      let htmlFinal = "";
+      reseñasValidas.forEach(reseña => {
+        // Si no hay foto, usa la de Eric Ingram por defecto
+        let fotoURL = reseña.Foto && reseña.Foto.trim() !== "" ? reseña.Foto : "images/person_man_1.jpg";
+        
+        htmlFinal += `
+          <div class="testimonial-v1">
+            <div class="testimonial-inner-bg">
+              <span class="quote">&ldquo;</span>
+              <blockquote>${reseña.Texto}</blockquote>
+            </div>
+            <div class="testimonial-author-info">
+              <img src="${fotoURL}" alt="${reseña.Nombre}">
+              <h3>${reseña.Nombre}</h3>
+              <span class="d-block position">${reseña.Cargo || ''}</span>
+            </div>
+          </div>`;
+      });
+
+      contenedor.innerHTML = htmlFinal;
+
+      // ACTIVA EL CARRUSEL: Movimiento automático hacia la derecha
+      if ($.fn.owlCarousel) {
+        $(contenedor).owlCarousel({
+          items: 1,
+          loop: true,
+          margin: 30,
+          autoplay: true,
+          autoplayTimeout: 5000,
+          smartSpeed: 800,
+          nav: false,
+          dots: true,
+          autoplayHoverPause: true
+        });
+      }
+    }
+  });
+});
+</script>
   </body>
 </html>
 
