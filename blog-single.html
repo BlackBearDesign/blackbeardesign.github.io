@@ -10,8 +10,6 @@
     <meta name="keywords" content="html, css, javascript, jquery">
     <meta name="author" content="">
 
-    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
-
     <link rel="stylesheet" href="css/vendor/icomoon/style.css">
     <link rel="stylesheet" href="css/vendor/owl.carousel.min.css">
     <link rel="stylesheet" href="css/vendor/animate.min.css">
@@ -27,49 +25,73 @@
       body, .unslate_co--site-wrap, .unslate_co--site-inner, .unslate_co--section, .cover-v1 { background-color: transparent !important; }
       
       /* Ajustes para el contenido del post */
-      #post-header.overlay:before { background: rgba(0,0,0,0.6); } /* Oscurecer un poco la portada */
-      .post-content { font-size: 1.1rem; line-height: 1.9; color: rgba(255,255,255,0.7); }
+      #post-header.overlay:before { background: rgba(0,0,0,0.4); } 
+      .post-content { 
+        font-size: 1.1rem; 
+        line-height: 1.9; 
+        color: #ffffff !important; /* Texto en blanco puro para máxima visibilidad */
+        text-shadow: 0 2px 10px rgba(0,0,0,0.8); /* Sombra para resaltar sobre el fondo */
+      }
       .post-content h2, .post-content h3 { color: #fff; margin-top: 40px; }
       .post-content img { width: 100%; border-radius: 8px; margin: 40px 0; border: 1px solid rgba(255,255,255,0.1); }
       
-      /* Estilos para la animación Swipe (Lottie) debajo del título */
-      .swipe-lottie-container-post {
+      /* Estilo del Scroll Mouse (Sustituyendo al Lottie) */
+      .scroll-container-blog {
         text-align: center;
-        margin-top: 30px; /* Espacio entre el texto y la animación */
+        margin-top: 20px;
         width: 100%;
-        position: relative;
-        z-index: 10;
       }
-      dotlottie-player.post-swipe {
-        width: 100px !important; 
-        height: 100px !important;
-        display: inline-block;
-        transform: rotate(90deg);
-        opacity: 0.7;
+      .scroll-container-blog .mouse {
+        border: 2px solid #fff;
+        border-radius: 20px;
+        height: 40px;
+        width: 25px;
+        display: block;
+        margin: 0 auto 10px auto;
+        position: relative;
+      }
+      .scroll-container-blog .scroll {
+        background: #fff;
+        border-radius: 10px;
+        height: 6px;
+        width: 2px;
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        margin-left: -1px;
+        animation: scroll 1.5s infinite;
+      }
+      .scroll-container-blog .mouse-label {
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 2px;
+        font-weight: 700;
+      }
+      @keyframes scroll {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(15px); opacity: 0; }
       }
 
       /* Navegación y Comentarios */
       .navigation-post p { color: #fff; font-weight: 700; font-size: 1.2rem; margin-top: 5px; }
       .comment-v1 { border-bottom: 1px solid rgba(255,255,255,0.1); padding: 30px 0; list-style: none; }
       .comment-v1 h3 { color: #fff; font-size: 18px; margin-bottom: 5px; }
-      .comment-date { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; }
       
-      /* Formulario en modo oscuro */
+      /* Formulario oscuro */
       .comment-form-wrap form { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 10px; }
       .form-control { background: rgba(0,0,0,0.5) !important; border: 1px solid rgba(255,255,255,0.2) !important; color: #fff !important; }
-      .form-control:focus { border-color: #fff !important; }
-      label { color: rgba(255,255,255,0.7); }
-
-      /* CORRECCIÓN FOOTER: Asegurar que no se quede fijo */
+      
+      /* FOOTER GRIS */
       .unslate_co--footer {
         background-color: #191919 !important;
-        position: relative !important; /* Clave para que no se quede fijo */
+        position: relative !important;
         display: block !important;
         z-index: 10 !important;
-        margin-top: 0;
+        padding: 60px 0;
       }
+      .footer-site-social li a { color: #fff; opacity: 0.6; text-transform: uppercase; font-size: 12px; letter-spacing: 2px; font-weight: 700; }
     </style>
-
   </head>
   <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
 
@@ -78,19 +100,6 @@
         <source src="video/bg.mp4" type="video/mp4">
       </video>
     </div>
-
-    <nav class="unslate_co--site-mobile-menu">
-      <div class="close-wrap d-flex">
-        <a href="#" class="d-flex ml-auto js-menu-toggle">
-          <span class="close-label">Close</span>
-          <div class="close-times">
-            <span class="bar1"></span>
-            <span class="bar2"></span>
-          </div>
-        </a>
-      </div>
-      <div class="site-mobile-inner"></div>
-    </nav>
 
     <div class="unslate_co--site-wrap">
       <div class="unslate_co--site-inner">
@@ -107,7 +116,7 @@
                 </ul>
               </div>
               <div class="site-logo pos-absolute">
-                <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px;">
                   <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px; width: auto; vertical-align: middle;">
                 </a>
               </div>
@@ -118,38 +127,26 @@
                   <li><a href="index.html#journal-section" class="nav-link active">Journal</a></li>
                   <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
                 </ul>
-                <ul class="site-nav-ul-none-onepage text-right d-inline-block d-lg-none">
-                  <li><a href="#" class="js-menu-toggle">Menu</a></li>
-                </ul>
               </div>
             </div>
           </div>
         </nav>
-        <div class="cover-v1 jarallax overlay" id="post-header" style="height: 90vh; background-size: cover; background-position: center;">
+
+        <div class="cover-v1 jarallax overlay" id="post-header" style="height: 100vh; background-size: cover; background-position: center;">
           <div class="container">
-            <div class="row align-items-center justify-content-center" style="height: 90vh;">
+            <div class="row align-items-center justify-content-center" style="height: 100vh;">
               <div class="col-md-10 text-center" style="position: relative; z-index: 2;">
-                <h1 class="heading" id="post-title" style="font-size: 4rem; font-weight: 900;">Cargando...</h1>
-                <div class="post-meta subheading" id="post-meta" style="font-size: 1.2rem; color: rgba(255,255,255,0.8);"></div>
+                <h1 class="heading" id="post-title" style="font-size: 4.5rem; font-weight: 900; margin-bottom: 10px;">Cargando...</h1>
+                <div class="post-meta subheading" id="post-meta" style="font-size: 1.1rem; color: rgba(255,255,255,0.7); margin-bottom: 30px;"></div>
                 
-                <div class="swipe-lottie-container-post" data-aos="fade-in" data-aos-delay="500">
-                  <dotlottie-player 
-                    class="post-swipe"
-                    src="images/scrol.lottie" 
-                    background="transparent" 
-                    speed="1" 
-                    loop 
-                    autoplay>
-                  </dotlottie-player>
+                <div class="scroll-container-blog" data-aos="fade-up" data-aos-delay="200">
+                  <span class="mouse"><span class="scroll"></span></span>
+                  <span class="mouse-label">Scroll</span>
                 </div>
 
               </div>
             </div>
           </div>
-          <a href="#blog-content-anchor" class="mouse-wrap smoothscroll" style="z-index: 2; bottom: 30px;">
-            <span class="mouse"><span class="scroll"></span></span>
-            <span class="mouse-label">Scroll</span>
-          </a>
         </div>
 
         <div class="unslate_co--section" id="blog-content-anchor">
@@ -160,15 +157,15 @@
             </div>
 
             <div class="row mt-5 pt-5 navigation-post" style="border-top: 1px solid rgba(255,255,255,0.1);">
-              <div class="col-6">
+              <div class="col-6 text-left">
                 <a href="#" id="prev-link" class="d-block text-white">
-                  <span style="color: #fff; opacity: 0.5;">&larr; Previous Post</span>
+                  <span style="color: rgba(255,255,255,0.5); font-size: 11px;">&larr; Previous Post</span>
                   <p id="prev-title">...</p>
                 </a>
               </div>
               <div class="col-6 text-right">
                 <a href="#" id="next-link" class="d-block text-white">
-                  <span style="color: #fff; opacity: 0.5;">Next Post &rarr;</span>
+                  <span style="color: rgba(255,255,255,0.5); font-size: 11px;">Next Post &rarr;</span>
                   <p id="next-title">...</p>
                 </a>
               </div>
@@ -180,12 +177,9 @@
                   <h2 class="heading-h2 text-center divider" id="comment-count">0 Comments</h2>
                   <span><img src="images/divider.png" alt="divider" width="76"></span>
                 </div>
+                <ul class="comment-list" id="dynamic-comments" style="padding: 0;"></ul>
                 
-                <ul class="comment-list" id="dynamic-comments" style="padding: 0;">
-                  </ul>
-
                 <div class="comment-form-wrap pt-5">
-                  <h3 class="mb-5 heading-h3 text-center">Leave a comment</h3>
                   <form id="commentForm">
                     <div class="form-group mb-4">
                       <label for="name">Name *</label>
@@ -204,37 +198,30 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <footer class="unslate_co--footer unslate_co--section">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-7">
-            <div class="footer-site-logo">
-              <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
-                <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px; width: auto; vertical-align: middle;">
-              </a>
+        <footer class="unslate_co--footer unslate_co--section">
+          <div class="container text-center">
+            <div class="footer-site-logo mb-4">
+              <img src="images/logo.png" alt="Logo" style="height: 35px; background: white; padding: 5px 10px; border-radius: 4px;">
             </div>
-            <ul class="footer-site-social">
+            <ul class="footer-site-social mb-4" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 30px;">
               <li><a href="#">Facebook</a></li>
               <li><a href="#">Instagram</a></li>
             </ul>
-            <p class="site-copyright">
-              Copyright &copy;
-              <script>document.write(new Date().getFullYear());</script> BlackBear. All rights reserved.
+            <p class="site-copyright" style="opacity: 0.5; font-size: 13px;">
+              Copyright &copy; <script>document.write(new Date().getFullYear());</script> BlackBear. All rights reserved.
             </p>
           </div>
-        </div>
+        </footer>
+
       </div>
-    </footer>
+    </div>
 
     <script src="js/scripts-dist.js"></script>
     <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 
     <script>
-      // --- TUS LINKS (VERIFICA QUE SEAN CORRECTOS) ---
       const URL_POSTS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=0&single=true&output=csv";
       const URL_COMENTARIOS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=328009394&single=true&output=csv";
       const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycby1w3WCAhLKvRlppqqnwf4TLyb8yCVcz6KXxnsO-gwsz_wJqb1Dj7a4vbQISltivviqzA/exec";
@@ -242,7 +229,6 @@
       const params = new URLSearchParams(window.location.search);
       const postID = parseInt(params.get('id')) || 1;
 
-      // 1. CARGAR POST Y NAVEGACIÓN
       Papa.parse(URL_POSTS, {
         download: true, header: true,
         complete: function(res) {
@@ -265,7 +251,6 @@
         }
       });
 
-      // 2. CARGAR COMENTARIOS
       Papa.parse(URL_COMENTARIOS, {
         download: true, header: true,
         complete: function(res) {
@@ -273,38 +258,24 @@
           document.getElementById('comment-count').innerText = `${comments.length} Comments`;
           let html = "";
           comments.reverse().forEach(c => {
-            html += `<li class="comment-v1"><h3>${c.Nombre}</h3><div class="comment-date">${c.Fecha}</div><p>${c.Mensaje}</p></li>`;
+            html += `<li class="comment-v1"><h3>${c.Nombre}</h3><div class="comment-date" style="opacity:0.5; font-size:12px;">${c.Fecha}</div><p>${c.Mensaje}</p></li>`;
           });
           document.getElementById('dynamic-comments').innerHTML = html;
         }
       });
 
-      // 3. ENVIAR COMENTARIO
       document.getElementById('commentForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        const originalText = btn.value;
         btn.value = "Sending...";
         btn.disabled = true;
-        btn.style.opacity = "0.5";
-
         const formData = new URLSearchParams();
         formData.append('postID', postID);
         formData.append('name', document.getElementById('name').value);
         formData.append('message', document.getElementById('message').value);
-
-        fetch(URL_APPS_SCRIPT, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: formData
-        }).then(() => {
-          alert("¡Gracias! Tu comentario se ha enviado y aparecerá en breve.");
+        fetch(URL_APPS_SCRIPT, { method: 'POST', mode: 'no-cors', body: formData }).then(() => {
+          alert("Success!");
           location.reload();
-        }).catch(() => {
-          alert("Error al enviar el comentario. Por favor intenta de nuevo.");
-          btn.disabled = false;
-          btn.value = originalText;
-          btn.style.opacity = "1";
         });
       });
     </script>
