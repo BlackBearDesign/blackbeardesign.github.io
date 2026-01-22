@@ -693,31 +693,24 @@
       });
     </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const googleSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKmvmO9lY24-_9fMoPRSKJzApwjQKC69bVdwseuQjaAoGbvs1LtuUEJ9k26gaIvRo03gDMN8pXKMDS/pub?gid=0&single=true&output=csv";
-  const $carousel = $('#dynamic-carousel');
+  const $carousel = $('#testimonial-carousel-dynamic');
 
   Papa.parse(googleSheetURL, {
     download: true,
     header: true,
     complete: function(results) {
-      let datos = results.data;
-      
-      // 1. Filtramos filas vacías (para que no salgan cuadros negros)
+      const datos = results.data;
       const reseñasValidas = datos.filter(fila => fila.Texto && fila.Texto.trim() !== "");
-
-      // 2. Mezclamos aleatoriamente
       reseñasValidas.sort(() => Math.random() - 0.5);
 
-      // 3. Generamos el HTML (Importante el <div> extra para Owl Carousel)
       let htmlFinal = "";
       reseñasValidas.forEach(reseña => {
-        let fotoURL = reseña.Foto && reseña.Foto.trim() !== "" ? reseña.Foto : "images/person_man_1.jpg";
-        
+        let fotoURL = (reseña.Foto && reseña.Foto.trim() !== "") ? reseña.Foto : "images/person_man_1.jpg";
         htmlFinal += `
-          <div>
+          <div class="item">
             <div class="testimonial-v1">
               <div class="testimonial-inner-bg">
                 <span class="quote">&ldquo;</span>
@@ -732,20 +725,19 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>`;
       });
 
-      // 4. Inyectamos las reseñas
       $carousel.html(htmlFinal);
 
-      // 5. ACTIVAMOS EL CARRUSEL (Configurado a 10 segundos)
       $carousel.owlCarousel({
-        items: 1,               // Una reseña a la vez
-        loop: true,              // Bucle infinito
+        items: 1,
+        loop: true,
         margin: 30,
-        autoplay: true,          // Movimiento automático
-        autoplayTimeout: 10000,  // 10 segundos por slide
-        smartSpeed: 1000,        // Velocidad del deslizamiento
-        nav: false,
-        dots: true,              // Puntitos de navegación activados
-        autoplayHoverPause: true // Se pausa si pones el mouse encima
+        autoplay: true,
+        autoplayTimeout: 10000,
+        smartSpeed: 1000,
+        nav: true,
+        dots: true,
+        navText: ['<span class="icon-keyboard_arrow_left"></span>', '<span class="icon-keyboard_arrow_right"></span>'],
+        autoplayHoverPause: true
       });
     }
   });
