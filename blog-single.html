@@ -15,21 +15,21 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* Fondo de video y transparencias */
+      /* Fondo de video fijo del index */
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
-      body, .unslate_co--site-wrap, .unslate_co--site-inner, .unslate_co--section, .cover-v1 { background-color: transparent !important; }
+      body, .unslate_co--site-wrap, .unslate_co--site-inner, .unslate_co--section, .cover-v1 { background-color: transparent !important; color: #fff; }
       
       /* Cabecera del Post (Altura corregida) */
-      #post-header { height: 65vh !important; background-size: cover; background-position: center; position: relative; }
+      #post-header { height: 70vh !important; background-size: cover; background-position: center; position: relative; }
       #post-header.overlay:before { content: ""; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); }
       
-      /* Visibilidad del Texto */
+      /* Visibilidad del Texto (Blanco Puro) */
       .post-content { 
         font-size: 1.15rem; 
         line-height: 1.9; 
         color: #ffffff !important; 
-        text-shadow: 0 2px 8px rgba(0,0,0,0.9); 
+        text-shadow: 0 2px 10px rgba(0,0,0,0.9); 
       }
       .post-content img { width: 100%; border-radius: 10px; margin: 35px 0; border: 1px solid rgba(255,255,255,0.1); }
 
@@ -40,21 +40,29 @@
       .scroll-container-blog .mouse-label { color: #fff; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; font-weight: 700; }
       @keyframes scroll { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(12px); opacity: 0; } }
 
-      /* Estilo de Comentarios (Basado en la captura) */
+      /* Navegación Resaltada en Blanco */
+      .navigation-post { padding: 60px 0; margin-top: 20px; border-top: none !important; }
+      .navigation-post span { color: #ffffff; opacity: 0.6; text-transform: uppercase; font-size: 11px; letter-spacing: 2px; font-weight: 700; display: block; margin-bottom: 5px; }
+      .navigation-post p { color: #ffffff !important; font-weight: 800; font-size: 1.4rem; margin: 0; }
+      .navigation-post a { text-decoration: none !important; }
+      
+      /* Estilo de Comentarios Blanco */
       .comment-v1 { border-bottom: 1px solid rgba(255,255,255,0.1); padding: 25px 0; list-style: none; }
-      .comment-v1 h4 { color: #fff; margin-bottom: 5px; font-weight: 700; font-size: 1.1rem; }
-      .comment-v1 p { color: #ffffff !important; opacity: 0.9; margin-top: 10px; }
+      .comment-v1 h4 { color: #fff; margin-bottom: 5px; font-weight: 800; font-size: 1.2rem; }
+      .comment-v1 p { color: #ffffff !important; margin-top: 10px; font-size: 1.1rem; }
       
       /* Formulario */
       .comment-form-wrap form { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 12px; }
       .form-control { background: rgba(0,0,0,0.6) !important; border: 1px solid rgba(255,255,255,0.2) !important; color: #fff !important; }
       
-      /* Footer Gris Original */
+      /* FOOTER GRIS FINAL (IGUAL AL INDEX) */
       .unslate_co--footer {
         background-color: #191919 !important;
         position: relative !important;
-        padding: 60px 0 !important;
+        padding: 80px 0 !important;
         margin-top: 50px !important;
+        z-index: 10 !important;
+        width: 100%;
       }
     </style>
   </head>
@@ -97,10 +105,10 @@
 
         <div class="cover-v1 overlay" id="post-header">
           <div class="container">
-            <div class="row align-items-center justify-content-center" style="height: 65vh;">
+            <div class="row align-items-center justify-content-center" style="height: 70vh;">
               <div class="col-md-10 text-center" style="z-index: 2;">
-                <h1 class="heading" id="post-title" style="font-size: 3.5rem; font-weight: 900; color: #fff;">Cargando...</h1>
-                <div id="post-meta" style="color: rgba(255,255,255,0.8); font-size: 1.1rem; margin-bottom: 20px;"></div>
+                <h1 class="heading" id="post-title" style="font-size: 3.8rem; font-weight: 900; color: #fff;">Cargando...</h1>
+                <div id="post-meta" style="color: #fff; opacity: 0.8; font-size: 1.1rem; margin-bottom: 20px;"></div>
                 <div class="scroll-container-blog">
                   <span class="mouse"><span class="scroll"></span></span>
                   <span class="mouse-label">Scroll</span>
@@ -116,12 +124,12 @@
               <div class="col-md-8 post-content" id="post-content"></div>
             </div>
 
-            <div class="row mt-5 pt-5" style="border-top: 1px solid rgba(255,255,255,0.1);">
-              <div class="col-6"><a href="#" id="prev-link" class="text-white"><span style="opacity:0.5; font-size:11px;">&larr; PREVIOUS POST</span><p id="prev-title" style="font-weight:700;">...</p></a></div>
-              <div class="col-6 text-right"><a href="#" id="next-link" class="text-white"><span style="opacity:0.5; font-size:11px;">NEXT POST &rarr;</span><p id="next-title" style="font-weight:700;">...</p></a></div>
+            <div class="row navigation-post">
+              <div class="col-6"><a href="#" id="prev-link" class="text-white"><span>&larr; PREVIOUS POST</span><p id="prev-title">...</p></a></div>
+              <div class="col-6 text-right"><a href="#" id="next-link" class="text-white"><span>NEXT POST &rarr;</span><p id="next-title">...</p></a></div>
             </div>
 
-            <div class="row justify-content-center mt-5 pt-5">
+            <div class="row justify-content-center mt-5">
               <div class="col-md-8">
                 <div class="section-heading-wrap text-center mb-5">
                   <h2 class="heading-h2 text-center divider" id="comment-count" style="color:#fff;">0 Comments</h2>
@@ -130,10 +138,10 @@
                 <ul class="comment-list" id="dynamic-comments" style="padding:0; list-style:none;"></ul>
                 
                 <div class="comment-form-wrap pt-5">
-                  <h3 class="mb-5 heading-h3 text-center" style="color:#fff;">Leave a comment</h3>
+                  <h3 class="mb-5 heading-h3 text-center" style="color:#fff; font-weight: 800;">Leave a comment</h3>
                   <form id="commentForm">
-                    <div class="form-group mb-4"><label style="color:rgba(255,255,255,0.7);">Name *</label><input type="text" class="form-control" id="name" required></div>
-                    <div class="form-group mb-4"><label style="color:rgba(255,255,255,0.7);">Message *</label><textarea id="message" class="form-control" rows="5" required></textarea></div>
+                    <div class="form-group mb-4"><label style="color:#fff; opacity: 0.8;">Name *</label><input type="text" class="form-control" id="name" required></div>
+                    <div class="form-group mb-4"><label style="color:#fff; opacity: 0.8;">Message *</label><textarea id="message" class="form-control" rows="5" required></textarea></div>
                     <div class="text-center"><input type="submit" value="Post Comment" class="btn btn-outline-pill btn-custom-light" id="submitBtn"></div>
                   </form>
                 </div>
@@ -145,15 +153,15 @@
         <footer class="unslate_co--footer">
           <div class="container text-center">
             <div class="footer-site-logo">
-              <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
+              <a href="index.html" style="background: white; padding: 10px 15px; border-radius: 5px; display: inline-block; margin-bottom: 25px;">
                 <img src="images/logo.png" alt="Logo" style="height: 35px;">
               </a>
             </div>
-            <ul class="footer-site-social mb-4" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 30px;">
-              <li><a href="#">Facebook</a></li>
-              <li><a href="#">Instagram</a></li>
+            <ul class="footer-site-social mb-4" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 40px;">
+              <li><a href="#" style="color:#fff; font-size: 11px; font-weight: 700; letter-spacing: 2px;">FACEBOOK</a></li>
+              <li><a href="#" style="color:#fff; font-size: 11px; font-weight: 700; letter-spacing: 2px;">INSTAGRAM</a></li>
             </ul>
-            <p class="site-copyright" style="opacity:0.5; font-size:13px; color:#fff;">
+            <p class="site-copyright" style="opacity:0.6; font-size:13px; color:#fff;">
               Copyright &copy; <script>document.write(new Date().getFullYear());</script> BlackBear. All rights reserved.
             </p>
           </div>
