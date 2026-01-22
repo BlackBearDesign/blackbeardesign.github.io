@@ -89,8 +89,22 @@
   max-width: 100%;
   margin: 0 auto;
 }
-    </style>
+      .swipe-lottie-container {
+  text-align: center;
+  margin-top: -120px !important; /* Lo sube para que esté cerca de las fotos */
+  width: 100%;
+  position: relative;
+  z-index: 5;
+}
 
+dotlottie-player {
+  width: 250px !important; /* Tamaño más grande */
+  height: 250px !important;
+  display: inline-block;
+  transform: rotate(90deg); /* Lo gira a vertical */
+}
+    </style>
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
   </head>
   <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
 
@@ -509,12 +523,21 @@
     </div>
   </div>
 
- <div class="owl-carousel" id="dynamic-carousel" data-aos="fade-up">
+<div class="owl-carousel" id="dynamic-carousel" data-aos="fade-up">
   </div>
-</div> <div class="unslate_co--section" id="journal-section">
-      <!-- END testimonial -->
 
-      <div class="unslate_co--section" id="journal-section">
+  <div class="swipe-lottie-container" data-aos="fade-in" data-aos-duration="3000">
+    <dotlottie-player 
+      src="images/scrol.dotlottie" 
+      background="transparent" 
+      speed="1" 
+      loop 
+      autoplay>
+    </dotlottie-player>
+  </div>
+</div> 
+
+<div class="unslate_co--section" id="journal-section">
         <div class="container">
           <div class="section-heading-wrap text-center mb-5">
             <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Journal</span></h2>
