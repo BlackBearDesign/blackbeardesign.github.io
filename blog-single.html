@@ -1,57 +1,110 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>BlackBear | Journal</title>
+    <title>BlackBear | Journal Post</title>
+    <link rel="icon" type="image/png" href="images/icon.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
+    <link rel="stylesheet" href="css/vendor/icomoon/style.css">
+    <link rel="stylesheet" href="css/vendor/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/vendor/animate.min.css">
+    <link rel="stylesheet" href="css/vendor/aos.css">
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="css/vendor/jquery.fancybox.min.css">
     <link rel="stylesheet" href="css/style.css">
-    
+
     <style>
-      /* Estética BlackBear */
-      body { background-color: #000; color: #fff; font-family: 'Poppins', sans-serif; }
-      .unslate_co--site-inner { background-color: transparent; }
+      /* Fondo de video y transparencias */
+      .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
+      .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+      body, .unslate_co--site-wrap, .unslate_co--site-inner, .unslate_co--section, .cover-v1 { background-color: transparent !important; }
       
-      /* Header del Post */
-      .cover-v1.overlay { position: relative; background-size: cover; background-position: center; }
-      .cover-v1.overlay:before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); }
+      /* Cabecera del Post (Altura corregida) */
+      #post-header { height: 65vh !important; background-size: cover; background-position: center; position: relative; }
+      #post-header.overlay:before { content: ""; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); }
       
-      /* Contenido del Post */
-      .post-content { color: #ccc; font-size: 1.1rem; line-height: 1.8; }
-      .post-content img { width: 100%; border-radius: 10px; margin: 35px 0; border: 1px solid #333; }
-      
-      /* Navegación Circular */
-      .navigation-post p { color: #fff; font-weight: 700; font-size: 1.2rem; margin-top: 5px; transition: 0.3s; }
-      .navigation-post span { color: #ef3159; text-transform: uppercase; font-size: 12px; letter-spacing: 2px; font-weight: 600; }
-      .navigation-post a:hover p { color: #ef3159; }
-      .navigation-post a { text-decoration: none !important; }
-      
-      /* Comentarios Lineales */
-      .comment-v1 { border-bottom: 1px solid #222; padding: 30px 0; list-style: none; }
-      .comment-v1 h3 { color: #ef3159; font-size: 18px; margin-bottom: 5px; font-weight: 700; }
-      .comment-date { font-size: 12px; color: #555; margin-bottom: 15px; text-transform: uppercase; }
-      .comment-list { padding: 0; }
+      /* Visibilidad del Texto */
+      .post-content { 
+        font-size: 1.15rem; 
+        line-height: 1.9; 
+        color: #ffffff !important; 
+        text-shadow: 0 2px 8px rgba(0,0,0,0.9); 
+      }
+      .post-content img { width: 100%; border-radius: 10px; margin: 35px 0; border: 1px solid rgba(255,255,255,0.1); }
+
+      /* Animación Scroll Mouse */
+      .scroll-container-blog { text-align: center; margin-top: 25px; width: 100%; }
+      .scroll-container-blog .mouse { border: 2px solid #fff; border-radius: 20px; height: 35px; width: 22px; display: block; margin: 0 auto 10px auto; position: relative; }
+      .scroll-container-blog .scroll { background: #fff; border-radius: 10px; height: 5px; width: 2px; position: absolute; top: 6px; left: 50%; margin-left: -1px; animation: scroll 1.5s infinite; }
+      .scroll-container-blog .mouse-label { color: #fff; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; font-weight: 700; }
+      @keyframes scroll { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(12px); opacity: 0; } }
+
+      /* Estilo de Comentarios (Basado en la captura) */
+      .comment-v1 { border-bottom: 1px solid rgba(255,255,255,0.1); padding: 25px 0; list-style: none; }
+      .comment-v1 h4 { color: #fff; margin-bottom: 5px; font-weight: 700; font-size: 1.1rem; }
+      .comment-v1 p { color: #ffffff !important; opacity: 0.9; margin-top: 10px; }
       
       /* Formulario */
-      .form-control { background: #111; border: 1px solid #222; color: #fff; padding: 15px; border-radius: 5px; }
-      .form-control:focus { background: #151515; color: #fff; border-color: #ef3159; box-shadow: none; }
-      label { color: #777; font-size: 14px; margin-bottom: 10px; }
-      .btn-custom { background-color: #ef3159; color: white; padding: 12px 30px; border-radius: 50px; border: none; font-weight: 700; transition: 0.3s; }
-      .btn-custom:hover { background-color: #c42648; transform: translateY(-2px); }
+      .comment-form-wrap form { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 12px; }
+      .form-control { background: rgba(0,0,0,0.6) !important; border: 1px solid rgba(255,255,255,0.2) !important; color: #fff !important; }
+      
+      /* Footer Gris Original */
+      .unslate_co--footer {
+        background-color: #191919 !important;
+        position: relative !important;
+        padding: 60px 0 !important;
+        margin-top: 50px !important;
+      }
     </style>
   </head>
-  <body>
+  <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+
+    <div class="video-bg-global">
+      <video autoplay loop muted playsinline><source src="video/bg.mp4" type="video/mp4"></video>
+    </div>
 
     <div class="unslate_co--site-wrap">
       <div class="unslate_co--site-inner">
 
-        <div class="cover-v1 jarallax overlay" id="post-header" style="height: 80vh;">
+        <nav class="unslate_co--site-nav site-nav-target">
           <div class="container">
-            <div class="row align-items-center justify-content-center" style="height: 80vh;">
-              <div class="col-md-10 text-center" style="position: relative; z-index: 2;">
-                <h1 class="blog-heading" id="post-title" style="font-size: 4rem; font-weight: 900;">Cargando...</h1>
-                <div class="post-meta" id="post-meta" style="font-size: 1.2rem; color: #ef3159;"></div>
+            <div class="row align-items-center justify-content-between text-left">
+              <div class="col-md-5 text-right">
+                <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                  <li><a href="index.html#home-section" class="nav-link">Home</a></li>
+                  <li><a href="index.html#portfolio-section" class="nav-link">Portfolio</a></li>
+                  <li><a href="index.html#about-section" class="nav-link">About</a></li>
+                  <li><a href="index.html#services-section" class="nav-link">Services</a></li>
+                </ul>
+              </div>
+              <div class="site-logo pos-absolute">
+                <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; border-radius: 5px;">
+                  <img src="images/logo.png" alt="Logo" style="height: 40px;">
+                </a>
+              </div>
+              <div class="col-md-5 text-right text-lg-left">
+                <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                  <li><a href="index.html#skills-section" class="nav-link">Skills</a></li>
+                  <li><a href="index.html#testimonial-section" class="nav-link">Testimonial</a></li>
+                  <li><a href="index.html#journal-section" class="nav-link active">Journal</a></li>
+                  <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div class="cover-v1 overlay" id="post-header">
+          <div class="container">
+            <div class="row align-items-center justify-content-center" style="height: 65vh;">
+              <div class="col-md-10 text-center" style="z-index: 2;">
+                <h1 class="heading" id="post-title" style="font-size: 3.5rem; font-weight: 900; color: #fff;">Cargando...</h1>
+                <div id="post-meta" style="color: rgba(255,255,255,0.8); font-size: 1.1rem; margin-bottom: 20px;"></div>
+                <div class="scroll-container-blog">
+                  <span class="mouse"><span class="scroll"></span></span>
+                  <span class="mouse-label">Scroll</span>
+                </div>
               </div>
             </div>
           </div>
@@ -63,128 +116,95 @@
               <div class="col-md-8 post-content" id="post-content"></div>
             </div>
 
-            <div class="row mt-5 pt-5 navigation-post border-top border-dark">
-              <div class="col-6">
-                <a href="#" id="prev-link">
-                  <span>&larr; Previous Post</span>
-                  <p id="prev-title">...</p>
-                </a>
-              </div>
-              <div class="col-6 text-right">
-                <a href="#" id="next-link">
-                  <span>Next Post &rarr;</span>
-                  <p id="next-title">...</p>
-                </a>
-              </div>
+            <div class="row mt-5 pt-5" style="border-top: 1px solid rgba(255,255,255,0.1);">
+              <div class="col-6"><a href="#" id="prev-link" class="text-white"><span style="opacity:0.5; font-size:11px;">&larr; PREVIOUS POST</span><p id="prev-title" style="font-weight:700;">...</p></a></div>
+              <div class="col-6 text-right"><a href="#" id="next-link" class="text-white"><span style="opacity:0.5; font-size:11px;">NEXT POST &rarr;</span><p id="next-title" style="font-weight:700;">...</p></a></div>
             </div>
 
             <div class="row justify-content-center mt-5 pt-5">
               <div class="col-md-8">
-                <h3 class="mb-5" id="comment-count" style="font-weight: 800; font-size: 2rem;">0 Comments</h3>
-                <ul class="comment-list" id="dynamic-comments"></ul>
-
+                <div class="section-heading-wrap text-center mb-5">
+                  <h2 class="heading-h2 text-center divider" id="comment-count" style="color:#fff;">0 Comments</h2>
+                  <span><img src="images/divider.png" alt="divider" width="76"></span>
+                </div>
+                <ul class="comment-list" id="dynamic-comments" style="padding:0; list-style:none;"></ul>
+                
                 <div class="comment-form-wrap pt-5">
-                  <h3 class="mb-5" style="font-weight: 800;">Leave a comment</h3>
-                  <form id="commentForm" class="p-5 bg-black border border-dark">
-                    <div class="form-group mb-4">
-                      <label for="name">Name *</label>
-                      <input type="text" class="form-control" id="name" required placeholder="Your Name">
-                    </div>
-                    <div class="form-group mb-4">
-                      <label for="message">Message *</label>
-                      <textarea id="message" cols="30" rows="5" class="form-control" required placeholder="Write your thoughts..."></textarea>
-                    </div>
-                    <div class="form-group">
-                      <input type="submit" value="Post Comment" class="btn-custom" id="submitBtn">
-                    </div>
+                  <h3 class="mb-5 heading-h3 text-center" style="color:#fff;">Leave a comment</h3>
+                  <form id="commentForm">
+                    <div class="form-group mb-4"><label style="color:rgba(255,255,255,0.7);">Name *</label><input type="text" class="form-control" id="name" required></div>
+                    <div class="form-group mb-4"><label style="color:rgba(255,255,255,0.7);">Message *</label><textarea id="message" class="form-control" rows="5" required></textarea></div>
+                    <div class="text-center"><input type="submit" value="Post Comment" class="btn btn-outline-pill btn-custom-light" id="submitBtn"></div>
                   </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        <footer class="unslate_co--footer">
+          <div class="container text-center">
+            <div class="footer-site-logo">
+              <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
+                <img src="images/logo.png" alt="Logo" style="height: 35px;">
+              </a>
+            </div>
+            <ul class="footer-site-social mb-4" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 30px;">
+              <li><a href="#">Facebook</a></li>
+              <li><a href="#">Instagram</a></li>
+            </ul>
+            <p class="site-copyright" style="opacity:0.5; font-size:13px; color:#fff;">
+              Copyright &copy; <script>document.write(new Date().getFullYear());</script> BlackBear. All rights reserved.
+            </p>
+          </div>
+        </footer>
+
       </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/scripts-dist.js"></script>
+    <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 
     <script>
-      // 1. CONFIGURACIÓN DE LINKS
       const URL_POSTS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=0&single=true&output=csv";
-      const URL_COMENTARIOS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=328009394&single=true&output=csv";
-      const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycby1w3WCAhLKvRlppqqnwf4TLyb8yCVcz6KXxnsO-gwsz_wJqb1Dj7a4vbQISltivviqzA/exec";
+      const URL_COMS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=328009394&single=true&output=csv";
+      const URL_SCRIPT = "https://script.google.com/macros/s/AKfycby1w3WCAhLKvRlppqqnwf4TLyb8yCVcz6KXxnsO-gwsz_wJqb1Dj7a4vbQISltivviqzA/exec";
 
-      const params = new URLSearchParams(window.location.search);
-      const postID = parseInt(params.get('id')) || 1;
+      const currentID = new URLSearchParams(window.location.search).get('id') || 1;
 
-      // 2. CARGAR POST Y NAVEGACIÓN CIRCULAR
-      Papa.parse(URL_POSTS, {
-        download: true, header: true,
-        complete: function(res) {
-          const posts = res.data.filter(p => p.ID && p.ID.trim() !== "");
-          const post = posts.find(p => p.ID == postID) || posts[0];
+      Papa.parse(URL_POSTS, { download: true, header: true, complete: function(res) {
+        const posts = res.data.filter(p => p.ID && p.ID.trim() !== "");
+        const post = posts.find(p => p.ID == currentID) || posts[0];
+        document.getElementById('post-title').innerText = post.Titulo;
+        document.getElementById('post-meta').innerText = `By ${post.Autor} • ${post.Fecha}`;
+        document.getElementById('post-content').innerHTML = post.Contenido;
+        document.getElementById('post-header').style.backgroundImage = `url('${post.ImagenPortada}')`;
+        
+        let idx = posts.findIndex(p => p.ID == currentID);
+        let prev = posts[(idx - 1 + posts.length) % posts.length], next = posts[(idx + 1) % posts.length];
+        document.getElementById('prev-link').href = `blog-single.html?id=${prev.ID}`;
+        document.getElementById('prev-title').innerText = prev.Titulo;
+        document.getElementById('next-link').href = `blog-single.html?id=${next.ID}`;
+        document.getElementById('next-title').innerText = next.Titulo;
+      }});
 
-          document.getElementById('post-title').innerText = post.Titulo;
-          document.getElementById('post-meta').innerText = `By ${post.Autor} • ${post.Fecha} • ${post.TiempoLectura}`;
-          document.getElementById('post-content').innerHTML = post.Contenido;
-          document.getElementById('post-header').style.backgroundImage = `url('${post.ImagenPortada}')`;
+      Papa.parse(URL_COMS, { download: true, header: true, complete: function(res) {
+        const comments = res.data.filter(c => c.PostID == currentID);
+        document.getElementById('comment-count').innerText = `${comments.length} Comments`;
+        document.getElementById('dynamic-comments').innerHTML = comments.reverse().map(c => `
+          <li class="comment-v1">
+            <h4>${c.Nombre}</h4>
+            <div style="opacity:0.5; font-size:12px;">${c.Fecha}</div>
+            <p>${c.Mensaje}</p>
+          </li>`).join('');
+      }});
 
-          // Lógica Circular de Navegación
-          let idx = posts.findIndex(p => p.ID == postID);
-          let prev = posts[(idx - 1 + posts.length) % posts.length];
-          let next = posts[(idx + 1) % posts.length];
-
-          document.getElementById('prev-link').href = `blog-single.html?id=${prev.ID}`;
-          document.getElementById('prev-title').innerText = prev.Titulo;
-          document.getElementById('next-link').href = `blog-single.html?id=${next.ID}`;
-          document.getElementById('next-title').innerText = next.Titulo;
-        }
-      });
-
-      // 3. CARGAR COMENTARIOS LINEALES
-      Papa.parse(URL_COMENTARIOS, {
-        download: true, header: true,
-        complete: function(res) {
-          const comments = res.data.filter(c => c.PostID == postID);
-          document.getElementById('comment-count').innerText = `${comments.length} Comments`;
-          let html = "";
-          comments.reverse().forEach(c => { // Los más nuevos arriba
-            html += `
-              <li class="comment-v1">
-                <h3>${c.Nombre}</h3>
-                <div class="comment-date">${c.Fecha}</div>
-                <p>${c.Mensaje}</p>
-              </li>`;
-          });
-          document.getElementById('dynamic-comments').innerHTML = html;
-        }
-      });
-
-      // 4. ENVIAR COMENTARIO AL EXCEL
       document.getElementById('commentForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        btn.value = "Sending...";
-        btn.disabled = true;
-
-        const formData = new URLSearchParams();
-        formData.append('postID', postID);
-        formData.append('name', document.getElementById('name').value);
-        formData.append('message', document.getElementById('message').value);
-
-        fetch(URL_APPS_SCRIPT, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: formData
-        }).then(() => {
-          alert("¡Éxito! Tu comentario aparecerá en breve.");
-          location.reload();
-        }).catch(() => {
-          alert("Error al enviar. Intenta de nuevo.");
-          btn.disabled = false;
-          btn.value = "Post Comment";
-        });
+        const btn = document.getElementById('submitBtn'); btn.value = "Sending..."; btn.disabled = true;
+        const fd = new URLSearchParams(); fd.append('postID', currentID); fd.append('name', document.getElementById('name').value); fd.append('message', document.getElementById('message').value);
+        fetch(URL_SCRIPT, { method: 'POST', mode: 'no-cors', body: fd }).then(() => { alert("Success!"); location.reload(); });
       });
     </script>
   </body>
