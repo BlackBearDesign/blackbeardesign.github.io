@@ -222,13 +222,8 @@ input:-webkit-autofill:focus {
     min-height: 500px;
 }
 
-/* --- FIX TOTAL: SEPARACIÓN Y ESTILO DEFINITIVO --- */
-
-/* A. ESPACIO EN LA FICHA TÉCNICA (Lo que abres) */
-.meta-item { 
-    margin-bottom: 65px !important; /* Más separación entre Descripción, Fecha y Cliente */
-    opacity: 0; 
-}
+/* Metadatos: Diseño con jerarquía (Gris + Blanco Bold) */
+.meta-item { margin-bottom: 30px; opacity: 0; }
 
 .meta-header {
     display: block;
@@ -236,35 +231,17 @@ input:-webkit-autofill:focus {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #ffffff !important; 
-    opacity: 0.5;
+  opacity: 0.6;
     font-weight: 700;
-    margin-bottom: 25px !important; /* Más espacio bajo el título pequeño */
+    margin-bottom: 5px;
 }
 
 .meta-value {
     display: block;
-    font-size: 16px;
+    font-size: 15px;
     color: #ffffff !important;
     font-weight: 800;
     text-transform: uppercase;
-    line-height: 2.0 !important; /* Evita que las líneas de texto se amontonen */
-}
-
-/* B. ESPACIO EN LAS PORTADAS (Los cuadritos del Grid) */
-.portfolio-item-content h3 {
-    font-weight: 900 !important; /* Título bien Bold */
-    color: #ffffff !important;
-    margin-bottom: 20px !important; /* Separa el título de la categoría */
-    text-transform: uppercase;
-}
-
-.portfolio-item-content p, 
-.portfolio-item-content .post-meta {
-    color: #ffffff !important;
-    opacity: 0.6 !important; /* Blanco suave */
-    letter-spacing: 3px;     /* Letras más separadas y elegantes */
-    text-transform: uppercase;
-    font-size: 10px !important;
 }
 
 /* --- BOTÓN DE CIERRE (X) FINAL Y REFINADO --- */
@@ -310,37 +287,6 @@ input:-webkit-autofill:focus {
     color: #000000 !important; 
     transform: scale(1.12); /* Zoom suave */
 }
-/* --- PORTADAS (Portfolio & Journal): ALINEACIÓN IZQUIERDA Y ESTILO --- */
-.portfolio-item-content {
-    text-align: left !important; /* Fuerza el texto a la izquierda */
-    padding: 30px !important;    /* Espacio interno para que no toque los bordes */
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-.portfolio-item-content h3 {
-    text-align: left !important;
-    font-weight: 900 !important;  /* Título Súper Bold */
-    color: #ffffff !important;
-    font-size: 1.5rem !important;
-    margin-bottom: 15px !important; /* Separa el título del texto de abajo */
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.portfolio-item-content p, 
-.portfolio-item-content .post-meta {
-    text-align: left !important;
-    color: #ffffff !important;
-    opacity: 0.6 !important;     /* Blanco con opacidad elegante */
-    font-weight: 400 !important;
-    text-transform: uppercase;
-    letter-spacing: 2px;         /* Letras separadas */
-    font-size: 10px !important;
-    margin: 0 !important;
-}     
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -1002,52 +948,6 @@ window.closeProject = function() {
         }
     });
 };
-</script>
-<script>
-// --- MOTOR DEL FORMULARIO DE CONTACTO ---
-document.getElementById('contactFormMain').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const email = document.getElementById('contact-email').value.trim();
-  const phone = document.getElementById('contact-phone').value.trim();
-  
-  // VALIDACIÓN: Al menos uno de los dos debe estar lleno
-  if (!email && !phone) {
-    alert("Please provide at least an email or a phone number so I can reach you.");
-    return;
-  }
-
-  const btn = document.getElementById('contactSubmitBtn');
-  const loader = document.getElementById('contact-loader');
-  // Esta es la dirección de tu base de datos en Google
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPOKE4AQa_YioNPWNkmqt2i1aYbblJB6QWTgHmacTapkku_wG8ZG-rwnO0q7z-TmqU/exec"; 
-
-  btn.style.display = 'none';
-  loader.style.display = 'inline-block';
-
-  const data = new URLSearchParams();
-  data.append('name', document.getElementById('contact-name').value);
-  data.append('email', email);
-  data.append('phone', phone);
-  data.append('message', document.getElementById('contact-message').value);
-
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: data
-  })
-  .then(() => {
-    alert("Message received! We'll get back to you shortly.");
-    document.getElementById('contactFormMain').reset();
-    btn.style.display = 'inline-block';
-    loader.style.display = 'none';
-  })
-  .catch(error => {
-    alert("Something went wrong. Please try again.");
-    btn.style.display = 'inline-block';
-    loader.style.display = 'none';
-  });
-});
 </script>
   </body>
 </html>
