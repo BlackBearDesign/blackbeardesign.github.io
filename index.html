@@ -197,21 +197,66 @@ input:-webkit-autofill:focus {
 } 
 /* PEGA ESTO */
 /* PEGA ESTO LITERALMENTE */
-#project-single-view, #project-single-view h2, #project-single-view h3, #project-single-view p, #project-single-view span, #project-single-view strong {
+/* --- NUEVA FICHA TÉCNICA REFINADA --- */
+#project-single-view {
+    color: #ffffff !important;
+    font-family: inherit !important;
+}
+
+/* Título más elegante */
+#project-title {
+    color: white;
+    font-weight: 700;
+    font-size: clamp(30px, 4vw, 45px) !important; /* Más pequeño y balanceado */
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+    line-height: 1.1;
+}
+
+/* Unificación de Metadatos: Blanco, Bold, mismo tamaño */
+.meta-item { margin-bottom: 25px; opacity: 0; } /* Para el fade-in */
+
+#project-single-view h3, 
+#project-single-view p, 
+#project-single-view span, 
+#project-single-view strong {
     color: #ffffff !important;
     font-weight: 700 !important;
-    font-family: inherit !important;
+    font-size: 14px !important; /* Tamaño único */
     text-transform: uppercase;
     letter-spacing: 1px;
+    margin: 0;
+    display: block;
 }
-#project-single-view h3 { font-size: 11px; color: #888 !important; margin-bottom: 10px; }
-#project-single-view p { font-size: 15px; line-height: 1.6; margin-bottom: 30px; text-transform: none !important; }
-#project-single-view strong { font-size: 16px; display: block; margin-top: 5px; text-transform: none !important; }
+
+#project-single-view p, #project-single-view strong {
+    margin-top: 5px;
+}
+
+/* Alineación vertical del video y texto */
+.project-content-row {
+    display: flex;
+    align-items: center; /* Centrado vertical perfecto */
+}
+
+/* Botón de cierre: X Negra sobre fondo blanco */
 .close-v1 { display: inline-flex; align-items: center; text-decoration: none !important; transition: transform 0.3s ease; cursor: pointer !important; }
-.close-v1:hover { transform: scale(1.2); }
-.icon-text { font-size: 11px; margin-right: 15px; color: #ffffff !important; }
-.close-circle { width: 50px; height: 50px; border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; line-height: 0; color: #ffffff; transition: all 0.3s ease; padding-bottom: 4px; }
-.close-v1:hover .close-circle { background: #ffffff !important; color: #000000 !important; }
+.close-v1:hover { transform: scale(1.1); }
+.icon-text { font-size: 11px; margin-right: 15px; color: #ffffff !important; opacity: 0.7; }
+.close-circle { 
+    width: 50px; height: 50px; 
+    border: 1px solid rgba(255,255,255,0.3); 
+    border-radius: 50%; 
+    display: flex; align-items: center; justify-content: center; 
+    font-size: 24px; color: #ffffff; 
+    transition: all 0.3s ease;
+}
+
+.close-v1:hover .close-circle { 
+    background: #ffffff !important; 
+    color: #000000 !important; /* X ahora es negra en hover */
+    border-color: #ffffff !important;
+}
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -308,41 +353,47 @@ input:-webkit-autofill:focus {
      <div class="unslate_co--section" id="portfolio-section">
   <div class="container">
     
-   <div id="project-single-view" style="display:none; opacity:0; pointer-events: auto;">
-      <div class="row justify-content-between">
+ <div id="project-single-view" style="display:none; opacity:0; pointer-events: auto;">
+  <div class="row">
+    <div class="col-lg-12 text-right mb-5">
+      <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
+        <span class="icon-text">Back to Portfolio</span>
+        <span class="close-circle">×</span>
+      </a>
+    </div>
+  </div>
+  
+  <div class="row project-content-row justify-content-between">
+    
+    <div class="col-lg-7">
+      <h2 id="project-title"></h2>
+      <div id="project-visual-content"></div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="project-details">
         
-        <div class="col-lg-12 text-right mb-5">
-          <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
-            <span class="icon-text">Back to Portfolio</span>
-            <span class="close-circle">×</span>
-          </a>
-        </div>
-        
-        <div class="col-lg-7">
-          <h2 id="project-title" style="color: white; font-weight: 700; font-size: clamp(40px, 5vw, 70px); margin-bottom: 40px; letter-spacing: -2px; line-height: 1;"></h2>
-          <div id="project-visual-content"></div>
+        <div class="meta-item">
+          <h3>Project Description</h3>
+          <p id="project-desc"></p>
         </div>
 
-        <div class="col-lg-4 pt-lg-5">
-          <div class="project-details" style="margin-top: 50px;">
-            <div class="mb-5">
-              <h3 style="color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 15px;">Project Description</h3>
-              <p id="project-desc" style="color: #999; line-height: 1.8; font-size: 15px;"></p>
-            </div>
-            <div class="row">
-              <div class="col-12 mb-4">
-                <span style="display:block; color:#444; font-size:10px; text-transform:uppercase; font-weight: 700; letter-spacing: 1px;">Project Date</span>
-                <strong id="project-date" style="color:white; font-weight: 400; font-size: 16px;"></strong>
-              </div>
-              <div class="col-12">
-                <span style="display:block; color:#444; font-size:10px; text-transform:uppercase; font-weight: 700; letter-spacing: 1px;">Client</span>
-                <strong id="project-client" style="color:white; font-weight: 400; font-size: 16px;"></strong>
-              </div>
-            </div>
-          </div>
+        <div class="meta-item">
+          <span>Project Date</span>
+          <strong id="project-date"></strong>
         </div>
+
+        <div class="meta-item">
+          <span>Client</span>
+          <strong id="project-client"></strong>
+        </div>
+
       </div>
     </div>
+
+  </div>
+</div>
+  
 
     <div id="portfolio-grid-container" class="portfolio-wrapper">
       <div class="d-flex align-items-center mb-4">
@@ -841,16 +892,16 @@ window.openProject = function(id) {
     const p = window.portfolioItems.find(x => x.ID == id);
     if(!p) return;
 
-    // 1. Primero desvanecemos el grid suavemente hacia abajo
+    // 1. Desvanecemos el portafolio
     gsap.to("#portfolio-grid-container", { 
         duration: 0.5, 
-        y: 30, 
+        y: 20, 
         opacity: 0, 
         ease: "power2.inOut",
         onComplete: () => {
-            // 2. Solo cuando desaparece el grid, cambiamos los textos y mostramos la ficha
             document.getElementById('portfolio-grid-container').style.display = "none";
             
+            // 2. Cargamos la información
             document.getElementById('project-title').innerText = p.Titulo;
             document.getElementById('project-desc').innerText = p.Descripcion;
             document.getElementById('project-date').innerText = p.Fecha || "2024";
@@ -863,24 +914,27 @@ window.openProject = function(id) {
             
             document.getElementById('project-visual-content').innerHTML = content;
 
-            // 3. Movemos el scroll y hacemos que la ficha aparezca con suavidad
+            // 3. Animación de entrada de la ficha
             window.scrollTo({top: $('#portfolio-section').offset().top - 70, behavior: 'smooth'});
             
+            // Aparece la ficha principal
             gsap.fromTo("#project-single-view", 
-                { opacity: 0, y: 60, display: "block" }, 
-                { duration: 0.8, opacity: 1, y: 0, ease: "power3.out" }
+                { opacity: 0, y: 40, display: "block" }, 
+                { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" }
             );
-        }
-    });
-};
 
-window.closeProject = function() {
-    gsap.to("#project-single-view", { duration: 0.5, opacity: 0, y: 100, display: "none", ease: "power2.in",
-        onComplete: () => {
-            document.getElementById('project-visual-content').innerHTML = ""; 
-            gsap.fromTo("#portfolio-grid-container", { opacity: 0, y: 50, display: "block" }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out",
-                onComplete: () => { $('#posts').isotope('layout'); }
-            });
+            // EFECTO FADE-IN EN CASCADA para los metadatos
+            gsap.fromTo(".meta-item", 
+                { opacity: 0, x: 20 }, 
+                { 
+                    duration: 0.6, 
+                    opacity: 1, 
+                    x: 0, 
+                    stagger: 0.2, // Uno tras otro
+                    delay: 0.4,    // Espera un poco a que el video se acomode
+                    ease: "power2.out" 
+                }
+            );
         }
     });
 };
