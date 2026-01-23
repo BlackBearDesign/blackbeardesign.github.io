@@ -195,12 +195,43 @@ input:-webkit-autofill:focus {
   color: #ffffff !important;
   font-weight: 600;
 } 
-/* --- EFECTO MODERN BUILDING (INDEX 15) --- */
+/* --- ESTILO PROFESIONAL PORTAFOLIO --- */
 #posts .portfolio-item {
   position: relative;
   overflow: hidden !important;
   background: #000;
   display: block;
+}
+
+/* Efecto Lupa: La imagen crece y se oscurece al pasar el mouse */
+#posts .portfolio-item img {
+  filter: brightness(0.9);
+  transition: transform 0.8s cubic-bezier(0.2, 1, 0.2, 1), filter 0.8s ease !important;
+}
+
+#posts .portfolio-item:hover img {
+  transform: scale(1.1); 
+  filter: brightness(0.4);
+}
+
+/* Texto que sube suavemente */
+#posts .portfolio-item-content {
+  padding: 30px !important;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  transition: transform 0.4s ease-out;
+  z-index: 2;
+}
+
+#posts .portfolio-item:hover .portfolio-item-content {
+  transform: translateY(-15px);
+}
+
+#posts .portfolio-item-content h3 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 15px rgba(0,0,0,1);
+  font-weight: 800 !important;
 }
 
 #posts .portfolio-item img {
@@ -331,7 +362,7 @@ input:-webkit-autofill:focus {
       <!-- END .cover-v1 -->
 
 
-      <div class="unslate_co--section" id="portfolio-section">
+     <div class="unslate_co--section" id="portfolio-section">
   <div class="container">
     
     <div id="project-single-view" style="display:none; opacity:0; padding-bottom: 60px;">
@@ -341,25 +372,25 @@ input:-webkit-autofill:focus {
             <span class="icon-close2" style="font-size: 30px; color: white;">×</span>
           </a>
         </div>
-        <div class="col-lg-8" id="project-video-content" style="min-height: 450px; background: #000;"></div>
+        <div class="col-lg-8" id="project-video-content" style="min-height: 450px; background: #000; border-radius: 8px; overflow: hidden;"></div>
         <div class="col-lg-4">
           <div class="project-details pl-lg-4">
-            <h2 class="heading-h2" id="project-title" style="color: white; font-weight: 700; margin-bottom: 20px;"></h2>
+            <h2 class="heading-h2" id="project-title" style="color: white; font-weight: 800; margin-bottom: 20px; font-size: 2rem;"></h2>
             <div class="mb-5">
-              <h3 class="heading-h3" style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 2px;">Project Description</h3>
-              <p id="project-desc" style="color: #ccc; line-height: 1.8;"></p>
+              <h3 style="color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">Project Description</h3>
+              <p id="project-desc" style="color: #ccc; line-height: 1.8; font-size: 14px;"></p>
             </div>
             <div class="row">
-              <div class="col-6 mb-4">
-                <span style="display:block; color:#666; font-size:11px; text-transform:uppercase;">Project Date</span>
+              <div class="col-12 mb-3">
+                <span style="display:block; color:#555; font-size:10px; text-transform:uppercase; font-weight: 700;">Project Date</span>
                 <strong id="project-date" style="color:white; font-weight: 400;"></strong>
               </div>
-              <div class="col-6 mb-4">
-                <span style="display:block; color:#666; font-size:11px; text-transform:uppercase;">Role</span>
+              <div class="col-12 mb-3">
+                <span style="display:block; color:#555; font-size:10px; text-transform:uppercase; font-weight: 700;">Role / Category</span>
                 <strong id="project-role" style="color:white; font-weight: 400;"></strong>
               </div>
-              <div class="col-6">
-                <span style="display:block; color:#666; font-size:11px; text-transform:uppercase;">Client</span>
+              <div class="col-12">
+                <span style="display:block; color:#555; font-size:10px; text-transform:uppercase; font-weight: 700;">Client</span>
                 <strong id="project-client" style="color:white; font-weight: 400;"></strong>
               </div>
             </div>
@@ -372,11 +403,9 @@ input:-webkit-autofill:focus {
       <div class="d-flex align-items-center mb-4 gsap-reveal">
         <h2 class="mr-auto heading-h2">Portfolio</h2>
       </div>
-
       <div id="posts" class="row gutter-isotope-item">
         </div>
-
-      <div class="row mt-5">
+      <div class="row mt-5 gsap-reveal">
         <div class="col-12 text-center">
           <a href="categories.html" class="btn btn-outline-pill btn-custom-light" style="padding: 15px 45px; text-transform: uppercase; font-weight: bold; letter-spacing: 2px;">
             Video Categories
@@ -859,17 +888,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const EXCEL_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
   let portfolioData = [];
 
-  // 1. CARGAR DATOS DE EXCEL
+  // Leer Excel
   Papa.parse(EXCEL_URL, {
-    download: true, 
-    header: true,
+    download: true, header: true,
     complete: function(results) {
       portfolioData = results.data.filter(p => p.ID && p.VideoURL);
       renderGrid(portfolioData);
     }
   });
 
-  // 2. CREAR LA CUADRÍCULA (GRID)
   function renderGrid(data) {
     const $grid = $('#posts');
     const shuffled = data.sort(() => Math.random() - 0.5).slice(0, 9);
@@ -892,44 +919,34 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>`;
     });
     $grid.html(html);
-
-    // Reiniciar Isotope para acomodar los moldes
     $grid.imagesLoaded().progress(() => { 
-      $grid.isotope('reloadItems').isotope({ 
-        itemSelector: '.item', 
-        layoutMode: 'masonry' 
-      }); 
+      $grid.isotope('reloadItems').isotope({ itemSelector: '.item', layoutMode: 'masonry' }); 
     });
   }
 
-  // 3. ABRIR VISTA DETALLADA (SINGLE VIEW)
   window.openProject = function(id) {
     const p = portfolioData.find(x => x.ID == id);
     if (!p) return;
-
-    gsap.to("#portfolio-grid-container", {duration: 0.5, opacity: 0, display: "none", onComplete: () => {
+    gsap.to("#portfolio-grid-container", {duration: 0.4, opacity: 0, display: "none", onComplete: () => {
       $('#project-title').text(p.Titulo);
       $('#project-desc').text(p.Descripcion);
-      $('#project-date').text(p.Fecha || '2024');
+      $('#project-date').text(p.Fecha || '2025');
       $('#project-role').text(p.Category);
-      $('#project-client').text(p.Cliente || 'BlackBear Client');
+      $('#project-client').text(p.Cliente);
 
       let embed = "";
-      // Detector robusto de YouTube
-      if(p.VideoURL.includes('youtube.com') || p.VideoURL.includes('youtu.be')) {
+      if(p.VideoURL.includes('youtube') || p.VideoURL.includes('youtu.be')) {
         let vId = p.VideoURL.includes('v=') ? p.VideoURL.split('v=')[1].split('&')[0] : p.VideoURL.split('/').pop();
         embed = `<iframe width="100%" height="450" src="https://www.youtube.com/embed/${vId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
       } else {
         embed = `<video controls autoplay style="width:100%; max-height:450px;"><source src="${p.VideoURL}" type="video/mp4"></video>`;
       }
-      
       $('#project-video-content').html(embed);
-      gsap.to("#project-single-view", {duration: 0.5, opacity: 1, display: "block"});
+      gsap.fromTo("#project-single-view", {opacity: 0, y: 30}, {duration: 0.5, opacity: 1, y: 0, display: "block"});
       window.scrollTo({top: $('#portfolio-section').offset().top - 50, behavior: 'smooth'});
     }});
   };
 
-  // 4. CERRAR VISTA DETALLADA
   window.closeProject = function() {
     gsap.to("#project-single-view", {duration: 0.4, opacity: 0, display: "none", onComplete: () => {
       $('#project-video-content').empty();
