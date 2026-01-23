@@ -840,20 +840,38 @@ document.addEventListener('DOMContentLoaded', function() {
 window.openProject = function(id) {
     const p = window.portfolioItems.find(x => x.ID == id);
     if(!p) return;
-    gsap.to("#portfolio-grid-container", { duration: 0.4, y: 50, opacity: 0, display: "none", ease: "power2.in" });
-    document.getElementById('project-title').innerText = p.Titulo;
-    document.getElementById('project-desc').innerText = p.Descripcion;
-    document.getElementById('project-date').innerText = p.Fecha || "2024";
-    document.getElementById('project-client').innerText = p.Cliente || "Private Client";
-    let url = p.VideoURL;
-    let content = (url.includes('youtube.com') || url.includes('youtu.be')) 
-        ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1].split('&')[0] : url.split('/').pop()}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" frameborder="0" allowfullscreen></iframe></div>`
-        : `<video controls autoplay style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
-    document.getElementById('project-visual-content').innerHTML = content;
-    setTimeout(() => {
-        window.scrollTo({top: $('#portfolio-section').offset().top - 70, behavior: 'smooth'});
-        gsap.fromTo("#project-single-view", { opacity: 0, y: 100, display: "block" }, { duration: 0.8, opacity: 1, y: 0, ease: "power3.out" });
-    }, 450);
+
+    // 1. Primero desvanecemos el grid suavemente hacia abajo
+    gsap.to("#portfolio-grid-container", { 
+        duration: 0.5, 
+        y: 30, 
+        opacity: 0, 
+        ease: "power2.inOut",
+        onComplete: () => {
+            // 2. Solo cuando desaparece el grid, cambiamos los textos y mostramos la ficha
+            document.getElementById('portfolio-grid-container').style.display = "none";
+            
+            document.getElementById('project-title').innerText = p.Titulo;
+            document.getElementById('project-desc').innerText = p.Descripcion;
+            document.getElementById('project-date').innerText = p.Fecha || "2024";
+            document.getElementById('project-client').innerText = p.Cliente || "Private Client";
+            
+            let url = p.VideoURL;
+            let content = (url.includes('youtube.com') || url.includes('youtu.be')) 
+                ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1].split('&')[0] : url.split('/').pop()}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" frameborder="0" allowfullscreen></iframe></div>`
+                : `<video controls autoplay style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
+            
+            document.getElementById('project-visual-content').innerHTML = content;
+
+            // 3. Movemos el scroll y hacemos que la ficha aparezca con suavidad
+            window.scrollTo({top: $('#portfolio-section').offset().top - 70, behavior: 'smooth'});
+            
+            gsap.fromTo("#project-single-view", 
+                { opacity: 0, y: 60, display: "block" }, 
+                { duration: 0.8, opacity: 1, y: 0, ease: "power3.out" }
+            );
+        }
+    });
 };
 
 window.closeProject = function() {
