@@ -949,6 +949,52 @@ window.closeProject = function() {
     });
 };
 </script>
+<script>
+// --- MOTOR DEL FORMULARIO DE CONTACTO ---
+document.getElementById('contactFormMain').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const email = document.getElementById('contact-email').value.trim();
+  const phone = document.getElementById('contact-phone').value.trim();
+  
+  // VALIDACIÓN: Al menos uno de los dos debe estar lleno
+  if (!email && !phone) {
+    alert("Please provide at least an email or a phone number so I can reach you.");
+    return;
+  }
+
+  const btn = document.getElementById('contactSubmitBtn');
+  const loader = document.getElementById('contact-loader');
+  // Esta es la dirección de tu base de datos en Google
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPOKE4AQa_YioNPWNkmqt2i1aYbblJB6QWTgHmacTapkku_wG8ZG-rwnO0q7z-TmqU/exec"; 
+
+  btn.style.display = 'none';
+  loader.style.display = 'inline-block';
+
+  const data = new URLSearchParams();
+  data.append('name', document.getElementById('contact-name').value);
+  data.append('email', email);
+  data.append('phone', phone);
+  data.append('message', document.getElementById('contact-message').value);
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: data
+  })
+  .then(() => {
+    alert("Message received! We'll get back to you shortly.");
+    document.getElementById('contactFormMain').reset();
+    btn.style.display = 'inline-block';
+    loader.style.display = 'none';
+  })
+  .catch(error => {
+    alert("Something went wrong. Please try again.");
+    btn.style.display = 'inline-block';
+    loader.style.display = 'none';
+  });
+});
+</script>
   </body>
 </html>
 
