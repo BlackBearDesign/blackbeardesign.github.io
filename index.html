@@ -198,53 +198,54 @@ input:-webkit-autofill:focus {
 /* PEGA ESTO */
 /* PEGA ESTO LITERALMENTE */
 /* --- ESTILO BLACKBEAR REFINADO --- */
+/* --- ESTILO BLACKBEAR DEFINITIVO --- */
 #project-single-view {
     color: #ffffff !important;
     font-family: inherit !important;
 }
 
-/* Título: Grande pero elegante */
+/* Título equilibrado */
 #project-title {
-    font-size: clamp(30px, 4vw, 45px) !important;
+    font-size: clamp(30px, 4vw, 48px) !important;
     font-weight: 800 !important;
     letter-spacing: -1px;
     margin-bottom: 25px;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.1;
 }
 
-/* Alineación Vertical: Centra el texto con la altura del video */
+/* Centrado Vertical Real */
 .project-flex-row {
     display: flex;
-    align-items: center; 
+    align-items: center; /* Centra verticalmente */
+    min-height: 500px;  /* Altura mínima para que el centrado se note */
 }
 
-/* Metadatos: Blanco, Bold, mismo tamaño y con Fade-in */
+/* Metadatos con jerarquía (para que no se vea "plano") */
 .meta-item { 
-    margin-bottom: 35px; 
-    opacity: 0; /* Para el efecto fade-in */
+    margin-bottom: 30px; 
+    opacity: 0; 
 }
 
 .meta-header {
     display: block;
-    font-size: 13px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #ffffff !important;
+    color: #777 !important; /* Gris para dar profundidad */
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 .meta-value {
     display: block;
-    font-size: 13px;
+    font-size: 15px;
     color: #ffffff !important;
-    font-weight: 700;
+    font-weight: 700; /* Bold como pediste */
     text-transform: uppercase;
-    opacity: 0.8; /* Un toque de transparencia para que no se vea "plano" */
 }
 
-/* BOTÓN DE CIERRE: X Negra en Hover */
+/* BOTÓN DE CIERRE (X) MÁS GRANDE Y FUNCIONAL */
 .close-v1 { 
     display: inline-flex; 
     align-items: center; 
@@ -255,28 +256,28 @@ input:-webkit-autofill:focus {
 
 .close-v1 .icon-text { 
     font-size: 11px; 
-    margin-right: 15px; 
+    margin-right: 20px; 
     color: #ffffff !important; 
     text-transform: uppercase; 
     font-weight: 700; 
+    opacity: 0.8;
 }
 
 .close-circle { 
-    width: 50px; height: 50px; 
+    width: 60px; height: 60px; /* X más grande */
     border: 1px solid rgba(255,255,255,0.3); 
     border-radius: 50%; 
     display: flex; align-items: center; justify-content: center; 
-    font-size: 28px; color: #ffffff; 
-    transition: all 0.3s ease;
+    font-size: 32px; color: #ffffff; 
+    transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
     padding-bottom: 4px; 
 }
 
 .close-v1:hover .close-circle { 
     background: #ffffff !important; 
-    color: #000000 !important; /* X Negra */
+    color: #000000 !important; /* X negra sobre blanco */
+    transform: scale(1.1);
 }
-
-.close-v1:hover { transform: scale(1.05); }
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -373,7 +374,7 @@ input:-webkit-autofill:focus {
      <div class="unslate_co--section" id="portfolio-section">
   <div class="container">
     
-   <div id="project-single-view" style="display:none; opacity:0; pointer-events: auto;">
+  <div id="project-single-view" style="display:none; opacity:0; pointer-events: auto;">
   <div class="row">
     <div class="col-lg-12 text-right mb-5">
       <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
@@ -383,13 +384,13 @@ input:-webkit-autofill:focus {
     </div>
   </div>
   
-  <div class="row project-flex-row justify-content-between">
+  <div class="row project-flex-row">
     <div class="col-lg-7">
       <h2 id="project-title"></h2>
       <div id="project-visual-content"></div>
     </div>
 
-    <div class="col-lg-4">
+    <div class="col-lg-4 offset-lg-1">
       <div class="meta-item">
         <span class="meta-header">Project Description</span>
         <span id="project-desc" class="meta-value"></span>
@@ -403,17 +404,6 @@ input:-webkit-autofill:focus {
         <span id="project-client" class="meta-value"></span>
       </div>
     </div>
-  </div>
-</div>
-
-    <div id="portfolio-grid-container" class="portfolio-wrapper">
-      <div class="d-flex align-items-center mb-4">
-        <h2 class="mr-auto heading-h2">Portfolio</h2>
-      </div>
-      <div id="posts" class="row gutter-isotope-item">
-        </div>
-    </div>
-
   </div>
 </div>
 
@@ -899,11 +889,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 3. FUNCIÓN PARA ABRIR LA FICHA TÉCNICA (Diseño Modern Building)
 /* PEGA ESTO LITERALMENTE */
+// --- LÓGICA DE NAVEGACIÓN BLACKBEAR ---
+
+// 1. Función para abrir el proyecto
 window.openProject = function(id) {
     const p = window.portfolioItems.find(x => x.ID == id);
     if(!p) return;
 
-    // 1. Desvanecer el grid
+    // Desvanecemos el portafolio suavemente
     gsap.to("#portfolio-grid-container", { 
         duration: 0.4, 
         y: 20, 
@@ -912,7 +905,7 @@ window.openProject = function(id) {
         onComplete: () => {
             document.getElementById('portfolio-grid-container').style.display = "none";
             
-            // 2. Cargar datos
+            // Llenamos los datos desde tu Excel
             document.getElementById('project-title').innerText = p.Titulo;
             document.getElementById('project-desc').innerText = p.Descripcion;
             document.getElementById('project-date').innerText = p.Fecha || "2024";
@@ -925,24 +918,42 @@ window.openProject = function(id) {
             
             document.getElementById('project-visual-content').innerHTML = content;
 
-            // 3. Mostrar la ficha y animar los textos
+            // Ajustamos el scroll y mostramos la ficha
             window.scrollTo({top: $('#portfolio-section').offset().top - 70, behavior: 'smooth'});
             
             gsap.fromTo("#project-single-view", 
-                { opacity: 0, y: 40, display: "block" }, 
+                { opacity: 0, y: 30, display: "block" }, 
                 { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" }
             );
 
-            // Efecto Fade-in escalonado para los datos de la derecha
+            // Efecto de entrada escalonado para el texto (Fade-in)
             gsap.fromTo(".meta-item", 
                 { opacity: 0, x: 20 }, 
+                { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4, ease: "power2.out" }
+            );
+        }
+    });
+};
+
+// 2. Función para cerrar y volver al grid (¡Crucial para la X!)
+window.closeProject = function() {
+    gsap.to("#project-single-view", { 
+        duration: 0.5, 
+        opacity: 0, 
+        y: 30, 
+        onComplete: () => {
+            document.getElementById('project-single-view').style.display = "none";
+            document.getElementById('project-visual-content').innerHTML = ""; // Detiene el video
+            
+            document.getElementById('portfolio-grid-container').style.display = "block";
+            gsap.fromTo("#portfolio-grid-container", 
+                { opacity: 0, y: 20 }, 
                 { 
-                    duration: 0.5, 
+                    duration: 0.6, 
                     opacity: 1, 
-                    x: 0, 
-                    stagger: 0.15, // Uno tras otro
-                    delay: 0.4, 
-                    ease: "power2.out" 
+                    y: 0, 
+                    ease: "power3.out", 
+                    onComplete: () => { $('#posts').isotope('layout'); } 
                 }
             );
         }
