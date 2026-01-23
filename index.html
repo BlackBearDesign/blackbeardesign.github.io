@@ -103,6 +103,35 @@ dotlottie-player {
   display: inline-block;
   transform: rotate(90deg);
 }
+      /* --- COPIA Y PEGA ESTO AL FINAL DE TU <style> --- */
+#journal-grid .blog-item { position: relative; overflow: hidden; background: #000; }
+
+/* Gradiente negro abajo para que el texto blanco brille */
+#journal-grid .overlay {
+  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.2) 60%, transparent 100%) !important;
+  opacity: 1 !important; 
+}
+
+/* Imagen un poco más oscura para dar contraste */
+#journal-grid img {
+  filter: brightness(0.7);
+  transition: 0.3s ease-in-out;
+}
+#journal-grid .blog-item:hover img { filter: brightness(0.9); }
+
+/* Texto con sombra pesada para legibilidad total */
+#journal-grid .portfolio-item-content h3 {
+  color: #fff !important;
+  text-shadow: 2px 2px 15px rgba(0,0,0,1);
+  font-weight: 800 !important;
+  font-size: 1.5rem;
+}
+#journal-grid .post-meta {
+  color: #fff !important;
+  opacity: 0.9;
+  text-shadow: 1px 1px 5px rgba(0,0,0,1);
+  font-weight: 600;
+}
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
   </head>
@@ -545,8 +574,7 @@ dotlottie-player {
     </div>
 
     <div class="row gutter-v4 align-items-stretch" id="journal-grid">
-      <div class="col-12 text-center"><p>Cargando posts...</p></div>
-    </div>
+      </div>
   </div>
 </div>
 
@@ -554,40 +582,32 @@ dotlottie-player {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const URL_EXCEL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=0&single=true&output=csv";
-  const $grid = document.getElementById('journal-grid');
-
+  
   Papa.parse(URL_EXCEL, {
     download: true,
     header: true,
     complete: function(results) {
       let posts = results.data.filter(p => p.ID && p.Titulo);
-      
-      // 1. MEZCLAR ALEATORIAMENTE
-      posts.sort(() => Math.random() - 0.5);
+      posts.sort(() => Math.random() - 0.5); // Mezcla aleatoria
+      const seleccion = posts.slice(0, 5); // Solo agarramos 5
 
-      // 2. TOMAR SOLO LOS PRIMEROS 5
-      const selectedPosts = posts.slice(0, 5);
-
-      let htmlFinal = "";
-      selectedPosts.forEach((post, index) => {
-        // El primer post (index 0) es el grande, los demás pequeños
-        let colSize = (index === 0) ? "col-lg-8" : "col-lg-4";
-        
-        htmlFinal += `
-          <div class="col-sm-6 col-md-6 ${colSize} blog-post-entry" data-aos="fade-up" data-aos-delay="${index * 100}">
+      let html = "";
+      seleccion.forEach((post, i) => {
+        let tamaño = (i === 0) ? "col-lg-8" : "col-lg-4"; // El primero es el grande
+        html += `
+          <div class="col-sm-6 col-md-6 ${tamaño} blog-post-entry">
             <a href="blog-single.html?id=${post.ID}" class="grid-item blog-item w-100 h-100">
               <div class="overlay">
-                <div class="portfolio-item-content">
+                <div class="portfolio-item-content" style="padding: 40px 30px;">
                   <h3>${post.Titulo}</h3>
                   <p class="post-meta">By ${post.Autor} <span class="small">&bullet;</span> ${post.TiempoLectura || '5 min read'}</p>
                 </div>
               </div>
-              <img src="${post.ImagenPortada}" class="lazyload img-fluid" alt="${post.Titulo}" style="height: 100%; width: 100%; object-fit: cover;" />
+              <img src="${post.ImagenPortada}" class="lazyload img-fluid" alt="post" style="height: 100%; width: 100%; object-fit: cover;" />
             </a>
           </div>`;
       });
-
-      $grid.innerHTML = htmlFinal;
+      document.getElementById('journal-grid').innerHTML = html;
     }
   });
 });
