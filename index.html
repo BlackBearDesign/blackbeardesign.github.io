@@ -286,41 +286,39 @@ input:-webkit-autofill:focus {
       <!-- END .cover-v1 -->
 
 
-      <div class="unslate_co--section" id="portfolio-section">
+     <div class="unslate_co--section" id="portfolio-section">
   <div class="container">
     
-    <div id="project-single-view" style="display:none; opacity:0; padding-bottom: 50px;">
+    <div id="project-single-view" style="display:none; opacity:0; padding-bottom: 60px;">
       <div class="row justify-content-center">
         <div class="col-lg-12 text-right mb-4">
-          <a href="javascript:void(0)" onclick="closeProject()" class="close-v1" style="text-decoration:none;">
+          <a href="javascript:void(0)" onclick="closeProject()" class="close-v1" style="text-decoration:none; cursor:pointer;">
             <span class="icon-close2" style="font-size: 30px; color: white;">×</span>
           </a>
         </div>
         
-        <div class="col-lg-8">
-          <div id="project-video-content" class="video-container" style="background:#000; min-height:400px; display:flex; align-items:center;">
-            </div>
+        <div class="col-lg-8 mb-5 mb-lg-0">
+          <div id="project-video-content" class="video-container" style="background:#000; min-height:450px; display:flex; align-items:center; justify-content:center;">
+              </div>
         </div>
 
         <div class="col-lg-4">
-          <div class="project-details" style="padding-left: 20px;">
-            <h2 class="heading-h2" id="project-title" style="color: white; margin-bottom: 30px;"></h2>
+          <div class="project-details pl-lg-5">
+            <h2 class="heading-h2" id="project-title" style="color: white; margin-bottom: 30px; font-weight: 700;"></h2>
+            
             <div class="mb-5">
-              <h3 class="heading-h3" style="color: #888; font-size: 13px; text-transform: uppercase; letter-spacing: 2px;">Project Description</h3>
-              <p id="project-desc" style="color: #ccc; line-height: 1.6;"></p>
+              <h3 class="heading-h3" style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: .2rem; margin-bottom: 15px;">Description</h3>
+              <p id="project-desc" style="color: #ccc; line-height: 1.8;"></p>
             </div>
-            <div class="row mb-4">
-              <div class="col-sm-6">
-                <div class="project-info-item">
-                  <span class="label" style="display:block; font-size: 11px; color: #666; text-transform: uppercase;">Project Date</span>
-                  <span class="val" id="project-date" style="color: white; font-weight: bold;"></span>
-                </div>
+            
+            <div class="row">
+              <div class="col-6 mb-4">
+                <span class="label" style="display:block; color:#666; font-size:11px; text-transform:uppercase; letter-spacing:.1rem;">Date</span>
+                <strong class="val" id="project-date" style="color:white; font-weight:700;"></strong>
               </div>
-              <div class="col-sm-6">
-                <div class="project-info-item">
-                  <span class="label" style="display:block; font-size: 11px; color: #666; text-transform: uppercase;">Client</span>
-                  <span class="val" id="project-client" style="color: white; font-weight: bold;"></span>
-                </div>
+              <div class="col-6 mb-4">
+                 <span class="label" style="display:block; color:#666; font-size:11px; text-transform:uppercase; letter-spacing:.1rem;">Client</span>
+                <strong class="val" id="project-client" style="color:white; font-weight:700;"></strong>
               </div>
             </div>
           </div>
@@ -329,17 +327,20 @@ input:-webkit-autofill:focus {
     </div>
 
     <div id="portfolio-grid-container" class="portfolio-wrapper">
-      <div class="d-flex align-items-center mb-4 gsap-reveal gsap-reveal-filter">
-        <h2 class="mr-auto heading-h2"><span class="gsap-reveal">Portfolio</span></h2>
+      <div class="section-heading-wrap text-center mb-5">
+        <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Portfolio</span></h2>
+        <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
       </div>
 
       <div id="posts" class="row gutter-isotope-item">
-        <div class="col-12 text-center"><p style="color: white;">Loading projects...</p></div>
+         <div class="col-12 text-center text-white">Loading projects...</div>
       </div>
 
-      <div class="row mt-5">
+      <div class="row mt-5 pt-5" style="border-top: 1px solid rgba(255,255,255,0.1);">
         <div class="col-12 text-center">
-          <a href="categories.html" class="btn btn-outline-pill btn-custom-light" style="padding: 15px 40px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; border-width: 2px;">Video Categories</a>
+          <a href="categories.html" class="btn btn-outline-pill btn-custom-light" style="padding: 15px 40px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; border-width: 2px;">
+            Video Categories
+          </a>
         </div>
       </div>
     </div>
@@ -813,39 +814,55 @@ document.getElementById('contactFormMain').addEventListener('submit', function(e
   });
 });
 </script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const EXCEL_PORTFOLIO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
-  let allPortfolioItems = [];
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 
-  // 1. CARGA DESDE EXCEL
-  Papa.parse(EXCEL_PORTFOLIO, {
+<script>
+// --- CONFIGURACIÓN ---
+const EXCEL_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
+let portfolioData = [];
+let $gridContainer = $('#posts');
+let isotopeInstance;
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // 1. INICIAR CARGA DE DATOS
+  Papa.parse(EXCEL_URL, {
     download: true,
     header: true,
+    skipEmptyLines: true,
     complete: function(results) {
-      allPortfolioItems = results.data.filter(p => p.ID && p.VideoURL);
-      initPortfolioGrid(allPortfolioItems);
+      // Filtrar filas válidas
+      portfolioData = results.data.filter(p => p.ID && p.VideoURL && p.ThumbnailURL);
+      renderAndInitIsotope(portfolioData);
+    },
+    error: function(err) {
+        console.error("Error loading Excel:", err);
+        $gridContainer.html('<div class="col-12 text-center text-danger">Error loading portfolio.</div>');
     }
   });
+});
 
-  // 2. RENDER Y MEZCLA ALEATORIA
-  function initPortfolioGrid(data) {
-    const $grid = $('#posts');
-    const shuffled = data.sort(() => Math.random() - 0.5); // Mezcla aleatoria
+// 2. FUNCIÓN CORE: RENDERIZAR HTML Y ACTIVAR ISOTOPE
+function renderAndInitIsotope(data) {
+    // Mezcla aleatoria
+    const shuffled = data.sort(() => Math.random() - 0.5);
     
-    let html = "";
+    let htmlItems = "";
     shuffled.forEach((item, index) => {
-      // Mantenemos la lógica de distribución original (portrait en ciertos items)
-      const portraitClass = (index % 3 === 1) ? "item-portrait" : "";
-      
-      html += `
-        <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${portraitClass}">
-          <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item isotope-item gsap-reveal-img">
+        // IMPORTANTE: Para simular la distribución original, asignamos aleatoriamente
+        // la clase 'item-portrait' a aproximadamente el 30% de los items.
+        // Esto crea la variación de alturas que buscas.
+        const isPortrait = Math.random() < 0.3; 
+        const portraitClass = isPortrait ? "item-portrait" : "";
+        
+        htmlItems += `
+        <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${portraitClass} gsap-reveal-img" data-aos="fade-up" data-aos-delay="${index*50}">
+          <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item isotope-item">
             <div class="overlay">
               <span class="wrap-icon icon-play_circle_filled"></span>
               <div class="portfolio-item-content">
                 <h3>${item.Titulo}</h3>
-                <p>${item.Category}</p>
+                <p style="opacity:0.7;">${item.Category}</p>
               </div>
             </div>
             <img src="${item.ThumbnailURL}" class="lazyload img-fluid" alt="${item.Titulo}" style="width:100%; height:100%; object-fit:cover;">
@@ -853,54 +870,111 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>`;
     });
 
-    // Inyectar y refrescar Isotope
-    $grid.html(html);
-    $grid.isotope('reloadItems').isotope();
-    
-    // Ejecutar animaciones de entrada originales
-    if(window.AOS) AOS.refresh();
-  }
+    // Inyectar el HTML construido
+    $gridContainer.html(htmlItems);
 
-  // 3. LÓGICA DE SELECCIÓN (Efecto Fade Out/Fade In)
-  window.openProject = function(id) {
-    const project = allPortfolioItems.find(p => p.ID == id);
+    // --- LA CLAVE: ESPERAR IMÁGENES Y LUEGO ISOTOPE ---
+    // Usamos imagesLoaded (librería de tu plantilla) para asegurar que Isotope
+    // calcule el layout solo cuando las imágenes del Excel ya tienen tamaño.
+    $gridContainer.imagesLoaded().progress( function() {
+        // Si ya existe una instancia, la destruimos para evitar conflictos
+        if (isotopeInstance) {
+            $gridContainer.isotope('destroy');
+        }
+        // Inicializamos Isotope con modo 'masonry' para el look de mosaico irregular
+        isotopeInstance = $gridContainer.isotope({
+            itemSelector: '.item',
+            layoutMode: 'masonry',
+            masonry: {
+                columnWidth: '.col-lg-4' // Usa la columna base de Bootstrap para calcular
+            }
+        });
+        // Refrescar animaciones AOS si existen
+        if(window.AOS) AOS.refresh();
+         // Refrescar animaciones GSAP ScrollTrigger si existen
+        if(window.ScrollTrigger) ScrollTrigger.refresh();
+    });
+}
+
+// 3. LÓGICA DE CLIC: FADE OUT GRID -> FADE IN FICHA
+window.openProject = function(id) {
+    const project = portfolioData.find(p => p.ID == id);
     if(!project) return;
 
-    // Fade Out de la cuadrícula
-    gsap.to("#portfolio-grid-container", {duration: 0.5, opacity: 0, display: "none", onComplete: () => {
-      // Llenar datos en la ficha técnica
-      document.getElementById('project-title').innerText = project.Titulo;
-      document.getElementById('project-desc').innerText = project.Descripcion;
-      document.getElementById('project-date').innerText = project.Fecha;
-      document.getElementById('project-client').innerText = project.Cliente;
+    // A. Animación de SALIDA de la cuadrícula (Fade Out y Slide Up)
+    gsap.to("#portfolio-grid-container", {
+        duration: 0.5, 
+        opacity: 0, 
+        y: -50, // Efecto de subir mientras desaparece
+        ease: "power2.in",
+        onComplete: () => {
+            document.getElementById('portfolio-grid-container').style.display = "none";
+            loadProjectData(project);
+        }
+    });
+};
 
-      // Inyectar Video (YouTube o MP4)
-      let videoHtml = "";
-      if(project.VideoURL.includes('youtube.com') || project.VideoURL.includes('youtu.be')) {
-        const videoId = project.VideoURL.split('v=')[1] || project.VideoURL.split('/').pop();
-        videoHtml = `<iframe width="100%" height="450" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
-      } else {
-        videoHtml = `<video controls autoplay style="width:100%;"><source src="${project.VideoURL}" type="video/mp4"></video>`;
-      }
-      document.getElementById('project-video-content').innerHTML = videoHtml;
+function loadProjectData(project) {
+    // Llenar textos
+    document.getElementById('project-title').innerText = project.Titulo;
+    document.getElementById('project-desc').innerText = project.Descripcion;
+    document.getElementById('project-date').innerText = project.Fecha;
+    document.getElementById('project-client').innerText = project.Cliente;
 
-      // Fade In de la ficha técnica
-      gsap.to("#project-single-view", {duration: 0.5, opacity: 1, display: "block"});
-      window.scrollTo({top: document.getElementById('portfolio-section').offsetTop - 50, behavior: 'smooth'});
-    }});
-  };
+    // Determinar tipo de video e inyectar reproductor
+    const vUrl = project.VideoURL;
+    let embedHtml = "";
+    if(vUrl.includes('youtube.com') || vUrl.includes('youtu.be')) {
+        const vId = vUrl.split('v=')[1] || vUrl.split('/').pop();
+        embedHtml = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${vId}?autoplay=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="position:absolute; top:0; left:0;"></iframe>`;
+    } else if (vUrl.includes('vimeo.com')) {
+         const vId = vUrl.split('/').pop();
+          embedHtml = `<iframe src="https://player.vimeo.com/video/${vId}?autoplay=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="position:absolute; top:0; left:0;"></iframe>`;
+    }
+    else {
+        // MP4 directo
+        embedHtml = `<video controls autoplay loop style="width:100%; height:100%; object-fit:contain;"><source src="${vUrl}" type="video/mp4"></video>`;
+    }
+    // Contenedor con ratio 16:9
+    document.getElementById('project-video-content').innerHTML = `<div style="position:relative; padding-bottom:56.25%; height:0; width:100%;">${embedHtml}</div>`;
 
-  // 4. BOTÓN DE CERRAR
-  window.closeProject = function() {
-    gsap.to("#project-single-view", {duration: 0.5, opacity: 0, display: "none", onComplete: () => {
-      document.getElementById('project-video-content').innerHTML = ""; // Detener video
-      // Fade In de la cuadrícula
-      gsap.to("#portfolio-grid-container", {duration: 0.5, opacity: 1, display: "block"});
-      $('#posts').isotope('layout');
-    }});
-  };
-});
-</script>    
+    // B. Animación de ENTRADA de la ficha (Fade In y Slide Up)
+    const $singleView = document.getElementById('project-single-view');
+    $singleView.style.display = "block";
+    gsap.fromTo($singleView, 
+        { opacity: 0, y: 50 }, 
+        { duration: 0.6, opacity: 1, y: 0, ease: "power2.out", delay: 0.1 }
+    );
+    
+    // Scroll suave hacia el inicio de la sección
+    gsap.to(window, {duration: 0.8, scrollTo: {y: "#portfolio-section", offsetY: 60}});
+}
+
+// 4. LÓGICA DE CERRAR: FADE OUT FICHA -> FADE IN GRID
+window.closeProject = function() {
+     // A. Animación de SALIDA de la ficha
+    gsap.to("#project-single-view", {
+        duration: 0.4,
+        opacity: 0,
+        y: 30,
+        ease: "power2.in",
+        onComplete: () => {
+            document.getElementById('project-single-view').style.display = "none";
+            document.getElementById('project-video-content').innerHTML = ""; // Detener video
+
+            // B. Animación de ENTRADA de la cuadrícula
+            const $grid = document.getElementById('portfolio-grid-container');
+            $grid.style.display = "block";
+            gsap.fromTo($grid,
+                { opacity: 0, y: -30 },
+                { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }
+            );
+            // IMPORTANTE: Recalcular Isotope por si el layout se movió al ocultarlo
+             $gridContainer.isotope('layout');
+        }
+    });
+};
+</script>  
   </body>
 </html>
 
