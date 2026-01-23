@@ -195,6 +195,27 @@ input:-webkit-autofill:focus {
   color: #ffffff !important;
   font-weight: 600;
 } 
+/* Alturas fijas para que los moldes del Index funcionen con cualquier imagen */
+#posts .item {
+    height: 300px; /* Altura base para cuadros normales */
+    margin-bottom: 20px;
+}
+
+#posts .item.item-portrait {
+    height: 620px; /* El doble aprox para los moldes altos (2, 5 y 7) */
+}
+
+#posts .portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Evita que la imagen se deforme */
+}
+
+/* Botón de categorías estilo Zona Verde */
+.btn-category-container {
+    padding: 40px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}      
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
   </head>
@@ -286,23 +307,23 @@ input:-webkit-autofill:focus {
       <!-- END .cover-v1 -->
 
 
-      <div class="unslate_co--section" id="portfolio-section">
+<div class="unslate_co--section" id="portfolio-section">
   <div class="container">
     
-    <div id="project-single-view" style="display:none; opacity:0; padding-bottom: 50px;">
+    <div id="project-single-view" style="display:none; opacity:0; padding-bottom: 60px;">
       <div class="row justify-content-center">
         <div class="col-lg-12 text-right mb-4">
           <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
             <span class="icon-close2" style="font-size: 30px; color: white;">×</span>
           </a>
         </div>
-        <div class="col-lg-8" id="project-video-content"></div>
+        <div class="col-lg-8" id="project-video-content" style="min-height: 450px; background: #000;"></div>
         <div class="col-lg-4">
-          <div class="project-details">
-            <h2 class="heading-h2" id="project-title" style="color: white;"></h2>
+          <div class="project-details pl-lg-4">
+            <h2 class="heading-h2" id="project-title" style="color: white; font-weight: 700; margin-bottom: 20px;"></h2>
             <div class="mb-5">
-              <h3 class="heading-h3" style="color: #888; font-size: 13px; text-transform: uppercase;">Project Description</h3>
-              <p id="project-desc" style="color: #ccc;"></p>
+              <h3 class="heading-h3" style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 2px;">Description</h3>
+              <p id="project-desc" style="color: #ccc; line-height: 1.8;"></p>
             </div>
             <div class="row">
               <div class="col-6">
@@ -320,16 +341,18 @@ input:-webkit-autofill:focus {
     </div>
 
     <div id="portfolio-grid-container" class="portfolio-wrapper">
-      <div class="d-flex align-items-center mb-4 gsap-reveal gsap-reveal-filter">
-        <h2 class="mr-auto heading-h2"><span class="gsap-reveal">Portfolio</span></h2>
+      <div class="section-heading-wrap text-center mb-5">
+        <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Portfolio</span></h2>
       </div>
 
       <div id="posts" class="row gutter-isotope-item">
         </div>
 
-      <div class="row mt-5">
+      <div class="row btn-category-container">
         <div class="col-12 text-center">
-          <a href="categories.html" class="btn btn-outline-pill btn-custom-light" style="padding: 15px 40px; text-transform: uppercase; font-weight: bold;">Video Categories</a>
+          <a href="categories.html" class="btn btn-outline-pill btn-custom-light" style="padding: 15px 45px; text-transform: uppercase; font-weight: bold; letter-spacing: 2px;">
+            Video Categories
+          </a>
         </div>
       </div>
     </div>
@@ -802,45 +825,33 @@ document.getElementById('contactFormMain').addEventListener('submit', function(e
   });
 });
 </script>
-    <script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
-  const EXCEL_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4_9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
-  let allData = [];
+  const EXCEL_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
+  let portfolioItems = [];
 
+  // 1. CARGA Y FILTRADO
   Papa.parse(EXCEL_URL, {
     download: true,
     header: true,
     complete: function(results) {
-      allData = results.data.filter(p => p.ID && p.VideoURL);
-      renderGrid(allData);
+      portfolioItems = results.data.filter(p => p.ID && p.VideoURL);
+      renderPortfolio(portfolioItems);
     }
   });
 
-  function renderGrid(data) {
-    const $posts = $('#posts');
-    const shuffled = data.sort(() => Math.random() - 0.5);
+  function renderPortfolio(data) {
+    const $grid = $('#posts');
+    const shuffled = data.sort(() => Math.random() - 0.5).slice(0, 9);
 
-    // Definimos el "molde" exacto de las 9 posiciones de tu imagen
-    // La clase 'item-portrait' es la que hace el cuadro alto
-    const layoutConfig = [
-      { class: "" },                // 1. Normal
-      { class: "item-portrait" },   // 2. ALTO
-      { class: "" },                // 3. Normal
-      { class: "" },                // 4. Normal
-      { class: "item-portrait" },   // 5. ALTO (Central)
-      { class: "" },                // 6. Normal
-      { class: "item-portrait" },   // 7. ALTO
-      { class: "" },                // 8. Normal
-      { class: "" }                 // 9. Normal
-    ];
+    // MOLDES ORIGINALES: 2, 5 y 7 son ALTOS (item-portrait)
+    const moldes = ["", "item-portrait", "", "", "item-portrait", "", "item-portrait", "", ""];
 
     let html = "";
-    // Solo tomamos 9 para no romper el diseño original
-    shuffled.slice(0, 9).forEach((item, i) => {
-      const config = layoutConfig[i];
+    shuffled.forEach((item, i) => {
       html += `
-        <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${config.class}">
-          <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item isotope-item gsap-reveal-img">
+        <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${moldes[i]} gsap-reveal-img">
+          <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item isotope-item">
             <div class="overlay">
               <span class="wrap-icon icon-play_circle_filled"></span>
               <div class="portfolio-item-content">
@@ -848,35 +859,46 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p>${item.Category}</p>
               </div>
             </div>
-            <img src="${item.ThumbnailURL}" class="lazyload img-fluid" alt="${item.Titulo}" 
-                 style="width:100%; height:100%; object-fit:cover;">
+            <img src="${item.ThumbnailURL}" class="lazyload img-fluid" alt="${item.Titulo}">
           </a>
         </div>`;
     });
 
-    $posts.html(html);
-    
-    // Reiniciamos Isotope para que calcule las formas correctamente
-    $posts.imagesLoaded().progress( function() {
-      $posts.isotope('reloadItems').isotope();
+    $grid.html(html);
+
+    // REINICIAR ISOTOPE CUANDO LAS IMÁGENES ESTÉN LISTAS
+    $grid.imagesLoaded().progress(function() {
+      $grid.isotope('reloadItems').isotope({
+        itemSelector: '.item',
+        layoutMode: 'masonry'
+      });
     });
   }
 
-  // LOGICA DE CLICK (Efecto Modern Building)
+  // 2. LÓGICA DE VIDEO (Extractor Inteligente)
   window.openProject = function(id) {
-    const p = allData.find(x => x.ID == id);
+    const p = portfolioItems.find(x => x.ID == id);
+    if(!p) return;
+
     gsap.to("#portfolio-grid-container", {duration: 0.5, opacity: 0, display: "none", onComplete: () => {
       document.getElementById('project-title').innerText = p.Titulo;
       document.getElementById('project-desc').innerText = p.Descripcion;
       document.getElementById('project-date').innerText = p.Fecha;
       document.getElementById('project-client').innerText = p.Cliente;
+
+      let videoUrl = p.VideoURL;
+      let embed = "";
       
-      let videoEmbed = p.VideoURL.includes('youtube') ? 
-        `<iframe width="100%" height="450" src="https://www.youtube.com/embed/${p.VideoURL.split('v=')[1]}?autoplay=1" frameborder="0" allowfullscreen></iframe>` :
-        `<video controls autoplay style="width:100%;"><source src="${p.VideoURL}" type="video/mp4"></video>`;
-      
-      document.getElementById('project-video-content').innerHTML = videoEmbed;
+      if(videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+        let vId = videoUrl.includes('v=') ? videoUrl.split('v=')[1].split('&')[0] : videoUrl.split('/').pop();
+        embed = `<iframe width="100%" height="450" src="https://www.youtube.com/embed/${vId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+      } else {
+        embed = `<video controls autoplay style="width:100%; max-height:450px;"><source src="${videoUrl}" type="video/mp4"></video>`;
+      }
+
+      document.getElementById('project-video-content').innerHTML = embed;
       gsap.to("#project-single-view", {duration: 0.5, opacity: 1, display: "block"});
+      window.scrollTo({top: $('#portfolio-section').offset().top - 50, behavior: 'smooth'});
     }});
   };
 
