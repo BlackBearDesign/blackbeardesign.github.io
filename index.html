@@ -162,6 +162,34 @@ dotlottie-player {
 #journal-grid .blog-item:hover .post-meta {
   transform: translateY(-5px);
 }
+      /* --- CORRECCIÓN DE COLORES Y LÍNEAS EN FORMULARIO --- */
+.form-control {
+  color: #ffffff !important; /* Texto siempre blanco */
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.2) !important;
+  border-radius: 0 !important;
+  padding-left: 0 !important;
+}
+
+.form-control:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid #ffffff !important;
+}
+
+/* Evita que el navegador ponga el texto gris al autocompletar */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+#contact-section label {
+  color: #ffffff !important;
+  font-weight: 600;
+}
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
   </head>
@@ -654,58 +682,59 @@ document.addEventListener('DOMContentLoaded', function() {
       <!-- END blog posts -->
 
 
-      <div class="unslate_co--section" id="contact-section">
-        <div class="container">
-          <div class="section-heading-wrap text-center mb-5">
-            <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Get In Touch</span></h2>
-            <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
+     <div class="unslate_co--section" id="contact-section">
+  <div class="container">
+    <div class="section-heading-wrap text-center mb-5">
+      <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Get In Touch</span></h2>
+      <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
+    </div>
+
+    <div class="row justify-content-between">
+      <div class="col-md-7">
+        <form method="post" id="contactFormMain">
+          <div class="form-group row mb-0">
+            <div class="col-lg-12 form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" id="contact-name" required>
+            </div>
+            <div class="col-lg-6 form-group">
+              <label>Email (Optional*)</label>
+              <input type="email" class="form-control" id="contact-email">
+            </div>
+            <div class="col-lg-6 form-group">
+              <label>Phone (Optional*)</label>
+              <input type="text" class="form-control" id="contact-phone">
+            </div>
+            <div class="col-lg-12 form-group">
+              <label>Write your message...</label>
+              <textarea id="contact-message" cols="30" rows="7" class="form-control" required></textarea>
+            </div>
           </div>
-
-
-          <div class="row justify-content-between">
-            
-          <div class="col-md-6">
-  <form method="post" id="contactFormMain">
-    <div class="form-group row mb-0">
-      <div class="col-lg-6 form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="contact-name" required>
+          <p style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 20px;">* Please provide at least an email or a phone number so I can contact you.</p>
+          <div class="form-group row">
+            <div class="col-md-12 d-flex align-items-center">
+              <input type="submit" class="btn btn-outline-pill btn-custom-light mr-3" value="Send Message" id="contactSubmitBtn">
+              <span id="contact-loader" style="display:none; color: white;">🚀 Sending...</span>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="col-lg-6 form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="contact-email" required>
-      </div>
-      <div class="col-lg-12 form-group">
-        <label for="message">Write your message...</label>
-        <textarea id="contact-message" cols="30" rows="7" class="form-control" required></textarea>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-md-12 d-flex align-items-center">
-        <input type="submit" class="btn btn-outline-pill btn-custom-light mr-3" value="Send Message" id="contactSubmitBtn">
-        <span id="contact-loader" style="display:none; color: white;">🚀 Sending...</span>
-      </div>
-    </div>
-  </form>
-</div>
 
-            <div class="col-md-4">
-  <div class="contact-info-v1">
-    <div class="gsap-reveal d-block">
-      <span class="d-block contact-info-label">Email</span>
-      <a href="mailto:maximolairdesign@gmail.com" class="contact-info-val">maximolairdesign@gmail.com</a>
-    </div>
-    <div class="gsap-reveal d-block">
-      <span class="d-block contact-info-label">Phone</span>
-      <a href="tel:+522211319056" class="contact-info-val">+52 2211319056</a>
-    </div>
-  </div>
-</div>
-
+      <div class="col-md-4">
+        <div class="contact-info-v1">
+          <div class="gsap-reveal d-block mb-4">
+            <span class="d-block contact-info-label">Email</span>
+            <a href="mailto:maximolairdesign@gmail.com" class="contact-info-val">maximolairdesign@gmail.com</a>
+          </div>
+          <div class="gsap-reveal d-block">
+            <span class="d-block contact-info-label">Phone</span>
+            <a href="tel:+522211319056" class="contact-info-val">+52 2211319056</a>
           </div>
         </div>
       </div>
-      </div> <!-- END .unslate_co-site-inner -->
+    </div>
+  </div>
+</div>
 
       <footer class="unslate_co--footer unslate_co--section">
         <div class="container">
@@ -824,20 +853,31 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-    <script>
+   <script>
 document.getElementById('contactFormMain').addEventListener('submit', function(e) {
   e.preventDefault();
   
+  const email = document.getElementById('contact-email').value.trim();
+  const phone = document.getElementById('contact-phone').value.trim();
+  
+  // VALIDACIÓN: Si ambos están vacíos, no deja enviar
+  if (!email && !phone) {
+    alert("Please provide at least an email or a phone number so I can reach you.");
+    return;
+  }
+
   const btn = document.getElementById('contactSubmitBtn');
   const loader = document.getElementById('contact-loader');
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzgZRd18dtb5DedW2hOeDpOiN48W1XvHqK5VXBbFLeMWyVWnIyopduyALrn68GVmkwo/exec"; 
+  // TU NUEVO LINK ACTUALIZADO
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPOKE4AQa_YioNPWNkmqt2i1aYbblJB6QWTgHmacTapkku_wG8ZG-rwnO0q7z-TmqU/exec"; 
 
   btn.style.display = 'none';
   loader.style.display = 'inline-block';
 
   const data = new URLSearchParams();
   data.append('name', document.getElementById('contact-name').value);
-  data.append('email', document.getElementById('contact-email').value);
+  data.append('email', email);
+  data.append('phone', phone);
   data.append('message', document.getElementById('contact-message').value);
 
   fetch(SCRIPT_URL, {
@@ -846,7 +886,6 @@ document.getElementById('contactFormMain').addEventListener('submit', function(e
     body: data
   })
   .then(() => {
-    // MENSAJE DE ÉXITO ORIGINAL EN INGLÉS
     alert("Message received! We'll get back to you shortly.");
     document.getElementById('contactFormMain').reset();
     btn.style.display = 'inline-block';
