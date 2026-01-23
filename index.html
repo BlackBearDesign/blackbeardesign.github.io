@@ -197,6 +197,7 @@ input:-webkit-autofill:focus {
 } 
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   </head>
   <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
 
@@ -286,160 +287,59 @@ input:-webkit-autofill:focus {
       <!-- END .cover-v1 -->
 
 
-      <div class="unslate_co--section" id="portfolio-section">
-        <div class="container">
-          
-          
-          <div class="relative"><div class="loader-portfolio-wrap"><div class="loader-portfolio"></div></div> </div>
-          <div id="portfolio-single-holder"></div>
-
-          <div class="portfolio-wrapper">
-
-            <div class="d-flex align-items-center mb-4 gsap-reveal gsap-reveal-filter">
-              <h2 class="mr-auto heading-h2"><span class="gsap-reveal">Portfolio</span></h2>
-
-              <!-- <a href="#" class="text-white js-filter d-inline-block d-lg-none">Filter</a>
-              
-              <div class="filter-wrap">
-                <div class="filter ml-auto" id="filters">
-                  <a href="#" class="active" data-filter="*">All</a>
-                  <a href="#" data-filter=".web">Web</a>
-                  <a href="#" data-filter=".branding">Branding</a>
-                  <a href="#" data-filter=".illustration">Illustration</a>
-                  <a href="#" data-filter=".packaging">Packaging</a>
-                </div>
-              </div> -->
-            </div>
-
-
-            
-            <div id="posts" class="row gutter-isotope-item">
-              <div class="item web branding col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
-                <a href="portfolio-single-1.html" class="portfolio-item ajax-load-page isotope-item gsap-reveal-img" data-id="1">
-                    <div class="overlay">
-                      <span class="wrap-icon icon-link2"></span>
-                      <div class="portfolio-item-content">
-                        <h3>Shoe Rebranding</h3>
-                        <p>web, branding</p>
-                      </div>
-                    </div>
-                    <img src="images/work_1_md.jpg" class="lazyload  img-fluid" alt="Images" />
-                  </a>
-              </div>
-              <div class="item branding packaging illustration col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ">
-                <a href="portfolio-single-3.html" class="portfolio-item ajax-load-page item-portrait isotope-item gsap-reveal-img" data-id="3">
-                    <div class="overlay">
-                      <span class="wrap-icon icon-link2"></span>
-                      <div class="portfolio-item-content">
-                        <h3>Reworking</h3>
-                        <p>branding, packaging, illustration</p>
-                      </div>
-                    </div>
-                    <img src="images/work_2_md.jpg" class="lazyload  img-fluid" alt="Images" />
-                  </a>
-              </div>
-
-              <div class="item branding packaging col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
-                <a href="portfolio-single-4.html" class="portfolio-item isotope-item gsap-reveal-img ajax-load-page" data-id="4">
-                    <div class="overlay">
-                      <span class="wrap-icon icon-link2"></span>
-                      <div class="portfolio-item-content">
-                        <h3>Modern Building</h3>
-                        <p>branding, packaging</p>
-                      </div>
-                    </div>
-                    <img src="images/work_3_md.jpg" class="lazyload  img-fluid" alt="Images" />
-                  </a>
-              </div>
-
-              <div class="item web packaging col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
-
-                <a href="images/work_4_full.jpg" class="portfolio-item isotope-item gsap-reveal-img" data-fancybox="gallery" data-caption="Watch">
-                    <div class="overlay">
-                      <span class="wrap-icon icon-photo2"></span>
-                      <div class="portfolio-item-content">
-                        <h3>Watch</h3>
-                        <p>web, packaging</p>
-                      </div>
-                    </div>
-                    <img src="images/work_4_full.jpg" class="lazyload  img-fluid" alt="Images" />
-                  </a>
-
-              </div>
-
-              <div class="item illustration packaging col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
-                <a href="images/work_5_md.jpg" class="portfolio-item isotope-item gsap-reveal-img" data-fancybox="gallery" data-caption="Shoe Rebranding">
-                    <div class="overlay">
-                      <span class="wrap-icon icon-photo2"></span>
-                      <div class="portfolio-item-content">
-                        <h3>Shoe Rebranding</h3>
-                        <p>illustration, packaging</p>
-                      </div>
-                    </div>
-                    <img src="images/work_5_md.jpg" class="lazyload  img-fluid" alt="Images" />
-                  </a>
-              </div>
-
-              <div class="item web branding col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
-                <a href="portfolio-single-2.html" class="portfolio-item ajax-load-page item-portrait isotope-item gsap-reveal-img" data-id="2">
-                    <div class="overlay">
-                      <span class="wrap-icon icon-link2"></span>
-                      <div class="portfolio-item-content">
-                        <h3>Reshape</h3>
-                        <p>web, branding</p>
-                      </div>
-                    </div>
-                    <img src="images/work_6_md.jpg" class="lazyload  img-fluid" alt="Images" />
-                  </a>
-              </div>
-
-              <div class="item branding packaging col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
-                <a href="images/work_7_a_md.jpg" class="portfolio-item item-portrait isotope-item gsap-reveal-img " data-fancybox="gallery" data-caption="Modern Building">
-                    <div class="overlay">
-                      <span class="wrap-icon icon-photo2"></span>
-                      <div class="portfolio-item-content">
-                        <h3>Modern Building</h3>
-                        <p>branding, packaging</p>
-                      </div>
-                    </div>
-                    <img src="images/work_7_a_md.jpg" class="lazyload  img-fluid" alt="Images" />
-                  </a>
-              </div>
-
-              <div class="item web branding col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
-                <a href="https://www.youtube.com/watch?v=mwtbEGNABWU" class="portfolio-item isotope-item gsap-reveal-img" data-fancybox="gallery" data-caption="Showreel 2019">
-                    <div class="overlay">
-                      <span class="wrap-icon icon-play_circle_filled"></span>
-                      <div class="portfolio-item-content">
-                        <h3>Showreel 2019</h3>
-                        <p>web, branding</p>
-                      </div>
-                    </div>
-                    <img src="images/work_8_md.jpg" class="lazyload  img-fluid" alt="Images" />
-                  </a>
-              </div>
-
-              <div class="item web illustration col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
-                <a href="images/work_9_a_md.jpg" class="portfolio-item isotope-item gsap-reveal-img" data-fancybox="gallery" data-caption="Render Packaging">
-                    <div class="overlay">
-                      <span class="wrap-icon icon-photo2"></span>
-                      <div class="portfolio-item-content">
-                        <h3>Render Packaging</h3>
-                        <p>web, illustration</p>
-                      </div>
-                    </div>
-                    <img src="images/work_9_a_md.jpg" class="lazyload  img-fluid" alt="Images" />
-                  </a>
-              </div>
-
-            </div>
-            
-          </div>
-
-
+     <div class="unslate_co--section" id="portfolio-section">
+  <div class="container">
+    
+    <div id="project-single-view" style="display:none; opacity:0; padding-bottom: 60px;">
+      <div class="row justify-content-between">
+        
+        <div class="col-lg-12 text-right mb-5">
+          <a href="javascript:void(0)" onclick="closeProject()" class="close-v1" style="color: white; text-decoration: none; display: inline-block;">
+            <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-right: 15px; opacity: 0.6;">Back to Portfolio</span>
+            <span style="font-size: 30px; line-height: 1; vertical-align: middle; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center;">×</span>
+          </a>
         </div>
-      </div>
+        
+        <div class="col-lg-7">
+          <h2 id="project-title" style="color: white; font-weight: 700; font-size: 55px; margin-bottom: 40px; letter-spacing: -1px;"></h2>
+          <div id="project-visual-content" style="background: #000; border-radius: 4px; overflow: hidden;">
+            </div>
+        </div>
 
+        <div class="col-lg-4 pt-lg-5">
+          <div class="project-details" style="margin-top: 60px;">
+            <div class="mb-5">
+              <h3 style="color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 15px;">Project Description</h3>
+              <p id="project-desc" style="color: #999; line-height: 1.8; font-size: 15px;"></p>
+            </div>
+
+            <div class="row">
+              <div class="col-12 mb-4">
+                <span style="display:block; color:#444; font-size:10px; text-transform:uppercase; font-weight: 700; letter-spacing: 1px;">Project Date</span>
+                <strong id="project-date" style="color:white; font-weight: 400; font-size: 16px;"></strong>
+              </div>
+              <div class="col-12">
+                <span style="display:block; color:#444; font-size:10px; text-transform:uppercase; font-weight: 700; letter-spacing: 1px;">Client</span>
+                <strong id="project-client" style="color:white; font-weight: 400; font-size: 16px;"></strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="portfolio-grid-container" class="portfolio-wrapper">
+      <div class="d-flex align-items-center mb-4">
+        <h2 class="mr-auto heading-h2">Portfolio</h2>
+      </div>
+      <div id="posts" class="row gutter-isotope-item">
+        <div class="col-12 text-center"><p style="color: white;">Loading projects...</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
       <div class="unslate_co--section">
         <div class="container">
@@ -905,6 +805,52 @@ document.getElementById('contactFormMain').addEventListener('submit', function(e
     loader.style.display = 'none';
   });
 });
+</script>
+<script>
+window.openProject = function(id) {
+    const p = portfolioItems.find(x => x.ID == id);
+    if(!p) return;
+
+    // 1. Animación de salida de la cuadrícula
+    gsap.to("#portfolio-grid-container", { duration: 0.5, y: 20, opacity: 0, display: "none", ease: "power2.inOut", onComplete: () => {
+        
+        // 2. Insertar los datos del Excel
+        document.getElementById('project-title').innerText = p.Titulo;
+        document.getElementById('project-desc').innerText = p.Descripcion;
+        document.getElementById('project-date').innerText = p.Fecha || "January 2024";
+        document.getElementById('project-client').innerText = p.Cliente || "Private Client";
+
+        // 3. Detectar si es YouTube o Video directo
+        let url = p.VideoURL;
+        let content = "";
+        if(url.includes('youtube.com') || url.includes('youtu.be')) {
+            let vId = url.includes('v=') ? url.split('v=')[1].split('&')[0] : url.split('/').pop();
+            content = `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${vId}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe></div>`;
+        } else {
+            content = `<video controls autoplay style="width:100%; display:block;"><source src="${url}" type="video/mp4"></video>`;
+        }
+        document.getElementById('project-visual-content').innerHTML = content;
+
+        // 4. Animación de entrada de la Ficha Técnica (Efecto Index 15)
+        window.scrollTo({top: $('#portfolio-section').offset().top - 80, behavior: 'smooth'});
+        gsap.fromTo("#project-single-view", 
+            { opacity: 0, y: 30 }, 
+            { duration: 0.8, opacity: 1, y: 0, display: "block", ease: "power3.out" }
+        );
+    }});
+};
+
+window.closeProject = function() {
+    // Animación de regreso
+    gsap.to("#project-single-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
+        document.getElementById('project-visual-content').innerHTML = ""; // Apaga el video
+        gsap.fromTo("#portfolio-grid-container", 
+            { opacity: 0, y: 30 }, 
+            { duration: 0.6, opacity: 1, y: 0, display: "block", ease: "power3.out" }
+        );
+        $('#posts').isotope('layout'); // Reajusta los cuadros
+    }});
+};
 </script>
   </body>
 </html>
