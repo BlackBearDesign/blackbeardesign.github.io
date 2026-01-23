@@ -854,18 +854,22 @@ document.getElementById('contactFormMain').addEventListener('submit', function(e
   });
 });
 </script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
   const EXCEL_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
   let portfolioData = [];
 
+  // 1. CARGAR DATOS DE EXCEL
   Papa.parse(EXCEL_URL, {
-    download: true, header: true,
+    download: true, 
+    header: true,
     complete: function(results) {
       portfolioData = results.data.filter(p => p.ID && p.VideoURL);
       renderGrid(portfolioData);
     }
   });
 
+  // 2. CREAR LA CUADRÍCULA (GRID)
   function renderGrid(data) {
     const $grid = $('#posts');
     const shuffled = data.sort(() => Math.random() - 0.5).slice(0, 9);
@@ -888,20 +892,36 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>`;
     });
     $grid.html(html);
-    $grid.imagesLoaded().progress(() => { $grid.isotope('reloadItems').isotope({ itemSelector: '.item', layoutMode: 'masonry' }); });
+
+    // Reiniciar Isotope para acomodar los moldes
+    $grid.imagesLoaded().progress(() => { 
+      $grid.isotope('reloadItems').isotope({ 
+        itemSelector: '.item', 
+        layoutMode: 'masonry' 
+      }); 
+    });
   }
 
+  // 3. ABRIR VISTA DETALLADA (SINGLE VIEW)
   window.openProject = function(id) {
     const p = portfolioData.find(x => x.ID == id);
+    if (!p) return;
+
     gsap.to("#portfolio-grid-container", {duration: 0.5, opacity: 0, display: "none", onComplete: () => {
       $('#project-title').text(p.Titulo);
       $('#project-desc').text(p.Descripcion);
-      $('#project-date').text(p.Fecha);
+      $('#project-date').text(p.Fecha || '2024');
       $('#project-role').text(p.Category);
-      $('#project-client').text(p.Cliente);
+      $('#project-client').text(p.Cliente || 'BlackBear Client');
 
-      let embed = p.VideoURL.includes('youtube') ? `<iframe width="100%" height="450" src="https://www.youtube.com/embed/${p.VideoURL.split('v=')[1]}" frameborder="0" allowfullscreen></iframe>` 
-                  : `<video controls autoplay style="width:100%;"><source src="${p.VideoURL}" type="video/mp4"></video>`;
+      let embed = "";
+      // Detector robusto de YouTube
+      if(p.VideoURL.includes('youtube.com') || p.VideoURL.includes('youtu.be')) {
+        let vId = p.VideoURL.includes('v=') ? p.VideoURL.split('v=')[1].split('&')[0] : p.VideoURL.split('/').pop();
+        embed = `<iframe width="100%" height="450" src="https://www.youtube.com/embed/${vId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+      } else {
+        embed = `<video controls autoplay style="width:100%; max-height:450px;"><source src="${p.VideoURL}" type="video/mp4"></video>`;
+      }
       
       $('#project-video-content').html(embed);
       gsap.to("#project-single-view", {duration: 0.5, opacity: 1, display: "block"});
@@ -909,13 +929,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }});
   };
 
+  // 4. CERRAR VISTA DETALLADA
   window.closeProject = function() {
     gsap.to("#project-single-view", {duration: 0.4, opacity: 0, display: "none", onComplete: () => {
       $('#project-video-content').empty();
-      gsap.to("#portfolio-grid-container", {duration: 0.4, opacity: 1, display: "block"});
-    }});
-  };
-});    
+      gsap.to("#portfolio-grid-container", {duration: 0.4, opacity: 1, display  
   </body>
 </html>
 
