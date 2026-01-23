@@ -289,36 +289,29 @@ input:-webkit-autofill:focus {
      <div class="unslate_co--section" id="portfolio-section">
   <div class="container">
     
-    <div id="project-single-view" style="display:none; opacity:0; padding-bottom: 60px;">
+    <div id="project-single-view" style="display:none; opacity:0; padding-bottom: 50px;">
       <div class="row justify-content-center">
         <div class="col-lg-12 text-right mb-4">
-          <a href="javascript:void(0)" onclick="closeProject()" class="close-v1" style="text-decoration:none; cursor:pointer;">
+          <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
             <span class="icon-close2" style="font-size: 30px; color: white;">×</span>
           </a>
         </div>
-        
-        <div class="col-lg-8 mb-5 mb-lg-0">
-          <div id="project-video-content" class="video-container" style="background:#000; min-height:450px; display:flex; align-items:center; justify-content:center;">
-              </div>
-        </div>
-
+        <div class="col-lg-8" id="project-video-content"></div>
         <div class="col-lg-4">
-          <div class="project-details pl-lg-5">
-            <h2 class="heading-h2" id="project-title" style="color: white; margin-bottom: 30px; font-weight: 700;"></h2>
-            
+          <div class="project-details">
+            <h2 class="heading-h2" id="project-title" style="color: white;"></h2>
             <div class="mb-5">
-              <h3 class="heading-h3" style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: .2rem; margin-bottom: 15px;">Description</h3>
-              <p id="project-desc" style="color: #ccc; line-height: 1.8;"></p>
+              <h3 class="heading-h3" style="color: #888; font-size: 13px; text-transform: uppercase;">Project Description</h3>
+              <p id="project-desc" style="color: #ccc;"></p>
             </div>
-            
             <div class="row">
-              <div class="col-6 mb-4">
-                <span class="label" style="display:block; color:#666; font-size:11px; text-transform:uppercase; letter-spacing:.1rem;">Date</span>
-                <strong class="val" id="project-date" style="color:white; font-weight:700;"></strong>
+              <div class="col-6">
+                <span style="display:block; color:#666; font-size:11px; text-transform:uppercase;">Date</span>
+                <strong id="project-date" style="color:white;"></strong>
               </div>
-              <div class="col-6 mb-4">
-                 <span class="label" style="display:block; color:#666; font-size:11px; text-transform:uppercase; letter-spacing:.1rem;">Client</span>
-                <strong class="val" id="project-client" style="color:white; font-weight:700;"></strong>
+              <div class="col-6">
+                <span style="display:block; color:#666; font-size:11px; text-transform:uppercase;">Client</span>
+                <strong id="project-client" style="color:white;"></strong>
               </div>
             </div>
           </div>
@@ -327,27 +320,22 @@ input:-webkit-autofill:focus {
     </div>
 
     <div id="portfolio-grid-container" class="portfolio-wrapper">
-      <div class="section-heading-wrap text-center mb-5">
-        <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Portfolio</span></h2>
-        <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
+      <div class="d-flex align-items-center mb-4 gsap-reveal gsap-reveal-filter">
+        <h2 class="mr-auto heading-h2"><span class="gsap-reveal">Portfolio</span></h2>
       </div>
 
       <div id="posts" class="row gutter-isotope-item">
-         <div class="col-12 text-center text-white">Loading projects...</div>
-      </div>
+        </div>
 
-      <div class="row mt-5 pt-5" style="border-top: 1px solid rgba(255,255,255,0.1);">
+      <div class="row mt-5">
         <div class="col-12 text-center">
-          <a href="categories.html" class="btn btn-outline-pill btn-custom-light" style="padding: 15px 40px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; border-width: 2px;">
-            Video Categories
-          </a>
+          <a href="categories.html" class="btn btn-outline-pill btn-custom-light" style="padding: 15px 40px; text-transform: uppercase; font-weight: bold;">Video Categories</a>
         </div>
       </div>
     </div>
 
   </div>
 </div>
-
 
       <div class="unslate_co--section">
         <div class="container">
@@ -817,164 +805,92 @@ document.getElementById('contactFormMain').addEventListener('submit', function(e
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 
 <script>
-// --- CONFIGURACIÓN ---
-const EXCEL_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
-let portfolioData = [];
-let $gridContainer = $('#posts');
-let isotopeInstance;
-
 document.addEventListener('DOMContentLoaded', function() {
-  
-  // 1. INICIAR CARGA DE DATOS
+  const EXCEL_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4_9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
+  let allData = [];
+
   Papa.parse(EXCEL_URL, {
     download: true,
     header: true,
-    skipEmptyLines: true,
     complete: function(results) {
-      // Filtrar filas válidas
-      portfolioData = results.data.filter(p => p.ID && p.VideoURL && p.ThumbnailURL);
-      renderAndInitIsotope(portfolioData);
-    },
-    error: function(err) {
-        console.error("Error loading Excel:", err);
-        $gridContainer.html('<div class="col-12 text-center text-danger">Error loading portfolio.</div>');
+      allData = results.data.filter(p => p.ID && p.VideoURL);
+      renderGrid(allData);
     }
   });
-});
 
-// 2. FUNCIÓN CORE: RENDERIZAR HTML Y ACTIVAR ISOTOPE
-function renderAndInitIsotope(data) {
-    // Mezcla aleatoria
+  function renderGrid(data) {
+    const $posts = $('#posts');
     const shuffled = data.sort(() => Math.random() - 0.5);
-    
-    let htmlItems = "";
-    shuffled.forEach((item, index) => {
-        // IMPORTANTE: Para simular la distribución original, asignamos aleatoriamente
-        // la clase 'item-portrait' a aproximadamente el 30% de los items.
-        // Esto crea la variación de alturas que buscas.
-        const isPortrait = Math.random() < 0.3; 
-        const portraitClass = isPortrait ? "item-portrait" : "";
-        
-        htmlItems += `
-        <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${portraitClass} gsap-reveal-img" data-aos="fade-up" data-aos-delay="${index*50}">
-          <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item isotope-item">
+
+    // Definimos el "molde" exacto de las 9 posiciones de tu imagen
+    // La clase 'item-portrait' es la que hace el cuadro alto
+    const layoutConfig = [
+      { class: "" },                // 1. Normal
+      { class: "item-portrait" },   // 2. ALTO
+      { class: "" },                // 3. Normal
+      { class: "" },                // 4. Normal
+      { class: "item-portrait" },   // 5. ALTO (Central)
+      { class: "" },                // 6. Normal
+      { class: "item-portrait" },   // 7. ALTO
+      { class: "" },                // 8. Normal
+      { class: "" }                 // 9. Normal
+    ];
+
+    let html = "";
+    // Solo tomamos 9 para no romper el diseño original
+    shuffled.slice(0, 9).forEach((item, i) => {
+      const config = layoutConfig[i];
+      html += `
+        <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${config.class}">
+          <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item isotope-item gsap-reveal-img">
             <div class="overlay">
               <span class="wrap-icon icon-play_circle_filled"></span>
               <div class="portfolio-item-content">
                 <h3>${item.Titulo}</h3>
-                <p style="opacity:0.7;">${item.Category}</p>
+                <p>${item.Category}</p>
               </div>
             </div>
-            <img src="${item.ThumbnailURL}" class="lazyload img-fluid" alt="${item.Titulo}" style="width:100%; height:100%; object-fit:cover;">
+            <img src="${item.ThumbnailURL}" class="lazyload img-fluid" alt="${item.Titulo}" 
+                 style="width:100%; height:100%; object-fit:cover;">
           </a>
         </div>`;
     });
 
-    // Inyectar el HTML construido
-    $gridContainer.html(htmlItems);
-
-    // --- LA CLAVE: ESPERAR IMÁGENES Y LUEGO ISOTOPE ---
-    // Usamos imagesLoaded (librería de tu plantilla) para asegurar que Isotope
-    // calcule el layout solo cuando las imágenes del Excel ya tienen tamaño.
-    $gridContainer.imagesLoaded().progress( function() {
-        // Si ya existe una instancia, la destruimos para evitar conflictos
-        if (isotopeInstance) {
-            $gridContainer.isotope('destroy');
-        }
-        // Inicializamos Isotope con modo 'masonry' para el look de mosaico irregular
-        isotopeInstance = $gridContainer.isotope({
-            itemSelector: '.item',
-            layoutMode: 'masonry',
-            masonry: {
-                columnWidth: '.col-lg-4' // Usa la columna base de Bootstrap para calcular
-            }
-        });
-        // Refrescar animaciones AOS si existen
-        if(window.AOS) AOS.refresh();
-         // Refrescar animaciones GSAP ScrollTrigger si existen
-        if(window.ScrollTrigger) ScrollTrigger.refresh();
-    });
-}
-
-// 3. LÓGICA DE CLIC: FADE OUT GRID -> FADE IN FICHA
-window.openProject = function(id) {
-    const project = portfolioData.find(p => p.ID == id);
-    if(!project) return;
-
-    // A. Animación de SALIDA de la cuadrícula (Fade Out y Slide Up)
-    gsap.to("#portfolio-grid-container", {
-        duration: 0.5, 
-        opacity: 0, 
-        y: -50, // Efecto de subir mientras desaparece
-        ease: "power2.in",
-        onComplete: () => {
-            document.getElementById('portfolio-grid-container').style.display = "none";
-            loadProjectData(project);
-        }
-    });
-};
-
-function loadProjectData(project) {
-    // Llenar textos
-    document.getElementById('project-title').innerText = project.Titulo;
-    document.getElementById('project-desc').innerText = project.Descripcion;
-    document.getElementById('project-date').innerText = project.Fecha;
-    document.getElementById('project-client').innerText = project.Cliente;
-
-    // Determinar tipo de video e inyectar reproductor
-    const vUrl = project.VideoURL;
-    let embedHtml = "";
-    if(vUrl.includes('youtube.com') || vUrl.includes('youtu.be')) {
-        const vId = vUrl.split('v=')[1] || vUrl.split('/').pop();
-        embedHtml = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${vId}?autoplay=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="position:absolute; top:0; left:0;"></iframe>`;
-    } else if (vUrl.includes('vimeo.com')) {
-         const vId = vUrl.split('/').pop();
-          embedHtml = `<iframe src="https://player.vimeo.com/video/${vId}?autoplay=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="position:absolute; top:0; left:0;"></iframe>`;
-    }
-    else {
-        // MP4 directo
-        embedHtml = `<video controls autoplay loop style="width:100%; height:100%; object-fit:contain;"><source src="${vUrl}" type="video/mp4"></video>`;
-    }
-    // Contenedor con ratio 16:9
-    document.getElementById('project-video-content').innerHTML = `<div style="position:relative; padding-bottom:56.25%; height:0; width:100%;">${embedHtml}</div>`;
-
-    // B. Animación de ENTRADA de la ficha (Fade In y Slide Up)
-    const $singleView = document.getElementById('project-single-view');
-    $singleView.style.display = "block";
-    gsap.fromTo($singleView, 
-        { opacity: 0, y: 50 }, 
-        { duration: 0.6, opacity: 1, y: 0, ease: "power2.out", delay: 0.1 }
-    );
+    $posts.html(html);
     
-    // Scroll suave hacia el inicio de la sección
-    gsap.to(window, {duration: 0.8, scrollTo: {y: "#portfolio-section", offsetY: 60}});
-}
-
-// 4. LÓGICA DE CERRAR: FADE OUT FICHA -> FADE IN GRID
-window.closeProject = function() {
-     // A. Animación de SALIDA de la ficha
-    gsap.to("#project-single-view", {
-        duration: 0.4,
-        opacity: 0,
-        y: 30,
-        ease: "power2.in",
-        onComplete: () => {
-            document.getElementById('project-single-view').style.display = "none";
-            document.getElementById('project-video-content').innerHTML = ""; // Detener video
-
-            // B. Animación de ENTRADA de la cuadrícula
-            const $grid = document.getElementById('portfolio-grid-container');
-            $grid.style.display = "block";
-            gsap.fromTo($grid,
-                { opacity: 0, y: -30 },
-                { duration: 0.6, opacity: 1, y: 0, ease: "power2.out" }
-            );
-            // IMPORTANTE: Recalcular Isotope por si el layout se movió al ocultarlo
-             $gridContainer.isotope('layout');
-        }
+    // Reiniciamos Isotope para que calcule las formas correctamente
+    $posts.imagesLoaded().progress( function() {
+      $posts.isotope('reloadItems').isotope();
     });
-};
-</script>  
+  }
+
+  // LOGICA DE CLICK (Efecto Modern Building)
+  window.openProject = function(id) {
+    const p = allData.find(x => x.ID == id);
+    gsap.to("#portfolio-grid-container", {duration: 0.5, opacity: 0, display: "none", onComplete: () => {
+      document.getElementById('project-title').innerText = p.Titulo;
+      document.getElementById('project-desc').innerText = p.Descripcion;
+      document.getElementById('project-date').innerText = p.Fecha;
+      document.getElementById('project-client').innerText = p.Cliente;
+      
+      let videoEmbed = p.VideoURL.includes('youtube') ? 
+        `<iframe width="100%" height="450" src="https://www.youtube.com/embed/${p.VideoURL.split('v=')[1]}?autoplay=1" frameborder="0" allowfullscreen></iframe>` :
+        `<video controls autoplay style="width:100%;"><source src="${p.VideoURL}" type="video/mp4"></video>`;
+      
+      document.getElementById('project-video-content').innerHTML = videoEmbed;
+      gsap.to("#project-single-view", {duration: 0.5, opacity: 1, display: "block"});
+    }});
+  };
+
+  window.closeProject = function() {
+    gsap.to("#project-single-view", {duration: 0.4, opacity: 0, display: "none", onComplete: () => {
+      document.getElementById('project-video-content').innerHTML = "";
+      gsap.to("#portfolio-grid-container", {duration: 0.4, opacity: 1, display: "block"});
+      $('#posts').isotope('layout');
+    }});
+  };
+});
+</script>
   </body>
 </html>
 
