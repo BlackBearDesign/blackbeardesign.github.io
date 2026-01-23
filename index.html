@@ -222,8 +222,11 @@ input:-webkit-autofill:focus {
     min-height: 500px;
 }
 
-/* Metadatos: Diseño con jerarquía (Gris + Blanco Bold) */
-.meta-item { margin-bottom: 30px; opacity: 0; }
+/* --- METADATOS: ESPACIADO MEJORADO --- */
+.meta-item { 
+    margin-bottom: 50px; /* Aumentamos el espacio entre bloques (ej: entre descripción y fecha) */
+    opacity: 0; 
+}
 
 .meta-header {
     display: block;
@@ -231,9 +234,9 @@ input:-webkit-autofill:focus {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #ffffff !important; 
-  opacity: 0.6;
+    opacity: 0.6;
     font-weight: 700;
-    margin-bottom: 5px;
+    margin-bottom: 15px; /* ¡AQUÍ ESTÁ EL CAMBIO! Más espacio bajo el título pequeño */
 }
 
 .meta-value {
@@ -242,6 +245,7 @@ input:-webkit-autofill:focus {
     color: #ffffff !important;
     font-weight: 800;
     text-transform: uppercase;
+    line-height: 1.8; /* Esto separa las líneas si la descripción es larga */
 }
 
 /* --- BOTÓN DE CIERRE (X) FINAL Y REFINADO --- */
