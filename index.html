@@ -243,7 +243,7 @@ input:-webkit-autofill:focus {
     text-transform: uppercase;
 }
 
-/* BOTÓN DE CIERRE (X) GRANDE */
+//* --- NUEVO BOTÓN DE CIERRE (X) CORREGIDO --- */
 .close-v1 { 
     display: inline-flex; 
     align-items: center; 
@@ -252,27 +252,36 @@ input:-webkit-autofill:focus {
     cursor: pointer !important; 
 }
 
+/* 1. CORRECCIÓN DE FUENTE */
 .close-v1 .icon-text { 
-    font-size: 11px; 
+    font-family: 'Montserrat', sans-serif !important; /* Usamos la fuente del sitio */
+    font-size: 13px; 
     margin-right: 20px; 
     color: #ffffff !important; 
     text-transform: uppercase; 
     font-weight: 700; 
+    letter-spacing: 2px;
 }
 
+/* 2. CORRECCIÓN DE TAMAÑO */
 .close-circle { 
-    width: 60px; height: 60px; 
-    border: 1px solid rgba(255,255,255,0.3); 
+    width: 70px; height: 70px; /* Círculo más grande */
+    border: 2px solid rgba(255,255,255,0.5); 
     border-radius: 50%; 
-    display: flex; align-items: center; justify-content: center; 
-    font-size: 32px; color: #ffffff; 
-    transition: all 0.3s ease;
-    padding-bottom: 4px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 45px; /* La X ahora es más grande */
+    color: #ffffff; 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding-bottom: 7px; 
 }
 
+/* 3. CORRECCIÓN DE ANIMACIÓN ZOOM */
 .close-v1:hover .close-circle { 
     background: #ffffff !important; 
-    color: #000000 !important; /* La X se pone negra aquí */
+    color: #000000 !important; 
+    transform: scale(1.2); /* Esto hace el efecto de ZOOM */
 }
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
