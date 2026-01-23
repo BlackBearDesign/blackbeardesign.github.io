@@ -287,61 +287,158 @@ input:-webkit-autofill:focus {
 
 
       <div class="unslate_co--section" id="portfolio-section">
-  <div class="container">
-    
-    <div id="project-single-view" style="display:none; opacity:0;">
-      <div class="row justify-content-center">
-        <div class="col-lg-12 text-right mb-4">
-          <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
-            <span class="icon-close2"></span> </a>
-        </div>
-        <div class="col-lg-8">
-          <div class="video-container" id="project-video-content">
-            </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="project-details">
-            <h2 class="heading-h2" id="project-title">Project Title</h2>
-            <div class="mb-5">
-              <h3 class="heading-h3">Project Description</h3>
-              <p id="project-desc">Description text here...</p>
-            </div>
-            <div class="row mb-4">
-              <div class="col-sm-6">
-                <div class="project-info-item">
-                  <span class="label">Project Date</span>
-                  <span class="val" id="project-date">Date</span>
+        <div class="container">
+          
+          
+          <div class="relative"><div class="loader-portfolio-wrap"><div class="loader-portfolio"></div></div> </div>
+          <div id="portfolio-single-holder"></div>
+
+          <div class="portfolio-wrapper">
+
+            <div class="d-flex align-items-center mb-4 gsap-reveal gsap-reveal-filter">
+              <h2 class="mr-auto heading-h2"><span class="gsap-reveal">Portfolio</span></h2>
+
+              <!-- <a href="#" class="text-white js-filter d-inline-block d-lg-none">Filter</a>
+              
+              <div class="filter-wrap">
+                <div class="filter ml-auto" id="filters">
+                  <a href="#" class="active" data-filter="*">All</a>
+                  <a href="#" data-filter=".web">Web</a>
+                  <a href="#" data-filter=".branding">Branding</a>
+                  <a href="#" data-filter=".illustration">Illustration</a>
+                  <a href="#" data-filter=".packaging">Packaging</a>
                 </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="project-info-item">
-                  <span class="label">Client</span>
-                  <span class="val" id="project-client">Client Name</span>
-                </div>
-              </div>
+              </div> -->
             </div>
+
+
+            
+            <div id="posts" class="row gutter-isotope-item">
+              <div class="item web branding col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
+                <a href="portfolio-single-1.html" class="portfolio-item ajax-load-page isotope-item gsap-reveal-img" data-id="1">
+                    <div class="overlay">
+                      <span class="wrap-icon icon-link2"></span>
+                      <div class="portfolio-item-content">
+                        <h3>Shoe Rebranding</h3>
+                        <p>web, branding</p>
+                      </div>
+                    </div>
+                    <img src="images/work_1_md.jpg" class="lazyload  img-fluid" alt="Images" />
+                  </a>
+              </div>
+              <div class="item branding packaging illustration col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ">
+                <a href="portfolio-single-3.html" class="portfolio-item ajax-load-page item-portrait isotope-item gsap-reveal-img" data-id="3">
+                    <div class="overlay">
+                      <span class="wrap-icon icon-link2"></span>
+                      <div class="portfolio-item-content">
+                        <h3>Reworking</h3>
+                        <p>branding, packaging, illustration</p>
+                      </div>
+                    </div>
+                    <img src="images/work_2_md.jpg" class="lazyload  img-fluid" alt="Images" />
+                  </a>
+              </div>
+
+              <div class="item branding packaging col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
+                <a href="portfolio-single-4.html" class="portfolio-item isotope-item gsap-reveal-img ajax-load-page" data-id="4">
+                    <div class="overlay">
+                      <span class="wrap-icon icon-link2"></span>
+                      <div class="portfolio-item-content">
+                        <h3>Modern Building</h3>
+                        <p>branding, packaging</p>
+                      </div>
+                    </div>
+                    <img src="images/work_3_md.jpg" class="lazyload  img-fluid" alt="Images" />
+                  </a>
+              </div>
+
+              <div class="item web packaging col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
+
+                <a href="images/work_4_full.jpg" class="portfolio-item isotope-item gsap-reveal-img" data-fancybox="gallery" data-caption="Watch">
+                    <div class="overlay">
+                      <span class="wrap-icon icon-photo2"></span>
+                      <div class="portfolio-item-content">
+                        <h3>Watch</h3>
+                        <p>web, packaging</p>
+                      </div>
+                    </div>
+                    <img src="images/work_4_full.jpg" class="lazyload  img-fluid" alt="Images" />
+                  </a>
+
+              </div>
+
+              <div class="item illustration packaging col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
+                <a href="images/work_5_md.jpg" class="portfolio-item isotope-item gsap-reveal-img" data-fancybox="gallery" data-caption="Shoe Rebranding">
+                    <div class="overlay">
+                      <span class="wrap-icon icon-photo2"></span>
+                      <div class="portfolio-item-content">
+                        <h3>Shoe Rebranding</h3>
+                        <p>illustration, packaging</p>
+                      </div>
+                    </div>
+                    <img src="images/work_5_md.jpg" class="lazyload  img-fluid" alt="Images" />
+                  </a>
+              </div>
+
+              <div class="item web branding col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
+                <a href="portfolio-single-2.html" class="portfolio-item ajax-load-page item-portrait isotope-item gsap-reveal-img" data-id="2">
+                    <div class="overlay">
+                      <span class="wrap-icon icon-link2"></span>
+                      <div class="portfolio-item-content">
+                        <h3>Reshape</h3>
+                        <p>web, branding</p>
+                      </div>
+                    </div>
+                    <img src="images/work_6_md.jpg" class="lazyload  img-fluid" alt="Images" />
+                  </a>
+              </div>
+
+              <div class="item branding packaging col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
+                <a href="images/work_7_a_md.jpg" class="portfolio-item item-portrait isotope-item gsap-reveal-img " data-fancybox="gallery" data-caption="Modern Building">
+                    <div class="overlay">
+                      <span class="wrap-icon icon-photo2"></span>
+                      <div class="portfolio-item-content">
+                        <h3>Modern Building</h3>
+                        <p>branding, packaging</p>
+                      </div>
+                    </div>
+                    <img src="images/work_7_a_md.jpg" class="lazyload  img-fluid" alt="Images" />
+                  </a>
+              </div>
+
+              <div class="item web branding col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
+                <a href="https://www.youtube.com/watch?v=mwtbEGNABWU" class="portfolio-item isotope-item gsap-reveal-img" data-fancybox="gallery" data-caption="Showreel 2019">
+                    <div class="overlay">
+                      <span class="wrap-icon icon-play_circle_filled"></span>
+                      <div class="portfolio-item-content">
+                        <h3>Showreel 2019</h3>
+                        <p>web, branding</p>
+                      </div>
+                    </div>
+                    <img src="images/work_8_md.jpg" class="lazyload  img-fluid" alt="Images" />
+                  </a>
+              </div>
+
+              <div class="item web illustration col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
+                <a href="images/work_9_a_md.jpg" class="portfolio-item isotope-item gsap-reveal-img" data-fancybox="gallery" data-caption="Render Packaging">
+                    <div class="overlay">
+                      <span class="wrap-icon icon-photo2"></span>
+                      <div class="portfolio-item-content">
+                        <h3>Render Packaging</h3>
+                        <p>web, illustration</p>
+                      </div>
+                    </div>
+                    <img src="images/work_9_a_md.jpg" class="lazyload  img-fluid" alt="Images" />
+                  </a>
+              </div>
+
+            </div>
+            
           </div>
+
+
         </div>
       </div>
-    </div>
-
-    <div id="portfolio-grid-container">
-      <div class="section-heading-wrap text-center mb-5">
-        <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Portfolio</span></h2>
-      </div>
-
-      <div id="portfolio-posts" class="row gutter-isotope-item">
-        </div>
-
-      <div class="row mt-5">
-        <div class="col-12 text-center">
-          <a href="categories.html" class="btn btn-outline-pill btn-custom-light">Video Categories</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 
       <div class="unslate_co--section">
@@ -807,84 +904,6 @@ document.getElementById('contactFormMain').addEventListener('submit', function(e
     btn.style.display = 'inline-block';
     loader.style.display = 'none';
   });
-});
-</script>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const PORTFOLIO_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
-  let allProjects = [];
-
-  // 1. CARGA DESDE EXCEL
-  Papa.parse(PORTFOLIO_SHEET_URL, {
-    download: true,
-    header: true,
-    complete: function(results) {
-      allProjects = results.data.filter(p => p.ID && p.VideoURL);
-      renderPortfolio(allProjects);
-    }
-  });
-
-  // 2. RENDER Y MEZCLA ALEATORIA
-  function renderPortfolio(data) {
-    const $grid = document.getElementById('portfolio-posts');
-    // Mezcla aleatoria (Shuffle)
-    const shuffled = data.sort(() => Math.random() - 0.5);
-    
-    let html = "";
-    shuffled.forEach((item, index) => {
-      html += `
-        <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2">
-          <a href="javascript:void(0)" class="portfolio-item" onclick="openProject('${item.ID}')">
-            <div class="overlay">
-              <span class="wrap-icon icon-play_circle_filled"></span>
-              <div class="portfolio-item-content">
-                <h3>${item.Titulo}</h3>
-                <p>${item.Category}</p>
-              </div>
-            </div>
-            <img src="${item.ThumbnailURL}" class="lazyload img-fluid" alt="${item.Titulo}">
-          </a>
-        </div>`;
-    });
-    $grid.innerHTML = html;
-  }
-
-  // 3. LÓGICA DE SELECCIÓN (FADE OUT / FADE IN)
-  window.openProject = function(id) {
-    const project = allProjects.find(p => p.ID == id);
-    if(!project) return;
-
-    // Animación de salida de la cuadrícula
-    gsap.to("#portfolio-grid-container", {duration: 0.5, opacity: 0, display: "none", onComplete: () => {
-      // Llenar datos de la ficha técnica
-      document.getElementById('project-title').innerText = project.Titulo;
-      document.getElementById('project-desc').innerText = project.Descripcion;
-      document.getElementById('project-date').innerText = project.Fecha;
-      document.getElementById('project-client').innerText = project.Cliente;
-      
-      // Inyectar Video (Soporta YouTube o MP4 directo)
-      let videoHtml = "";
-      if(project.VideoURL.includes('youtube.com') || project.VideoURL.includes('youtu.be')) {
-        const videoId = project.VideoURL.split('v=')[1] || project.VideoURL.split('/').pop();
-        videoHtml = `<iframe width="100%" height="450" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
-      } else {
-        videoHtml = `<video controls autoplay style="width:100%;"><source src="${project.VideoURL}" type="video/mp4"></video>`;
-      }
-      document.getElementById('project-video-content').innerHTML = videoHtml;
-
-      // Animación de entrada de la ficha
-      gsap.to("#project-single-view", {duration: 0.5, opacity: 1, display: "block"});
-      window.scrollTo({top: document.getElementById('portfolio-section').offsetTop - 100, behavior: 'smooth'});
-    }});
-  };
-
-  // 4. BOTÓN CERRAR
-  window.closeProject = function() {
-    gsap.to("#project-single-view", {duration: 0.5, opacity: 0, display: "none", onComplete: () => {
-      document.getElementById('project-video-content').innerHTML = ""; // Detiene el video
-      gsap.to("#portfolio-grid-container", {duration: 0.5, opacity: 1, display: "block"});
-    }});
-  };
 });
 </script>
   </body>
