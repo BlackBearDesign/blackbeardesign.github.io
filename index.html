@@ -195,61 +195,20 @@ input:-webkit-autofill:focus {
   color: #ffffff !important;
   font-weight: 600;
 } 
-/* --- ESTILO FINAL: ZOOM Y TEXTO DINÁMICO --- */
-      #posts .portfolio-item {
-        position: relative;
-        overflow: hidden !important;
-        background: #000;
-        display: block;
+/* --/* --- ANIMACIÓN CUADRO BLANCO Y ZOOM --- */
+      .gsap-reveal-img { position: relative; overflow: hidden; background: #000; }
+      .gsap-reveal-img:after {
+        content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        background: #fff; z-index: 10; transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
       }
-
-      /* Efecto Lupa: La imagen crece y se oscurece al pasar el mouse */
-      #posts .portfolio-item img {
-        filter: brightness(0.9);
-        transition: transform 0.8s cubic-bezier(0.2, 1, 0.2, 1), filter 0.8s ease !important;
-      }
-
-      #posts .portfolio-item:hover img {
-        transform: scale(1.1); 
-        filter: brightness(0.4);
-      }
-
-      /* Texto que sube cuando pones el mouse encima */
-      #posts .portfolio-item-content {
-        padding: 30px !important;
-        bottom: 0;
-        position: absolute;
-        width: 100%;
-        transition: transform 0.4s ease-out;
-        z-index: 2;
-      }
-
-      #posts .portfolio-item:hover .portfolio-item-content {
-        transform: translateY(-15px);
-      }
-
-      #posts .portfolio-item-content h3 {
-        color: #ffffff !important;
-        text-shadow: 0 2px 15px rgba(0,0,0,1);
-        font-weight: 800 !important;
-        font-size: 1.4rem;
-      }
-
-      /* Estilo de la info lateral (Ficha Técnica) como en tu imagen */
-      .project-details h3 {
-        color: #666;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: 700;
-        margin-top: 20px;
-      }
-      .project-details strong {
-        color: white;
-        font-weight: 400;
-        font-size: 16px;
-        display: block;
-      }      
+      .gsap-reveal-img.active:after { transform: translateY(-101%); }
+      .portfolio-item img { transition: transform 0.8s ease !important; filter: brightness(0.9); }
+      .portfolio-item:hover img { transform: scale(1.1); filter: brightness(0.4); }
+      .portfolio-item-content { padding: 30px !important; bottom: 0; position: absolute; width: 100%; transition: transform 0.4s ease-out; z-index: 2; }
+      .portfolio-item:hover .portfolio-item-content { transform: translateY(-15px); }
+      .portfolio-item-content h3 { color: white !important; text-shadow: 0 2px 15px #000; font-weight: 800; font-size: 1.4rem; }
+      .project-details h3 { color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-top: 20px; }
+      .project-details strong { color: white; font-weight: 400; font-size: 16px; display: block; }
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
   </head>
@@ -860,21 +819,21 @@ document.getElementById('contactFormMain').addEventListener('submit', function(e
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const EXCEL_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
-  let portfolioData = [];
+  let portfolioItems = [];
 
-  // 1. Carga inteligente desde tu Excel
   Papa.parse(EXCEL_URL, {
     download: true, header: true,
     complete: function(results) {
-      portfolioData = results.data.filter(p => p.ID && p.VideoURL);
+      // 1. ORDEN DESCENDENTE (Más nuevo primero por ID)
+      portfolioItems = results.data
+        .filter(p => p.ID && p.VideoURL)
+        .sort((a, b) => b.ID - a.ID); 
+
       const $grid = $('#posts');
-      const shuffled = portfolioData.sort(() => Math.random() - 0.5).slice(0, 9);
-      
-      // Moldes del Index 15: el 2, 6 y 7 son altos
       const molds = ["", "item-portrait", "", "", "", "item-portrait", "item-portrait", "", ""];
 
       let html = "";
-      shuffled.forEach((item, i) => {
+      portfolioItems.slice(0, 9).forEach((item, i) => {
         html += `
           <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${molds[i]} gsap-reveal-img">
             <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item isotope-item">
@@ -890,50 +849,41 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>`;
       });
       $grid.html(html);
-      
-      // Activa el acomodo Masonry e Isotope
+
+      // 2. ACTIVAR CUADRO BLANCO (Revelación)
+      setTimeout(() => { $('.gsap-reveal-img').addClass('active'); }, 600);
+
       $grid.imagesLoaded().progress(() => {
         $grid.isotope('reloadItems').isotope({ itemSelector: '.item', layoutMode: 'masonry' });
       });
     }
   });
 
-  // 2. Función para ABRIR (Animación Modern Building)
   window.openProject = function(id) {
-    const p = portfolioData.find(x => x.ID == id);
-    if (!p) return;
-
-    // Desvanece el grid principal
+    const p = portfolioItems.find(x => x.ID == id);
+    if(!p) return;
     gsap.to("#portfolio-grid-container", {duration: 0.4, opacity: 0, y: -20, display: "none", onComplete: () => {
-      // Llena la ficha técnica con tus datos de Excel
       document.getElementById('project-title').innerText = p.Titulo;
       document.getElementById('project-desc').innerText = p.Descripcion;
       document.getElementById('project-date').innerText = p.Fecha || '2025';
-      document.getElementById('project-role').innerText = p.Category;
       document.getElementById('project-client').innerText = p.Cliente;
-
-      // Carga de Video (YouTube o MP4)
-      let embed = "";
-      if(p.VideoURL.includes('youtube.com') || p.VideoURL.includes('youtu.be')) {
-        let vId = p.VideoURL.includes('v=') ? p.VideoURL.split('v=')[1].split('&')[0] : p.VideoURL.split('/').pop();
-        embed = `<iframe width="100%" height="450" src="https://www.youtube.com/embed/${vId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
-      } else {
-        embed = `<video controls autoplay style="width:100%; max-height:450px;"><source src="${p.VideoURL}" type="video/mp4"></video>`;
-      }
+      
+      let vId = p.VideoURL.includes('v=') ? p.VideoURL.split('v=')[1].split('&')[0] : p.VideoURL.split('/').pop();
+      let embed = p.VideoURL.includes('youtube') ? 
+        `<iframe width="100%" height="450" src="https://www.youtube.com/embed/${vId}?autoplay=1" frameborder="0" allowfullscreen></iframe>` : 
+        `<video controls autoplay style="width:100%; max-height:450px;"><source src="${p.VideoURL}" type="video/mp4"></video>`;
+      
       document.getElementById('project-video-content').innerHTML = embed;
-
-      // Muestra la ficha técnica con entrada suave
       gsap.fromTo("#project-single-view", {opacity: 0, y: 30}, {duration: 0.5, opacity: 1, y: 0, display: "block"});
       window.scrollTo({top: $('#portfolio-section').offset().top - 50, behavior: 'smooth'});
     }});
   };
 
-  // 3. Función para CERRAR
   window.closeProject = function() {
     gsap.to("#project-single-view", {duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
-      document.getElementById('project-video-content').innerHTML = ""; // Detiene el video
+      document.getElementById('project-video-content').innerHTML = "";
       gsap.to("#portfolio-grid-container", {duration: 0.4, opacity: 1, display: "block"});
-      $('#posts').isotope('layout'); // Reajusta el portafolio
+      $('#posts').isotope('layout');
     }});
   };
 });
