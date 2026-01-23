@@ -19,7 +19,7 @@
     
 
     <!-- Theme Style -->
-    <link rel="stylesheet" href="css/style.css">
+   
 
     <style>
       /* Fondo de video fijo detrás de todo el contenido */
@@ -39,23 +39,31 @@
         opacity: 0.5;
       }
 
-      /* Hacemos transparentes las secciones negras para ver el video de fondo */
-      body, 
-      .unslate_co--site-wrap, 
-      .unslate_co--site-inner, 
-      .unslate_co--section, 
-      .cover-v1 {
+     /* ESTRUCTURA PARA EMPUJAR EL FOOTER AL FONDO */
+      html, body { height: 100%; margin: 0; }
+      
+      .unslate_co--site-wrap { 
+        display: flex; 
+        flex-direction: column; 
+        min-height: 100vh; 
+        background-color: transparent !important; 
+      }
+      
+      .unslate_co--site-inner { 
+        flex: 1 0 auto; 
+        background-color: transparent !important; 
+      }
+
+      body, .unslate_co--section, .cover-v1 {
         background-color: transparent !important;
       }
 
-      /* EL FOOTER: Se queda al final de la web, NO se queda fijo en el monitor */
       .unslate_co--footer {
-        background-color: #191919 !important; /* El tono gris sólido de tu imagen */
-        position: relative !important;
-        display: block !important;
-       z-index: 10 !important;
-        margin-top: 0;
-      }
+        background-color: #191919 !important;
+        flex-shrink: 0; /* Evita que el footer se encoja */
+        z-index: 10 !important;
+        padding: 60px 0 !important;
+      }
 
      #services-section .feature-v1 .wrap-icon img {
         filter: brightness(0) invert(1) !important;
