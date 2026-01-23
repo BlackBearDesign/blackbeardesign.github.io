@@ -222,9 +222,11 @@ input:-webkit-autofill:focus {
     min-height: 500px;
 }
 
-/* --- METADATOS: ESPACIADO MEJORADO --- */
+/* --- FIX TOTAL: SEPARACIÓN Y ESTILO DEFINITIVO --- */
+
+/* A. ESPACIO EN LA FICHA TÉCNICA (Lo que abres) */
 .meta-item { 
-    margin-bottom: 50px; /* Aumentamos el espacio entre bloques (ej: entre descripción y fecha) */
+    margin-bottom: 65px !important; /* Más separación entre Descripción, Fecha y Cliente */
     opacity: 0; 
 }
 
@@ -234,18 +236,35 @@ input:-webkit-autofill:focus {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #ffffff !important; 
-    opacity: 0.6;
+    opacity: 0.5;
     font-weight: 700;
-    margin-bottom: 15px; /* ¡AQUÍ ESTÁ EL CAMBIO! Más espacio bajo el título pequeño */
+    margin-bottom: 25px !important; /* Más espacio bajo el título pequeño */
 }
 
 .meta-value {
     display: block;
-    font-size: 15px;
+    font-size: 16px;
     color: #ffffff !important;
     font-weight: 800;
     text-transform: uppercase;
-    line-height: 1.8; /* Esto separa las líneas si la descripción es larga */
+    line-height: 2.0 !important; /* Evita que las líneas de texto se amontonen */
+}
+
+/* B. ESPACIO EN LAS PORTADAS (Los cuadritos del Grid) */
+.portfolio-item-content h3 {
+    font-weight: 900 !important; /* Título bien Bold */
+    color: #ffffff !important;
+    margin-bottom: 20px !important; /* Separa el título de la categoría */
+    text-transform: uppercase;
+}
+
+.portfolio-item-content p, 
+.portfolio-item-content .post-meta {
+    color: #ffffff !important;
+    opacity: 0.6 !important; /* Blanco suave */
+    letter-spacing: 3px;     /* Letras más separadas y elegantes */
+    text-transform: uppercase;
+    font-size: 10px !important;
 }
 
 /* --- BOTÓN DE CIERRE (X) FINAL Y REFINADO --- */
