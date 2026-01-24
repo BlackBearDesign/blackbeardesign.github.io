@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* --- ESTRUCTURA PARA ELIMINAR ESPACIOS Y FIJAR FOOTER --- */
+      /* --- ESTRUCTURA PARA ELIMINAR ESPACIOS Y FIJAR FOOTER ABAJO --- */
       html, body { height: 100%; margin: 0; padding: 0; }
       
       /* Contenedor principal en modo Flexbox */
@@ -25,7 +25,7 @@
         background-color: transparent !important; 
       }
       
-      /* El contenido crece para empujar el footer al fondo */
+      /* El contenido crece para empujar el footer al fondo de la pantalla */
       .unslate_co--site-inner { 
         flex: 1 0 auto; 
         background-color: transparent !important;
@@ -37,7 +37,7 @@
       /* FOOTER GRIS SÓLIDO (IDÉNTICO AL INDEX 27) */
       .unslate_co--footer {
         background-color: #191919 !important;
-        flex-shrink: 0; /* No permite que el footer se achique */
+        flex-shrink: 0; /* No permite que el footer se encoja */
         padding: 40px 0;
         position: relative;
         z-index: 10;
@@ -53,7 +53,8 @@
           transition: all 0.3s ease; 
           cursor: pointer !important;
           float: right; 
-          opacity: 0; /* Para animación GSAP */
+          opacity: 0; /* Para animación GSAP lateral */
+          transform: translateX(20px);
       }
       .close-v1 .icon-text { 
           font-family: 'Montserrat', sans-serif !important; 
@@ -78,7 +79,7 @@
       }
       .close-v1:hover .close-circle { background: #ffffff !important; color: #000000 !important; transform: scale(1.12); }
 
-      /* DISEÑO DE TARJETAS */
+      /* DISEÑO DE TARJETAS CATEGORÍA */
       .category-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -125,7 +126,7 @@
               </div>
               <div class="site-logo pos-absolute">
                 <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px; width: auto; vertical-align: middle;">
+                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px;">
                 </a>
               </div>
               <div class="col-md-5 text-right text-lg-left">
@@ -256,7 +257,7 @@
         
         gsap.to("#selection-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
           gsap.set("#grid-view", { display: "block", opacity: 0 });
-          gsap.to("#grid-view", { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
+          gsap.fromTo("#grid-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
           gsap.fromTo("#btn-back-cat", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, delay: 0.3 });
         }});
       }
@@ -265,7 +266,7 @@
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, onComplete: () => {
           document.getElementById('grid-view').style.display = "none";
           gsap.set("#selection-view", { display: "block", opacity: 0 });
-          gsap.to("#selection-view", { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
+          gsap.fromTo("#selection-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
         }});
       }
 
@@ -277,7 +278,7 @@
         document.getElementById('project-client').innerText = p.Cliente || "Private";
         
         let url = p.VideoURL;
-        let content = (url.includes('youtube') || url.includes('youtu.be'))
+        let content = (url.includes('youtube.com') || url.includes('youtu.be'))
           ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1] : url.split('/').pop()}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" frameborder="0" allowfullscreen></iframe></div>`
           : `<video controls autoplay style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
         
@@ -285,7 +286,7 @@
         
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
           gsap.set("#project-single-view", { display: "block", opacity: 0 });
-          gsap.to("#project-single-view", { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
+          gsap.fromTo("#project-single-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
           gsap.fromTo("#btn-back-grid", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, delay: 0.4 });
           gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4 });
         }});
@@ -296,7 +297,7 @@
           document.getElementById('project-single-view').style.display = "none";
           document.getElementById('project-visual-content').innerHTML = "";
           gsap.set("#grid-view", { display: "block", opacity: 0 });
-          gsap.to("#grid-view", { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
+          gsap.fromTo("#grid-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
         }});
       }
     </script>
