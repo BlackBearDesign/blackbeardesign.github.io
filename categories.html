@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* --- ESTRUCTURA BASE (IGUAL A TU CAT 3) --- */
+      /* --- ESTRUCTURA BASE --- */
       html, body { height: 100%; margin: 0; }
 
       .unslate_co--site-inner { 
@@ -32,11 +32,12 @@
           padding-bottom: 80px;
       }
 
-      /* AGREGADO: Ocultar inicialmente para evitar el 'madraso' visual */
+      /* Ocultar inicialmente para GSAP */
       #selection-view h1, 
       #selection-view .wavy-divider, 
       #selection-view p, 
-      .home-button-container {
+      .home-button-container,
+      .category-card {
           opacity: 0;
       }
 
@@ -46,7 +47,7 @@
           margin-bottom: 20px;
       }
 
-      /* --- FOOTER (ZONA GRIS) --- */
+      /* --- FOOTER --- */
       #dynamic-footer-wrap { 
           width: 100%;
           opacity: 0; 
@@ -61,11 +62,9 @@
           z-index: 100;
       }
 
-      /* --- TUS ESTILOS ORIGINALES DE TEXTO Y TARJETAS --- */
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
 
-      /* Estilo exacto de tus títulos según la imagen */
       #selection-view h1 { font-weight: 800; letter-spacing: 3px; text-transform: uppercase; }
 
       .category-card { 
@@ -80,7 +79,6 @@
           display: flex; 
           align-items: center; 
           justify-content: center;
-          opacity: 0; /* Para que GSAP lo anime */
       }
       .category-card h3 { font-weight: 800; letter-spacing: 4px; margin: 0; font-size: 1.2rem; color: #fff; text-transform: uppercase; }
       .category-card:hover { background: #ffffff; transform: translateY(-10px); }
@@ -88,12 +86,15 @@
       
       .wavy-divider { display: block; margin: 20px auto; width: 70px; filter: brightness(0) invert(1); }
 
-      /* Cierres y vistas de proyecto (sin cambios) */
-      #project-single-view { display: none; }
-      .close-v1 { display: inline-flex !important; align-items: center; justify-content: flex-end; text-decoration: none !important; transition: all 0.3s ease; cursor: pointer !important; float: right; opacity: 0; }
+      /* Vistas de proyecto y Grid */
+      #project-single-view { display: none; opacity: 0; }
+      .close-v1 { display: inline-flex !important; align-items: center; justify-content: flex-end; text-decoration: none !important; transition: all 0.3s ease; cursor: pointer !important; float: right; }
       .close-v1 .icon-text { font-family: 'Montserrat', sans-serif !important; font-size: 10px; margin-right: 12px; color: #ffffff !important; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; }
       .close-circle { width: 45px; height: 45px; border: 1px solid rgba(255,255,255,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #ffffff; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding-bottom: 4px; }
       .close-v1:hover .close-circle { background: #ffffff !important; color: #000000 !important; transform: scale(1.12); }
+
+      .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6); font-weight: 700; }
+      .meta-value { display: block; font-size: 15px; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; }
     </style>
   </head>
   <body>
@@ -113,7 +114,6 @@
                   <li><a href="index.html#home-section" class="nav-link">Home</a></li>
                   <li><a href="index.html#portfolio-section" class="nav-link">Portfolio</a></li>
                   <li><a href="index.html#about-section" class="nav-link">About</a></li>
-                  <li><a href="index.html#services-section" class="nav-link">Services</a></li>
                 </ul>
               </div>
               <div class="site-logo pos-absolute">
@@ -123,8 +123,6 @@
               </div>
               <div class="col-md-5 text-right text-lg-left">
                 <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
-                  <li><a href="index.html#skills-section" class="nav-link">Skills</a></li>
-                  <li><a href="index.html#testimonial-section" class="nav-link">Testimonial</a></li>
                   <li><a href="index.html#journal-section" class="nav-link">Journal</a></li>
                   <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
                 </ul>
@@ -145,7 +143,42 @@
           </div>
 
           <div id="grid-view" style="display: none; opacity: 0;">
-             </div>
+            <div class="row">
+              <div class="col-12 text-right mb-4">
+                <a href="javascript:void(0)" onclick="closeCategory()" class="close-v1">
+                  <span class="icon-text">Back to Categories</span>
+                  <span class="close-circle">×</span>
+                </a>
+              </div>
+            </div>
+            <div class="text-center mb-5">
+              <h1 id="current-category-title" style="font-weight: 800; letter-spacing: 3px; text-transform: uppercase;"></h1>
+              <img src="images/divider.png" class="wavy-divider" alt="divider">
+            </div>
+            <div id="filtered-posts" class="row gutter-isotope-item"></div>
+          </div>
+
+          <div id="project-single-view">
+            <div class="row">
+              <div class="col-12 text-right mb-5">
+                <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
+                  <span class="icon-text">Back to Category Grid</span>
+                  <span class="close-circle">×</span>
+                </a>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-lg-7">
+                <h2 id="project-title" style="font-weight: 800; text-transform: uppercase;"></h2>
+                <div id="project-visual-content"></div>
+              </div>
+              <div class="col-lg-4 offset-lg-1">
+                <span class="meta-header">Description</span><span id="project-desc" class="meta-value"></span>
+                <span class="meta-header">Date</span><span id="project-date" class="meta-value"></span>
+                <span class="meta-header">Client</span><span id="project-client" class="meta-value"></span>
+              </div>
+            </div>
+          </div>
 
           <div class="home-button-container">
             <a href="index.html" class="btn btn-outline-pill btn-custom-light">// BACK TO HOME //</a>
@@ -198,29 +231,68 @@
         });
         document.getElementById('categories-container').innerHTML = html;
 
-        // --- ANIMACIÓN DE ENTRADA (GSAP) ---
         const tl = gsap.timeline();
-
-        // 1. Aparece el título principal suavemente
         tl.to("#selection-view h1, #selection-view .wavy-divider, #selection-view p", {
           duration: 0.8, opacity: 1, y: 0, stagger: 0.2, ease: "power2.out"
         });
-
-        // 2. Aparecen las categorías en cascada (Stagger)
         tl.to(".category-card", {
           duration: 0.7, opacity: 1, y: -10, stagger: 0.1, ease: "power2.out"
         }, "-=0.4");
-
-        // 3. FADE LARGO PARA EL BOTÓN (Para que no salte, aparece cuando ya hay espacio)
-        tl.to(".home-button-container", {
-          duration: 1.2, opacity: 1, ease: "power2.out"
-        }, "-=0.3");
-
-        // 4. Footer al final
-        tl.to("#dynamic-footer-wrap", { duration: 1, opacity: 1, ease: "power2.out" }, "-=0.6");
+        tl.to(".home-button-container", { duration: 1, opacity: 1 }, "-=0.3");
+        tl.to("#dynamic-footer-wrap", { duration: 1, opacity: 1 }, "-=0.6");
       }
 
-      // Resto de funciones (openCategory, etc) se mantienen igual a tu CAT 3
+      function openCategory(cat) {
+        document.getElementById('current-category-title').innerText = cat;
+        const filtered = allItems.filter(item => item.Category === cat);
+        let html = "";
+        filtered.forEach(item => {
+          html += `
+            <div class="col-sm-6 col-md-4 mb-4">
+              <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item">
+                <div class="overlay"><span class="wrap-icon icon-play_circle_filled"></span><div class="portfolio-item-content"><h3>${item.Titulo}</h3></div></div>
+                <img src="${item.ThumbnailURL}" class="img-fluid" style="width:100%; height:250px; object-fit:cover;">
+              </a>
+            </div>`;
+        });
+        document.getElementById('filtered-posts').innerHTML = html;
+
+        gsap.to("#selection-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
+          gsap.fromTo("#grid-view", { opacity: 0, display: "block" }, { duration: 0.6, opacity: 1 });
+        }});
+      }
+
+      function closeCategory() {
+        gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
+          gsap.fromTo("#selection-view", { opacity: 0, display: "block" }, { duration: 0.6, opacity: 1 });
+        }});
+      }
+
+      function openProject(id) {
+        const p = allItems.find(x => x.ID == id);
+        document.getElementById('project-title').innerText = p.Titulo;
+        document.getElementById('project-desc').innerText = p.Descripcion;
+        document.getElementById('project-date').innerText = p.Fecha || "2026";
+        document.getElementById('project-client').innerText = p.Cliente || "Private";
+        
+        let url = p.VideoURL;
+        let content = url.includes('youtube') 
+          ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1] : url.split('/').pop()}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" frameborder="0" allowfullscreen></iframe></div>`
+          : `<video controls autoplay style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
+        
+        document.getElementById('project-visual-content').innerHTML = content;
+        
+        gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
+          gsap.fromTo("#project-single-view", { opacity: 0, display: "block" }, { duration: 0.6, opacity: 1 });
+        }});
+      }
+
+      function closeProject() {
+        gsap.to("#project-single-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
+          document.getElementById('project-visual-content').innerHTML = "";
+          gsap.fromTo("#grid-view", { opacity: 0, display: "block" }, { duration: 0.6, opacity: 1 });
+        }});
+      }
     </script>
   </body>
 </html>
