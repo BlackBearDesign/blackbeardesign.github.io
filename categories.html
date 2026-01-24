@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* --- ESTRUCTURA STICKY FOOTER SIN ESPACIOS MUERTOS --- */
+      /* --- FIX: ELIMINACIÓN DE ESPACIOS Y STICKY FOOTER --- */
       html, body { height: 100%; margin: 0; }
       .unslate_co--site-wrap { 
         display: flex; 
@@ -24,24 +24,24 @@
         background-color: transparent !important; 
       }
       .unslate_co--site-inner { 
-        flex: 1 0 auto; /* Empuja el footer al final pero deja que el contenido fluya */
-        padding-bottom: 40px; /* Espacio mínimo antes del botón */
+        flex: 1 0 auto; /* Empuja el footer pero permite que el contenido sea compacto */
       }
 
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
 
-      /* FOOTER IDÉNTICO AL INDEX (27) */
+      /* FOOTER IDÉNTICO AL INDEX (27) CON MARGEN CERRADO */
       .unslate_co--footer {
         background-color: #191919 !important;
         position: relative !important;
         display: block !important;
         z-index: 10 !important;
-        flex-shrink: 0; /* Evita que el footer se deforme */
+        flex-shrink: 0;
         padding: 40px 0;
+        margin-top: 0; /* Eliminamos margen superior extra */
       }
 
-      /* BOTÓN DE CIERRE (X) - ESTILO PREMIUM INDEX (27) */
+      /* BOTÓN DE CIERRE (X) PREMIUM INDEX (27) */
       .close-v1 { 
           display: inline-flex !important; 
           align-items: center; 
@@ -79,7 +79,7 @@
           transform: scale(1.12); 
       }
 
-      /* CATEGORÍAS */
+      /* DISEÑO DE CATEGORÍAS */
       .category-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -94,10 +94,10 @@
       .category-card h3 { font-weight: 800; letter-spacing: 4px; margin: 0; font-size: 1.2rem; color: #fff; text-transform: uppercase; }
       .category-card:hover { background: #ffffff; transform: translateY(-10px); }
       .category-card:hover h3 { color: #000 !important; }
-      .wavy-divider { display: block; margin: 20px auto; width: 70px; filter: brightness(0) invert(1); }
+      .wavy-divider { display: block; margin: 15px auto; width: 70px; filter: brightness(0) invert(1); }
 
-      /* CARGA DINÁMICA SIN SALTOS */
-      #dynamic-load-block { opacity: 0; }
+      /* CARGA SIN SALTOS */
+      #dynamic-bottom-block { opacity: 0; }
 
       /* METADATOS IGUAL AL INDEX (27) */
       #project-single-view { display: none; }
@@ -143,7 +143,7 @@
           </div>
         </nav>
 
-        <div class="container" style="padding-top: 150px;">
+        <div class="container" style="padding-top: 130px; padding-bottom: 20px;">
           
           <div id="selection-view">
             <div class="text-center mb-5">
@@ -152,10 +152,6 @@
               <p>Select a category to filter my work</p>
             </div>
             <div class="row gutter-v4" id="categories-container"></div>
-            
-            <div class="text-center mt-5 mb-5" id="dynamic-btn-wrap" style="opacity: 0;">
-              <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
-            </div>
           </div>
 
           <div id="grid-view" style="display: none; opacity: 0;">
@@ -172,9 +168,6 @@
               <img src="images/divider.png" class="wavy-divider" alt="divider">
             </div>
             <div id="filtered-posts" class="row gutter-isotope-item"></div>
-            <div class="text-center mt-5 mb-5">
-              <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
-            </div>
           </div>
 
           <div id="project-single-view">
@@ -197,7 +190,11 @@
           </div>
 
         </div>
-      </div> <div id="dynamic-footer-block" style="opacity: 0;">
+      </div> <div id="dynamic-bottom-block">
+        <div class="text-center mb-5">
+          <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
+        </div>
+
         <footer class="unslate_co--footer">
           <div class="container text-center">
             <div class="footer-site-logo">
@@ -214,9 +211,7 @@
         </footer>
       </div>
 
-    </div>
-
-    <script src="js/scripts-dist.js"></script>
+    </div> <script src="js/scripts-dist.js"></script>
     <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -245,9 +240,8 @@
         });
         document.getElementById('categories-container').innerHTML = html;
         
-        // --- APARECEN BOTÓN Y FOOTER CUANDO HAY CONTENIDO ---
-        gsap.to("#dynamic-btn-wrap", { duration: 1, opacity: 1, delay: 0.5 });
-        gsap.to("#dynamic-footer-block", { duration: 1.2, opacity: 1, delay: 0.7, ease: "power2.out" });
+        // --- FIX FINAL: APARECER TODO CON FADE-IN CUANDO ESTÉ LISTO ---
+        gsap.to("#dynamic-bottom-block", { duration: 1, opacity: 1, delay: 0.4, ease: "power2.out" });
       }
 
       function openCategory(cat) {
