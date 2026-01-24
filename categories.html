@@ -15,33 +15,22 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* --- FIX: ELIMINACIÓN DE ESPACIOS Y STICKY FOOTER --- */
-      html, body { height: 100%; margin: 0; }
-      .unslate_co--site-wrap { 
-        display: flex; 
-        flex-direction: column; 
-        min-height: 100vh; 
-        background-color: transparent !important; 
-      }
-      .unslate_co--site-inner { 
-        flex: 1 0 auto; /* Empuja el footer pero permite que el contenido sea compacto */
-      }
-
+      /* --- ESTILOS DE FONDO Y LIMPIEZA DE ESPACIOS --- */
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+      body, .unslate_co--site-wrap, .unslate_co--site-inner { background-color: transparent !important; color: white; }
 
-      /* FOOTER IDÉNTICO AL INDEX (27) CON MARGEN CERRADO */
+      /* FOOTER SÓLIDO (IDÉNTICO AL INDEX 27) */
       .unslate_co--footer {
         background-color: #191919 !important;
         position: relative !important;
         display: block !important;
         z-index: 10 !important;
-        flex-shrink: 0;
         padding: 40px 0;
-        margin-top: 0; /* Eliminamos margen superior extra */
+        margin-top: 60px; /* Espacio controlado con el botón */
       }
 
-      /* BOTÓN DE CIERRE (X) PREMIUM INDEX (27) */
+      /* BOTÓN DE CIERRE (X) REFINADO DEL INDEX (27) */
       .close-v1 { 
           display: inline-flex !important; 
           align-items: center; 
@@ -50,7 +39,6 @@
           transition: all 0.3s ease; 
           cursor: pointer !important;
           float: right; 
-          opacity: 0;
       }
       .close-v1 .icon-text { 
           font-family: 'Montserrat', sans-serif !important; 
@@ -79,7 +67,7 @@
           transform: scale(1.12); 
       }
 
-      /* DISEÑO DE CATEGORÍAS */
+      /* DISEÑO DE TARJETAS */
       .category-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -96,14 +84,14 @@
       .category-card:hover h3 { color: #000 !important; }
       .wavy-divider { display: block; margin: 15px auto; width: 70px; filter: brightness(0) invert(1); }
 
-      /* CARGA SIN SALTOS */
-      #dynamic-bottom-block { opacity: 0; }
-
-      /* METADATOS IGUAL AL INDEX (27) */
+      /* METADATOS PROYECTO (IGUAL AL INDEX 27) */
       #project-single-view { display: none; }
       .meta-item { margin-bottom: 30px; opacity: 0; }
       .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #ffffff !important; opacity: 0.6; font-weight: 700; margin-bottom: 5px; }
       .meta-value { display: block; font-size: 15px; color: #ffffff !important; font-weight: 800; text-transform: uppercase; }
+      
+      /* OCULTAR CARGA INICIAL */
+      .main-content-loader { opacity: 0; }
     </style>
   </head>
   <body>
@@ -113,8 +101,8 @@
     </div>
 
     <div class="unslate_co--site-wrap">
-      
       <div class="unslate_co--site-inner">
+
         <nav class="unslate_co--site-nav site-nav-target">
           <div class="container">
             <div class="row align-items-center justify-content-between text-left">
@@ -143,7 +131,7 @@
           </div>
         </nav>
 
-        <div class="container" style="padding-top: 130px; padding-bottom: 20px;">
+        <div class="container main-content-loader" style="padding-top: 130px;">
           
           <div id="selection-view">
             <div class="text-center mb-5">
@@ -152,6 +140,10 @@
               <p>Select a category to filter my work</p>
             </div>
             <div class="row gutter-v4" id="categories-container"></div>
+            
+            <div class="text-center mt-5">
+              <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
+            </div>
           </div>
 
           <div id="grid-view" style="display: none; opacity: 0;">
@@ -168,6 +160,9 @@
               <img src="images/divider.png" class="wavy-divider" alt="divider">
             </div>
             <div id="filtered-posts" class="row gutter-isotope-item"></div>
+            <div class="text-center mt-5">
+              <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
+            </div>
           </div>
 
           <div id="project-single-view">
@@ -190,28 +185,23 @@
           </div>
 
         </div>
-      </div> <div id="dynamic-bottom-block">
-        <div class="text-center mb-5">
-          <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
-        </div>
-
-        <footer class="unslate_co--footer">
-          <div class="container text-center">
-            <div class="footer-site-logo">
-              <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
-                <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px;">
-              </a>
-            </div>
-            <ul class="footer-site-social" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
-              <li><a href="#">Facebook</a></li>
-              <li><a href="#">Instagram</a></li>
-            </ul>
-            <p class="site-copyright">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
+      </div> <footer class="unslate_co--footer main-content-loader">
+        <div class="container text-center">
+          <div class="footer-site-logo">
+            <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 15px;">
+              <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px;">
+            </a>
           </div>
-        </footer>
-      </div>
+          <ul class="footer-site-social" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; margin-bottom: 15px;">
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+          <p class="site-copyright" style="font-size: 12px;">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
 
-    </div> <script src="js/scripts-dist.js"></script>
+    <script src="js/scripts-dist.js"></script>
     <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -226,6 +216,8 @@
           complete: function(results) {
             allItems = results.data.filter(p => p.ID && p.Titulo);
             renderCategoryMenu();
+            // REVELAR TODO CUANDO EL EXCEL LLEGUE
+            gsap.to(".main-content-loader", { duration: 1, opacity: 1, ease: "power2.out" });
           }
         });
       });
@@ -239,9 +231,6 @@
                   </div>`;
         });
         document.getElementById('categories-container').innerHTML = html;
-        
-        // --- FIX FINAL: APARECER TODO CON FADE-IN CUANDO ESTÉ LISTO ---
-        gsap.to("#dynamic-bottom-block", { duration: 1, opacity: 1, delay: 0.4, ease: "power2.out" });
       }
 
       function openCategory(cat) {
@@ -289,6 +278,7 @@
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
           gsap.set("#project-single-view", { display: "block", opacity: 0, y: 30 });
           gsap.to("#project-single-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
+          // Animación X y metadatos (IDÉNTICO AL INDEX 27)
           gsap.fromTo("#btn-back-grid", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, delay: 0.4 });
           gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4 });
         }});
