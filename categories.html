@@ -284,4 +284,18 @@
           gsap.set("#project-single-view", { display: "block", opacity: 0 });
           gsap.to("#project-single-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
           gsap.fromTo("#btn-back-grid", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, delay: 0.4 });
-          gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0,
+          gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4 });
+        }});
+      }
+
+      function closeProject() {
+        gsap.to("#project-single-view", { duration: 0.4, opacity: 0, y: 20, onComplete: () => {
+          document.getElementById('project-single-view').style.display = "none";
+          document.getElementById('project-visual-content').innerHTML = "";
+          gsap.set("#grid-view", { display: "block", opacity: 0 });
+          gsap.to("#grid-view", { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
+        }});
+      }
+    </script>
+  </body>
+</html>
