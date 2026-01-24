@@ -982,6 +982,8 @@ document.addEventListener('DOMContentLoaded', function() {
         header: true,
         complete: function(results) {
             window.portfolioItems = results.data.filter(p => p.ID && p.Titulo);
+          // MEZCLAR EL PORTAFOLIO ALEATORIAMENTE
+window.portfolioItems.sort(() => Math.random() - 0.5);
             if(window.portfolioItems.length > 0) {
                 renderPortfolioGrid(window.portfolioItems);
             } else {
