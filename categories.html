@@ -15,97 +15,76 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* ESTILOS COPIADOS LITERALMENTE DEL INDEX (27).HTML */
+      /* --- 1. ESTRUCTURA BASE --- */
+      html, body { 
+        height: 100%; 
+        margin: 0; 
+      }
+
+      /* La página es una columna elástica */
+      .unslate_co--site-inner { 
+          display: flex !important; 
+          flex-direction: column !important; 
+          min-height: 100vh !important; 
+          background-color: transparent !important; 
+          color: white; 
+      }
+
+      /* Esta zona (videos) ocupa todo el espacio y empuja al footer al suelo */
+      #main-content-area {
+          flex: 1 0 auto !important;
+          padding-top: 150px;
+          padding-bottom: 80px; /* Espacio para que el botón no toque el footer */
+      }
+
+      /* El botón de HOME ahora vive aquí, sobre el fondo de video */
+      .home-button-container {
+          text-align: center;
+          margin-top: 60px;
+          margin-bottom: 20px;
+      }
+
+      /* --- 2. EL FOOTER ORIGINAL (SOLO ZONA GRIS) --- */
+      #dynamic-footer-wrap { 
+          width: 100%;
+          opacity: 0; /* Para el efecto GSAP */
+          flex-shrink: 0 !important;
+      }
+
+      .unslate_co--footer {
+          background-color: #191919 !important;
+          padding: 60px 0;
+          display: block !important;
+          position: relative !important;
+          z-index: 100;
+      }
+
+      /* --- 3. OTROS ESTILOS --- */
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
-      body, .unslate_co--site-wrap, .unslate_co--site-inner, .unslate_co--section { background-color: transparent !important; }
-      
-      .unslate_co--footer {
-        background-color: #191919 !important;
-        position: relative !important;
-        display: block !important;
-        z-index: 10 !important;
-        margin-top: 0;
-      }
 
-      /* BOTÓN DE CIERRE (X) REFINADO DEL INDEX */
-      .close-v1 { 
-          display: inline-flex !important; 
-          align-items: center; 
-          justify-content: flex-end; 
-          text-decoration: none !important; 
-          transition: all 0.3s ease; 
-          cursor: pointer !important;
-          width: auto !important; 
-          float: right; 
-      }
-      .close-v1 .icon-text { 
-          font-family: 'Montserrat', sans-serif !important; 
-          font-size: 10px; 
-          margin-right: 12px; 
-          color: #ffffff !important; 
-          text-transform: uppercase; 
-          font-weight: 700; 
-          letter-spacing: 2px;
-      }
-      .close-circle { 
-          width: 45px; height: 45px; 
-          border: 1px solid rgba(255,255,255,0.4); 
-          border-radius: 50%; 
-          display: flex; 
-          align-items: center; 
-          justify-content: center; 
-          font-size: 24px; 
-          color: #ffffff; 
-          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          padding-bottom: 4px; 
-      }
-      .close-v1:hover .close-circle { 
-          background: #ffffff !important; 
-          color: #000000 !important; 
-          transform: scale(1.12); 
-      }
+      .close-v1 { display: inline-flex !important; align-items: center; justify-content: flex-end; text-decoration: none !important; transition: all 0.3s ease; cursor: pointer !important; float: right; opacity: 0; }
+      .close-v1 .icon-text { font-family: 'Montserrat', sans-serif !important; font-size: 10px; margin-right: 12px; color: #ffffff !important; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; }
+      .close-circle { width: 45px; height: 45px; border: 1px solid rgba(255,255,255,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #ffffff; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding-bottom: 4px; }
+      .close-v1:hover .close-circle { background: #ffffff !important; color: #000000 !important; transform: scale(1.12); }
 
-      /* ESTILOS DE CATEGORÍAS */
-      .category-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 60px 20px;
-        border-radius: 4px;
-        text-align: center;
-        transition: 0.4s all ease;
-        cursor: pointer;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+      .category-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 60px 20px; border-radius: 4px; text-align: center; transition: 0.4s all ease; cursor: pointer; height: 100%; display: flex; align-items: center; justify-content: center; }
       .category-card h3 { font-weight: 800; letter-spacing: 4px; margin: 0; font-size: 1.2rem; color: #fff; text-transform: uppercase; }
       .category-card:hover { background: #ffffff; transform: translateY(-10px); }
       .category-card:hover h3 { color: #000 !important; }
       .wavy-divider { display: block; margin: 20px auto; width: 70px; filter: brightness(0) invert(1); }
 
-      /* SINGLE VIEW */
-      #project-single-view { color: #ffffff !important; display: none; }
-      .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6); font-weight: 700; }
-      .meta-value { display: block; font-size: 15px; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; }
+      #project-single-view { display: none; }
+      .meta-item { margin-bottom: 30px; opacity: 0; }
+      .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #ffffff !important; opacity: 0.6; font-weight: 700; margin-bottom: 5px; }
+      .meta-value { display: block; font-size: 15px; color: #ffffff !important; font-weight: 800; text-transform: uppercase; }
     </style>
   </head>
-  <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+  <body>
 
     <div class="video-bg-global">
       <video autoplay loop muted playsinline><source src="video/bg.mp4" type="video/mp4"></video>
     </div>
-
-    <nav class="unslate_co--site-mobile-menu">
-      <div class="close-wrap d-flex">
-        <a href="#" class="d-flex ml-auto js-menu-toggle">
-          <span class="close-label">Close</span>
-          <div class="close-times"><span class="bar1"></span><span class="bar2"></span></div>
-        </a>
-      </div>
-      <div class="site-mobile-inner"></div>
-    </nav>
 
     <div class="unslate_co--site-wrap">
       <div class="unslate_co--site-inner">
@@ -133,15 +112,12 @@
                   <li><a href="index.html#journal-section" class="nav-link">Journal</a></li>
                   <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
                 </ul>
-                <ul class="site-nav-ul-none-onepage text-right d-inline-block d-lg-none">
-                  <li><a href="#" class="js-menu-toggle">Menu</a></li>
-                </ul>
               </div>
             </div>
           </div>
         </nav>
 
-        <div class="container" style="padding-top: 150px; min-height: 80vh;">
+        <div id="main-content-area" class="container">
           
           <div id="selection-view">
             <div class="text-center mb-5">
@@ -150,17 +126,14 @@
               <p>Select a category to filter my work</p>
             </div>
             <div class="row gutter-v4" id="categories-container"></div>
-            <div class="text-center mt-5">
-              <a href="index.html" class="btn btn-outline-pill btn-custom-light">// BACK TO HOME //</a>
-            </div>
           </div>
 
           <div id="grid-view" style="display: none; opacity: 0;">
             <div class="row">
               <div class="col-12 text-right mb-4">
-                <a href="javascript:void(0)" onclick="closeCategory()" class="close-v1">
+                <a href="javascript:void(0)" onclick="closeCategory()" class="close-v1" id="btn-back-cat">
                   <span class="icon-text">Back to Categories</span>
-                  <span class="close-circle">×</span>
+                  <div class="close-circle">×</div>
                 </a>
               </div>
             </div>
@@ -174,43 +147,44 @@
           <div id="project-single-view">
             <div class="row">
               <div class="col-12 text-right mb-5">
-                <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
+                <a href="javascript:void(0)" onclick="closeProject()" class="close-v1" id="btn-back-grid">
                   <span class="icon-text">Back to Category Grid</span>
-                  <span class="close-circle">×</span>
+                  <div class="close-circle">×</div>
                 </a>
               </div>
             </div>
             <div class="row align-items-center">
-              <div class="col-lg-7"><h2 id="project-title" style="font-weight: 800;"></h2><div id="project-visual-content"></div></div>
+              <div class="col-lg-7"><h2 id="project-title" style="font-weight: 800; text-transform: uppercase;"></h2><div id="project-visual-content"></div></div>
               <div class="col-lg-4 offset-lg-1">
-                <span class="meta-header">Description</span><span id="project-desc" class="meta-value"></span>
-                <span class="meta-header">Date</span><span id="project-date" class="meta-value"></span>
-                <span class="meta-header">Client</span><span id="project-client" class="meta-value"></span>
+                <div class="meta-item"><span class="meta-header">Description</span><span id="project-desc" class="meta-value"></span></div>
+                <div class="meta-item"><span class="meta-header">Date</span><span id="project-date" class="meta-value"></span></div>
+                <div class="meta-item"><span class="meta-header">Client</span><span id="project-client" class="meta-value"></span></div>
               </div>
             </div>
           </div>
-        </div>
 
-      </div> <footer class="unslate_co--footer unslate_co--section">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-7">
-              <div class="footer-site-logo text-center">
+          <div class="home-button-container">
+            <a href="index.html" class="btn btn-outline-pill btn-custom-light">// BACK TO HOME //</a>
+          </div>
+
+        </div> <div id="dynamic-footer-wrap">
+          <footer class="unslate_co--footer unslate_co--section">
+            <div class="container text-center">
+              <div class="footer-site-logo">
                 <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
-                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px; width: auto; vertical-align: middle;">
+                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px;">
                 </a>
               </div>
-              <ul class="footer-site-social text-center">
+              <ul class="footer-site-social" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
                 <li><a href="#">Facebook</a></li>
                 <li><a href="#">Instagram</a></li>
               </ul>
-              <p class="site-copyright text-center">
-                Copyright &copy; <script>document.write(new Date().getFullYear());</script> BlackBear. All rights reserved.
-              </p>
+              <p class="site-copyright">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
             </div>
-          </div>
+          </footer>
         </div>
-      </footer>
+
+      </div>
     </div>
 
     <script src="js/scripts-dist.js"></script>
@@ -236,12 +210,12 @@
         const categories = [...new Set(allItems.map(item => item.Category || 'Video'))];
         let html = "";
         categories.forEach((cat, i) => {
-          html += `
-            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="${i*100}">
-              <div class="category-card" onclick="openCategory('${cat}')"><h3>${cat}</h3></div>
-            </div>`;
+          html += `<div class="col-md-4 mb-4">
+                    <div class="category-card" onclick="openCategory('${cat}')"><h3>${cat}</h3></div>
+                  </div>`;
         });
         document.getElementById('categories-container').innerHTML = html;
+        gsap.to("#dynamic-footer-wrap", { duration: 1, opacity: 1, delay: 0.8, ease: "power2.out" });
       }
 
       function openCategory(cat) {
@@ -249,23 +223,26 @@
         const filtered = allItems.filter(item => item.Category === cat);
         let html = "";
         filtered.forEach(item => {
-          html += `
-            <div class="col-sm-6 col-md-6 col-lg-4 mb-4">
-              <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item">
-                <div class="overlay"><span class="wrap-icon icon-play_circle_filled"></span><div class="portfolio-item-content"><h3>${item.Titulo}</h3></div></div>
-                <img src="${item.ThumbnailURL}" class="img-fluid" style="width:100%; height:250px; object-fit:cover;">
-              </a>
-            </div>`;
+          html += `<div class="col-sm-6 col-md-4 mb-4">
+                    <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item">
+                      <div class="overlay"><span class="wrap-icon icon-play_circle_filled"></span><div class="portfolio-item-content"><h3>${item.Titulo}</h3></div></div>
+                      <img src="${item.ThumbnailURL}" class="img-fluid" style="width:100%; height:250px; object-fit:cover;">
+                    </a>
+                  </div>`;
         });
         document.getElementById('filtered-posts').innerHTML = html;
+        
         gsap.to("#selection-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
-          gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
+          gsap.set("#grid-view", { display: "block", opacity: 0 });
+          gsap.to("#grid-view", { duration: 0.6, opacity: 1 });
+          gsap.fromTo("#btn-back-cat", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0 });
         }});
       }
 
       function closeCategory() {
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
-          gsap.fromTo("#selection-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
+          gsap.set("#selection-view", { display: "block", opacity: 0 });
+          gsap.to("#selection-view", { duration: 0.6, opacity: 1 });
         }});
       }
 
@@ -278,19 +255,25 @@
         
         let url = p.VideoURL;
         let content = url.includes('youtube') 
-          ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src=\"https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1] : url.split('/').pop()}\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" frameborder=\"0\" allowfullscreen></iframe></div>`
-          : `<video controls autoplay style=\"width:100%;\"><source src=\"${url}\" type=\"video/mp4\"></video>`;
+          ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1] : url.split('/').pop()}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" frameborder="0" allowfullscreen></iframe></div>`
+          : `<video controls autoplay style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
         
         document.getElementById('project-visual-content').innerHTML = content;
+        
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
-          gsap.fromTo("#project-single-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
+          gsap.set("#project-single-view", { display: "block", opacity: 0 });
+          gsap.to("#project-single-view", { duration: 0.6, opacity: 1 });
+          gsap.fromTo("#btn-back-grid", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0 });
+          gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, stagger: 0.15 });
         }});
       }
 
       function closeProject() {
-        gsap.to("#project-single-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
+        gsap.to("#project-single-view", { duration: 0.4, opacity: 0, onComplete: () => {
+          document.getElementById('project-single-view').style.display = "none";
           document.getElementById('project-visual-content').innerHTML = "";
-          gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
+          gsap.set("#grid-view", { display: "block", opacity: 0 });
+          gsap.to("#grid-view", { duration: 0.6, opacity: 1 });
         }});
       }
     </script>
