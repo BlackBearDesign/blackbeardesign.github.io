@@ -15,22 +15,22 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* --- ESTILOS DE FONDO Y LIMPIEZA DE ESPACIOS --- */
+      /* --- LIMPIEZA TOTAL DE ESPACIOS --- */
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
       body, .unslate_co--site-wrap, .unslate_co--site-inner { background-color: transparent !important; color: white; }
 
-      /* FOOTER SÓLIDO (IDÉNTICO AL INDEX 27) */
+      /* FOOTER SÓLIDO SIN POSICIÓN FIJA (IGUAL AL INDEX 27) */
       .unslate_co--footer {
         background-color: #191919 !important;
         position: relative !important;
         display: block !important;
         z-index: 10 !important;
         padding: 40px 0;
-        margin-top: 60px; /* Espacio controlado con el botón */
+        margin-top: 50px; /* Distancia corta y controlada */
       }
 
-      /* BOTÓN DE CIERRE (X) REFINADO DEL INDEX (27) */
+      /* BOTÓN DE CIERRE (X) REFINADO - CORRECCIÓN DE SALTO */
       .close-v1 { 
           display: inline-flex !important; 
           align-items: center; 
@@ -38,7 +38,9 @@
           text-decoration: none !important; 
           transition: all 0.3s ease; 
           cursor: pointer !important;
-          float: right; 
+          float: right;
+          opacity: 0; /* Oculto por defecto para evitar el flash arriba */
+          transform: translateY(20px);
       }
       .close-v1 .icon-text { 
           font-family: 'Montserrat', sans-serif !important; 
@@ -61,11 +63,7 @@
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           padding-bottom: 4px; 
       }
-      .close-v1:hover .close-circle { 
-          background: #ffffff !important; 
-          color: #000000 !important; 
-          transform: scale(1.12); 
-      }
+      .close-v1:hover .close-circle { background: #ffffff !important; color: #000000 !important; transform: scale(1.12); }
 
       /* DISEÑO DE TARJETAS */
       .category-card {
@@ -82,16 +80,15 @@
       .category-card h3 { font-weight: 800; letter-spacing: 4px; margin: 0; font-size: 1.2rem; color: #fff; text-transform: uppercase; }
       .category-card:hover { background: #ffffff; transform: translateY(-10px); }
       .category-card:hover h3 { color: #000 !important; }
-      .wavy-divider { display: block; margin: 15px auto; width: 70px; filter: brightness(0) invert(1); }
+      .wavy-divider { display: block; margin: 20px auto; width: 70px; filter: brightness(0) invert(1); }
 
-      /* METADATOS PROYECTO (IGUAL AL INDEX 27) */
-      #project-single-view { display: none; }
+      /* SINGLE VIEW (INDEX 27) */
+      #project-single-view { display: none; opacity: 0; }
       .meta-item { margin-bottom: 30px; opacity: 0; }
       .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #ffffff !important; opacity: 0.6; font-weight: 700; margin-bottom: 5px; }
       .meta-value { display: block; font-size: 15px; color: #ffffff !important; font-weight: 800; text-transform: uppercase; }
       
-      /* OCULTAR CARGA INICIAL */
-      .main-content-loader { opacity: 0; }
+      .load-hidden { opacity: 0; }
     </style>
   </head>
   <body>
@@ -115,8 +112,8 @@
                 </ul>
               </div>
               <div class="site-logo pos-absolute">
-                <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px; width: auto; vertical-align: middle;">
+                <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px;">
+                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px;">
                 </a>
               </div>
               <div class="col-md-5 text-right text-lg-left">
@@ -131,7 +128,7 @@
           </div>
         </nav>
 
-        <div class="container main-content-loader" style="padding-top: 130px;">
+        <div class="container load-hidden" style="padding-top: 130px;">
           
           <div id="selection-view">
             <div class="text-center mb-5">
@@ -140,13 +137,12 @@
               <p>Select a category to filter my work</p>
             </div>
             <div class="row gutter-v4" id="categories-container"></div>
-            
             <div class="text-center mt-5">
               <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
             </div>
           </div>
 
-          <div id="grid-view" style="display: none; opacity: 0;">
+          <div id="grid-view" style="display: none;">
             <div class="row">
               <div class="col-12 text-right mb-4">
                 <a href="javascript:void(0)" onclick="closeCategory()" class="close-v1" id="btn-back-cat">
@@ -185,7 +181,7 @@
           </div>
 
         </div>
-      </div> <footer class="unslate_co--footer main-content-loader">
+      </div> <footer class="unslate_co--footer load-hidden">
         <div class="container text-center">
           <div class="footer-site-logo">
             <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 15px;">
@@ -216,8 +212,7 @@
           complete: function(results) {
             allItems = results.data.filter(p => p.ID && p.Titulo);
             renderCategoryMenu();
-            // REVELAR TODO CUANDO EL EXCEL LLEGUE
-            gsap.to(".main-content-loader", { duration: 1, opacity: 1, ease: "power2.out" });
+            gsap.to(".load-hidden", { duration: 1, opacity: 1, ease: "power2.out" });
           }
         });
       });
@@ -248,16 +243,17 @@
         document.getElementById('filtered-posts').innerHTML = html;
         
         gsap.to("#selection-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
-          gsap.set("#grid-view", { display: "block", opacity: 0, y: 30 });
-          gsap.to("#grid-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
+          gsap.set("#grid-view", { display: "block", opacity: 0 });
+          gsap.fromTo("#grid-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
           gsap.fromTo("#btn-back-cat", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, delay: 0.3 });
         }});
       }
 
       function closeCategory() {
-        gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
-          gsap.set("#selection-view", { display: "block", opacity: 0, y: 30 });
-          gsap.to("#selection-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
+        gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, onComplete: () => {
+          document.getElementById('grid-view').style.display = "none";
+          gsap.set("#selection-view", { display: "block", opacity: 0 });
+          gsap.fromTo("#selection-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
         }});
       }
 
@@ -276,9 +272,8 @@
         document.getElementById('project-visual-content').innerHTML = content;
         
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
-          gsap.set("#project-single-view", { display: "block", opacity: 0, y: 30 });
-          gsap.to("#project-single-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
-          // Animación X y metadatos (IDÉNTICO AL INDEX 27)
+          gsap.set("#project-single-view", { display: "block", opacity: 0 });
+          gsap.fromTo("#project-single-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
           gsap.fromTo("#btn-back-grid", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, delay: 0.4 });
           gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4 });
         }});
@@ -288,8 +283,8 @@
         gsap.to("#project-single-view", { duration: 0.4, opacity: 0, y: 20, onComplete: () => {
           document.getElementById('project-single-view').style.display = "none";
           document.getElementById('project-visual-content').innerHTML = "";
-          gsap.set("#grid-view", { display: "block", opacity: 0, y: 30 });
-          gsap.to("#grid-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
+          gsap.set("#grid-view", { display: "block", opacity: 0 });
+          gsap.fromTo("#grid-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
         }});
       }
     </script>
