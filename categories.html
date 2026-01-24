@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* ESTILOS EXTRAÍDOS DEL INDEX (27).HTML */
+      /* ESTILOS DE FONDO Y ESTRUCTURA DEL INDEX (27).HTML */
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
       body, .unslate_co--site-wrap, .unslate_co--site-inner, .unslate_co--section { background-color: transparent !important; }
@@ -28,7 +28,7 @@
         margin-top: 0;
       }
 
-      /* BOTÓN DE CIERRE (X) PREMIUM - COPIADO LITERAMENTE */
+      /* BOTÓN DE CIERRE (X) EXTRAÍDO DEL INDEX (27).HTML */
       .close-v1 { 
           display: inline-flex !important; 
           align-items: center; 
@@ -56,7 +56,7 @@
           align-items: center; 
           justify-content: center; 
           font-size: 24px; 
-          color: #ffffff !important; 
+          color: #ffffff; 
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           padding-bottom: 4px; 
       }
@@ -66,7 +66,7 @@
           transform: scale(1.12); 
       }
 
-      /* ESTILOS DE CATEGORÍAS */
+      /* DISEÑO DE CATEGORÍAS */
       .category-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -85,7 +85,7 @@
       .category-card:hover h3 { color: #000 !important; }
       .wavy-divider { display: block; margin: 20px auto; width: 70px; filter: brightness(0) invert(1); }
 
-      /* METADATOS - IGUAL AL INDEX */
+      /* PROYECTO SINGLE VIEW - IGUAL AL INDEX (27).HTML */
       #project-single-view { color: #ffffff !important; display: none; }
       .meta-item { margin-bottom: 30px; opacity: 0; }
       .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #ffffff !important; opacity: 0.6; font-weight: 700; margin-bottom: 5px; }
@@ -189,13 +189,21 @@
               </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
 
       <footer class="unslate_co--footer unslate_co--section">
         <div class="container text-center">
-          <div class="footer-site-logo"><img src="images/logo.png" style="height: 35px; background: white; padding: 5px; border-radius: 4px;"></div>
+          <div class="footer-site-logo">
+            <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
+              <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px; width: auto; vertical-align: middle;">
+            </a>
+          </div>
+          <ul class="footer-site-social" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
           <p class="site-copyright mt-4">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
         </div>
       </footer>
@@ -244,14 +252,16 @@
                   </div>`;
         });
         document.getElementById('filtered-posts').innerHTML = html;
-        gsap.to("#selection-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
-          gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 30 }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
+        
+        // ANIMACIÓN DE TRANSICIÓN IGUAL AL INDEX
+        gsap.to("#selection-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
+          gsap.fromTo("#grid-view", { opacity: 0, y: 30, display: "block" }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
         }});
       }
 
       function closeCategory() {
-        gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
-          gsap.fromTo("#selection-view", { opacity: 0, display: "block", y: 30 }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
+        gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
+          gsap.fromTo("#selection-view", { opacity: 0, y: 30, display: "block" }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
         }});
       }
 
@@ -269,9 +279,9 @@
         
         document.getElementById('project-visual-content').innerHTML = content;
         
-        gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
-          // FIX: USAMOS SET PARA EVITAR EL SALTO ARRIBA
-          gsap.set("#project-single-view", { opacity: 0, y: 30, display: "block" });
+        // LÓGICA DE ANIMACIÓN SIN SALTOS (COPIADA DEL INDEX (27).HTML)
+        gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
+          gsap.set("#project-single-view", { opacity: 0, y: 30, display: "block" }); // BLOQUEA LA POSICIÓN ANTES DE MOSTRAR
           gsap.to("#project-single-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
           gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4, ease: "power2.out" });
         }});
@@ -281,7 +291,7 @@
         gsap.to("#project-single-view", { duration: 0.4, opacity: 0, y: 30, onComplete: () => {
           document.getElementById('project-single-view').style.display = "none";
           document.getElementById('project-visual-content').innerHTML = "";
-          gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 30 }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
+          gsap.fromTo("#grid-view", { opacity: 0, y: 30, display: "block" }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
         }});
       }
     </script>
