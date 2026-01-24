@@ -49,10 +49,10 @@
       .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 30px 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
       .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-      .post-content { font-size: 1.15rem; line-height: 1.9; color: #ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
-/* Esto es lo que separa los párrafos */
-.post-content p { margin-bottom: 30px !important; display: block; } 
-.post-content img { width: 100%; border-radius: 10px; margin: 35px 0; border: 1px solid rgba(255,255,255,0.1); }
+     .post-content { font-size: 1.15rem; line-height: 1.9; color: #ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+      /* Separación de párrafos automática */
+      .post-content p { margin-bottom: 30px !important; display: block; }
+      .post-content img { width: 100%; border-radius: 10px; margin: 35px 0; border: 1px solid rgba(255,255,255,0.1); }
 
       .scroll-container-blog { text-align: center; margin-top: 25px; width: 100%; }
       .scroll-container-blog .mouse { border: 2px solid #fff; border-radius: 20px; height: 35px; width: 22px; display: block; margin: 0 auto 10px auto; position: relative; }
@@ -193,16 +193,17 @@
 
       const currentID = new URLSearchParams(window.location.search).get('id') || 1;
 
-    function parseVideos(text) {
-        // 1. YouTube (Detecta videos normales Y Shorts)
+      function parseVideos(text) {
+        // 1. YouTube (Detecta normales y Shorts + Limpieza de interfaz)
+        // Parámetros: controls=1 (barra), modestbranding=1 (quita logo), rel=0 (solo tus videos al final), fs=1 (zoom)
         text = text.replace(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})(?:\S*)?/g, 
-          '<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/$1" allowfullscreen></iframe></div>');
+          '<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/$1?controls=1&modestbranding=1&rel=0&iv_load_policy=3&fs=1" allowfullscreen></iframe></div>');
         
         // 2. Google Drive
         text = text.replace(/(?:https?:\/\/)?drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)\/view\S*/g, 
           '<div class="video-wrapper"><iframe src="https://drive.google.com/file/d/$1/preview"></iframe></div>');
         
-        // 3. Crear Párrafos (Convierte los saltos de línea del Excel en etiquetas <p>)
+        // 3. Crear Párrafos (Convierte los "Enters" del Excel en etiquetas <p>)
         return text.split('\n').map(parrafo => {
           return parrafo.trim() !== '' ? `<p>${parrafo}</p>` : '';
         }).join('');
