@@ -11,37 +11,24 @@
     <link rel="stylesheet" href="css/vendor/animate.min.css">
     <link rel="stylesheet" href="css/vendor/aos.css">
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="css/vendor/jquery.fancybox.min.css">
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* --- SOLUCIÓN DEFINITIVA DE ESPACIOS Y FOOTER --- */
-      html, body { height: 100%; margin: 0; padding: 0; }
-      
-      .unslate_co--site-wrap { 
-        display: flex; 
-        flex-direction: column; 
-        min-height: 100vh; /* Obliga al wrap a ser tan alto como la pantalla */
-        background-color: transparent !important; 
-      }
-      
-      .unslate_co--site-inner { 
-        flex: 1 0 auto; /* Crece para empujar el footer hacia abajo */
-        background-color: transparent !important;
-      }
-
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+      body, .unslate_co--site-wrap, .unslate_co--site-inner { background-color: transparent !important; color: white; }
 
-      /* FOOTER GRIS SÓLIDO (IDÉNTICO AL INDEX 27) */
+      /* FOOTER ESTILO INDEX (27) */
       .unslate_co--footer {
         background-color: #191919 !important;
-        flex-shrink: 0; /* No permite que el footer se comprima */
-        padding: 40px 0;
-        position: relative;
-        z-index: 10;
+        position: relative !important;
+        display: block !important;
+        z-index: 10 !important;
+        margin-top: 50px;
       }
 
-      /* BOTÓN DE CIERRE (X) - LÓGICA DE INDEX (27) */
+      /* BOTÓN DE CIERRE (X) - COPIADO LITERAMENTE DEL INDEX (27) */
       .close-v1 { 
           display: inline-flex !important; 
           align-items: center; 
@@ -50,7 +37,7 @@
           transition: all 0.3s ease; 
           cursor: pointer !important;
           float: right; 
-          opacity: 0;
+          opacity: 0; /* Empieza oculto para animar con GSAP */
       }
       .close-v1 .icon-text { 
           font-family: 'Montserrat', sans-serif !important; 
@@ -73,9 +60,13 @@
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           padding-bottom: 4px; 
       }
-      .close-v1:hover .close-circle { background: #ffffff !important; color: #000000 !important; transform: scale(1.12); }
+      .close-v1:hover .close-circle { 
+          background: #ffffff !important; 
+          color: #000000 !important; 
+          transform: scale(1.12); 
+      }
 
-      /* TARJETAS */
+      /* CATEGORÍAS */
       .category-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -92,13 +83,14 @@
       .category-card:hover h3 { color: #000 !important; }
       .wavy-divider { display: block; margin: 20px auto; width: 70px; filter: brightness(0) invert(1); }
 
-      /* ESTILOS DE PROYECTO (SINGLE) */
+      /* ELEMENTOS QUE ESPERARÁN AL CARGADO */
+      #dynamic-footer-wrap { opacity: 0; }
+
+      /* SINGLE VIEW METADATA */
       #project-single-view { display: none; }
       .meta-item { margin-bottom: 30px; opacity: 0; }
       .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #ffffff !important; opacity: 0.6; font-weight: 700; margin-bottom: 5px; }
       .meta-value { display: block; font-size: 15px; color: #ffffff !important; font-weight: 800; text-transform: uppercase; }
-      
-      .load-hidden { opacity: 0; }
     </style>
   </head>
   <body>
@@ -108,8 +100,8 @@
     </div>
 
     <div class="unslate_co--site-wrap">
-      
       <div class="unslate_co--site-inner">
+
         <nav class="unslate_co--site-nav site-nav-target">
           <div class="container">
             <div class="row align-items-center justify-content-between text-left">
@@ -123,7 +115,7 @@
               </div>
               <div class="site-logo pos-absolute">
                 <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px;">
+                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px; width: auto; vertical-align: middle;">
                 </a>
               </div>
               <div class="col-md-5 text-right text-lg-left">
@@ -138,18 +130,18 @@
           </div>
         </nav>
 
-        <div class="container load-hidden" style="padding-top: 130px; padding-bottom: 50px;">
+        <div class="container" style="padding-top: 150px; min-height: 70vh;">
           
           <div id="selection-view">
             <div class="text-center mb-5">
-              <h1 style="font-weight: 800; letter-spacing: 3px; color:white;">VIDEO CATEGORIES</h1>
+              <h1 style="font-weight: 800; letter-spacing: 3px;">VIDEO CATEGORIES</h1>
               <img src="images/divider.png" class="wavy-divider" alt="divider">
               <p>Select a category to filter my work</p>
             </div>
             <div class="row gutter-v4" id="categories-container"></div>
           </div>
 
-          <div id="grid-view" style="display: none;">
+          <div id="grid-view" style="display: none; opacity: 0;">
             <div class="row">
               <div class="col-12 text-right mb-4">
                 <a href="javascript:void(0)" onclick="closeCategory()" class="close-v1" id="btn-back-cat">
@@ -159,7 +151,7 @@
               </div>
             </div>
             <div class="text-center mb-5">
-              <h1 id="current-category-title" style="font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color:white;"></h1>
+              <h1 id="current-category-title" style="font-weight: 800; letter-spacing: 3px; text-transform: uppercase;"></h1>
               <img src="images/divider.png" class="wavy-divider" alt="divider">
             </div>
             <div id="filtered-posts" class="row gutter-isotope-item"></div>
@@ -175,7 +167,7 @@
               </div>
             </div>
             <div class="row align-items-center">
-              <div class="col-lg-7"><h2 id="project-title" style="font-weight: 800; text-transform: uppercase; color:white;"></h2><div id="project-visual-content"></div></div>
+              <div class="col-lg-7"><h2 id="project-title" style="font-weight: 800; text-transform: uppercase;"></h2><div id="project-visual-content"></div></div>
               <div class="col-lg-4 offset-lg-1">
                 <div class="meta-item"><span class="meta-header">Description</span><span id="project-desc" class="meta-value"></span></div>
                 <div class="meta-item"><span class="meta-header">Date</span><span id="project-date" class="meta-value"></span></div>
@@ -183,27 +175,31 @@
               </div>
             </div>
           </div>
-        </div>
-      </div> <div id="dynamic-footer-block" class="load-hidden" style="margin-top: auto;">
-        <div class="text-center mb-5">
-          <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
-        </div>
-        <footer class="unslate_co--footer">
-          <div class="container text-center">
-            <div class="footer-site-logo">
-              <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 15px;">
-                <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px;">
-              </a>
-            </div>
-            <ul class="footer-site-social" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; margin-bottom: 15px;">
-              <li><a href="#">Facebook</a></li>
-              <li><a href="#">Instagram</a></li>
-            </ul>
-            <p class="site-copyright" style="font-size: 12px; color: rgba(255,255,255,0.6);">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
-          </div>
-        </footer>
-      </div>
 
+        </div>
+
+        <div id="dynamic-footer-wrap">
+          <div class="text-center mt-5 mb-5">
+            <a href="index.html" class="btn btn-outline-pill btn-custom-light">// BACK TO HOME //</a>
+          </div>
+
+          <footer class="unslate_co--footer unslate_co--section">
+            <div class="container text-center">
+              <div class="footer-site-logo">
+                <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
+                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px;">
+                </a>
+              </div>
+              <ul class="footer-site-social" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+              </ul>
+              <p class="site-copyright">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
+            </div>
+          </footer>
+        </div>
+
+      </div>
     </div>
 
     <script src="js/scripts-dist.js"></script>
@@ -221,7 +217,6 @@
           complete: function(results) {
             allItems = results.data.filter(p => p.ID && p.Titulo);
             renderCategoryMenu();
-            gsap.to(".load-hidden", { duration: 1, opacity: 1, ease: "power2.out" });
           }
         });
       });
@@ -235,6 +230,9 @@
                   </div>`;
         });
         document.getElementById('categories-container').innerHTML = html;
+        
+        // --- FIX: APARECE EL FOOTER SOLO CUANDO TODO ESTÁ LISTO ---
+        gsap.to("#dynamic-footer-wrap", { duration: 1, opacity: 1, delay: 0.8, ease: "power2.out" });
       }
 
       function openCategory(cat) {
@@ -252,17 +250,17 @@
         document.getElementById('filtered-posts').innerHTML = html;
         
         gsap.to("#selection-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
-          gsap.set("#grid-view", { display: "block", opacity: 0 });
-          gsap.to("#grid-view", { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
+          gsap.set("#grid-view", { display: "block", opacity: 0, y: 30 });
+          gsap.to("#grid-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
+          // Animación de la X entrando lateralmente igual al Index
           gsap.fromTo("#btn-back-cat", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, delay: 0.3 });
         }});
       }
 
       function closeCategory() {
-        gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, onComplete: () => {
-          document.getElementById('grid-view').style.display = "none";
-          gsap.set("#selection-view", { display: "block", opacity: 0 });
-          gsap.fromTo("#selection-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
+        gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
+          gsap.set("#selection-view", { display: "block", opacity: 0, y: 30 });
+          gsap.to("#selection-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
         }});
       }
 
@@ -274,15 +272,16 @@
         document.getElementById('project-client').innerText = p.Cliente || "Private";
         
         let url = p.VideoURL;
-        let content = (url.includes('youtube.com') || url.includes('youtu.be'))
+        let content = url.includes('youtube') 
           ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1] : url.split('/').pop()}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" frameborder="0" allowfullscreen></iframe></div>`
           : `<video controls autoplay style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
         
         document.getElementById('project-visual-content').innerHTML = content;
         
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
-          gsap.set("#project-single-view", { display: "block", opacity: 0 });
+          gsap.set("#project-single-view", { display: "block", opacity: 0, y: 30 });
           gsap.to("#project-single-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
+          // Animación de la X y metadatos estilo Index (27)
           gsap.fromTo("#btn-back-grid", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, delay: 0.4 });
           gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4 });
         }});
@@ -292,8 +291,8 @@
         gsap.to("#project-single-view", { duration: 0.4, opacity: 0, y: 20, onComplete: () => {
           document.getElementById('project-single-view').style.display = "none";
           document.getElementById('project-visual-content').innerHTML = "";
-          gsap.set("#grid-view", { display: "block", opacity: 0 });
-          gsap.to("#grid-view", { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
+          gsap.set("#grid-view", { display: "block", opacity: 0, y: 30 });
+          gsap.to("#grid-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
         }});
       }
     </script>
