@@ -981,11 +981,16 @@ document.addEventListener('DOMContentLoaded', function() {
         download: true,
         header: true,
         complete: function(results) {
+            // Filtramos los que tengan ID y Título
             window.portfolioItems = results.data.filter(p => p.ID && p.Titulo);
-          // MEZCLAR EL PORTAFOLIO ALEATORIAMENTE
-window.portfolioItems.sort(() => Math.random() - 0.5);
+            
+            // Mezclar el portafolio aleatoriamente
+            window.portfolioItems.sort(() => Math.random() - 0.5);
+
             if(window.portfolioItems.length > 0) {
-                renderPortfolioGrid(window.portfolioItems);
+                // --- CAMBIO AQUÍ: Solo tomamos los primeros 9 ---
+                const itemsParaMostrar = window.portfolioItems.slice(0, 9);
+                renderPortfolioGrid(itemsParaMostrar);
             } else {
                 document.getElementById('posts').innerHTML = '<div class="col-12 text-center"><p style="color:red;">No se encontraron proyectos en el Excel.</p></div>';
             }
