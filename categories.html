@@ -14,20 +14,18 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* --- ESTRUCTURA PARA ELIMINAR ESPACIOS Y FIJAR FOOTER ABAJO --- */
+      /* --- SOLUCIÓN DEFINITIVA DE ESPACIOS Y FOOTER --- */
       html, body { height: 100%; margin: 0; padding: 0; }
       
-      /* Contenedor principal en modo Flexbox */
       .unslate_co--site-wrap { 
         display: flex; 
         flex-direction: column; 
-        min-height: 100vh; /* Ocupa al menos toda la pantalla */
+        min-height: 100vh; /* Obliga al wrap a ser tan alto como la pantalla */
         background-color: transparent !important; 
       }
       
-      /* El contenido crece para empujar el footer al fondo de la pantalla */
       .unslate_co--site-inner { 
-        flex: 1 0 auto; 
+        flex: 1 0 auto; /* Crece para empujar el footer hacia abajo */
         background-color: transparent !important;
       }
 
@@ -37,14 +35,13 @@
       /* FOOTER GRIS SÓLIDO (IDÉNTICO AL INDEX 27) */
       .unslate_co--footer {
         background-color: #191919 !important;
-        flex-shrink: 0; /* No permite que el footer se encoja */
+        flex-shrink: 0; /* No permite que el footer se comprima */
         padding: 40px 0;
         position: relative;
         z-index: 10;
-        width: 100%;
       }
 
-      /* BOTÓN DE CIERRE (X) PREMIUM DEL INDEX (27) */
+      /* BOTÓN DE CIERRE (X) - LÓGICA DE INDEX (27) */
       .close-v1 { 
           display: inline-flex !important; 
           align-items: center; 
@@ -53,8 +50,7 @@
           transition: all 0.3s ease; 
           cursor: pointer !important;
           float: right; 
-          opacity: 0; /* Para animación GSAP lateral */
-          transform: translateX(20px);
+          opacity: 0;
       }
       .close-v1 .icon-text { 
           font-family: 'Montserrat', sans-serif !important; 
@@ -79,7 +75,7 @@
       }
       .close-v1:hover .close-circle { background: #ffffff !important; color: #000000 !important; transform: scale(1.12); }
 
-      /* DISEÑO DE TARJETAS CATEGORÍA */
+      /* TARJETAS */
       .category-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -94,8 +90,9 @@
       .category-card h3 { font-weight: 800; letter-spacing: 4px; margin: 0; font-size: 1.2rem; color: #fff; text-transform: uppercase; }
       .category-card:hover { background: #ffffff; transform: translateY(-10px); }
       .category-card:hover h3 { color: #000 !important; }
-      .wavy-divider { display: block; margin: 15px auto; width: 70px; filter: brightness(0) invert(1); }
+      .wavy-divider { display: block; margin: 20px auto; width: 70px; filter: brightness(0) invert(1); }
 
+      /* ESTILOS DE PROYECTO (SINGLE) */
       #project-single-view { display: none; }
       .meta-item { margin-bottom: 30px; opacity: 0; }
       .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #ffffff !important; opacity: 0.6; font-weight: 700; margin-bottom: 5px; }
@@ -141,7 +138,7 @@
           </div>
         </nav>
 
-        <div class="container load-hidden" style="padding-top: 130px; padding-bottom: 20px;">
+        <div class="container load-hidden" style="padding-top: 130px; padding-bottom: 50px;">
           
           <div id="selection-view">
             <div class="text-center mb-5">
@@ -150,10 +147,6 @@
               <p>Select a category to filter my work</p>
             </div>
             <div class="row gutter-v4" id="categories-container"></div>
-            
-            <div class="text-center mt-5">
-              <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
-            </div>
           </div>
 
           <div id="grid-view" style="display: none;">
@@ -170,9 +163,6 @@
               <img src="images/divider.png" class="wavy-divider" alt="divider">
             </div>
             <div id="filtered-posts" class="row gutter-isotope-item"></div>
-            <div class="text-center mt-5">
-              <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
-            </div>
           </div>
 
           <div id="project-single-view">
@@ -194,20 +184,26 @@
             </div>
           </div>
         </div>
-      </div> <footer class="unslate_co--footer load-hidden">
-        <div class="container text-center">
-          <div class="footer-site-logo">
-            <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 15px;">
-              <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px;">
-            </a>
-          </div>
-          <ul class="footer-site-social" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; margin-bottom: 15px;">
-            <li><a href="#">Facebook</a></li>
-            <li><a href="#">Instagram</a></li>
-          </ul>
-          <p class="site-copyright" style="font-size: 12px; color: rgba(255,255,255,0.6);">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
+      </div> <div id="dynamic-footer-block" class="load-hidden" style="margin-top: auto;">
+        <div class="text-center mb-5">
+          <a href="index.html" class="btn btn-outline-pill btn-custom-light" style="padding: 12px 35px; font-size: 13px;">// BACK TO HOME //</a>
         </div>
-      </footer>
+        <footer class="unslate_co--footer">
+          <div class="container text-center">
+            <div class="footer-site-logo">
+              <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 15px;">
+                <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px;">
+              </a>
+            </div>
+            <ul class="footer-site-social" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; margin-bottom: 15px;">
+              <li><a href="#">Facebook</a></li>
+              <li><a href="#">Instagram</a></li>
+            </ul>
+            <p class="site-copyright" style="font-size: 12px; color: rgba(255,255,255,0.6);">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
+
     </div>
 
     <script src="js/scripts-dist.js"></script>
@@ -257,7 +253,7 @@
         
         gsap.to("#selection-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
           gsap.set("#grid-view", { display: "block", opacity: 0 });
-          gsap.fromTo("#grid-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
+          gsap.to("#grid-view", { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
           gsap.fromTo("#btn-back-cat", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, delay: 0.3 });
         }});
       }
@@ -286,20 +282,6 @@
         
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, y: 20, display: "none", onComplete: () => {
           gsap.set("#project-single-view", { display: "block", opacity: 0 });
-          gsap.fromTo("#project-single-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
+          gsap.to("#project-single-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
           gsap.fromTo("#btn-back-grid", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, delay: 0.4 });
-          gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4 });
-        }});
-      }
-
-      function closeProject() {
-        gsap.to("#project-single-view", { duration: 0.4, opacity: 0, y: 20, onComplete: () => {
-          document.getElementById('project-single-view').style.display = "none";
-          document.getElementById('project-visual-content').innerHTML = "";
-          gsap.set("#grid-view", { display: "block", opacity: 0 });
-          gsap.fromTo("#grid-view", { y: 30, opacity: 0 }, { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" });
-        }});
-      }
-    </script>
-  </body>
-</html>
+          gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0,
