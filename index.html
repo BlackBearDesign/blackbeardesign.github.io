@@ -744,14 +744,18 @@ input:-webkit-autofill:focus {
 document.addEventListener('DOMContentLoaded', function() {
   const URL_EXCEL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=0&single=true&output=csv";
   const $grid = document.getElementById('journal-grid');
-  const $scrollIcon = document.querySelector('.swipe-lottie-container'); // Seleccionamos el icono de scroll
+  const $scrollIcon = document.querySelector('.swipe-lottie-container');
 
-  // 1. OCULTAMOS EL SCROLL E INICIAMOS CARGA
-  if ($scrollIcon) $scrollIcon.style.display = 'none';
+  // 1. OCULTAR EL SCROLL POR COMPLETO
+  if ($scrollIcon) {
+    $scrollIcon.style.visibility = 'hidden';
+    $scrollIcon.style.opacity = '0';
+  }
   
+  // 2. LOADER LIMPIO
   $grid.innerHTML = `
     <div id="journal-loader" class="col-12 text-center" style="padding: 150px 0;">
-      <h2 style="color: white; font-weight: 800; font-size: 2.5rem; letter-spacing: 5px; text-transform: uppercase; opacity: 0.5;">Cargando Journal...</h2>
+      <h2 style="color: white; font-weight: 800; font-size: 2.2rem; letter-spacing: 8px; text-transform: uppercase;">Cargando...</h2>
     </div>`;
 
   Papa.parse(URL_EXCEL, {
@@ -765,9 +769,11 @@ document.addEventListener('DOMContentLoaded', function() {
       let htmlFinal = "";
       selectedPosts.forEach((post, index) => {
         let colSize = (index === 0) ? "col-lg-8" : "col-lg-4";
-        // Importante: los items nacen con OPACITY 0
+        
+        // IMPORTANTE: Quitamos 'data-aos' para que no pelee con nuestro código
         htmlFinal += `
-          <div class="col-sm-6 col-md-6 ${colSize} blog-post-entry" style="opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);">
+          <div class="col-sm-6 col-md-6 ${colSize} blog-post-entry" 
+               style="opacity: 0; transform: translateY(60px); transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);">
             <a href="blog-single.html?id=${post.ID}" class="grid-item blog-item w-100 h-100">
               <div class="overlay">
                 <div class="portfolio-item-content">
@@ -784,22 +790,29 @@ document.addEventListener('DOMContentLoaded', function() {
       tempDiv.className = "row gutter-v4 align-items-stretch";
       tempDiv.innerHTML = htmlFinal;
 
-      // ESPERAMOS A LAS IMÁGENES
+      // ESPERAR A QUE LAS IMÁGENES BAJEN
       imagesLoaded(tempDiv, function() {
-        // 2. QUITAMOS LOADER Y MOSTRAMOS CONTENIDO
+        // Quitamos el texto de carga
         $grid.innerHTML = tempDiv.innerHTML;
         
-        // 3. VOLVEMOS A MOSTRAR EL SCROLL (YA NO ESTORBA)
-        if ($scrollIcon) $scrollIcon.style.display = 'block';
+        // 3. TRUCO DE RENDER: Esperamos un frame para que el navegador vea el opacity 0
+        setTimeout(() => {
+          // Mostramos el Scroll ahora que ya hay contenido
+          if ($scrollIcon) {
+            $scrollIcon.style.visibility = 'visible';
+            $scrollIcon.style.opacity = '1';
+            $scrollIcon.style.transition = 'opacity 1s ease';
+          }
 
-        // 4. LANZAMOS LA ANIMACIÓN ESCALONADA
-        const newItems = $grid.querySelectorAll('.blog-post-entry');
-        newItems.forEach((item, i) => {
-          setTimeout(() => {
-            item.style.opacity = "1";
-            item.style.transform = "translateY(0)";
-          }, i * 200); // 200ms de diferencia entre cada uno para que se note el efecto
-        });
+          // 4. ANIMACIÓN ESCALONADA (Más lenta para que se aprecie)
+          const newItems = $grid.querySelectorAll('.blog-post-entry');
+          newItems.forEach((item, i) => {
+            setTimeout(() => {
+              item.style.opacity = "1";
+              item.style.transform = "translateY(0)";
+            }, i * 300); // 300ms entre cada foto (Efecto cascada)
+          });
+        }, 100);
       });
     }
   });
