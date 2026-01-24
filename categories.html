@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-      /* ESTILOS COPIADOS LITERALMENTE DEL INDEX (27).HTML */
+      /* ESTILOS EXTRAÍDOS DEL INDEX (27).HTML */
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
       body, .unslate_co--site-wrap, .unslate_co--site-inner, .unslate_co--section { background-color: transparent !important; }
@@ -28,7 +28,7 @@
         margin-top: 0;
       }
 
-      /* BOTÓN DE CIERRE (X) REFINADO DEL INDEX */
+      /* BOTÓN DE CIERRE (X) PREMIUM - COPIADO LITERAMENTE */
       .close-v1 { 
           display: inline-flex !important; 
           align-items: center; 
@@ -56,7 +56,7 @@
           align-items: center; 
           justify-content: center; 
           font-size: 24px; 
-          color: #ffffff; 
+          color: #ffffff !important; 
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           padding-bottom: 4px; 
       }
@@ -85,10 +85,11 @@
       .category-card:hover h3 { color: #000 !important; }
       .wavy-divider { display: block; margin: 20px auto; width: 70px; filter: brightness(0) invert(1); }
 
-      /* SINGLE VIEW */
+      /* METADATOS - IGUAL AL INDEX */
       #project-single-view { color: #ffffff !important; display: none; }
-      .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6); font-weight: 700; }
-      .meta-value { display: block; font-size: 15px; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; }
+      .meta-item { margin-bottom: 30px; opacity: 0; }
+      .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #ffffff !important; opacity: 0.6; font-weight: 700; margin-bottom: 5px; }
+      .meta-value { display: block; font-size: 15px; color: #ffffff !important; font-weight: 800; text-transform: uppercase; }
     </style>
   </head>
   <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
@@ -96,16 +97,6 @@
     <div class="video-bg-global">
       <video autoplay loop muted playsinline><source src="video/bg.mp4" type="video/mp4"></video>
     </div>
-
-    <nav class="unslate_co--site-mobile-menu">
-      <div class="close-wrap d-flex">
-        <a href="#" class="d-flex ml-auto js-menu-toggle">
-          <span class="close-label">Close</span>
-          <div class="close-times"><span class="bar1"></span><span class="bar2"></span></div>
-        </a>
-      </div>
-      <div class="site-mobile-inner"></div>
-    </nav>
 
     <div class="unslate_co--site-wrap">
       <div class="unslate_co--site-inner">
@@ -132,9 +123,6 @@
                   <li><a href="index.html#testimonial-section" class="nav-link">Testimonial</a></li>
                   <li><a href="index.html#journal-section" class="nav-link">Journal</a></li>
                   <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
-                </ul>
-                <ul class="site-nav-ul-none-onepage text-right d-inline-block d-lg-none">
-                  <li><a href="#" class="js-menu-toggle">Menu</a></li>
                 </ul>
               </div>
             </div>
@@ -181,34 +169,34 @@
               </div>
             </div>
             <div class="row align-items-center">
-              <div class="col-lg-7"><h2 id="project-title" style="font-weight: 800;"></h2><div id="project-visual-content"></div></div>
+              <div class="col-lg-7">
+                <h2 id="project-title" style="font-weight: 800; text-transform: uppercase;"></h2>
+                <div id="project-visual-content"></div>
+              </div>
               <div class="col-lg-4 offset-lg-1">
-                <span class="meta-header">Description</span><span id="project-desc" class="meta-value"></span>
-                <span class="meta-header">Date</span><span id="project-date" class="meta-value"></span>
-                <span class="meta-header">Client</span><span id="project-client" class="meta-value"></span>
+                <div class="meta-item">
+                  <span class="meta-header">Description</span>
+                  <span id="project-desc" class="meta-value"></span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-header">Date</span>
+                  <span id="project-date" class="meta-value"></span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-header">Client</span>
+                  <span id="project-client" class="meta-value"></span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-      </div> <footer class="unslate_co--footer unslate_co--section">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-7">
-              <div class="footer-site-logo text-center">
-                <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
-                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px; width: auto; vertical-align: middle;">
-                </a>
-              </div>
-              <ul class="footer-site-social text-center">
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">Instagram</a></li>
-              </ul>
-              <p class="site-copyright text-center">
-                Copyright &copy; <script>document.write(new Date().getFullYear());</script> BlackBear. All rights reserved.
-              </p>
-            </div>
-          </div>
+      </div>
+
+      <footer class="unslate_co--footer unslate_co--section">
+        <div class="container text-center">
+          <div class="footer-site-logo"><img src="images/logo.png" style="height: 35px; background: white; padding: 5px; border-radius: 4px;"></div>
+          <p class="site-copyright mt-4">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
         </div>
       </footer>
     </div>
@@ -236,10 +224,9 @@
         const categories = [...new Set(allItems.map(item => item.Category || 'Video'))];
         let html = "";
         categories.forEach((cat, i) => {
-          html += `
-            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="${i*100}">
-              <div class="category-card" onclick="openCategory('${cat}')"><h3>${cat}</h3></div>
-            </div>`;
+          html += `<div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="${i*100}">
+                    <div class="category-card" onclick="openCategory('${cat}')"><h3>${cat}</h3></div>
+                  </div>`;
         });
         document.getElementById('categories-container').innerHTML = html;
       }
@@ -249,23 +236,22 @@
         const filtered = allItems.filter(item => item.Category === cat);
         let html = "";
         filtered.forEach(item => {
-          html += `
-            <div class="col-sm-6 col-md-6 col-lg-4 mb-4">
-              <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item">
-                <div class="overlay"><span class="wrap-icon icon-play_circle_filled"></span><div class="portfolio-item-content"><h3>${item.Titulo}</h3></div></div>
-                <img src="${item.ThumbnailURL}" class="img-fluid" style="width:100%; height:250px; object-fit:cover;">
-              </a>
-            </div>`;
+          html += `<div class="col-sm-6 col-md-6 col-lg-4 mb-4">
+                    <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item">
+                      <div class="overlay"><span class="wrap-icon icon-play_circle_filled"></span><div class="portfolio-item-content"><h3>${item.Titulo}</h3></div></div>
+                      <img src="${item.ThumbnailURL}" class="img-fluid" style="width:100%; height:250px; object-fit:cover;">
+                    </a>
+                  </div>`;
         });
         document.getElementById('filtered-posts').innerHTML = html;
         gsap.to("#selection-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
-          gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
+          gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 30 }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
         }});
       }
 
       function closeCategory() {
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
-          gsap.fromTo("#selection-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
+          gsap.fromTo("#selection-view", { opacity: 0, display: "block", y: 30 }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
         }});
       }
 
@@ -278,19 +264,24 @@
         
         let url = p.VideoURL;
         let content = url.includes('youtube') 
-          ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src=\"https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1] : url.split('/').pop()}\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" frameborder=\"0\" allowfullscreen></iframe></div>`
-          : `<video controls autoplay style=\"width:100%;\"><source src=\"${url}\" type=\"video/mp4\"></video>`;
+          ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1] : url.split('/').pop()}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" frameborder="0" allowfullscreen></iframe></div>`
+          : `<video controls autoplay style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
         
         document.getElementById('project-visual-content').innerHTML = content;
+        
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
-          gsap.fromTo("#project-single-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
+          // FIX: USAMOS SET PARA EVITAR EL SALTO ARRIBA
+          gsap.set("#project-single-view", { opacity: 0, y: 30, display: "block" });
+          gsap.to("#project-single-view", { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
+          gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4, ease: "power2.out" });
         }});
       }
 
       function closeProject() {
-        gsap.to("#project-single-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
+        gsap.to("#project-single-view", { duration: 0.4, opacity: 0, y: 30, onComplete: () => {
+          document.getElementById('project-single-view').style.display = "none";
           document.getElementById('project-visual-content').innerHTML = "";
-          gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
+          gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 30 }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
         }});
       }
     </script>
