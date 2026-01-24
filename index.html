@@ -397,31 +397,6 @@ input:-webkit-autofill:focus {
 /* 4. Aseguramos que el degradado ayude a la lectura */
 #journal-grid .overlay {
   background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%) !important;
-} 
-      /* Animación suave para el botón de categorías */
-.btn-fade-smooth {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: elegantFade 1.2s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
-  animation-delay: 0.5s;
-  transition: all 0.4s ease !important;
-}
-
-@keyframes elegantFade {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.btn-fade-smooth:hover {
-  background: #ffffff !important;
-  color: #000000 !important;
-  box-shadow: 0 10px 20px rgba(255,255,255,0.1);
-}
-/* Agrega esto a tu bloque de <style> o a tu archivo CSS */
-#post-content-p { /* Usa el ID o clase que tenga el párrafo de tu texto */
-    white-space: pre-wrap;
 }      
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
@@ -562,12 +537,12 @@ input:-webkit-autofill:focus {
   </div>
 
 <div class="row mt-5">
-    <div class="col-12 d-flex justify-content-center gsap-reveal"> 
-      <a href="categories.html" class="btn btn-outline-pill btn-custom-light btn-fade-smooth" style="padding: 15px 40px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; display: inline-block;">
+    <div class="col-12 d-flex justify-content-center gsap-reveal" data-aos="fade-up">
+      <a href="categories.html" class="btn btn-outline-pill btn-custom-light" style="padding: 15px 40px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; display: inline-block;">
         Video Category
       </a>
     </div>
-</div>
+  </div>
   </div>
   </div>
 </div>
@@ -1010,10 +985,8 @@ document.addEventListener('DOMContentLoaded', function() {
           // MEZCLAR EL PORTAFOLIO ALEATORIAMENTE
 window.portfolioItems.sort(() => Math.random() - 0.5);
             if(window.portfolioItems.length > 0) {
-    // Tomamos solo los primeros 9 proyectos después de mezclarlos
-    const limitedItems = window.portfolioItems.slice(0, 9);
-    renderPortfolioGrid(limitedItems);
-} else {
+                renderPortfolioGrid(window.portfolioItems);
+            } else {
                 document.getElementById('posts').innerHTML = '<div class="col-12 text-center"><p style="color:red;">No se encontraron proyectos en el Excel.</p></div>';
             }
         }
@@ -1072,8 +1045,17 @@ window.openProject = function(id) {
             document.getElementById('project-client').innerText = p.Cliente || "Private Client";
             
             let url = p.VideoURL;
+            let videoId = "";
+            
+            // Esta parte limpia el ID de YouTube para que no choquen los Shorts
+            if (url.includes('v=')) {
+                videoId = url.split('v=')[1].split('&')[0];
+            } else {
+                videoId = url.split('/').pop().split('?')[0];
+            }
+
             let content = (url.includes('youtube.com') || url.includes('youtu.be')) 
-                ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1].split('&')[0] : url.split('/').pop()}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" frameborder="0" allowfullscreen></iframe></div>`
+                ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" frameborder="0" allowfullscreen></iframe></div>`
                 : `<video controls autoplay style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
             
             document.getElementById('project-visual-content').innerHTML = content;
