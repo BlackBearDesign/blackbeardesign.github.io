@@ -7,21 +7,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="css/vendor/icomoon/style.css">
+    <link rel="stylesheet" href="css/vendor/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/vendor/animate.min.css">
     <link rel="stylesheet" href="css/vendor/aos.css">
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="css/vendor/jquery.fancybox.min.css">
     <link rel="stylesheet" href="css/style.css">
 
     <style>
+      /* ESTILOS COPIADOS LITERALMENTE DEL INDEX (27).HTML */
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
-      body, .unslate_co--site-wrap, .unslate_co--site-inner { background-color: transparent !important; color: white; }
+      body, .unslate_co--site-wrap, .unslate_co--site-inner, .unslate_co--section { background-color: transparent !important; }
+      
+      .unslate_co--footer {
+        background-color: #191919 !important;
+        position: relative !important;
+        display: block !important;
+        z-index: 10 !important;
+        margin-top: 0;
+      }
 
-      /* --- NAV BAR ESTILO INDEX --- */
-      .unslate_co--site-nav { background: #fff !important; padding: 10px 0 !important; }
-      .unslate_co--site-nav .nav-link { color: #000 !important; font-weight: 700 !important; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
-      .site-logo img { height: 40px; width: auto; }
+      /* BOTÓN DE CIERRE (X) REFINADO DEL INDEX */
+      .close-v1 { 
+          display: inline-flex !important; 
+          align-items: center; 
+          justify-content: flex-end; 
+          text-decoration: none !important; 
+          transition: all 0.3s ease; 
+          cursor: pointer !important;
+          width: auto !important; 
+          float: right; 
+      }
+      .close-v1 .icon-text { 
+          font-family: 'Montserrat', sans-serif !important; 
+          font-size: 10px; 
+          margin-right: 12px; 
+          color: #ffffff !important; 
+          text-transform: uppercase; 
+          font-weight: 700; 
+          letter-spacing: 2px;
+      }
+      .close-circle { 
+          width: 45px; height: 45px; 
+          border: 1px solid rgba(255,255,255,0.4); 
+          border-radius: 50%; 
+          display: flex; 
+          align-items: center; 
+          justify-content: center; 
+          font-size: 24px; 
+          color: #ffffff; 
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          padding-bottom: 4px; 
+      }
+      .close-v1:hover .close-circle { 
+          background: #ffffff !important; 
+          color: #000000 !important; 
+          transform: scale(1.12); 
+      }
 
-      /* --- TARJETAS CATEGORÍA --- */
+      /* ESTILOS DE CATEGORÍAS */
       .category-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -38,59 +83,29 @@
       .category-card h3 { font-weight: 800; letter-spacing: 4px; margin: 0; font-size: 1.2rem; color: #fff; text-transform: uppercase; }
       .category-card:hover { background: #ffffff; transform: translateY(-10px); }
       .category-card:hover h3 { color: #000 !important; }
-
       .wavy-divider { display: block; margin: 20px auto; width: 70px; filter: brightness(0) invert(1); }
 
-      /* --- BOTÓN DE CIERRE (X) PREMIUM --- */
-      .close-v1 { 
-          display: inline-flex !important; 
-          align-items: center; 
-          justify-content: flex-end; 
-          text-decoration: none !important; 
-          transition: all 0.3s ease; 
-          cursor: pointer !important;
-          float: right;
-          color: #fff !important; /* Fuerza a que no sea rojo */
-      }
-
-      .close-v1 .icon-text { 
-          font-size: 10px; 
-          margin-right: 15px; 
-          color: #ffffff !important; 
-          text-transform: uppercase; 
-          font-weight: 700; 
-          letter-spacing: 2px;
-      }
-
-      .close-circle { 
-          width: 45px; height: 45px; 
-          border: 1px solid rgba(255,255,255,0.4); 
-          border-radius: 50%; 
-          display: flex; 
-          align-items: center; 
-          justify-content: center; 
-          font-size: 20px; 
-          color: #ffffff !important; 
-          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          background: transparent;
-      }
-
-      .close-v1:hover .close-circle { 
-          background: #ffffff !important; 
-          color: #000000 !important; 
-          transform: scale(1.1); 
-      }
-
+      /* SINGLE VIEW */
       #project-single-view { color: #ffffff !important; display: none; }
       .meta-header { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6); font-weight: 700; }
       .meta-value { display: block; font-size: 15px; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; }
     </style>
   </head>
-  <body>
+  <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
 
     <div class="video-bg-global">
       <video autoplay loop muted playsinline><source src="video/bg.mp4" type="video/mp4"></video>
     </div>
+
+    <nav class="unslate_co--site-mobile-menu">
+      <div class="close-wrap d-flex">
+        <a href="#" class="d-flex ml-auto js-menu-toggle">
+          <span class="close-label">Close</span>
+          <div class="close-times"><span class="bar1"></span><span class="bar2"></span></div>
+        </a>
+      </div>
+      <div class="site-mobile-inner"></div>
+    </nav>
 
     <div class="unslate_co--site-wrap">
       <div class="unslate_co--site-inner">
@@ -103,18 +118,23 @@
                   <li><a href="index.html#home-section" class="nav-link">Home</a></li>
                   <li><a href="index.html#portfolio-section" class="nav-link">Portfolio</a></li>
                   <li><a href="index.html#about-section" class="nav-link">About</a></li>
+                  <li><a href="index.html#services-section" class="nav-link">Services</a></li>
                 </ul>
               </div>
               <div class="site-logo pos-absolute">
-                <a href="index.html" class="unslate_co--site-logo">
-                  <img src="images/logo.png" alt="BlackBear Logo">
+                <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px; width: auto; vertical-align: middle;">
                 </a>
               </div>
               <div class="col-md-5 text-right text-lg-left">
                 <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
                   <li><a href="index.html#skills-section" class="nav-link">Skills</a></li>
+                  <li><a href="index.html#testimonial-section" class="nav-link">Testimonial</a></li>
                   <li><a href="index.html#journal-section" class="nav-link">Journal</a></li>
                   <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
+                </ul>
+                <ul class="site-nav-ul-none-onepage text-right d-inline-block d-lg-none">
+                  <li><a href="#" class="js-menu-toggle">Menu</a></li>
                 </ul>
               </div>
             </div>
@@ -140,7 +160,7 @@
               <div class="col-12 text-right mb-4">
                 <a href="javascript:void(0)" onclick="closeCategory()" class="close-v1">
                   <span class="icon-text">Back to Categories</span>
-                  <div class="close-circle"><span>×</span></div>
+                  <span class="close-circle">×</span>
                 </a>
               </div>
             </div>
@@ -156,12 +176,12 @@
               <div class="col-12 text-right mb-5">
                 <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
                   <span class="icon-text">Back to Category Grid</span>
-                  <div class="close-circle"><span>×</span></div>
+                  <span class="close-circle">×</span>
                 </a>
               </div>
             </div>
             <div class="row align-items-center">
-              <div class="col-lg-7"><h2 id="project-title" style="font-weight: 800; text-transform: uppercase;"></h2><div id="project-visual-content"></div></div>
+              <div class="col-lg-7"><h2 id="project-title" style="font-weight: 800;"></h2><div id="project-visual-content"></div></div>
               <div class="col-lg-4 offset-lg-1">
                 <span class="meta-header">Description</span><span id="project-desc" class="meta-value"></span>
                 <span class="meta-header">Date</span><span id="project-date" class="meta-value"></span>
@@ -169,14 +189,26 @@
               </div>
             </div>
           </div>
-
         </div>
-      </div>
 
-      <footer class="unslate_co--footer unslate_co--section">
-        <div class="container text-center">
-          <div class="footer-site-logo"><img src="images/logo.png" style="height: 35px; background: white; padding: 5px; border-radius: 4px;"></div>
-          <p class="site-copyright mt-4">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
+      </div> <footer class="unslate_co--footer unslate_co--section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-7">
+              <div class="footer-site-logo text-center">
+                <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
+                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px; width: auto; vertical-align: middle;">
+                </a>
+              </div>
+              <ul class="footer-site-social text-center">
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+              </ul>
+              <p class="site-copyright text-center">
+                Copyright &copy; <script>document.write(new Date().getFullYear());</script> BlackBear. All rights reserved.
+              </p>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
@@ -226,7 +258,6 @@
             </div>`;
         });
         document.getElementById('filtered-posts').innerHTML = html;
-
         gsap.to("#selection-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
           gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
         }});
@@ -247,8 +278,8 @@
         
         let url = p.VideoURL;
         let content = url.includes('youtube') 
-          ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src="https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1] : url.split('/').pop()}" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe></div>`
-          : `<video controls autoplay style="width:100%;"><source src="${url}" type="video/mp4"></video>`;
+          ? `<div style="position:relative;padding-bottom:56.25%;height:0;"><iframe src=\"https://www.youtube.com/embed/${url.includes('v=') ? url.split('v=')[1] : url.split('/').pop()}\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" frameborder=\"0\" allowfullscreen></iframe></div>`
+          : `<video controls autoplay style=\"width:100%;\"><source src=\"${url}\" type=\"video/mp4\"></video>`;
         
         document.getElementById('project-visual-content').innerHTML = content;
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
