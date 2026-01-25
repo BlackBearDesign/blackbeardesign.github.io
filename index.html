@@ -398,6 +398,7 @@ input:-webkit-autofill:focus {
 #journal-grid .overlay {
   background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%) !important;
 }      
+
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -981,11 +982,16 @@ document.addEventListener('DOMContentLoaded', function() {
         download: true,
         header: true,
         complete: function(results) {
+            // Filtramos los que tengan ID y Título
             window.portfolioItems = results.data.filter(p => p.ID && p.Titulo);
-          // MEZCLAR EL PORTAFOLIO ALEATORIAMENTE
-window.portfolioItems.sort(() => Math.random() - 0.5);
+            
+            // Mezclar el portafolio aleatoriamente
+            window.portfolioItems.sort(() => Math.random() - 0.5);
+
             if(window.portfolioItems.length > 0) {
-                renderPortfolioGrid(window.portfolioItems);
+                // --- CAMBIO AQUÍ: Solo tomamos los primeros 9 ---
+                const itemsParaMostrar = window.portfolioItems.slice(0, 9);
+                renderPortfolioGrid(itemsParaMostrar);
             } else {
                 document.getElementById('posts').innerHTML = '<div class="col-12 text-center"><p style="color:red;">No se encontraron proyectos en el Excel.</p></div>';
             }
