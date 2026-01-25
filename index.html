@@ -398,37 +398,41 @@ input:-webkit-autofill:focus {
 #journal-grid .overlay {
   background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%) !important;
 }    
-/* --- SOLUCIÓN NAV: TEXTO VISIBLE Y SUBRAYADO ELEGANTE --- */
+/* --- NAVEGACIÓN INTELIGENTE BLACKBEAR --- */
 
-/* 1. Forzamos color negro en BASE, HOVER y ACTIVO */
-.unslate_co--site-nav .site-nav-ul li a,
+/* 1. Estado inicial (Sobre el video): Texto Blanco */
+.unslate_co--site-nav .site-nav-ul li a {
+    color: #ffffff !important; 
+    opacity: 0.7;
+    border-bottom: 2px solid transparent;
+    transition: 0.3s all ease;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Ayuda a leer sobre el video */
+}
+
+/* 2. Hover y Activo arriba: Blanco total + Línea */
 .unslate_co--site-nav .site-nav-ul li a:hover,
-.unslate_co--site-nav .site-nav-ul li.active > a,
-.unslate_co--site-nav .site-nav-ul li a.active {
-    color: #000000 !important; /* Siempre negro */
+.unslate_co--site-nav .site-nav-ul li.active > a {
+    color: #ffffff !important;
     opacity: 1 !important;
-    text-decoration: none !important;
-    background: transparent !important;
-}
-
-/* 2. Línea negra para la sección ACTIVA */
-.unslate_co--site-nav .site-nav-ul li.active > a,
-.unslate_co--site-nav .site-nav-ul li a.active {
-    border-bottom: 2px solid #000000 !important;
-    padding-bottom: 5px !important;
-    font-weight: 700 !important;
-}
-
-/* 3. Línea sutil al pasar el mouse (HOVER) para feedback visual */
-.unslate_co--site-nav .site-nav-ul li a:hover {
-    border-bottom: 2px solid rgba(0, 0, 0, 0.2) !important;
+    border-bottom: 2px solid #ffffff !important;
     padding-bottom: 5px !important;
 }
 
-/* 4. Asegurar que el botón de menú móvil también sea negro si es necesario */
-.site-nav-ul-none-onepage a {
+/* 3. Cuando bajas (Scrolled): Texto Negro + Línea Negra */
+/* La clase .unslate_co--scrolled la activa tu plantilla automáticamente al bajar */
+.unslate_co--site-nav.unslate_co--scrolled .site-nav-ul li a {
     color: #000000 !important;
-}      
+    text-shadow: none;
+}
+
+.unslate_co--site-nav.unslate_co--scrolled .site-nav-ul li.active > a {
+    border-bottom: 2px solid #000000 !important;
+    color: #000000 !important;
+}
+
+.unslate_co--site-nav.unslate_co--scrolled .site-nav-ul li a:hover {
+    border-bottom: 2px solid rgba(0,0,0,0.2) !important;
+} 
 
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
