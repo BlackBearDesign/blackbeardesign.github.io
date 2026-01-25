@@ -398,11 +398,19 @@ input:-webkit-autofill:focus {
 #journal-grid .overlay {
   background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%) !important;
 }      
- .unslate_co--site-nav .site-nav-ul li.active > a {
+/* --- FIX NAVEGACIÓN ACTIVA (SUBRAYADO) --- */
+.unslate_co--site-nav .site-nav-ul li.active > a {
+    color: #000000 !important; /* Mantiene el texto negro */
+    border-bottom: 2px solid #000000; /* Añade la línea negra abajo */
+    padding-bottom: 5px; /* Separa un poco la línea del texto */
+    opacity: 1 !important;
+}
+
+/* También para el hover, para que sea consistente */
+.unslate_co--site-nav .site-nav-ul li a:hover {
     color: #000000 !important;
-    border-bottom: 2px solid #000000;
-    padding-bottom: 5px;
-}     
+    opacity: 1 !important;
+}   
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
