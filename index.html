@@ -398,31 +398,7 @@ input:-webkit-autofill:focus {
 #journal-grid .overlay {
   background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%) !important;
 }      
-/* --- SOLUCIÓN DEFINITIVA NAVEGACIÓN BLACKBEAR --- */
 
-/* 1. Forzamos que los enlaces sean negros SIEMPRE (Base, Hover y Activo) */
-.unslate_co--site-nav .site-nav-ul li a,
-.unslate_co--site-nav .site-nav-ul li a:hover,
-.unslate_co--site-nav .site-nav-ul li.active > a,
-.unslate_co--site-nav .site-nav-ul li a.active {
-    color: #000000 !important; /* Negro puro */
-    opacity: 1 !important;
-    text-decoration: none !important;
-}
-
-/* 2. Aplicamos la línea inferior solo al estado ACTIVO */
-/* Nota: Targeteamos tanto al 'li' como al 'a' por si la plantilla cambia la clase */
-.unslate_co--site-nav .site-nav-ul li.active > a,
-.unslate_co--site-nav .site-nav-ul li a.active {
-    border-bottom: 2px solid #000000 !important; /* Línea negra */
-    padding-bottom: 4px !important;
-    font-weight: 700 !important; /* Opcional: un poco más de grosor para notar el cambio */
-}
-
-/* 3. Efecto sutil al pasar el mouse (opcional) */
-.unslate_co--site-nav .site-nav-ul li a:hover {
-    border-bottom: 2px solid rgba(0,0,0,0.2);
-}
     </style>
 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
