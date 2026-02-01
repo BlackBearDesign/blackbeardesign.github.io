@@ -6,37 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="images/icon.png">
     
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/vendor/icomoon/style.css">
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap" rel="stylesheet">
 
     <style>
       body { font-family: 'Montserrat', sans-serif !important; background: transparent; color: #fff; overflow-x: hidden; }
       
-      /* Fondo de video fijo e idéntico al index */
+      /* Fondo de video idéntico al index */
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
 
-      /* Estructura de la página */
       .unslate_co--site-wrap { background-color: transparent !important; }
-      .order-section { padding: 160px 0 100px 0; min-height: 85vh; }
-      .info-panel { background: rgba(10,10,10,0.85); padding: 40px; border: 1px solid #1a1a1a; border-radius: 8px; backdrop-filter: blur(15px); }
+      .order-section { padding: 180px 0 100px 0; min-height: 85vh; }
+      .info-panel { background: rgba(10,10,10,0.9); padding: 40px; border: 1px solid #1a1a1a; border-radius: 8px; backdrop-filter: blur(15px); }
 
-      /* Recuadro punteado y botón debajo */
-      .upload-box-dotted { border: 2px dashed rgba(255,255,255,0.2); padding: 45px 20px; text-align: center; border-radius: 10px; margin-bottom: 25px; }
-      .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; display: block; }
-      .btn-blackbear:hover { transform: scale(1.02); }
-      
-      /* Estado de Comprobante Enviado */
-      .btn-sent { background: #111 !important; color: #fff !important; border: 1px solid #333 !important; cursor: default; letter-spacing: 1px; }
-      .btn-cancel-delivery { background: transparent; color: #666; font-size: 10px; border: none; text-decoration: underline; margin-top: 15px; cursor: pointer; text-transform: uppercase; font-weight: 700; display: block; width: 100%; text-align: center; }
+      /* Métodos de Pago Solicitados */
+      .pay-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+      .pay-link { padding: 10px; font-size: 10px; font-weight: 900; text-align: center; border-radius: 4px; text-decoration: none !important; transition: 0.3s; color: #fff; }
+      .pay-paypal { background: #003087; }
+      .pay-wise { background: #00b5ff; }
+      .pay-binance { background: #F3BA2F; color: #000; }
 
-      /* Estilos de texto y badges */
-      .badge-status { padding: 8px 15px; background: #fff; color: #000; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block; }
-      .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; margin-left: 10px; }
-      
-      /* Footer gris sólido */
-      .unslate_co--footer { background-color: #191919 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; margin-top: 0; }
+      /* Contrato y Checkbox */
+      .contract-container { background: #000; border: 1px solid #222; padding: 15px; height: 100px; overflow-y: scroll; font-size: 11px; color: #666; margin-bottom: 15px; text-align: left; }
+      .accept-wrap { text-align: left; margin-bottom: 25px; }
+      .accept-wrap input { margin-right: 10px; }
+      .accept-wrap label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+      /* Área de Carga Mejorada */
+      .upload-box-dotted { border: 2px dashed rgba(255,255,255,0.2); padding: 35px 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
+      .upload-box-dotted:hover { border-color: #fff; }
+      .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
+      .btn-sent { background: #111 !important; color: #fff !important; border: 1px solid #333 !important; cursor: default; }
+
+      /* Footer Gris Sólido */
+      .unslate_co--footer { background-color: #191919 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; }
+      .badge-status { padding: 6px 12px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block; }
+      .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; }
     </style>
 </head>
 <body>
@@ -54,15 +62,19 @@
               <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
                 <li><a href="index.html#home-section" class="nav-link">Home</a></li>
                 <li><a href="index.html#portfolio-section" class="nav-link">Portfolio</a></li>
+                <li><a href="index.html#about-section" class="nav-link">About</a></li>
+                <li><a href="index.html#services-section" class="nav-link">Services</a></li>
               </ul>
             </div>
             <div class="site-logo pos-absolute">
               <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-                <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px; width: auto; vertical-align: middle;">
+                <img src="images/logo.png" alt="BlackBear" style="height: 40px; width: auto;">
               </a>
             </div>
             <div class="col-md-5 text-left">
               <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                <li><a href="index.html#skills-section" class="nav-link">Skills</a></li>
+                <li><a href="index.html#testimonial-section" class="nav-link">Testimonial</a></li>
                 <li><a href="index.html#journal-section" class="nav-link">Journal</a></li>
                 <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
               </ul>
@@ -72,43 +84,61 @@
       </nav>
 
       <div class="container order-section">
-          <div id="loading-view" class="text-center"><h2 style="font-weight: 900;">SINCRONIZANDO...</h2></div>
+          <div id="loading-view" class="text-center"><h2>SINCRO...</h2></div>
 
           <div id="order-view" style="display:none;">
-              <div class="row align-items-center">
+              <div class="row">
                   <div class="col-lg-7">
                       <span id="order-category" class="badge-status"></span>
-                      <h1 id="order-main-title" style="font-weight: 900; font-size: 3.5rem; text-transform: uppercase; line-height: 1; margin-bottom: 10px;"></h1>
-                      <h4 id="order-sub-title" style="font-weight: 700; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 35px;"></h4>
+                      <h1 id="order-main-title" style="font-weight: 900; font-size: 3.5rem; text-transform: uppercase; line-height: 1; margin: 0;"></h1>
+                      <h3 style="font-weight: 700; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px;">ESTADO DE PRODUCCIÓN</h3>
                       
-                      <div class="mb-4">
-                          <h5 style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.3; font-weight: 800;">Descripción del Proyecto</h5>
-                          <p id="order-description" style="font-size: 18px; color: #ccc; line-height: 1.6; max-width: 90%;"></p>
+                      <div class="mb-5">
+                          <h5 style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.3; font-weight: 800; margin-bottom: 10px;">Descripción del Proyecto</h5>
+                          <p id="order-description" style="font-size: 18px; color: #ccc; line-height: 1.6;"></p>
                       </div>
 
-                      <div id="video-preview-section" style="display:none;" class="mt-4">
-                        <h5 class="mb-3" style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.3;">Vista Previa (Marca de Agua)</h5>
-                        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid #222;" id="video-iframe"></div>
+                      <div id="preview-box" style="display:none;">
+                        <h5 style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.3; margin-bottom: 15px;">Vista Previa</h5>
+                        <div id="video-iframe" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid #222;"></div>
                       </div>
                   </div>
 
                   <div class="col-lg-4 offset-lg-1">
                       <div class="info-panel">
                           <div class="mb-4">
-                              <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.4; font-weight: 800;">Estatus Actual</span>
-                              <h3 id="order-status-text" style="font-weight: 900; text-transform: uppercase; margin: 5px 0 0 0;"></h3>
+                              <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.4; font-weight: 800;">Estatus</span>
+                              <h3 id="order-status-text" style="font-weight: 900; text-transform: uppercase; margin: 0;"></h3>
                           </div>
                           
                           <div class="mb-4 py-3 border-top border-bottom" style="border-color: #222 !important;">
                               <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.4; font-weight: 800;">Revisiones</span>
-                              <h4 style="font-weight: 900; margin: 10px 0 0 0;">DISPONIBLES: <span id="order-revisions" class="revision-badge">0</span></h4>
+                              <h4 style="font-weight: 900; margin: 5px 0 0 0;">DISPONIBLES: <span id="order-revisions" class="revision-badge">0</span></h4>
                           </div>
 
-                          <div id="actions-area"></div>
+                          <div id="actions-area">
+                              <div class="pay-grid">
+                                  <a href="TU_LINK_PAYPAL" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                  <a href="TU_LINK_WISE" target="_blank" class="pay-link pay-wise">WISE</a>
+                                  <a href="TU_ID_BINANCE" target="_blank" class="pay-link pay-binance">BINANCE</a>
+                              </div>
+                              <div class="contract-container">
+                                  <strong>CONTRATO BLACKBEAR:</strong><br>
+                                  1. El anticipo no es reembolsable una vez iniciada la producción.<br>
+                                  2. Los archivos finales se liberan tras el pago del saldo.<br>
+                                  3. El cliente acepta las revisiones estipuladas.
+                              </div>
+                              <div class="accept-wrap">
+                                  <input type="checkbox" id="accept-check"> <label for="accept-check">ACEPTO LOS TÉRMINOS Y CONDICIONES</label>
+                              </div>
+                              <div class="upload-box-dotted" onclick="document.getElementById('fileInput').click()">
+                                  <p id="upload-label" style="font-size: 11px; font-weight: 700; opacity: 0.5; text-transform: uppercase; margin: 0;">Sube tu comprobante (PNG/JPG)</p>
+                              </div>
+                              <input type="file" id="fileInput" class="d-none" onchange="handleUploadTrigger()">
+                              <button class="btn-blackbear" id="upload-btn" onclick="submitFinal()">ENVIAR PAGO</button>
+                          </div>
                       </div>
-                      <div class="text-right mt-4">
-                        <a href="index.html#portfolio-section" style="font-size: 10px; color: #444; text-decoration: none; letter-spacing: 2px; font-weight: 700;">&larr; VOLVER AL PORTAFOLIO</a>
-                      </div>
+                      <div class="text-right mt-4"><a href="index.html#portfolio-section" style="font-size: 10px; color: #444; font-weight: 700; letter-spacing: 2px; text-decoration: none;">&larr; VOLVER AL PORTAFOLIO</a></div>
                   </div>
               </div>
           </div>
@@ -121,11 +151,11 @@
               <img src="images/logo.png" alt="BlackBear" style="height: 35px; width: auto;">
             </a>
           </div>
-          <ul class="footer-site-social" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
-            <li><a href="#" style="font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #fff; opacity: 0.5;">Facebook</a></li>
-            <li><a href="#" style="font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #fff; opacity: 0.5;">Instagram</a></li>
+          <ul class="footer-site-social" style="list-style:none; padding:0; display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <li><a href="#" style="font-size:12px; text-transform:uppercase; letter-spacing:2px; color:#fff; opacity:0.5;">Facebook</a></li>
+            <li><a href="#" style="font-size:12px; text-transform:uppercase; letter-spacing:2px; color:#fff; opacity:0.5;">Instagram</a></li>
           </ul>
-          <p style="font-size: 12px; opacity: 0.3; margin: 0;">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
+          <p style="font-size:12px; opacity:0.3;">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
         </div>
       </footer>
 
@@ -133,91 +163,66 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script>
-        // CONFIGURACIÓN DE LINKS
-        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR7MfUJrspnPSDFqmPX0oPA_PtDE7312RnzngMrCwpGfgjRSvXD6jmiiDFVhAlbOTwmFmOEixPzBZ_z/pub?output=csv";
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxo0txYdwsl7p5YdBn4obClxFRQz3MXfgS1l6bHimyBP_p8FxPiSBvOdC8i7unntojGQQ/exec";
+        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR7MfUJrspnPSDFqmPX0oPA_PtDE7312RnzngMrCwpGfgjRSvXD6jmiiDFVhAlbOTwmFmOEixPzBZ_z/pub?output=csv&t=" + new Date().getTime();
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxo0txYdwsl7p5YdBn4obClxFRQz3MXfgS1l6bHimyBP_p8FxPiSBvOdC8i7unntojGQQ/exec";
+        let currentOrder = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             const id = new URLSearchParams(window.location.search).get('id');
-            if(!id) return document.getElementById('loading-view').innerHTML = "<h1>SE REQUIERE ID</h1>";
-
             Papa.parse(CSV_URL, {
                 download: true, header: true,
-                complete: (results) => {
-                    const order = results.data.find(row => row.ID === id);
-                    if(order) renderOrder(order);
-                    else document.getElementById('loading-view').innerHTML = "<h1>ORDEN NO ENCONTRADA</h1>";
+                complete: (r) => {
+                    currentOrder = r.data.find(x => x.ID === id);
+                    if(currentOrder) render(currentOrder);
                 }
             });
         });
 
-        function renderOrder(order) {
+        function render(o) {
             document.getElementById('loading-view').style.display = 'none';
             document.getElementById('order-view').style.display = 'block';
+            document.getElementById('order-main-title').innerText = "ORDEN DE " + o.Cliente;
+            document.getElementById('order-description').innerText = o.Descripcion || "Sin descripción adicional.";
+            document.getElementById('order-revisions').innerText = o.Revisiones || "0";
+            document.getElementById('order-status-text').innerText = o.Estatus.replace(/_/g, ' ');
+            document.getElementById('order-category').innerText = o.Categoria_Pago;
 
-            // Lógica de títulos solicitada
-            document.getElementById('order-main-title').innerText = "ORDEN DE " + order.Cliente;
-            document.getElementById('order-sub-title').innerText = "ESTADO DE PRODUCCIÓN";
-            
-            // Datos del Excel
-            document.getElementById('order-description').innerText = order.Descripcion || "Sin descripción adicional.";
-            document.getElementById('order-revisions').innerText = order.Revisiones || "0";
-            document.getElementById('order-status-text').innerText = order.Estatus.replace(/_/g, ' ');
-            document.getElementById('order-category').innerText = order.Categoria_Pago;
-
-            const actions = document.getElementById('actions-area');
-            
-            if(order.Estatus === 'ESPERANDO_PAGO') {
-                actions.innerHTML = `
-                    <div id="upload-container">
-                        <div class="upload-box-dotted">
-                            <p id="upload-label" style="font-size: 11px; font-weight: 700; opacity: 0.5; text-transform: uppercase; margin: 0;">Sube tu comprobante (PNG/JPG)</p>
-                        </div>
-                        <input type="file" id="fileInput" class="d-none" onchange="handleFileSelected('${order.ID}')">
-                        <button class="btn-blackbear" id="upload-btn" onclick="document.getElementById('fileInput').click()">ENVIAR PAGO</button>
-                    </div>`;
-            } else if(order.Estatus === 'REVISION') {
-                document.getElementById('video-preview-section').style.display = 'block';
-                document.getElementById('video-iframe').innerHTML = `<iframe src="${order.Link_YouTube.replace('watch?v=', 'embed/')}?modestbranding=1&rel=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
-                actions.innerHTML = `<button class="btn-blackbear" onclick="alert('Contacta por WhatsApp para liquidar el saldo final.')">LIQUIDAR SALDO</button>`;
-            } else if(order.Estatus === 'COMPLETADO') {
-                actions.innerHTML = `<a href="${order.Link_Drive}" target="_blank" class="btn-blackbear text-center">DESCARGAR MASTER 4K</a>`;
-            } else {
-                actions.innerHTML = `<p style="text-align:center; opacity:0.5; font-size:12px;">El estudio está trabajando en tu material.</p>`;
+            if(o.Estatus === 'REVISION') {
+                document.getElementById('preview-box').style.display = 'block';
+                document.getElementById('video-iframe').innerHTML = `<iframe src="${o.Link_YouTube.replace('watch?v=', 'embed/')}?modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
+            } else if(o.Estatus === 'COMPLETADO') {
+                document.getElementById('actions-area').innerHTML = `<a href="${o.Link_Drive}" target="_blank" class="btn-blackbear d-block text-center">DESCARGAR FINAL</a>`;
             }
         }
 
-        async function handleFileSelected(orderId) {
-            const btn = document.getElementById('upload-btn');
+        function handleUploadTrigger() {
             const file = document.getElementById('fileInput').files[0];
-            if(!file) return;
+            if(file) document.getElementById('upload-label').innerText = file.name;
+        }
 
+        async function submitFinal() {
+            const check = document.getElementById('accept-check');
+            const file = document.getElementById('fileInput').files[0];
+            if(!check.checked) return alert("Debes aceptar los términos.");
+            if(!file) return alert("Sube tu comprobante primero.");
+
+            const btn = document.getElementById('upload-btn');
             btn.innerText = "ENVIANDO...";
             btn.disabled = true;
 
             const reader = new FileReader();
             reader.onload = async (e) => {
                 const base64 = e.target.result.split(',')[1];
-                const formData = new URLSearchParams();
-                formData.append('fileBase64', base64);
-                formData.append('mimeType', file.type);
-                formData.append('fileName', `Orden_${orderId}_ticket`);
-                formData.append('orderId', orderId);
-                formData.append('type', 'anticipo');
+                const data = new URLSearchParams();
+                data.append('fileBase64', base64);
+                data.append('mimeType', file.type);
+                data.append('fileName', `Orden_${currentOrder.ID}_comprobante`);
+                data.append('orderId', currentOrder.ID);
+                data.append('type', 'anticipo');
 
-                try {
-                    await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
-                    
-                    // Lógica visual tras envío exitoso
-                    document.getElementById('upload-label').innerText = "ARCHIVO RECIBIDO";
-                    btn.innerText = "COMPROBANTE ENVIADO";
-                    btn.className = "btn-blackbear btn-sent";
-                    btn.onclick = null;
-                    document.getElementById('upload-container').innerHTML += `<button class="btn-cancel-delivery" onclick="location.reload()">CANCELAR ENTREGA</button>`;
-                } catch (err) {
-                    alert("Error en el envío. Reintenta.");
-                    location.reload();
-                }
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
+                btn.innerText = "COMPROBANTE ENVIADO";
+                btn.className = "btn-blackbear btn-sent";
             };
             reader.readAsDataURL(file);
         }
