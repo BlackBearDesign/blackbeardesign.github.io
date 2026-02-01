@@ -175,143 +175,189 @@
 
     </div>
 
-    <script>
-        // 🚨 LINK NUEVO DEL APPS SCRIPT (YA CON CARPETA DE DRIVE CONFIGURADA)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLnTKKWyN8pLJt5uMXjnritxPazqsAp32q1IbqdH8XfSBnpIIcC2Y2teJRJJdWrypCzQ/exec";
-        
-        let orderId = new URLSearchParams(window.location.search).get('id');
+<script>
+    // 🚨 LINK NUEVO DEL APPS SCRIPT (YA CON CARPETA DE DRIVE CONFIGURADA)
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLnTKKWyN8pLJt5uMXjnritxPazqsAp32q1IbqdH8XfSBnpIIcC2Y2teJRJJdWrypCzQ/exec";
+    
+    let orderId = new URLSearchParams(window.location.search).get('id');
 
-        document.addEventListener('DOMContentLoaded', () => {
-            if(!orderId) {
-                document.getElementById('loading-view').innerHTML = "<h1 style='color:red'>SE REQUIERE ID DE ORDEN EN LA URL</h1>";
+    document.addEventListener('DOMContentLoaded', () => {
+        if(!orderId) {
+            document.getElementById('loading-view').innerHTML = "<h1 style='color:red'>SE REQUIERE ID DE ORDEN EN LA URL</h1>";
+            return;
+        }
+
+        // CONEXIÓN EN VIVO AL EXCEL (SIN CACHÉ)
+        fetch(SCRIPT_URL + "?id=" + orderId + "&t=" + Date.now())
+            .then(response => response.json())
+            .then(data => {
+                if(data.error) {
+                    document.getElementById('loading-view').innerHTML = "<h1>ORDEN #" + orderId + " NO ENCONTRADA</h1>";
+                } else {
+                    render(data);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('loading-view').innerHTML = "<h1 style='color:red'>ERROR AL CONECTAR CON EL SERVIDOR</h1>";
+            });
+    });
+
+    function render(o) {
+        document.getElementById('loading-view').style.display = 'none';
+        document.getElementById('order-view').style.display = 'block';
+
+        // MAPEO DE DATOS (nombres exactos de tus columnas del Excel)
+        document.getElementById('order-main-title').innerText = "ORDEN DE " + (o.Cliente || "CLIENTE");
+        document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "Sin descripción.");
+        document.getElementById('order-revisions').innerText = o.Revisiones || "0";
+        document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
+        document.getElementById('order-status-text').innerText = (o.Estatus || "PENDIENTE").toString().replace(/_/g, ' ');
+        document.getElementById('order-category').innerText = o.Categoria_Pago || "PAGO";
+
+        // Si está en REVISION, mostrar video
+        if(o.Estatus === 'REVISION' && o.Link_YouTube) {
+            document.getElementById('preview-box').style.display = 'block';
+            let videoUrl = o.Link_YouTube.toString();
+            // Convertir cualquier formato de YouTube a embed
+            videoUrl = videoUrl.replace('watch?v=', 'embed/');
+            videoUrl = videoUrl.replace('youtu.be/', 'youtube.com/embed/');
+            if(!videoUrl.includes('embed')) {
+                videoUrl = videoUrl.replace('youtube.com/', 'youtube.com/embed/');
+            }
+            document.getElementById('video-iframe').innerHTML = 
+                `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" 
+                 style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                 frameborder="0" allowfullscreen></iframe>`;
+        } 
+        // Si está COMPLETADO, mostrar botón de descarga
+        else if(o.Estatus === 'COMPLETADO' && o.Link_Drive) {
+            document.getElementById('actions-area').innerHTML = 
+                `<a href="${o.Link_Drive}" target="_blank" class="btn-blackbear d-block text-center" 
+                 style="text-decoration:none; padding: 20px; font-size: 14px;">
+                 DESCARGAR MASTER 4K<br>
+                 <span style="font-size: 10px; opacity: 0.7; font-weight: 400;">Click para obtener el archivo final</span>
+                 </a>`;
+        }
+
+        // 🚨 NUEVO: Verificar si ya envió comprobante (para bloquear reenvío)
+        checkIfAlreadyUploaded(o);
+    }
+
+    // 🚨 NUEVA FUNCIÓN: Revisa si ya hay comprobante en el Excel
+    function checkIfAlreadyUploaded(o) {
+        // Comprobante_1 es la columna K, Comprobante_2 es la columna L
+        // Si alguna tiene un link real (que empiece con http), ya envió
+        const comprobante1 = o.Comprobante_1 || "";
+        const comprobante2 = o.Comprobante_2 || "";
+        
+        // Si ya hay un link guardado (que empiece con http y no sea el placeholder "[Imagen]")
+        if( (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') || 
+            (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]') ) {
+            
+            // Bloquear el área de subida para que no mande otro
+            const uploadBox = document.querySelector('.upload-box-dotted');
+            const fileInput = document.getElementById('fileInput');
+            const btn = document.getElementById('upload-btn');
+            const label = document.getElementById('upload-label');
+            const check = document.getElementById('accept-check');
+            const contract = document.querySelector('.contract-box');
+            const payGrid = document.querySelector('.pay-grid');
+            
+            // Cambiar visual del área de upload
+            uploadBox.style.borderColor = "#333";
+            uploadBox.style.cursor = "default";
+            uploadBox.onclick = null; // Quitar el click
+            label.innerText = "✓ COMPROBANTE YA ENVIADO";
+            label.style.color = "#4CAF50";
+            label.style.opacity = "1";
+            
+            // Ocultar el input file y el checkbox de términos (ya no aplica)
+            fileInput.style.display = 'none';
+            check.parentElement.style.display = 'none';
+            
+            // Bloquear botón
+            btn.innerText = "EN COLA DE REVISIÓN";
+            btn.className = "btn-blackbear btn-sent";
+            btn.disabled = true;
+            btn.onclick = null;
+            
+            // Opcional: mostrar mensaje de "ya recibimos tu pago"
+            console.log("Comprobante ya existente:", comprobante1 || comprobante2);
+        }
+    }
+
+    function handleFileSelected() {
+        const file = document.getElementById('fileInput').files[0];
+        if(file) {
+            // Validar tamaño (5MB máximo)
+            if(file.size > 5 * 1024 * 1024) {
+                alert("El archivo es muy grande. Máximo 5MB.");
+                document.getElementById('fileInput').value = '';
                 return;
             }
+            document.getElementById('upload-label').innerText = "ARCHIVO: " + file.name;
+            document.getElementById('upload-label').style.opacity = "1";
+            document.getElementById('upload-label').style.color = "#fff";
+        }
+    }
 
-            // CONEXIÓN EN VIVO AL EXCEL (SIN CACHÉ)
-            fetch(SCRIPT_URL + "?id=" + orderId + "&t=" + Date.now())
-                .then(response => response.json())
-                .then(data => {
-                    if(data.error) {
-                        document.getElementById('loading-view').innerHTML = "<h1>ORDEN #" + orderId + " NO ENCONTRADA</h1>";
-                    } else {
-                        render(data);
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    document.getElementById('loading-view').innerHTML = "<h1 style='color:red'>ERROR AL CONECTAR CON EL SERVIDOR</h1>";
+    async function submitFile() {
+        const check = document.getElementById('accept-check');
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+
+        if(!check.checked) return alert("Debes aceptar los términos y condiciones.");
+        if(!file) return alert("Por favor, selecciona tu comprobante primero.");
+
+        const btn = document.getElementById('upload-btn');
+        btn.innerText = "ENVIANDO...";
+        btn.disabled = true;
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            const base64 = e.target.result.split(',')[1];
+            const formData = new URLSearchParams();
+            formData.append('fileBase64', base64);
+            formData.append('mimeType', file.type);
+            formData.append('fileName', `Orden_${orderId}_comprobante`);
+            formData.append('orderId', orderId);
+
+            try {
+                // Enviar al Apps Script (usando POST)
+                const response = await fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    body: formData 
                 });
-        });
-
-        function render(o) {
-            document.getElementById('loading-view').style.display = 'none';
-            document.getElementById('order-view').style.display = 'block';
-
-            // MAPEO DE DATOS (nombres exactos de tus columnas del Excel)
-            document.getElementById('order-main-title').innerText = "ORDEN DE " + (o.Cliente || "CLIENTE");
-            document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "Sin descripción.");
-            document.getElementById('order-revisions').innerText = o.Revisiones || "0";
-            document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
-            document.getElementById('order-status-text').innerText = (o.Estatus || "PENDIENTE").toString().replace(/_/g, ' ');
-            document.getElementById('order-category').innerText = o.Categoria_Pago || "PAGO";
-
-            // Si está en REVISION, mostrar video
-            if(o.Estatus === 'REVISION' && o.Link_YouTube) {
-                document.getElementById('preview-box').style.display = 'block';
-                let videoUrl = o.Link_YouTube.toString();
-                // Convertir cualquier formato de YouTube a embed
-                videoUrl = videoUrl.replace('watch?v=', 'embed/');
-                videoUrl = videoUrl.replace('youtu.be/', 'youtube.com/embed/');
-                if(!videoUrl.includes('embed')) {
-                    videoUrl = videoUrl.replace('youtube.com/', 'youtube.com/embed/');
-                }
-                document.getElementById('video-iframe').innerHTML = 
-                    `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" 
-                     style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-                     frameborder="0" allowfullscreen></iframe>`;
-            } 
-            // Si está COMPLETADO, mostrar botón de descarga
-            else if(o.Estatus === 'COMPLETADO' && o.Link_Drive) {
-                document.getElementById('actions-area').innerHTML = 
-                    `<a href="${o.Link_Drive}" target="_blank" class="btn-blackbear d-block text-center" 
-                     style="text-decoration:none; padding: 20px; font-size: 14px;">
-                     DESCARGAR MASTER 4K<br>
-                     <span style="font-size: 10px; opacity: 0.7; font-weight: 400;">Click para obtener el archivo final</span>
-                     </a>`;
-            }
-        }
-
-        function handleFileSelected() {
-            const file = document.getElementById('fileInput').files[0];
-            if(file) {
-                // Validar tamaño (5MB máximo)
-                if(file.size > 5 * 1024 * 1024) {
-                    alert("El archivo es muy grande. Máximo 5MB.");
-                    document.getElementById('fileInput').value = '';
-                    return;
-                }
-                document.getElementById('upload-label').innerText = "ARCHIVO: " + file.name;
-                document.getElementById('upload-label').style.opacity = "1";
-                document.getElementById('upload-label').style.color = "#fff";
-            }
-        }
-
-        async function submitFile() {
-            const check = document.getElementById('accept-check');
-            const fileInput = document.getElementById('fileInput');
-            const file = fileInput.files[0];
-
-            if(!check.checked) return alert("Debes aceptar los términos y condiciones.");
-            if(!file) return alert("Por favor, selecciona tu comprobante primero.");
-
-            const btn = document.getElementById('upload-btn');
-            btn.innerText = "ENVIANDO...";
-            btn.disabled = true;
-
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const base64 = e.target.result.split(',')[1];
-                const formData = new URLSearchParams();
-                formData.append('fileBase64', base64);
-                formData.append('mimeType', file.type);
-                formData.append('fileName', `Orden_${orderId}_comprobante`);
-                formData.append('orderId', orderId);
-
-                try {
-                    // Enviar al Apps Script (usando POST)
-                    const response = await fetch(SCRIPT_URL, { 
-                        method: 'POST', 
-                        body: formData 
-                    });
+                
+                const result = await response.json();
+                console.log("Respuesta del servidor:", result);
+                
+                if(result.result === "success") {
+                    document.getElementById('upload-label').innerText = "✓ COMPROBANTE ENVIADO";
+                    document.getElementById('upload-label').style.color = "#4CAF50";
+                    btn.innerText = "EN COLA DE REVISIÓN";
+                    btn.className = "btn-blackbear btn-sent";
+                    btn.onclick = null;
                     
-                    const result = await response.json();
-                    console.log("Respuesta del servidor:", result);
-                    
-                    if(result.result === "success") {
-                        document.getElementById('upload-label').innerText = "✓ COMPROBANTE ENVIADO";
-                        document.getElementById('upload-label').style.color = "#4CAF50";
-                        btn.innerText = "EN COLA DE REVISIÓN";
-                        btn.className = "btn-blackbear btn-sent";
-                        btn.onclick = null;
-                        
-                        alert("¡Comprobante recibido! Lo revisaremos en breve.");
-                    } else {
-                        throw new Error(result.message || "Error desconocido");
-                    }
-                } catch (err) {
-                    console.error("Error completo:", err);
-                    alert("Error al enviar: " + err.message + "\nIntenta de nuevo o contacta por WhatsApp.");
-                    btn.innerText = "ENVIAR PAGO";
-                    btn.disabled = false;
+                    alert("¡Comprobante recibido! Lo revisaremos en breve.");
+                } else {
+                    throw new Error(result.message || "Error desconocido");
                 }
-            };
-            reader.onerror = (err) => {
-                alert("Error al leer el archivo: " + err);
+            } catch (err) {
+                console.error("Error completo:", err);
+                alert("Error al enviar: " + err.message + "\nIntenta de nuevo o contacta por WhatsApp.");
                 btn.innerText = "ENVIAR PAGO";
                 btn.disabled = false;
-            };
-            reader.readAsDataURL(file);
-        }
-    </script>
+            }
+        };
+        reader.onerror = (err) => {
+            alert("Error al leer el archivo: " + err);
+            btn.innerText = "ENVIAR PAGO";
+            btn.disabled = false;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
 </body>
 </html>
