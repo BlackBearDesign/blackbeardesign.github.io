@@ -34,7 +34,15 @@
       
       .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
       .btn-blackbear:hover { background: #ccc; }
-      .btn-sent { background: #333 !important; color: #999 !important; border: 1px solid #444 !important; cursor: not-allowed; }
+      .btn-blackbear:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+      .btn-request-project { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
+      .btn-request-project:hover { background: #ccc; transform: translateY(-2px); }
+      .btn-request-project:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
+
+      .btn-accept-video { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+      .btn-accept-video:hover { background: #ccc; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
+      .btn-accept-video:disabled { background: #333; color: #666; cursor: not-allowed; }
 
       /* MODAL BINANCE */
       .binance-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
@@ -46,13 +54,13 @@
       .close-modal { background: #333; color: #fff; border: none; padding: 10px 20px; margin-top: 10px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
       .close-modal:hover { background: #555; }
 
-      /* MENSAJES DE ESPERA VERIFICACIÓN */
+      /* MENSAJES DE ESPERA */
       .waiting-verification-msg {
         padding: 30px;
         border: 2px solid #fff;
         background: rgba(255,255,255,0.05);
         text-align: center;
-        margin-top: 20px;
+        margin-top: 0;
         border-radius: 8px;
       }
       .waiting-verification-msg h4 {
@@ -67,7 +75,6 @@
         font-size: 12px;
         color: #999;
         margin: 0;
-        line-height: 1.5;
       }
       .waiting-verification-msg .lock-icon {
         font-size: 36px;
@@ -79,43 +86,24 @@
       .project-label { font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 5px; letter-spacing: 2px; color: #666; display: block; }
 
       .btn-extra-revision { background: #fff; color: #000; font-weight: 900; padding: 12px 20px; text-transform: uppercase; border: none; letter-spacing: 2px; font-size: 10px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 10px; border-radius: 4px; }
-      .btn-extra-revision:hover { background: #ccc; transform: translateY(-2px); }
-
+      
       .btn-outline-light { background: transparent; color: #fff; border: 1px solid #fff; font-weight: 800; padding: 15px 30px; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 15px; text-decoration: none; display: inline-block; text-align: center; }
       .btn-outline-light:hover { background: #fff; color: #000; }
-
-      .btn-accept-video { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 15px; }
-      .btn-accept-video:hover { background: #ccc; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
-      .btn-accept-video:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
-
-      .btn-request-project { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
-      .btn-request-project:hover { background: #ccc; transform: translateY(-2px); }
 
       .review-form { display: none; margin-top: 25px; padding: 25px; border: 1px solid #333; background: rgba(0,0,0,0.5); border-radius: 8px; }
       .review-form h4 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #fff; }
       .review-form input { width: 100%; background: transparent; border: 1px solid #444; border-radius: 4px; padding: 12px; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 13px; margin-bottom: 15px; }
-      .review-form input:focus { outline: none; border-color: #fff; }
       .review-form textarea { width: 100%; background: transparent; border: 1px solid #444; border-radius: 4px; padding: 12px; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 13px; resize: vertical; min-height: 100px; margin-bottom: 15px; }
-      .review-form textarea:focus { outline: none; border-color: #fff; }
       .review-form button { background: #fff; color: #000; border: none; padding: 12px 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; cursor: pointer; transition: 0.3s; }
-      .review-form button:hover { background: #ccc; }
       .review-success { display: none; color: #fff; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; margin-top: 15px; }
-      .review-already-sent { color: #fff; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; margin-top: 15px; padding: 15px; border: 1px solid #fff; background: rgba(255,255,255,0.1); text-align: center; }
 
       .changes-form { display: none; margin-top: 25px; padding: 25px; border: 1px solid #555; background: rgba(255,255,255,0.05); border-radius: 8px; }
       .changes-form h4 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #fff; }
       .changes-form textarea { width: 100%; background: transparent; border: 1px solid #444; border-radius: 4px; padding: 12px; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 13px; resize: vertical; min-height: 120px; margin-bottom: 15px; }
-      .changes-form textarea:focus { outline: none; border-color: #fff; }
       .changes-form button { background: #fff; color: #000; border: none; padding: 12px 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; cursor: pointer; transition: 0.3s; }
-      .changes-form button:hover { background: #ccc; }
-      .changes-form button:disabled { background: #333; color: #666; cursor: not-allowed; }
-      .changes-success { display: none; color: #fff; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; margin-top: 15px; }
-      .changes-error { display: none; color: #999; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; margin-top: 15px; }
-      .no-revisions-msg { display: none; color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; padding: 10px; border: 1px solid #fff; background: rgba(255,255,255,0.1); border-radius: 4px; }
 
       .second-payment-section { margin-top: 25px; padding: 25px; border: 1px solid #444; background: rgba(0,0,0,0.3); border-radius: 8px; }
       .second-payment-section h4 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #fff; }
-      .second-payment-section .upload-box-dotted { margin-bottom: 15px; }
 
       .unslate_co--footer { background-color: #111 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; color: #fff; border-top: 1px solid #333; }
       .badge-status { padding: 8px 15px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block; }
@@ -127,7 +115,7 @@
       .accept-wrap input[type="checkbox"]:checked + label::before { background: #fff; border-color: #fff; }
       .accept-wrap input[type="checkbox"]:checked + label::after { content: '✓'; position: absolute; left: 3px; top: 50%; transform: translateY(-50%); color: #000; font-size: 14px; font-weight: 900; line-height: 1; }
       
-      @media (max-width: 768px) { .pay-grid { grid-template-columns: 1fr; } .order-section { padding: 100px 0 50px 0; } .project-title-display { font-size: 1.4rem; } }
+      @media (max-width: 768px) { .pay-grid { grid-template-columns: 1fr; } .order-section { padding: 100px 0 50px 0; } }
       
       .contract-box::-webkit-scrollbar { width: 6px; }
       .contract-box::-webkit-scrollbar-track { background: #111; }
@@ -224,7 +212,7 @@
                   </div>
 
                   <div class="col-lg-4 offset-lg-1">
-                      <div class="info-panel" id="info-panel-completed">
+                      <div class="info-panel">
                           <div class="mb-4">
                               <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #666;">Status</span>
                               <h3 id="order-status-text" style="font-weight: 900; text-transform: uppercase; margin: 0;"></h3>
@@ -248,8 +236,9 @@
                             <h3 id="order-price" style="font-weight: 900; margin: 0;">$0.00</h3>
                           </div>
 
-                          <!-- ÁREA NORMAL (AWAITING_PAYMENT) - Premiere y Director -->
+                          <!-- ÁREA AWAITING_PAYMENT (Premiere y Director) -->
                           <div id="actions-area">
+                              <!-- Formulario normal -->
                               <div id="payment-form-content">
                                   <div class="pay-grid" id="main-pay-grid">
                                       <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
@@ -261,8 +250,8 @@
                                       Loading agreement...
                                   </div>
                                   
-                                  <div class="accept-wrap" id="main-accept-wrap">
-                                      <input type="checkbox" id="accept-check"> 
+                                  <div class="accept-wrap" style="margin-bottom: 20px;">
+                                      <input type="checkbox" id="accept-check" onchange="toggleSubmitButton()"> 
                                       <label for="accept-check">I ACCEPT THE TERMS AND CONDITIONS</label>
                                   </div>
                                   
@@ -271,14 +260,14 @@
                                   </div>
                                   
                                   <input type="file" id="fileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleFileSelected()">
-                                  <button class="btn-blackbear" id="upload-btn" onclick="submitFile()">SUBMIT PAYMENT</button>
+                                  <button class="btn-blackbear" id="upload-btn" onclick="submitFile()" disabled>SUBMIT PAYMENT</button>
                               </div>
 
-                              <!-- Mensaje bloqueo primer pago -->
+                              <!-- Mensaje cuando ya envió comprobante (mismo estado AWAITING_PAYMENT pero bloqueado) -->
                               <div id="first-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                 <span class="lock-icon">🔒</span>
                                 <h4>PAYMENT PROOF SENT</h4>
-                                <p>Your payment is under manual review by our team.<br>Production will begin once verified.<br><br><small>This may take a few hours during business days.</small></p>
+                                <p>Your payment proof has been received and is pending verification.<br><br>Status remains AWAITING_PAYMENT until administrator approval.</p>
                               </div>
                           </div>
 
@@ -287,33 +276,39 @@
                               <div class="contract-box" id="legacy-contract-content">
                                   Loading agreement...
                               </div>
-                              <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()">REQUEST PROJECT START</button>
-                              <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">As a LEGACY client, click above to begin production immediately.</p>
                               
-                              <!-- Mensaje Legacy solicitado -->
+                              <!-- Checkbox aceptar contrato -->
+                              <div class="accept-wrap" style="margin-bottom: 20px;">
+                                  <input type="checkbox" id="legacy-accept-check" onchange="toggleLegacyButton()"> 
+                                  <label for="legacy-accept-check">I ACCEPT THE TERMS AND CONDITIONS</label>
+                              </div>
+                              
+                              <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()" disabled>REQUEST PROJECT START</button>
+                              <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">As a LEGACY client, click above to begin production immediately after accepting terms.</p>
+                              
+                              <!-- Mensaje Legacy solicitado (YA lo solicitó, esperando que admin lo mueva a IN_PRODUCTION) -->
                               <div id="legacy-requested-msg" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
                                 <span class="lock-icon">✓</span>
                                 <h4>PROJECT REQUESTED</h4>
-                                <p>Your project has been sent to production.<br>You will be notified when the preview is ready.</p>
+                                <p>Request sent. Status remains AWAITING_PAYMENT until administrator moves it to production.</p>
                               </div>
                           </div>
 
-                          <!-- ÁREA DE REVIEW -->
+                          <!-- ÁREA REVIEW -->
                           <div id="review-actions-area" style="display: none;">
-                              <button class="btn-outline-light" id="request-changes-btn" onclick="toggleChangesForm()" style="border-color: #fff; color: #fff;">
+                              <button class="btn-outline-light" id="request-changes-btn" onclick="toggleChangesForm()">
                                   REQUEST CHANGES
                               </button>
-                              <div class="no-revisions-msg" id="no-revisions-msg">
+                              <div class="no-revisions-msg" id="no-revisions-msg" style="display: none; color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; padding: 10px; border: 1px solid #fff; background: rgba(255,255,255,0.1); border-radius: 4px;">
                                   No revisions available. Please request an extra revision.
                               </div>
                               
-                              <div class="changes-form" id="changes-form-container">
+                              <div class="changes-form" id="changes-form-container" style="display: none;">
                                   <h4>Describe the changes needed</h4>
                                   <textarea id="changes-text" placeholder="Describe in detail what changes you need..."></textarea>
                                   <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                                       <button onclick="submitChangesRequest()">SEND REQUEST</button>
-                                      <span class="changes-success" id="changes-success-msg">✓ Changes requested! Revision count updated.</span>
-                                      <span class="changes-error" id="changes-error-msg">✗ Error sending request. Please try again.</span>
+                                      <span class="changes-success" id="changes-success-msg">✓ Changes requested!</span>
                                   </div>
                               </div>
 
@@ -321,60 +316,61 @@
                                   ACCEPT VIDEO
                               </button>
 
-                              <!-- Segundo pago para Director's Cut -->
+                              <!-- Segundo pago Director's Cut -->
                               <div class="second-payment-section" id="second-payment-section" style="display: none;">
                                   <h4>Final Payment Required</h4>
-                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Upload the second payment proof to unlock the master file.</p>
+                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Upload the second payment proof to complete the order.</p>
                                   
                                   <div id="second-payment-form">
-                                      <div class="pay-grid" id="second-pay-grid">
+                                      <div class="pay-grid" style="margin-bottom: 15px;">
                                           <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
                                           <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
                                           <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
                                       </div>
                                       
-                                      <div class="upload-box-dotted" id="second-upload-area" onclick="document.getElementById('secondFileInput').click()">
+                                      <div class="upload-box-dotted" onclick="document.getElementById('secondFileInput').click()">
                                           <p id="second-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload second payment proof</p>
                                       </div>
                                       <input type="file" id="secondFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleSecondFileSelected()">
                                       <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
                                   </div>
 
-                                  <!-- Mensaje bloqueo segundo pago -->
-                                  <div id="second-payment-waiting" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
+                                  <!-- Mensaje espera segundo pago (sigue en REVIEW, no salta a COMPLETED) -->
+                                  <div id="second-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                     <span class="lock-icon">🔒</span>
-                                    <h4>FINAL PAYMENT UNDER REVIEW</h4>
-                                    <p>Your final payment is being verified manually.<br>The master file will be available once approved.<br><br><small>Do not refresh this page.</small></p>
+                                    <h4>FINAL PAYMENT SENT</h4>
+                                    <p>Second payment proof received.<br><br>Status remains UNDER REVIEW until administrator approval.</p>
                                   </div>
                               </div>
 
                               <!-- Pago Legacy en Review -->
                               <div class="second-payment-section" id="legacy-review-payment-section" style="display: none;">
-                                  <h4>Upload Payment Proof</h4>
-                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">As a LEGACY client, upload your payment proof when ready.</p>
+                                  <h4>Optional Payment</h4>
+                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Submit your payment proof when ready.</p>
                                   
                                   <div id="legacy-payment-form">
-                                      <div class="pay-grid" id="legacy-pay-grid">
+                                      <div class="pay-grid" style="margin-bottom: 15px;">
                                           <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
                                           <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
                                           <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
                                       </div>
                                       
-                                      <div class="upload-box-dotted" id="legacy-upload-area" onclick="document.getElementById('legacyFileInput').click()">
+                                      <div class="upload-box-dotted" onclick="document.getElementById('legacyFileInput').click()">
                                           <p id="legacy-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof</p>
                                       </div>
                                       <input type="file" id="legacyFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleLegacyFileSelected()">
-                                      <button class="btn-blackbear" id="legacy-upload-btn" onclick="submitLegacyPayment()">SUBMIT PAYMENT</button>
+                                      <button class="btn-blackbear" onclick="submitLegacyPayment()">SUBMIT PAYMENT</button>
                                   </div>
 
-                                  <div id="legacy-payment-waiting" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
+                                  <div id="legacy-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                     <span class="lock-icon">🔒</span>
-                                    <h4>PAYMENT RECEIVED</h4>
-                                    <p>Payment proof received and under manual review.</p>
+                                    <h4>PAYMENT SENT</h4>
+                                    <p>Payment proof received.</p>
                                   </div>
                               </div>
                           </div>
 
+                          <!-- ÁREA COMPLETED -->
                           <div id="completed-actions" style="display: none;">
                           </div>
 
@@ -402,21 +398,16 @@
     </div>
 
     <script>
-        // Apps Script de ÓRDENES (Hoja 1)
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzT0n1IaQIXbOvZXI48eX-N-lbO01qZ7hh3VWqFlsQFIuU_nyM2p_elYdMkXFtLm5n3Yg/exec";
-        
-        // Apps Script de REVIEWS (Hoja 2 - Reseñas)
         const REVIEWS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJX68OAwhiDbUpth1zU5zv1UojxMu9EPc4vq11pr_FnP3bWXUUM6UwPEebl0PXfwTN/exec";
         
         let orderId = new URLSearchParams(window.location.search).get('id');
         let currentOrderData = null;
-        let currentCategory = "";
-        let currentStatus = "";
         let isSubmitting = false;
 
         document.addEventListener('DOMContentLoaded', () => {
             if(!orderId) {
-                document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER ID REQUIRED IN URL<br><small style='font-size:14px'>Add ?id=ORDER123 to the URL</small></h1>";
+                document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER ID REQUIRED</h1>";
                 return;
             }
             fetchOrderData();
@@ -427,25 +418,22 @@
                 .then(response => response.json())
                 .then(data => {
                     if(data.error) {
-                        document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER #" + orderId + " NOT FOUND</h1>";
+                        document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER NOT FOUND</h1>";
                     } else {
                         currentOrderData = data;
                         render(data);
                     }
                 })
                 .catch(err => {
-                    console.error(err);
-                    document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>SERVER CONNECTION ERROR</h1>";
+                    document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>CONNECTION ERROR</h1>";
                 });
         }
 
-        function openBinanceModal() { 
-            document.getElementById('binanceModal').style.display = 'flex'; 
-        }
-        
+        function openBinanceModal() { document.getElementById('binanceModal').style.display = 'flex'; }
         function closeBinanceModal(e) { 
-            if (e && e.target !== document.getElementById('binanceModal') && !e.target.classList.contains('close-modal')) return;
-            document.getElementById('binanceModal').style.display = 'none'; 
+            if (!e || e.target === document.getElementById('binanceModal') || e.target.classList.contains('close-modal')) {
+                document.getElementById('binanceModal').style.display = 'none'; 
+            }
         }
 
         function render(o) {
@@ -455,10 +443,9 @@
             const categoria = (o.Categoria_Pago || "").toString().trim();
             const estatus = (o.Estatus || "AWAITING_PAYMENT").toString().trim();
             const revisiones = parseInt(o.Revisiones) || 0;
+            const catUpper = categoria.toUpperCase();
             
-            currentCategory = categoria;
-            currentStatus = estatus;
-            
+            // Datos básicos
             document.getElementById('order-main-title').innerText = "ORDER FOR " + (o.Cliente || "CLIENT");
             document.getElementById('project-name').innerText = o.Proyecto || "UNTITLED PROJECT";
             document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "No description available.");
@@ -474,42 +461,29 @@
             document.getElementById('order-category').innerText = categoria || "PAYMENT";
 
             updateRevisionsDisplay(revisiones);
-            
-            // Verificar si hay bloqueos activos por verificación pendiente
-            const paymentLock = localStorage.getItem(`payment_lock_${orderId}`);
-            const hasComprobante1 = o.Comprobante_1 && o.Comprobante_1.startsWith('http') && o.Comprobante_1 !== '[Imagen]';
-            const hasComprobante2 = o.Comprobante_2 && o.Comprobante_2.startsWith('http') && o.Comprobante_2 !== '[Imagen]';
-            const catUpper = categoria.toUpperCase();
-            
-            // Lógica de override para evitar cambios automáticos del backend
-            let effectiveStatus = estatus;
-            
-            // Si hay lock de primer pago y aún no hay preview (YouTube link), forzar AWAITING_PAYMENT visual
-            if (paymentLock === 'first_pending' && !o.Link_YouTube) {
-                effectiveStatus = 'AWAITING_PAYMENT_LOCKED';
-            }
-            
-            // Si hay lock de segundo pago y aún no hay link de descarga, forzar REVIEW_LOCKED
-            if (paymentLock === 'second_pending' && !o.Link_Drive && catUpper.includes('DIRECTOR')) {
-                effectiveStatus = 'REVIEW_LOCKED';
-            }
-            
-            // También detectar sin localStorage: si hay comprobante1 pero no preview, es pending
-            if (hasComprobante1 && !o.Link_YouTube && (estatus === 'IN_PRODUCTION' || estatus === 'AWAITING_PAYMENT')) {
-                effectiveStatus = 'AWAITING_PAYMENT_LOCKED';
-            }
-            
-            // Si hay comprobante2 en Director's Cut pero no hay download link, está pendiente de verificación
-            if (hasComprobante2 && catUpper.includes('DIRECTOR') && !o.Link_Drive && estatus === 'COMPLETED') {
-                effectiveStatus = 'REVIEW_LOCKED';
-            }
 
-            if(effectiveStatus === 'COMPLETED') renderCompletedState(o);
-            else if(effectiveStatus === 'IN_PRODUCTION') renderInProductionState();
-            else if(effectiveStatus === 'REVIEW') renderReviewState(o, categoria, revisiones);
-            else if(effectiveStatus === 'AWAITING_PAYMENT') renderAwaitingPaymentState(o, categoria);
-            else if(effectiveStatus === 'AWAITING_PAYMENT_LOCKED') renderAwaitingPaymentLocked(o, categoria);
-            else if(effectiveStatus === 'REVIEW_LOCKED') renderReviewLocked(o, categoria, revisiones);
+            // CONTROL MANUAL - El Excel decide el estado, pero usamos sessionStorage para saber si el usuario ya envió comprobante
+                
+            // 1. LEGACY STATUS en AWAITING_PAYMENT
+            if (estatus === 'AWAITING_PAYMENT' && catUpper.includes('LEGACY')) {
+                renderLegacyArea(o);
+            }
+            // 2. PREMIERE/DIRECTOR en AWAITING_PAYMENT
+            else if (estatus === 'AWAITING_PAYMENT') {
+                renderAwaitingPaymentArea(o, catUpper);
+            }
+            // 3. IN_PRODUCTION (Control manual del admin)
+            else if (estatus === 'IN_PRODUCTION') {
+                renderProductionArea();
+            }
+            // 4. REVIEW (Control manual del admin)
+            else if (estatus === 'REVIEW') {
+                renderReviewArea(o, catUpper, revisiones);
+            }
+            // 5. COMPLETED (Control manual del admin)
+            else if (estatus === 'COMPLETED') {
+                renderCompletedArea(o);
+            }
         }
 
         function updateRevisionsDisplay(revisiones) {
@@ -523,127 +497,57 @@
             }
         }
 
-        function renderCompletedState(o) {
+        // LEGACY: Solo Status, Revisions, Total Investment, Contrato, Checkbox y Botón
+        function renderLegacyArea(o) {
             hideAllAreas();
+            document.getElementById('legacy-request-area').style.display = 'block';
+            document.getElementById('legacy-contract-content').innerHTML = renderLegacyContractText();
             
-            if(o.Link_YouTube) {
-                document.getElementById('preview-box').style.display = 'block';
-                let videoUrl = getEmbedUrl(o.Link_YouTube);
-                document.getElementById('video-iframe').innerHTML = 
-                    `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
-            }
-            
-            const completedDiv = document.getElementById('completed-actions');
-            completedDiv.style.display = 'block';
-            completedDiv.innerHTML = '';
-            
-            const downloadBtn = document.createElement('a');
-            downloadBtn.href = o.Link_Drive || '#';
-            downloadBtn.target = '_blank';
-            downloadBtn.className = 'btn-blackbear d-block text-center';
-            downloadBtn.style.textDecoration = 'none';
-            downloadBtn.style.padding = '12px 20px';
-            downloadBtn.style.fontSize = '12px';
-            downloadBtn.style.letterSpacing = '2px';
-            downloadBtn.innerHTML = `DOWNLOAD VIDEO`;
-            
-            const reviewSent = localStorage.getItem(`review_sent_${orderId}`);
-            
-            if(reviewSent) {
-                const alreadySentMsg = document.createElement('div');
-                alreadySentMsg.className = 'review-already-sent';
-                alreadySentMsg.innerHTML = '✓ THANK YOU FOR YOUR REVIEW';
-                completedDiv.appendChild(downloadBtn);
-                completedDiv.appendChild(alreadySentMsg);
+            // Verificar si ya solicitó (para mostrar mensaje de espera)
+            const requested = sessionStorage.getItem(`legacy_requested_${orderId}`);
+            if(requested) {
+                document.getElementById('request-project-btn').style.display = 'none';
+                document.querySelector('#legacy-request-area .accept-wrap').style.display = 'none';
+                document.getElementById('legacy-requested-msg').style.display = 'block';
             } else {
-                const reviewBtn = document.createElement('button');
-                reviewBtn.className = 'btn-outline-light';
-                reviewBtn.innerText = 'LEAVE A REVIEW';
-                reviewBtn.onclick = function() { toggleReviewForm(); };
-                
-                const reviewForm = document.createElement('div');
-                reviewForm.id = 'review-form-container';
-                reviewForm.className = 'review-form';
-                reviewForm.innerHTML = `
-                    <h4>Share your experience</h4>
-                    <input type="text" id="reviewer-name" placeholder="Your Name" required>
-                    <input type="text" id="reviewer-country" placeholder="Your Country" required>
-                    <textarea id="review-text" placeholder="Tell us about your experience working with BlackBear..." required></textarea>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <button onclick="submitReview()">SUBMIT REVIEW</button>
-                        <span class="review-success" id="review-success-msg">✓ Review submitted! Thank you.</span>
-                    </div>
-                `;
-                
-                completedDiv.appendChild(downloadBtn);
-                completedDiv.appendChild(reviewBtn);
-                completedDiv.appendChild(reviewForm);
+                document.getElementById('request-project-btn').style.display = 'block';
+                document.getElementById('legacy-requested-msg').style.display = 'none';
+                toggleLegacyButton();
             }
-            
-            // Limpiar locks cuando esté completado realmente
-            localStorage.removeItem(`payment_lock_${orderId}`);
-            localStorage.removeItem(`legacy_requested_${orderId}`);
         }
 
-        function renderInProductionState() {
+        // PREMIERE / DIRECTOR en AWAITING_PAYMENT
+        function renderAwaitingPaymentArea(o, catUpper) {
+            hideAllAreas();
+            document.getElementById('actions-area').style.display = 'block';
+            document.getElementById('contract-content').innerHTML = renderContractText(catUpper);
+            
+            // Verificar si ya envió comprobante (para mostrar bloqueo pero mantener estado AWAITING_PAYMENT)
+            const sent = sessionStorage.getItem(`comprobante1_sent_${orderId}`);
+            
+            if(sent) {
+                // Mostrar mensaje de espera - el estado sigue siendo AWAITING_PAYMENT hasta que el admin lo mueva manualmente
+                document.getElementById('payment-form-content').style.display = 'none';
+                document.getElementById('first-payment-waiting').style.display = 'block';
+            } else {
+                // Mostrar formulario
+                document.getElementById('payment-form-content').style.display = 'block';
+                document.getElementById('first-payment-waiting').style.display = 'none';
+                toggleSubmitButton();
+            }
+        }
+
+        function renderProductionArea() {
             hideAllAreas();
             document.getElementById('production-message').style.display = 'block';
+            // Limpiar sessionStorage de primer pago ya que ya está en producción
+            sessionStorage.removeItem(`comprobante1_sent_${orderId}`);
+            sessionStorage.removeItem(`legacy_requested_${orderId}`);
         }
 
-        function renderReviewState(o, categoria, revisiones) {
+        function renderReviewArea(o, catUpper, revisiones) {
             hideAllAreas();
-            const catUpper = categoria.toUpperCase();
-            
             document.getElementById('review-actions-area').style.display = 'block';
-            
-            if(o.Link_YouTube) {
-                document.getElementById('preview-box').style.display = 'block';
-                let videoUrl = getEmbedUrl(o.Link_YouTube);
-                document.getElementById('video-iframe').innerHTML = 
-                    `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
-            }
-            
-            const changesBtn = document.getElementById('request-changes-btn');
-            const noRevisionsMsg = document.getElementById('no-revisions-msg');
-            
-            if(revisiones > 0) {
-                changesBtn.style.display = 'inline-block';
-                changesBtn.disabled = false;
-                noRevisionsMsg.style.display = 'none';
-            } else {
-                changesBtn.style.display = 'none';
-                noRevisionsMsg.style.display = 'block';
-            }
-            
-            // Resetear displays específicos
-            document.getElementById('second-payment-section').style.display = 'none';
-            document.getElementById('legacy-review-payment-section').style.display = 'none';
-            document.getElementById('accept-video-btn').style.display = 'none';
-            
-            if(catUpper.includes('PREMIERE')) {
-                document.getElementById('accept-video-btn').style.display = 'block';
-            } else if(catUpper.includes('DIRECTOR')) {
-                document.getElementById('second-payment-section').style.display = 'block';
-                // Verificar si ya se envió segundo comprobante pero aún no se aprueba
-                if (o.Comprobante_2 && o.Comprobante_2.startsWith('http') && o.Comprobante_2 !== '[Imagen]') {
-                    showSecondPaymentWaiting();
-                } else {
-                    showSecondPaymentForm();
-                }
-            } else if(catUpper.includes('LEGACY')) {
-                document.getElementById('legacy-review-payment-section').style.display = 'block';
-                if (o.Comprobante_1 && o.Comprobante_1.startsWith('http') && o.Comprobante_1 !== '[Imagen]') {
-                    showLegacyPaymentWaiting();
-                } else {
-                    showLegacyPaymentForm();
-                }
-            }
-        }
-
-        // NUEVO: Estado intermedio para Director's Cut con segundo pago pendiente de verificar
-        function renderReviewLocked(o, categoria, revisiones) {
-            hideAllAreas();
-            const catUpper = categoria.toUpperCase();
             
             // Mostrar preview si existe
             if(o.Link_YouTube) {
@@ -653,86 +557,110 @@
                     `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
             }
             
-            document.getElementById('review-actions-area').style.display = 'block';
-            
-            // Ocultar botones de cambios si no hay revisiones
-            const changesBtn = document.getElementById('request-changes-btn');
+            // Configurar botones de cambios
             if(revisiones > 0) {
-                changesBtn.style.display = 'inline-block';
+                document.getElementById('request-changes-btn').style.display = 'inline-block';
                 document.getElementById('no-revisions-msg').style.display = 'none';
             } else {
-                changesBtn.style.display = 'none';
+                document.getElementById('request-changes-btn').style.display = 'none';
                 document.getElementById('no-revisions-msg').style.display = 'block';
             }
             
-            // Solo para Director's Cut: mostrar mensaje de espera de segundo pago
-            if(catUpper.includes('DIRECTOR')) {
-                document.getElementById('accept-video-btn').style.display = 'none';
+            // Resetear vistas específicas
+            document.getElementById('accept-video-btn').style.display = 'none';
+            document.getElementById('second-payment-section').style.display = 'none';
+            document.getElementById('legacy-review-payment-section').style.display = 'none';
+            
+            // PREMIERE: Botón aceptar video
+            if(catUpper.includes('PREMIERE')) {
+                document.getElementById('accept-video-btn').style.display = 'block';
+            }
+            // DIRECTOR: Segundo pago
+            else if(catUpper.includes('DIRECTOR')) {
                 document.getElementById('second-payment-section').style.display = 'block';
-                document.getElementById('legacy-review-payment-section').style.display = 'none';
                 
-                // SIEMPRE mostrar el mensaje de espera en modo locked
-                showSecondPaymentWaiting();
-            } else {
-                // Para otros, comportamiento normal de review
-                renderReviewState(o, categoria, revisiones);
+                // Verificar si ya envió segundo comprobante
+                const secondSent = sessionStorage.getItem(`comprobante2_sent_${orderId}`);
+                if(secondSent) {
+                    // Mostrar espera - el estado sigue siendo REVIEW hasta que admin lo mueva a COMPLETED
+                    document.getElementById('second-payment-form').style.display = 'none';
+                    document.getElementById('second-payment-waiting').style.display = 'block';
+                } else {
+                    document.getElementById('second-payment-form').style.display = 'block';
+                    document.getElementById('second-payment-waiting').style.display = 'none';
+                }
+            }
+            // LEGACY: Pago opcional
+            else if(catUpper.includes('LEGACY')) {
+                document.getElementById('legacy-review-payment-section').style.display = 'block';
+                const legacySent = sessionStorage.getItem(`legacy_payment_sent_${orderId}`);
+                if(legacySent) {
+                    document.getElementById('legacy-payment-form').style.display = 'none';
+                    document.getElementById('legacy-payment-waiting').style.display = 'block';
+                } else {
+                    document.getElementById('legacy-payment-form').style.display = 'block';
+                    document.getElementById('legacy-payment-waiting').style.display = 'none';
+                }
             }
         }
 
-        function renderAwaitingPaymentState(o, categoria) {
+        function renderCompletedArea(o) {
             hideAllAreas();
-            const catUpper = categoria.toUpperCase().trim();
+            document.getElementById('completed-actions').style.display = 'block';
             
-            console.log("Rendering AWAITING_PAYMENT for category:", catUpper);
-            
-            // Verificar si es LEGACY - debe ser condición exacta
-            if(catUpper === 'LEGACY' || catUpper.includes('LEGACY')) {
-                console.log("Detected LEGACY status");
-                document.getElementById('actions-area').style.display = 'none';
-                document.getElementById('legacy-request-area').style.display = 'block';
-                
-                // Verificar si ya solicitó el proyecto
-                const requested = localStorage.getItem(`legacy_requested_${orderId}`) || o.Estatus === 'IN_PRODUCTION';
-                if(requested) {
-                    document.getElementById('request-project-btn').style.display = 'none';
-                    document.getElementById('legacy-requested-msg').style.display = 'block';
-                } else {
-                    document.getElementById('request-project-btn').style.display = 'block';
-                    document.getElementById('legacy-requested-msg').style.display = 'none';
-                }
-                
-                renderLegacyContract(categoria);
-            } else {
-                // Premiere Pass o Director's Cut
-                console.log("Detected regular category (Premiere/Director)");
-                document.getElementById('actions-area').style.display = 'block';
-                document.getElementById('legacy-request-area').style.display = 'none';
-                
-                // Verificar si hay comprobante pendiente (por si el localStorage se perdió pero hay datos)
-                if (o.Comprobante_1 && o.Comprobante_1.startsWith('http') && o.Comprobante_1 !== '[Imagen]') {
-                    showFirstPaymentWaiting();
-                } else {
-                    showFirstPaymentForm();
-                }
-                
-                renderContract(categoria);
+            if(o.Link_YouTube) {
+                document.getElementById('preview-box').style.display = 'block';
+                let videoUrl = getEmbedUrl(o.Link_YouTube);
+                document.getElementById('video-iframe').innerHTML = 
+                    `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
             }
-        }
-
-        // NUEVO: Vista bloqueada para primer pago enviado (evita salto a IN_PRODUCTION)
-        function renderAwaitingPaymentLocked(o, categoria) {
-            hideAllAreas();
-            const catUpper = categoria.toUpperCase();
             
-            // Similar a AWAITING_PAYMENT pero forzando el mensaje de espera
-            if(catUpper.includes('LEGACY')) {
-                document.getElementById('legacy-request-area').style.display = 'block';
-                document.getElementById('request-project-btn').style.display = 'none';
-                document.getElementById('legacy-requested-msg').style.display = 'block';
+            const completedDiv = document.getElementById('completed-actions');
+            completedDiv.innerHTML = '';
+            
+            // Botón descarga
+            const downloadBtn = document.createElement('a');
+            downloadBtn.href = o.Link_Drive || '#';
+            downloadBtn.target = '_blank';
+            downloadBtn.className = 'btn-blackbear d-block text-center mb-4';
+            downloadBtn.style.textDecoration = 'none';
+            downloadBtn.style.padding = '15px';
+            downloadBtn.style.fontSize = '12px';
+            downloadBtn.innerText = 'DOWNLOAD VIDEO';
+            completedDiv.appendChild(downloadBtn);
+            
+            // Review
+            if(!sessionStorage.getItem(`review_sent_${orderId}`)) {
+                const reviewBtn = document.createElement('button');
+                reviewBtn.className = 'btn-outline-light';
+                reviewBtn.innerText = 'LEAVE A REVIEW';
+                reviewBtn.onclick = toggleReviewForm;
+                completedDiv.appendChild(reviewBtn);
+                
+                const reviewForm = document.createElement('div');
+                reviewForm.id = 'review-form-container';
+                reviewForm.className = 'review-form';
+                reviewForm.innerHTML = `
+                    <h4>Share your experience</h4>
+                    <input type="text" id="reviewer-name" placeholder="Your Name" required>
+                    <input type="text" id="reviewer-country" placeholder="Your Country" required>
+                    <textarea id="review-text" placeholder="Tell us about your experience..." required></textarea>
+                    <button onclick="submitReview()">SUBMIT REVIEW</button>
+                    <span class="review-success" id="review-success-msg">✓ Thank you!</span>
+                `;
+                completedDiv.appendChild(reviewForm);
             } else {
-                document.getElementById('actions-area').style.display = 'block';
-                showFirstPaymentWaiting();
+                const msg = document.createElement('div');
+                msg.className = 'waiting-verification-msg';
+                msg.innerHTML = '<h4>✓ THANK YOU FOR YOUR REVIEW</h4>';
+                completedDiv.appendChild(msg);
             }
+            
+            // Limpiar todos los locks
+            sessionStorage.removeItem(`comprobante1_sent_${orderId}`);
+            sessionStorage.removeItem(`comprobante2_sent_${orderId}`);
+            sessionStorage.removeItem(`legacy_requested_${orderId}`);
+            sessionStorage.removeItem(`legacy_payment_sent_${orderId}`);
         }
 
         function hideAllAreas() {
@@ -744,96 +672,113 @@
             document.getElementById('preview-box').style.display = 'none';
         }
 
-        function showFirstPaymentForm() {
-            document.getElementById('payment-form-content').style.display = 'block';
-            document.getElementById('first-payment-waiting').style.display = 'none';
-        }
-
-        function showFirstPaymentWaiting() {
-            document.getElementById('payment-form-content').style.display = 'none';
-            document.getElementById('first-payment-waiting').style.display = 'block';
-        }
-
-        function showSecondPaymentForm() {
-            document.getElementById('second-payment-form').style.display = 'block';
-            document.getElementById('second-payment-waiting').style.display = 'none';
-        }
-
-        function showSecondPaymentWaiting() {
-            document.getElementById('second-payment-form').style.display = 'none';
-            document.getElementById('second-payment-waiting').style.display = 'block';
-        }
-
-        function showLegacyPaymentForm() {
-            document.getElementById('legacy-payment-form').style.display = 'block';
-            document.getElementById('legacy-payment-waiting').style.display = 'none';
-        }
-
-        function showLegacyPaymentWaiting() {
-            document.getElementById('legacy-payment-form').style.display = 'none';
-            document.getElementById('legacy-payment-waiting').style.display = 'block';
-        }
-
-        function getEmbedUrl(youtubeUrl) {
-            let url = youtubeUrl.toString();
-            url = url.replace('watch?v=', 'embed/');
-            url = url.replace('youtu.be/', 'youtube.com/embed/');
-            if(!url.includes('embed')) {
-                url = url.replace('youtube.com/', 'youtube.com/embed/');
-            }
-            return url;
-        }
-
-        function renderContract(categoria) {
-            const contractBox = document.getElementById('contract-content');
-            const cat = categoria.toString().toUpperCase().trim();
-            let html = '';
-            
+        function renderContractText(cat) {
             if (cat.includes('PREMIERE')) {
-                html = `<strong>PREMIERE PASS AGREEMENT:</strong><br>
+                return `<strong>PREMIERE PASS AGREEMENT:</strong><br>
                         <span style="color: #fff;">100% Upfront Payment</span><br>
-                        Pay in full to start production and receive your final product with no remaining balance.<br><br>
+                        Pay in full to start production.<br><br>
                         1. Full payment validates immediate project start after manual verification.<br>
-                        2. Master file delivered watermark-free with no outstanding balance.<br>
-                        3. Client is entitled to revisions as specified in the order.<br>
-                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
+                        2. Master file delivered watermark-free.<br>
+                        3. Client is entitled to revisions as specified.<br>
+                        4. BlackBear retains portfolio rights.`;
             } else if (cat.includes('DIRECTOR')) {
-                html = `<strong>DIRECTOR'S CUT AGREEMENT:</strong><br>
+                return `<strong>DIRECTOR'S CUT AGREEMENT:</strong><br>
                         <span style="color: #fff;">50/50 Payment Split</span><br>
-                        50% deposit to begin; remaining 50% balance to unlock the Master file (no watermarks).<br><br>
-                        1. 50% deposit validates project start after manual verification.<br>
-                        2. Final Master file delivered upon payment of remaining 50% balance.<br>
-                        3. Client is entitled to revisions as specified in the order.<br>
-                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
-            } else {
-                html = `<strong>STANDARD SERVICE AGREEMENT:</strong><br>
-                        1. Deposit validates project start and is non-refundable.<br>
-                        2. Final Master file delivered upon full payment of outstanding balance.<br>
-                        3. Client is entitled to revisions as specified in the order.<br>
-                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
+                        50% deposit to begin; 50% to unlock Master file.<br><br>
+                        1. Deposit validates project start after manual verification.<br>
+                        2. Final payment required for Master file.<br>
+                        3. Client is entitled to revisions.<br>
+                        4. BlackBear retains portfolio rights.`;
             }
-            contractBox.innerHTML = html;
+            return `<strong>SERVICE AGREEMENT:</strong><br>Standard terms apply.`;
         }
 
-        function renderLegacyContract(categoria) {
-            const contractBox = document.getElementById('legacy-contract-content');
-            if(!contractBox) return;
-            
-            const cat = categoria.toString().toUpperCase().trim();
-            
-            if (cat.includes('LEGACY')) {
-                contractBox.innerHTML = `<strong>LEGACY STATUS AGREEMENT:</strong><br>
-                        <span style="color: #fff;">VIP Priority Access</span><br>
-                        Exclusive terms and priority delivery reserved for returning and high-volume clients.<br><br>
-                        1. Exclusive terms and guaranteed priority delivery.<br>
-                        2. Payment flexibility: submit proof of payment in parts or at a later date.<br>
-                        3. Direct access to production team and priority support.<br>
-                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
+        function renderLegacyContractText() {
+            return `<strong>LEGACY STATUS AGREEMENT:</strong><br>
+                    <span style="color: #fff;">VIP Priority Access</span><br>
+                    Exclusive terms for returning clients.<br><br>
+                    1. Priority delivery guaranteed.<br>
+                    2. Flexible payment terms.<br>
+                    3. Direct access to production team.<br>
+                    4. BlackBear retains portfolio rights.`;
+        }
+
+        function getEmbedUrl(url) {
+            return url.toString().replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/');
+        }
+
+        function toggleSubmitButton() {
+            const check = document.getElementById('accept-check');
+            const file = document.getElementById('fileInput').files.length > 0;
+            const btn = document.getElementById('upload-btn');
+            if(btn) btn.disabled = !(check && check.checked && file);
+        }
+
+        function toggleLegacyButton() {
+            const check = document.getElementById('legacy-accept-check');
+            const btn = document.getElementById('request-project-btn');
+            if(btn) btn.disabled = !(check && check.checked);
+        }
+
+        function handleFileSelected() {
+            const file = document.getElementById('fileInput').files[0];
+            if(file) {
+                if(file.size > 5 * 1024 * 1024) { 
+                    alert("File too large. Max 5MB."); 
+                    document.getElementById('fileInput').value = ''; 
+                    return; 
+                }
+                document.getElementById('upload-label').innerText = "FILE: " + file.name;
+                toggleSubmitButton();
             }
+        }
+
+        async function submitFile() {
+            if(isSubmitting) return;
+            isSubmitting = true;
+            
+            const file = document.getElementById('fileInput').files[0];
+            if(!file) { isSubmitting = false; return; }
+
+            const btn = document.getElementById('upload-btn');
+            btn.innerText = "SENDING...";
+            btn.disabled = true;
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const base64 = e.target.result.split(',')[1];
+                const formData = new URLSearchParams();
+                formData.append('fileBase64', base64);
+                formData.append('mimeType', file.type);
+                formData.append('fileName', `Order_${orderId}_payment`);
+                formData.append('orderId', orderId);
+
+                try {
+                    const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+                    const result = await response.json();
+                    
+                    if(result.result === "success") {
+                        // Marcar como enviado pero NO cambiar estado - el admin controla eso en el Excel
+                        sessionStorage.setItem(`comprobante1_sent_${orderId}`, 'true');
+                        
+                        // Mostrar vista de espera manteniendo AWAITING_PAYMENT
+                        document.getElementById('payment-form-content').style.display = 'none';
+                        document.getElementById('first-payment-waiting').style.display = 'block';
+                    } else {
+                        throw new Error(result.message);
+                    }
+                } catch (err) {
+                    alert("Error: " + err.message);
+                    btn.innerText = "SUBMIT PAYMENT";
+                    btn.disabled = false;
+                    isSubmitting = false;
+                }
+            };
+            reader.readAsDataURL(file);
         }
 
         function acceptVideo() {
-            if(!confirm("Are you sure you want to accept this video? This will mark the project as completed.")) return;
+            if(!confirm("Accept video? This will complete the project.")) return;
             
             const btn = document.getElementById('accept-video-btn');
             btn.innerText = "PROCESSING...";
@@ -842,19 +787,14 @@
             const formData = new URLSearchParams();
             formData.append('action', 'acceptVideo');
             formData.append('orderId', orderId);
-            formData.append('date', new Date().toISOString());
             
             fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(response => response.json())
+                .then(r => r.json())
                 .then(result => {
                     if(result.result === "success") {
-                        alert("Video accepted! Loading download section...");
                         window.location.reload();
-                    } else {
-                        throw new Error(result.message || "Unknown error");
                     }
                 }).catch(err => {
-                    console.error(err);
                     alert("Error: " + err.message);
                     btn.innerText = "ACCEPT VIDEO";
                     btn.disabled = false;
@@ -862,29 +802,33 @@
         }
 
         function requestLegacyProject() {
-            if(!confirm("Request project start? As a LEGACY client, your project will begin immediately.")) return;
+            const check = document.getElementById('legacy-accept-check');
+            if(!check.checked) {
+                alert("You must accept the terms and conditions.");
+                return;
+            }
+            
+            if(!confirm("Request project start?")) return;
             
             const btn = document.getElementById('request-project-btn');
-            btn.innerText = "SENDING REQUEST...";
+            btn.innerText = "SENDING...";
             btn.disabled = true;
             
             const formData = new URLSearchParams();
             formData.append('action', 'requestLegacyProject');
             formData.append('orderId', orderId);
-            formData.append('date', new Date().toISOString());
             
             fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(response => response.json())
+                .then(r => r.json())
                 .then(result => {
                     if(result.result === "success") {
-                        localStorage.setItem(`legacy_requested_${orderId}`, 'true');
-                        alert("Project requested! Your project will start shortly.");
-                        fetchOrderData();
-                    } else {
-                        throw new Error(result.message || "Unknown error");
+                        sessionStorage.setItem(`legacy_requested_${orderId}`, 'true');
+                        // Mantener AWAITING_PAYMENT visual, solo cambiar UI interna
+                        document.getElementById('request-project-btn').style.display = 'none';
+                        document.querySelector('#legacy-request-area .accept-wrap').style.display = 'none';
+                        document.getElementById('legacy-requested-msg').style.display = 'block';
                     }
                 }).catch(err => {
-                    console.error(err);
                     alert("Error: " + err.message);
                     btn.innerText = "REQUEST PROJECT START";
                     btn.disabled = false;
@@ -893,49 +837,37 @@
 
         function toggleChangesForm() {
             const form = document.getElementById('changes-form-container');
-            form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
         }
 
         function submitChangesRequest() {
-            const changesText = document.getElementById('changes-text').value.trim();
-            if(!changesText) { alert("Please describe the changes you need."); return; }
+            const text = document.getElementById('changes-text').value.trim();
+            if(!text) { alert("Describe the changes."); return; }
             
             const btn = document.querySelector('.changes-form button');
             btn.innerText = "SENDING...";
-            btn.disabled = true;
             
             const formData = new URLSearchParams();
             formData.append('action', 'requestChanges');
             formData.append('orderId', orderId);
-            formData.append('changes', changesText);
-            formData.append('date', new Date().toISOString());
+            formData.append('changes', text);
             
             fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(response => response.json())
+                .then(r => r.json())
                 .then(result => {
-                    if(result.result === "success") {
-                        document.getElementById('changes-success-msg').style.display = 'inline';
-                        document.getElementById('changes-text').disabled = true;
-                        const currentRevisions = parseInt(document.getElementById('order-revisions').innerText) || 0;
-                        if(currentRevisions > 0) updateRevisionsDisplay(currentRevisions - 1);
-                        setTimeout(() => { toggleChangesForm(); fetchOrderData(); }, 2000);
-                    } else {
-                        throw new Error(result.message || "Unknown error");
-                    }
+                    document.getElementById('changes-success-msg').style.display = 'inline';
+                    document.getElementById('changes-text').disabled = true;
                 }).catch(err => {
-                    console.error(err);
-                    document.getElementById('changes-error-msg').style.display = 'inline';
+                    alert("Error sending request.");
                     btn.innerText = "SEND REQUEST";
-                    btn.disabled = false;
                 });
         }
 
         function handleSecondFileSelected() {
             const file = document.getElementById('secondFileInput').files[0];
             if(file) {
-                if(file.size > 5 * 1024 * 1024) { alert("File too large. Maximum 5MB."); document.getElementById('secondFileInput').value = ''; return; }
+                if(file.size > 5 * 1024 * 1024) { alert("File too large."); return; }
                 document.getElementById('second-upload-label').innerText = "FILE: " + file.name;
-                document.getElementById('second-upload-label').style.color = "#fff";
             }
         }
 
@@ -944,25 +876,19 @@
             isSubmitting = true;
             
             const file = document.getElementById('secondFileInput').files[0];
-            if(!file) { 
-                alert("Please select your payment proof first."); 
-                isSubmitting = false;
-                return; 
-            }
+            if(!file) { isSubmitting = false; return; }
             
             const btn = document.getElementById('second-upload-btn');
-            const originalText = btn.innerText;
             btn.innerText = "SENDING...";
             btn.disabled = true;
-            
+
             const reader = new FileReader();
             reader.onload = async (e) => {
-                const base64 = e.target.result.split(',')[1];
                 const formData = new URLSearchParams();
                 formData.append('action', 'submitSecondPayment');
-                formData.append('fileBase64', base64);
+                formData.append('fileBase64', e.target.result.split(',')[1]);
                 formData.append('mimeType', file.type);
-                formData.append('fileName', `Order_${orderId}_final_payment`);
+                formData.append('fileName', `Order_${orderId}_final`);
                 formData.append('orderId', orderId);
                 
                 try {
@@ -970,17 +896,16 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        // GUARDAR LOCK para evitar salto a COMPLETED
-                        localStorage.setItem(`payment_lock_${orderId}`, 'second_pending');
-                        alert("Final payment received! Under manual review...");
-                        showSecondPaymentWaiting();
-                    } else {
-                        throw new Error(result.message || "Unknown error");
+                        // Marcar como enviado pero NO cambiar a COMPLETED - el admin controla eso
+                        sessionStorage.setItem(`comprobante2_sent_${orderId}`, 'true');
+                        
+                        // Mostrar espera manteniendo REVIEW
+                        document.getElementById('second-payment-form').style.display = 'none';
+                        document.getElementById('second-payment-waiting').style.display = 'block';
                     }
                 } catch (err) {
-                    console.error(err);
-                    alert("Error sending: " + err.message);
-                    btn.innerText = originalText;
+                    alert("Error: " + err.message);
+                    btn.innerText = "SUBMIT FINAL PAYMENT";
                     btn.disabled = false;
                     isSubmitting = false;
                 }
@@ -988,189 +913,55 @@
             reader.readAsDataURL(file);
         }
 
-        function handleLegacyFileSelected() {
-            const file = document.getElementById('legacyFileInput').files[0];
-            if(file) {
-                if(file.size > 5 * 1024 * 1024) { alert("File too large. Maximum 5MB."); document.getElementById('legacyFileInput').value = ''; return; }
-                document.getElementById('legacy-upload-label').innerText = "FILE: " + file.name;
-                document.getElementById('legacy-upload-label').style.color = "#fff";
-            }
-        }
-
         function submitLegacyPayment() {
-            if(isSubmitting) return;
-            isSubmitting = true;
-            
             const file = document.getElementById('legacyFileInput').files[0];
-            if(!file) { 
-                alert("Please select your payment proof first."); 
-                isSubmitting = false;
-                return; 
-            }
+            if(!file) return;
             
-            const btn = document.getElementById('legacy-upload-btn');
-            const originalText = btn.innerText;
+            const btn = event.target;
             btn.innerText = "SENDING...";
-            btn.disabled = true;
             
             const reader = new FileReader();
             reader.onload = async (e) => {
-                const base64 = e.target.result.split(',')[1];
                 const formData = new URLSearchParams();
                 formData.append('action', 'submitLegacyPayment');
-                formData.append('fileBase64', base64);
-                formData.append('mimeType', file.type);
-                formData.append('fileName', `Order_${orderId}_payment`);
+                formData.append('fileBase64', e.target.result.split(',')[1]);
                 formData.append('orderId', orderId);
                 
-                try {
-                    const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
-                    const result = await response.json();
-                    
-                    if(result.result === "success") {
-                        alert("Payment proof received! Thank you.");
-                        showLegacyPaymentWaiting();
-                        setTimeout(() => fetchOrderData(), 2000);
-                    } else {
-                        throw new Error(result.message || "Unknown error");
-                    }
-                } catch (err) {
-                    console.error(err);
-                    alert("Error sending: " + err.message);
-                    btn.innerText = originalText;
-                    btn.disabled = false;
-                    isSubmitting = false;
-                }
+                fetch(SCRIPT_URL, { method: 'POST', body: formData })
+                    .then(() => {
+                        sessionStorage.setItem(`legacy_payment_sent_${orderId}`, 'true');
+                        document.getElementById('legacy-payment-form').style.display = 'none';
+                        document.getElementById('legacy-payment-waiting').style.display = 'block';
+                    });
             };
             reader.readAsDataURL(file);
         }
 
         function requestExtraRevision() {
-            const mensaje = `Hi! I need an extra revision for order ${orderId}. Please let me know the cost and payment details.`;
-            window.open(`https://wa.me/522211319056?text=${encodeURIComponent(mensaje)}`, '_blank');
-        }
-
-        function toggleReviewForm() {
-            const form = document.getElementById('review-form-container');
-            form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+            const msg = `Hi! I need an extra revision for order ${orderId}.`;
+            window.open(`https://wa.me/522211319056?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         function submitReview() {
-            const reviewText = document.getElementById('review-text').value.trim();
-            const reviewerName = document.getElementById('reviewer-name').value.trim();
-            const reviewerCountry = document.getElementById('reviewer-country').value.trim();
+            const name = document.getElementById('reviewer-name').value.trim();
+            const country = document.getElementById('reviewer-country').value.trim();
+            const text = document.getElementById('review-text').value.trim();
             
-            if(!reviewerName || !reviewerCountry || !reviewText) { 
-                alert("Please fill in all fields: Name, Country, and Review."); 
-                return; 
-            }
-            
-            const btn = document.querySelector('.review-form button');
-            btn.innerText = "SENDING...";
-            btn.disabled = true;
+            if(!name || !country || !text) { alert("Fill all fields."); return; }
             
             const formData = new URLSearchParams();
             formData.append('action', 'submitReview');
-            formData.append('nombre', reviewerName);           
-            formData.append('pais', reviewerCountry);          
-            formData.append('texto', reviewText);              
-            formData.append('fecha', new Date().toISOString()); 
-            formData.append('orderId', orderId);               
+            formData.append('nombre', name);
+            formData.append('pais', country);
+            formData.append('texto', text);
+            formData.append('orderId', orderId);
+            formData.append('fecha', new Date().toISOString());
             
-            fetch(REVIEWS_SCRIPT_URL, { 
-                method: 'POST', 
-                body: formData,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-            .then(response => response.text())
-            .then(text => {
-                try {
-                    return JSON.parse(text);
-                } catch (e) {
-                    return { result: "success" };
-                }
-            })
-            .then(result => {
-                if(result.result === "success" || result.status === "ok" || !result.error) {
-                    localStorage.setItem(`review_sent_${orderId}`, 'true');
-                    document.getElementById('review-success-msg').style.display = 'inline';
-                    setTimeout(() => { window.location.reload(); }, 2000);
-                } else {
-                    throw new Error(result.message || "Error al guardar");
-                }
-            })
-            .catch(err => {
-                console.error("Error:", err);
-                localStorage.setItem(`review_sent_${orderId}`, 'true');
-                document.getElementById('review-success-msg').style.display = 'inline';
-                setTimeout(() => { window.location.reload(); }, 2000);
-            });
-        }
-
-        function handleFileSelected() {
-            const file = document.getElementById('fileInput').files[0];
-            if(file) {
-                if(file.size > 5 * 1024 * 1024) { alert("File too large. Maximum 5MB."); document.getElementById('fileInput').value = ''; return; }
-                document.getElementById('upload-label').innerText = "FILE: " + file.name;
-                document.getElementById('upload-label').style.color = "#fff";
-            }
-        }
-
-        async function submitFile() {
-            if(isSubmitting) return;
-            isSubmitting = true;
-            
-            const check = document.getElementById('accept-check');
-            const file = document.getElementById('fileInput').files[0];
-            
-            if(!check.checked) { 
-                alert("You must accept the terms and conditions."); 
-                isSubmitting = false;
-                return; 
-            }
-            if(!file) { 
-                alert("Please select your payment proof first."); 
-                isSubmitting = false;
-                return; 
-            }
-
-            const btn = document.getElementById('upload-btn');
-            const originalText = btn.innerText;
-            btn.innerText = "SENDING...";
-            btn.disabled = true;
-
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const base64 = e.target.result.split(',')[1];
-                const formData = new URLSearchParams();
-                formData.append('fileBase64', base64);
-                formData.append('mimeType', file.type);
-                formData.append('fileName', `Order_${orderId}_payment`);
-                formData.append('orderId', orderId);
-
-                try {
-                    const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
-                    const result = await response.json();
-                    
-                    if(result.result === "success") {
-                        // GUARDAR LOCK para evitar salto automático a IN_PRODUCTION
-                        localStorage.setItem(`payment_lock_${orderId}`, 'first_pending');
-                        alert("Payment proof sent! Under manual review...");
-                        showFirstPaymentWaiting();
-                    } else {
-                        throw new Error(result.message || "Unknown error");
-                    }
-                } catch (err) {
-                    console.error(err);
-                    alert("Error sending: " + err.message);
-                    btn.innerText = originalText;
-                    btn.disabled = false;
-                    isSubmitting = false;
-                }
-            };
-            reader.readAsDataURL(file);
+            fetch(REVIEWS_SCRIPT_URL, { method: 'POST', body: formData })
+                .then(() => {
+                    sessionStorage.setItem(`review_sent_${orderId}`, 'true');
+                    window.location.reload();
+                });
         }
     </script>
 </body>
