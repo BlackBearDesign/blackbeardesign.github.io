@@ -13,31 +13,24 @@
 
     <style>
       body { font-family: 'Montserrat', sans-serif !important; background: #000; color: #fff; overflow-x: hidden; }
-      
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; filter: grayscale(100%); }
-
       .unslate_co--site-wrap { background-color: transparent !important; }
       .order-section { padding: 180px 0 100px 0; min-height: 85vh; }
       .info-panel { background: rgba(10,10,10,0.95); padding: 40px; border: 1px solid #333; border-radius: 8px; backdrop-filter: blur(15px); }
-
       .pay-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
       .pay-link { padding: 10px; font-size: 10px; font-weight: 900; text-align: center; border-radius: 4px; text-decoration: none !important; color: #fff; transition: 0.3s; cursor: pointer; border: none; display: inline-block; width: 100%; }
       .pay-paypal { background: #003087; }
       .pay-wise { background: #00b5ff; }
       .pay-binance { background: #F3BA2F; color: #000; }
       .pay-link:hover { opacity: 0.8; transform: translateY(-2px); }
-
       .contract-box { background: #000; border: 1px solid #333; padding: 15px; height: 140px; overflow-y: scroll; font-size: 11px; color: #ccc; margin-bottom: 15px; text-align: left; line-height: 1.6; }
       .contract-box strong { color: #fff; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
-      
       .upload-box-dotted { border: 2px dashed rgba(255,255,255,0.3); padding: 45px 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
       .upload-box-dotted:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
-      
       .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
       .btn-blackbear:hover { background: #ccc; }
       .btn-sent { background: #333 !important; color: #999 !important; border: 1px solid #444 !important; cursor: not-allowed; }
-
       .binance-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
       .binance-modal-content { background: #111; border: 1px solid #F3BA2F; padding: 40px; border-radius: 10px; text-align: center; max-width: 400px; width: 90%; }
       .binance-modal h3 { color: #F3BA2F; font-size: 18px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
@@ -46,23 +39,17 @@
       .binance-data strong { color: #F3BA2F; }
       .close-modal { background: #333; color: #fff; border: none; padding: 10px 20px; margin-top: 10px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
       .close-modal:hover { background: #555; }
-
       .project-title-display { font-weight: 700; font-size: 1.8rem; color: #fff; margin-top: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; }
       .project-label { font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 5px; letter-spacing: 2px; color: #666; display: block; }
-
       .btn-extra-revision { background: #fff; color: #000; font-weight: 900; padding: 12px 20px; text-transform: uppercase; border: none; letter-spacing: 2px; font-size: 10px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 10px; border-radius: 4px; }
       .btn-extra-revision:hover { background: #ccc; transform: translateY(-2px); }
-
       .btn-outline-light { background: transparent; color: #fff; border: 1px solid #fff; font-weight: 800; padding: 15px 30px; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 15px; text-decoration: none; display: inline-block; text-align: center; }
       .btn-outline-light:hover { background: #fff; color: #000; }
-
       .btn-accept-video { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 15px; }
       .btn-accept-video:hover { background: #ccc; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
       .btn-accept-video:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
-
       .btn-request-project { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
       .btn-request-project:hover { background: #ccc; transform: translateY(-2px); }
-
       .review-form { display: none; margin-top: 25px; padding: 25px; border: 1px solid #333; background: rgba(0,0,0,0.5); border-radius: 8px; }
       .review-form h4 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #fff; }
       .review-form input { width: 100%; background: transparent; border: 1px solid #444; border-radius: 4px; padding: 12px; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 13px; margin-bottom: 15px; }
@@ -73,7 +60,6 @@
       .review-form button:hover { background: #ccc; }
       .review-success { display: none; color: #fff; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; margin-top: 15px; }
       .review-already-sent { color: #fff; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; margin-top: 15px; padding: 15px; border: 1px solid #fff; background: rgba(255,255,255,0.1); text-align: center; }
-
       .changes-form { display: none; margin-top: 25px; padding: 25px; border: 1px solid #555; background: rgba(255,255,255,0.05); border-radius: 8px; }
       .changes-form h4 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #fff; }
       .changes-form textarea { width: 100%; background: transparent; border: 1px solid #444; border-radius: 4px; padding: 12px; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 13px; resize: vertical; min-height: 120px; margin-bottom: 15px; }
@@ -84,27 +70,21 @@
       .changes-success { display: none; color: #fff; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; margin-top: 15px; }
       .changes-error { display: none; color: #999; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; margin-top: 15px; }
       .no-revisions-msg { display: none; color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; padding: 10px; border: 1px solid #fff; background: rgba(255,255,255,0.1); border-radius: 4px; }
-
       .second-payment-section { margin-top: 25px; padding: 25px; border: 1px solid #444; background: rgba(0,0,0,0.3); border-radius: 8px; }
       .second-payment-section h4 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #fff; }
       .second-payment-section .upload-box-dotted { margin-bottom: 15px; }
-
       .unslate_co--footer { background-color: #111 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; color: #fff; border-top: 1px solid #333; }
       .badge-status { padding: 8px 15px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block; }
       .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; }
-      
       .accept-wrap input[type="checkbox"] { display: none; }
       .accept-wrap label { position: relative; padding-left: 28px; cursor: pointer; display: inline-block; color: #fff; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
       .accept-wrap label::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; border: 2px solid #fff; background: transparent; border-radius: 3px; transition: all 0.2s; }
       .accept-wrap input[type="checkbox"]:checked + label::before { background: #fff; border-color: #fff; }
       .accept-wrap input[type="checkbox"]:checked + label::after { content: '✓'; position: absolute; left: 3px; top: 50%; transform: translateY(-50%); color: #000; font-size: 14px; font-weight: 900; line-height: 1; }
-      
       @media (max-width: 768px) { .pay-grid { grid-template-columns: 1fr; } .order-section { padding: 100px 0 50px 0; } .project-title-display { font-size: 1.4rem; } }
-      
       .contract-box::-webkit-scrollbar { width: 6px; }
       .contract-box::-webkit-scrollbar-track { background: #111; }
       .contract-box::-webkit-scrollbar-thumb { background: #fff; border-radius: 3px; }
-      
       #order-main-title { color: #fff; }
       #order-description { color: #ccc; }
       #order-status-text { color: #fff; }
@@ -335,13 +315,9 @@
     </div>
 
     <script>
-        // URL DEL EXCEL DE ORDERS (Producción)
+        // URLS SIN ESPACIOS AL FINAL
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPhxeh2ywPPBL3DXXNUFX12Pu19ycRMp_Sc2C0WLui5fWIeDx8VGWlAd687oYO7lyU/exec";
-        
-        // ⚠️ IMPORTANTE: REEMPLAZAR CON LA URL DEL SEGUNDO SCRIPT (Excel de Reseñas)
-        // Cuando crees el Apps Script en el documento "Reseñas", pega su URL aquí:
         const REVIEWS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJX68OAwhiDbUpth1zU5zv1UojxMu9EPc4vq11pr_FnP3bWXUUM6UwPEebl0PXfwTN/exec";
-        // Si aún no tienes la URL de reviews, las reviews se guardarán en el Excel de orders temporalmente
         
         let orderId = new URLSearchParams(window.location.search).get('id');
         let currentOrderData = null;
@@ -353,13 +329,14 @@
                 document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER ID REQUIRED IN URL<br><small style='font-size:14px'>Add ?id=ORDER123 to the URL</small></h1>";
                 return;
             }
-
             console.log("Loading order:", orderId);
             fetchOrderData();
         });
 
         function fetchOrderData() {
-            const url = SCRIPT_URL + "?id=" + orderId + "&t=" + Date.now();
+            // Limpiar URL por si acaso
+            const cleanUrl = SCRIPT_URL.trim();
+            const url = cleanUrl + "?id=" + orderId + "&t=" + Date.now();
             console.log("Fetching from:", url);
             
             fetch(url)
@@ -382,7 +359,10 @@
                 });
         }
 
-        function openBinanceModal() { document.getElementById('binanceModal').style.display = 'flex'; }
+        function openBinanceModal() { 
+            document.getElementById('binanceModal').style.display = 'flex'; 
+        }
+        
         function closeBinanceModal(e) { 
             if (e && e.target !== document.getElementById('binanceModal') && !e.target.classList.contains('close-modal')) return;
             document.getElementById('binanceModal').style.display = 'none'; 
@@ -399,10 +379,11 @@
             currentCategory = categoria;
             currentStatus = estatus;
             
-            document.getElementById('order-main-title').innerText = "ORDER FOR " + (o.Cliente || "CLIENT");
-            document.getElementById('project-name').innerText = o.Proyecto || "UNTITLED PROJECT";
-            document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "No description available.");
-            document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
+            // Usar los nombres de columnas correctos del Excel
+            document.getElementById('order-main-title').innerText = "ORDER FOR " + (o.Cliente || o.cliente || "CLIENT");
+            document.getElementById('project-name').innerText = o.Proyecto || o.proyecto || o.Project || "UNTITLED PROJECT";
+            document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || o.descripcion || o.description || "No description available.");
+            document.getElementById('order-price').innerText = o.Precio_Total || o.precio || o.price || "$0.00";
             
             let statusDisplay = estatus.replace(/_/g, ' ');
             if(estatus === "AWAITING_PAYMENT") statusDisplay = "AWAITING PAYMENT";
@@ -439,9 +420,9 @@
             document.getElementById('legacy-request-area').style.display = 'none';
             document.getElementById('review-actions-area').style.display = 'none';
             
-            if(o.Link_YouTube) {
+            if(o.Link_YouTube || o.youtube) {
                 document.getElementById('preview-box').style.display = 'block';
-                let videoUrl = getEmbedUrl(o.Link_YouTube);
+                let videoUrl = getEmbedUrl(o.Link_YouTube || o.youtube);
                 document.getElementById('video-iframe').innerHTML = 
                     `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
             }
@@ -451,7 +432,7 @@
             completedDiv.innerHTML = '';
             
             const downloadBtn = document.createElement('a');
-            downloadBtn.href = o.Link_Drive || '#';
+            downloadBtn.href = o.Link_Drive || o.drive || '#';
             downloadBtn.target = '_blank';
             downloadBtn.className = 'btn-blackbear d-block text-center';
             downloadBtn.style.textDecoration = 'none';
@@ -511,9 +492,9 @@
             document.getElementById('production-message').style.display = 'none';
             document.getElementById('review-actions-area').style.display = 'block';
             
-            if(o.Link_YouTube) {
+            if(o.Link_YouTube || o.youtube) {
                 document.getElementById('preview-box').style.display = 'block';
-                let videoUrl = getEmbedUrl(o.Link_YouTube);
+                let videoUrl = getEmbedUrl(o.Link_YouTube || o.youtube);
                 document.getElementById('video-iframe').innerHTML = 
                     `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
             }
@@ -565,6 +546,7 @@
         }
 
         function getEmbedUrl(youtubeUrl) {
+            if(!youtubeUrl) return '';
             let url = youtubeUrl.toString();
             url = url.replace('watch?v=', 'embed/');
             url = url.replace('youtu.be/', 'youtube.com/embed/');
@@ -575,7 +557,7 @@
         function renderContract(categoria) {
             const contractBox = document.getElementById('contract-content');
             if(!contractBox) return;
-            const cat = categoria.toString().toUpperCase().trim();
+            const cat = (categoria || "").toString().toUpperCase().trim();
             let html = '';
             
             if (cat.includes('PREMIERE')) {
@@ -593,7 +575,7 @@
         function renderLegacyContract(categoria) {
             const contractBox = document.getElementById('legacy-contract-content');
             if(!contractBox) return;
-            const cat = categoria.toString().toUpperCase().trim();
+            const cat = (categoria || "").toString().toUpperCase().trim();
             if (cat.includes('LEGACY')) {
                 contractBox.innerHTML = `<strong>LEGACY STATUS AGREEMENT:</strong><br><span style="color: #fff;">VIP Priority Access</span><br>Exclusive terms and priority delivery reserved for returning and high-volume clients.<br><br>1. Exclusive terms and guaranteed priority delivery.<br>2. Payment flexibility: submit proof of payment in parts or at a later date.<br>3. Direct access to production team and priority support.<br>4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
             } else {
@@ -602,10 +584,10 @@
         }
 
         function checkIfAlreadyUploaded(o) {
-            const comprobante1 = o.Comprobante_1 || "";
+            const comprobante1 = o.Comprobante_1 || o.comprobante1 || "";
             const categoria = (o.Categoria_Pago || "").toString().toUpperCase();
             
-            if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
+            if (comprobante1 && comprobante1.startsWith && comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
                 const uploadBox = document.querySelector('#actions-area .upload-box-dotted');
                 const fileInput = document.getElementById('fileInput');
                 const btn = document.getElementById('upload-btn');
@@ -632,8 +614,8 @@
         }
 
         function checkSecondPaymentStatus(o) {
-            const comprobante2 = o.Comprobante_2 || "";
-            if (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]') {
+            const comprobante2 = o.Comprobante_2 || o.comprobante2 || "";
+            if (comprobante2 && comprobante2.startsWith && comprobante2.startsWith('http') && comprobante2 !== '[Imagen]') {
                 const uploadBox = document.getElementById('second-upload-area');
                 const btn = document.getElementById('second-upload-btn');
                 const label = document.getElementById('second-upload-label');
@@ -652,8 +634,8 @@
         }
 
         function checkLegacyPaymentStatus(o) {
-            const comprobante1 = o.Comprobante_1 || "";
-            if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
+            const comprobante1 = o.Comprobante_1 || o.comprobante1 || "";
+            if (comprobante1 && comprobante1.startsWith && comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
                 const uploadBox = document.getElementById('legacy-upload-area');
                 const btn = document.getElementById('legacy-upload-btn');
                 const label = document.getElementById('legacy-upload-label');
@@ -683,7 +665,7 @@
             formData.append('orderId', orderId);
             formData.append('date', new Date().toISOString());
             
-            fetch(SCRIPT_URL, { method: 'POST', body: formData })
+            fetch(SCRIPT_URL.trim(), { method: 'POST', body: formData })
                 .then(response => response.json())
                 .then(result => {
                     if(result.result === "success") {
@@ -712,7 +694,7 @@
             formData.append('orderId', orderId);
             formData.append('date', new Date().toISOString());
             
-            fetch(SCRIPT_URL, { method: 'POST', body: formData })
+            fetch(SCRIPT_URL.trim(), { method: 'POST', body: formData })
                 .then(response => response.json())
                 .then(result => {
                     if(result.result === "success") {
@@ -748,7 +730,7 @@
             formData.append('changes', changesText);
             formData.append('date', new Date().toISOString());
             
-            fetch(SCRIPT_URL, { method: 'POST', body: formData })
+            fetch(SCRIPT_URL.trim(), { method: 'POST', body: formData })
                 .then(response => response.json())
                 .then(result => {
                     if(result.result === "success") {
@@ -797,7 +779,7 @@
                 formData.append('orderId', orderId);
                 
                 try {
-                    const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+                    const response = await fetch(SCRIPT_URL.trim(), { method: 'POST', body: formData });
                     const result = await response.json();
                     
                     if(result.result === "success") {
@@ -854,7 +836,7 @@
                 formData.append('orderId', orderId);
                 
                 try {
-                    const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+                    const response = await fetch(SCRIPT_URL.trim(), { method: 'POST', body: formData });
                     const result = await response.json();
                     
                     if(result.result === "success") {
@@ -911,7 +893,7 @@
             formData.append('pais', reviewerCountry);
             formData.append('date', new Date().toISOString());
             
-            fetch(REVIEWS_SCRIPT_URL, { method: 'POST', body: formData })
+            fetch(REVIEWS_SCRIPT_URL.trim(), { method: 'POST', body: formData })
                 .then(response => response.json())
                 .then(result => {
                     if(result.result === "success") {
@@ -958,7 +940,7 @@
                 formData.append('orderId', orderId);
 
                 try {
-                    const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+                    const response = await fetch(SCRIPT_URL.trim(), { method: 'POST', body: formData });
                     const result = await response.json();
                     
                     if(result.result === "success") {
