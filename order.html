@@ -46,6 +46,29 @@
       .close-modal { background: #333; color: #fff; border: none; padding: 10px 20px; margin-top: 10px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
       .close-modal:hover { background: #555; }
 
+      /* MENSAJES DE ESPERA VERIFICACIÓN */
+      .waiting-verification-msg {
+        padding: 25px;
+        border: 1px solid #fff;
+        background: rgba(255,255,255,0.05);
+        text-align: center;
+        margin-top: 20px;
+        border-radius: 8px;
+      }
+      .waiting-verification-msg h4 {
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+        color: #fff;
+      }
+      .waiting-verification-msg p {
+        font-size: 11px;
+        color: #999;
+        margin: 0;
+      }
+
       .project-title-display { font-weight: 700; font-size: 1.8rem; color: #fff; margin-top: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; }
       .project-label { font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 5px; letter-spacing: 2px; color: #666; display: block; }
 
@@ -219,9 +242,9 @@
                             <h3 id="order-price" style="font-weight: 900; margin: 0;">$0.00</h3>
                           </div>
 
-                          <!-- ÁREA DE ACCIONES NORMALES (AWAITING_PAYMENT) -->
+                          <!-- ÁREA NORMAL (AWAITING_PAYMENT) - Solo para NO LEGACY -->
                           <div id="actions-area">
-                              <div class="pay-grid">
+                              <div class="pay-grid" id="main-pay-grid">
                                   <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
                                   <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
                                   <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
@@ -231,26 +254,32 @@
                                   Loading agreement...
                               </div>
                               
-                              <div class="accept-wrap">
+                              <div class="accept-wrap" id="main-accept-wrap">
                                   <input type="checkbox" id="accept-check"> 
                                   <label for="accept-check">I ACCEPT THE TERMS AND CONDITIONS</label>
                               </div>
                               
-                              <div class="upload-box-dotted" id="upload-area" onclick="document.getElementById('fileInput').click()">
+                              <div class="upload-box-dotted" id="main-upload-area" onclick="document.getElementById('fileInput').click()">
                                   <p id="upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof (PNG/JPG)</p>
                               </div>
                               
                               <input type="file" id="fileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleFileSelected()">
                               <button class="btn-blackbear" id="upload-btn" onclick="submitFile()">SUBMIT PAYMENT</button>
+
+                              <!-- Mensaje de espera para primer pago (Director's Cut) -->
+                              <div id="first-payment-waiting" class="waiting-verification-msg" style="display: none;">
+                                <h4>✓ INITIAL PAYMENT RECEIVED</h4>
+                                <p>Your first payment is under review. Production will begin shortly.</p>
+                              </div>
                           </div>
 
-                          <!-- ÁREA DE ACCIONES PARA LEGACY AWAITING_PAYMENT -->
+                          <!-- ÁREA LEGACY (AWAITING_PAYMENT) - Solo contrato y botón -->
                           <div id="legacy-request-area" style="display: none;">
                               <div class="contract-box" id="legacy-contract-content">
                                   Loading agreement...
                               </div>
-                              <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()">REQUEST PROJECT</button>
-                              <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">As a LEGACY client, you can request the project to start. Payment can be arranged later.</p>
+                              <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()">REQUEST PROJECT START</button>
+                              <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">As a LEGACY client, click above to begin production immediately.</p>
                           </div>
 
                           <!-- ÁREA DE REVIEW -->
@@ -276,11 +305,12 @@
                                   ACCEPT VIDEO
                               </button>
 
+                              <!-- Segundo pago para DIRECTOR'S CUT -->
                               <div class="second-payment-section" id="second-payment-section" style="display: none;">
                                   <h4>Final Payment Required</h4>
                                   <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Upload the second payment proof to unlock the master file.</p>
                                   
-                                  <div class="pay-grid">
+                                  <div class="pay-grid" id="second-pay-grid">
                                       <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
                                       <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
                                       <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
@@ -291,13 +321,20 @@
                                   </div>
                                   <input type="file" id="secondFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleSecondFileSelected()">
                                   <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
+
+                                  <!-- Mensaje de espera para segundo pago -->
+                                  <div id="second-payment-waiting" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
+                                    <h4>✓ FINAL PAYMENT UNDER REVIEW</h4>
+                                    <p>Your final payment is being verified. The master file will be available soon.</p>
+                                  </div>
                               </div>
 
+                              <!-- Pago para LEGACY en REVIEW -->
                               <div class="second-payment-section" id="legacy-review-payment-section" style="display: none;">
                                   <h4>Upload Payment Proof</h4>
                                   <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">As a LEGACY client, upload your payment proof when ready.</p>
                                   
-                                  <div class="pay-grid">
+                                  <div class="pay-grid" id="legacy-pay-grid">
                                       <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
                                       <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
                                       <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
@@ -308,6 +345,11 @@
                                   </div>
                                   <input type="file" id="legacyFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleLegacyFileSelected()">
                                   <button class="btn-blackbear" id="legacy-upload-btn" onclick="submitLegacyPayment()">SUBMIT PAYMENT</button>
+
+                                  <div id="legacy-payment-waiting" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
+                                    <h4>✓ PAYMENT RECEIVED</h4>
+                                    <p>Payment proof received and under review.</p>
+                                  </div>
                               </div>
                           </div>
 
@@ -339,7 +381,6 @@
     </div>
 
     <script>
-        // URL del Google Apps Script - SIN ESPACIOS
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzT0n1IaQIXbOvZXI48eX-N-lbO01qZ7hh3VWqFlsQFIuU_nyM2p_elYdMkXFtLm5n3Yg/exec";
         
         let orderId = new URLSearchParams(window.location.search).get('id');
@@ -352,35 +393,26 @@
                 document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER ID REQUIRED IN URL<br><small style='font-size:14px'>Add ?id=ORDER123 to the URL</small></h1>";
                 return;
             }
-            console.log("Loading order:", orderId);
             fetchOrderData();
         });
 
         function fetchOrderData() {
-            const url = SCRIPT_URL + "?id=" + orderId + "&t=" + Date.now();
-            console.log("Fetching from:", url);
-            
-            fetch(url)
-                .then(response => {
-                    console.log("Response status:", response.status);
-                    return response.json();
-                })
+            fetch(SCRIPT_URL + "?id=" + orderId + "&t=" + Date.now())
+                .then(response => response.json())
                 .then(data => {
-                    console.log("Data received:", data);
                     if(data.error) {
-                        document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER #" + orderId + " NOT FOUND<br><small style='font-size:14px'>Check the Order ID</small></h1>";
+                        document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER #" + orderId + " NOT FOUND</h1>";
                     } else {
                         currentOrderData = data;
                         render(data);
                     }
                 })
                 .catch(err => {
-                    console.error("Error fetching:", err);
-                    document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>CONNECTION ERROR<br><small style='font-size:14px'>" + err.message + "</small></h1>";
+                    console.error(err);
+                    document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>SERVER CONNECTION ERROR</h1>";
                 });
         }
 
-        // FUNCIONES DEL MODAL BINANCE
         function openBinanceModal() { 
             document.getElementById('binanceModal').style.display = 'flex'; 
         }
@@ -452,7 +484,6 @@
             completedDiv.style.display = 'block';
             completedDiv.innerHTML = '';
             
-            // BOTÓN DOWNLOAD
             const downloadBtn = document.createElement('a');
             downloadBtn.href = o.Link_Drive || '#';
             downloadBtn.target = '_blank';
@@ -463,7 +494,6 @@
             downloadBtn.style.letterSpacing = '2px';
             downloadBtn.innerHTML = `DOWNLOAD VIDEO`;
             
-            // Verificar si ya envió review con localStorage
             const reviewSent = localStorage.getItem(`review_sent_${orderId}`);
             
             if(reviewSent) {
@@ -473,13 +503,11 @@
                 completedDiv.appendChild(downloadBtn);
                 completedDiv.appendChild(alreadySentMsg);
             } else {
-                // BOTÓN REVIEW
                 const reviewBtn = document.createElement('button');
                 reviewBtn.className = 'btn-outline-light';
                 reviewBtn.innerText = 'LEAVE A REVIEW';
                 reviewBtn.onclick = function() { toggleReviewForm(); };
                 
-                // FORMULARIO REVIEW CON NOMBRE Y PAÍS
                 const reviewForm = document.createElement('div');
                 reviewForm.id = 'review-form-container';
                 reviewForm.className = 'review-form';
@@ -524,7 +552,6 @@
                     `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
             }
             
-            // Configurar botón de solicitar cambios según revisiones disponibles
             const changesBtn = document.getElementById('request-changes-btn');
             const noRevisionsMsg = document.getElementById('no-revisions-msg');
             
@@ -554,46 +581,118 @@
             }
         }
 
+        // FIX CRÍTICO: Control estricto para AWAITING_PAYMENT
         function renderAwaitingPaymentState(o, categoria) {
             const catUpper = categoria.toUpperCase();
+            const comprobante1 = o.Comprobante_1 || "";
             
             document.getElementById('production-message').style.display = 'none';
             document.getElementById('completed-actions').style.display = 'none';
             document.getElementById('review-actions-area').style.display = 'none';
             
             if(catUpper.includes('LEGACY')) {
+                // LEGACY LIMPIO: Solo contrato y botón solicitar
                 document.getElementById('actions-area').style.display = 'none';
                 document.getElementById('legacy-request-area').style.display = 'block';
             } else {
+                // DIRECTOR'S CUT / PREMIERE: Verificar si ya pagó
                 document.getElementById('actions-area').style.display = 'block';
                 document.getElementById('legacy-request-area').style.display = 'none';
-                checkIfAlreadyUploaded(o);
+                
+                // Si ya existe Comprobante_1, bloquear TODO y mostrar espera
+                if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
+                    blockActionsAreaForWaiting();
+                }
+            }
+        }
+
+        // Nueva función específica para bloquear área de pagos
+        function blockActionsAreaForWaiting() {
+            // Ocultar botones de pago
+            document.getElementById('main-pay-grid').style.display = 'none';
+            // Ocultar contrato
+            document.getElementById('contract-content').style.display = 'none';
+            // Ocultar checkbox
+            document.getElementById('main-accept-wrap').style.display = 'none';
+            // Ocultar área de upload
+            document.getElementById('main-upload-area').style.display = 'none';
+            // Ocultar botón submit
+            document.getElementById('upload-btn').style.display = 'none';
+            // Ocultar file input
+            document.getElementById('fileInput').style.display = 'none';
+            
+            // Mostrar mensaje de espera
+            document.getElementById('first-payment-waiting').style.display = 'block';
+        }
+
+        function checkSecondPaymentStatus(o) {
+            const comprobante2 = o.Comprobante_2 || "";
+            if (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]') {
+                // Bloquear segundo pago y mostrar espera
+                document.getElementById('second-pay-grid').style.display = 'none';
+                document.getElementById('second-upload-area').style.display = 'none';
+                document.getElementById('secondFileInput').style.display = 'none';
+                document.getElementById('second-upload-btn').style.display = 'none';
+                document.getElementById('second-payment-waiting').style.display = 'block';
+            }
+        }
+
+        function checkLegacyPaymentStatus(o) {
+            const comprobante1 = o.Comprobante_1 || "";
+            if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
+                document.getElementById('legacy-pay-grid').style.display = 'none';
+                document.getElementById('legacy-upload-area').style.display = 'none';
+                document.getElementById('legacyFileInput').style.display = 'none';
+                document.getElementById('legacy-upload-btn').style.display = 'none';
+                document.getElementById('legacy-payment-waiting').style.display = 'block';
             }
         }
 
         function getEmbedUrl(youtubeUrl) {
-            if(!youtubeUrl) return '';
             let url = youtubeUrl.toString();
             url = url.replace('watch?v=', 'embed/');
             url = url.replace('youtu.be/', 'youtube.com/embed/');
-            if(!url.includes('embed')) url = url.replace('youtube.com/', 'youtube.com/embed/');
+            if(!url.includes('embed')) {
+                url = url.replace('youtube.com/', 'youtube.com/embed/');
+            }
             return url;
         }
 
         function renderContract(categoria) {
             const contractBox = document.getElementById('contract-content');
-            if(!contractBox) return;
-            const cat = (categoria || "").toString().toUpperCase().trim();
+            const cat = categoria.toString().toUpperCase().trim();
             let html = '';
             
             if (cat.includes('PREMIERE')) {
-                html = `<strong>PREMIERE PASS AGREEMENT:</strong><br><span style="color: #fff;">100% Upfront Payment</span><br>Pay in full to start production and receive your final product with no remaining balance.<br><br>1. Full payment validates immediate project start.<br>2. Master file delivered watermark-free with no outstanding balance.<br>3. Client is entitled to revisions as specified in the order.<br>4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
+                html = `<strong>PREMIERE PASS AGREEMENT:</strong><br>
+                        <span style="color: #fff;">100% Upfront Payment</span><br>
+                        Pay in full to start production and receive your final product with no remaining balance.<br><br>
+                        1. Full payment validates immediate project start.<br>
+                        2. Master file delivered watermark-free with no outstanding balance.<br>
+                        3. Client is entitled to revisions as specified in the order.<br>
+                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
             } else if (cat.includes('DIRECTOR')) {
-                html = `<strong>DIRECTOR'S CUT AGREEMENT:</strong><br><span style="color: #fff;">50/50 Payment Split</span><br>50% deposit to begin; remaining 50% balance to unlock the Master file (no watermarks).<br><br>1. 50% deposit validates project start and is non-refundable.<br>2. Final Master file delivered upon payment of remaining 50% balance.<br>3. Client is entitled to revisions as specified in the order.<br>4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
+                html = `<strong>DIRECTOR'S CUT AGREEMENT:</strong><br>
+                        <span style="color: #fff;">50/50 Payment Split</span><br>
+                        50% deposit to begin; remaining 50% balance to unlock the Master file (no watermarks).<br><br>
+                        1. 50% deposit validates project start and is non-refundable.<br>
+                        2. Final Master file delivered upon payment of remaining 50% balance.<br>
+                        3. Client is entitled to revisions as specified in the order.<br>
+                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
             } else if (cat.includes('LEGACY')) {
-                html = `<strong>LEGACY STATUS AGREEMENT:</strong><br><span style="color: #fff;">VIP Priority Access</span><br>Exclusive terms and priority delivery reserved for returning and high-volume clients.<br><br>1. Exclusive terms and guaranteed priority delivery.<br>2. Payment flexibility: submit proof of payment in parts or at a later date.<br>3. Direct access to production team and priority support.<br>4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
+                html = `<strong>LEGACY STATUS AGREEMENT:</strong><br>
+                        <span style="color: #fff;">VIP Priority Access</span><br>
+                        Exclusive terms and priority delivery reserved for returning and high-volume clients.<br><br>
+                        1. Exclusive terms and guaranteed priority delivery.<br>
+                        2. Payment flexibility: submit proof of payment in parts or at a later date.<br>
+                        3. Direct access to production team and priority support.<br>
+                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
             } else {
-                html = `<strong>STANDARD SERVICE AGREEMENT:</strong><br>1. Deposit validates project start and is non-refundable.<br>2. Final Master file delivered upon full payment of outstanding balance.<br>3. Client is entitled to revisions as specified in the order.<br>4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
+                html = `<strong>STANDARD SERVICE AGREEMENT:</strong><br>
+                        1. Deposit validates project start and is non-refundable.<br>
+                        2. Final Master file delivered upon full payment of outstanding balance.<br>
+                        3. Client is entitled to revisions as specified in the order.<br>
+                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
             }
             contractBox.innerHTML = html;
         }
@@ -601,81 +700,19 @@
         function renderLegacyContract(categoria) {
             const contractBox = document.getElementById('legacy-contract-content');
             if(!contractBox) return;
-            const cat = (categoria || "").toString().toUpperCase().trim();
-            if (cat.includes('LEGACY')) {
-                contractBox.innerHTML = `<strong>LEGACY STATUS AGREEMENT:</strong><br><span style="color: #fff;">VIP Priority Access</span><br>Exclusive terms and priority delivery reserved for returning and high-volume clients.<br><br>1. Exclusive terms and guaranteed priority delivery.<br>2. Payment flexibility: submit proof of payment in parts or at a later date.<br>3. Direct access to production team and priority support.<br>4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
-            } else {
-                renderContract(categoria);
-            }
-        }
-
-        function checkIfAlreadyUploaded(o) {
-            const comprobante1 = o.Comprobante_1 || "";
-            const categoria = (o.Categoria_Pago || "").toString().toUpperCase();
             
-            if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
-                const uploadBox = document.querySelector('#actions-area .upload-box-dotted');
-                const fileInput = document.getElementById('fileInput');
-                const btn = document.getElementById('upload-btn');
-                const label = document.getElementById('upload-label');
-                const check = document.getElementById('accept-check');
-                const payGrid = document.querySelector('#actions-area .pay-grid');
-                const contractBox = document.getElementById('contract-content');
-                
-                if(payGrid) payGrid.style.display = 'none';
-                if(contractBox) contractBox.style.display = 'none';
-                if(check && check.parentElement) check.parentElement.style.display = 'none';
-                if(fileInput) fileInput.style.display = 'none';
-                
-                uploadBox.style.borderColor = "#333";
-                uploadBox.style.cursor = "default";
-                uploadBox.onclick = null;
-                label.innerText = "✓ PAYMENT PROOF UNDER REVIEW";
-                label.style.color = "#fff";
-                
-                btn.innerText = "WAITING FOR VERIFICATION";
-                btn.className = "btn-blackbear btn-sent";
-                btn.onclick = null;
-            }
-        }
-
-        function checkSecondPaymentStatus(o) {
-            const comprobante2 = o.Comprobante_2 || "";
-            if (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]') {
-                const uploadBox = document.getElementById('second-upload-area');
-                const btn = document.getElementById('second-upload-btn');
-                const label = document.getElementById('second-upload-label');
-                const payGrid = document.getElementById('second-payment-section').querySelector('.pay-grid');
-                
-                if(payGrid) payGrid.style.display = 'none';
-                uploadBox.style.borderColor = "#333";
-                uploadBox.style.cursor = "default";
-                uploadBox.onclick = null;
-                label.innerText = "✓ FINAL PAYMENT UNDER REVIEW";
-                label.style.color = "#fff";
-                btn.innerText = "WAITING FOR VERIFICATION";
-                btn.className = "btn-blackbear btn-sent";
-                btn.disabled = true;
-            }
-        }
-
-        function checkLegacyPaymentStatus(o) {
-            const comprobante1 = o.Comprobante_1 || "";
-            if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
-                const uploadBox = document.getElementById('legacy-upload-area');
-                const btn = document.getElementById('legacy-upload-btn');
-                const label = document.getElementById('legacy-upload-label');
-                const payGrid = document.getElementById('legacy-review-payment-section').querySelector('.pay-grid');
-                
-                if(payGrid) payGrid.style.display = 'none';
-                uploadBox.style.borderColor = "#333";
-                uploadBox.style.cursor = "default";
-                uploadBox.onclick = null;
-                label.innerText = "✓ PAYMENT PROOF RECEIVED";
-                label.style.color = "#fff";
-                btn.innerText = "IN REVIEW QUEUE";
-                btn.className = "btn-blackbear btn-sent";
-                btn.disabled = true;
+            const cat = categoria.toString().toUpperCase().trim();
+            
+            if (cat.includes('LEGACY')) {
+                contractBox.innerHTML = `<strong>LEGACY STATUS AGREEMENT:</strong><br>
+                        <span style="color: #fff;">VIP Priority Access</span><br>
+                        Exclusive terms and priority delivery reserved for returning and high-volume clients.<br><br>
+                        1. Exclusive terms and guaranteed priority delivery.<br>
+                        2. Payment flexibility: submit proof of payment in parts or at a later date.<br>
+                        3. Direct access to production team and priority support.<br>
+                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
+            } else {
+                contractBox.innerHTML = renderContract(categoria);
             }
         }
 
@@ -732,7 +769,7 @@
                 }).catch(err => {
                     console.error(err);
                     alert("Error: " + err.message);
-                    btn.innerText = "REQUEST PROJECT";
+                    btn.innerText = "REQUEST PROJECT START";
                     btn.disabled = false;
                 });
         }
@@ -761,7 +798,6 @@
                 .then(result => {
                     if(result.result === "success") {
                         document.getElementById('changes-success-msg').style.display = 'inline';
-                        document.getElementById('changes-error-msg').style.display = 'none';
                         document.getElementById('changes-text').disabled = true;
                         const currentRevisions = parseInt(document.getElementById('order-revisions').innerText) || 0;
                         if(currentRevisions > 0) updateRevisionsDisplay(currentRevisions - 1);
@@ -809,18 +845,8 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        const uploadBox = document.getElementById('second-upload-area');
-                        const payGrid = document.getElementById('second-payment-section').querySelector('.pay-grid');
-                        if(payGrid) payGrid.style.display = 'none';
-                        uploadBox.style.borderColor = "#333";
-                        uploadBox.style.cursor = "default";
-                        uploadBox.onclick = null;
-                        document.getElementById('second-upload-label').innerText = "✓ FINAL PAYMENT SENT - UNDER REVIEW";
-                        document.getElementById('second-upload-label').style.color = "#fff";
-                        btn.innerText = "WAITING FOR VERIFICATION";
-                        btn.className = "btn-blackbear btn-sent";
-                        btn.disabled = true;
-                        alert("Payment proof sent! We will review it and unlock your download shortly.");
+                        alert("Final payment received! Processing...");
+                        fetchOrderData(); // Recargar para mostrar estado de espera
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
@@ -866,17 +892,8 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        const uploadBox = document.getElementById('legacy-upload-area');
-                        const payGrid = document.getElementById('legacy-review-payment-section').querySelector('.pay-grid');
-                        if(payGrid) payGrid.style.display = 'none';
-                        uploadBox.style.borderColor = "#333";
-                        uploadBox.style.cursor = "default";
-                        uploadBox.onclick = null;
-                        document.getElementById('legacy-upload-label').innerText = "✓ PAYMENT PROOF RECEIVED";
-                        document.getElementById('legacy-upload-label').style.color = "#fff";
-                        btn.innerText = "IN REVIEW QUEUE";
-                        btn.className = "btn-blackbear btn-sent";
-                        alert("Payment proof received! Thank you for your payment.");
+                        alert("Payment proof received! Thank you.");
+                        fetchOrderData();
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
@@ -931,7 +948,6 @@
                     }
                 }).catch(err => {
                     console.error(err);
-                    // Guardar en localStorage igual por si fue error de CORS pero si llegó
                     localStorage.setItem(`review_sent_${orderId}`, 'true');
                     document.getElementById('review-success-msg').style.display = 'inline';
                     setTimeout(() => { window.location.reload(); }, 2000);
@@ -971,24 +987,8 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        const uploadBox = document.querySelector('#actions-area .upload-box-dotted');
-                        const payGrid = document.querySelector('#actions-area .pay-grid');
-                        const contractBox = document.getElementById('contract-content');
-                        const check = document.getElementById('accept-check');
-                        
-                        if(payGrid) payGrid.style.display = 'none';
-                        if(contractBox) contractBox.style.display = 'none';
-                        if(check && check.parentElement) check.parentElement.style.display = 'none';
-                        
-                        uploadBox.style.borderColor = "#333";
-                        uploadBox.style.cursor = "default";
-                        uploadBox.onclick = null;
-                        document.getElementById('upload-label').innerText = "✓ PAYMENT PROOF SENT - UNDER REVIEW";
-                        document.getElementById('upload-label').style.color = "#fff";
-                        btn.innerText = "WAITING FOR VERIFICATION";
-                        btn.className = "btn-blackbear btn-sent";
-                        btn.onclick = null;
-                        alert("Payment proof sent! We will review it shortly and start production.");
+                        alert("Payment proof sent! We will review it shortly.");
+                        fetchOrderData(); // Recargar para aplicar bloqueo
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
