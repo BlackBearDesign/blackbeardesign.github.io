@@ -44,6 +44,12 @@
       .unslate_co--footer { background-color: #191919 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; }
       .badge-status { padding: 8px 15px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block; }
       .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; }
+      
+      /* Responsive para móvil */
+      @media (max-width: 768px) {
+        .pay-grid { grid-template-columns: 1fr; }
+        .order-section { padding: 100px 0 50px 0; }
+      }
     </style>
 </head>
 <body>
@@ -83,7 +89,10 @@
       </nav>
 
       <div class="container order-section">
-          <div id="loading-view" class="text-center"><h2 style="font-weight: 900; letter-spacing: 2px;">Sincronizando con el estudio...</h2></div>
+          <div id="loading-view" class="text-center">
+              <h2 style="font-weight: 900; letter-spacing: 2px;">Sincronizando con el estudio...</h2>
+              <p style="margin-top: 20px; opacity: 0.5;">Cargando datos en vivo...</p>
+          </div>
 
           <div id="order-view" style="display:none;">
               <div class="row">
@@ -131,7 +140,7 @@
                                   1. El anticipo valida el inicio del proyecto y no es reembolsable.<br>
                                   2. El archivo Master final se entregará al liquidar el saldo total.<br>
                                   3. El cliente tiene derecho a las revisiones marcadas en su orden.<br>
-                                  4. Dreamset Studios retiene derechos de portafolio salvo acuerdo NDA.
+                                  4. BlackBear retiene derechos de portafolio salvo acuerdo NDA.
                               </div>
                               <div class="accept-wrap">
                                   <input type="checkbox" id="accept-check"> <label for="accept-check">ACEPTO LOS TÉRMINOS Y CONDICIONES</label>
@@ -166,53 +175,85 @@
 
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script>
-        // Forzamos la actualización de datos con timestamp
-        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR7MfUJrspnPSDFqmPX0oPA_PtDE7312RnzngMrCwpGfgjRSvXD6jmiiDFVhAlbOTwmFmOEixPzBZ_z/pub?output=csv&t=" + new Date().getTime();
-        // Nueva implementación de Apps Script
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCq-GbHImxjAN-KDCcYMPS51lyxCfFlb5vnohJ-4m-4B48anD5OxFN0S88XRjvbkDbeA/exec";
+        // TU LINK DE APPS SCRIPT (YA LO TENÍAS)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxiDtZnwX43d4o09W3U_nPfr9u_eezQ3eKV7zCeIO5BOGCZiSnTt8DBM7fsR-MOKAoE-g/exec";
+        
         let orderId = new URLSearchParams(window.location.search).get('id');
 
         document.addEventListener('DOMContentLoaded', () => {
             if(!orderId) {
-                document.getElementById('loading-view').innerHTML = "<h1>SE REQUIERE ID DE ORDEN</h1>";
+                document.getElementById('loading-view').innerHTML = "<h1 style='color:red'>SE REQUIERE ID DE ORDEN EN LA URL</h1>";
                 return;
             }
 
-            Papa.parse(CSV_URL, {
-                download: true, header: true,
-                complete: (r) => {
-                    const o = r.data.find(x => x.ID === orderId);
-                    if(o) render(o);
-                    else document.getElementById('loading-view').innerHTML = "<h1>ORDEN #" + orderId + " NO ENCONTRADA</h1>";
-                }
-            });
+            // CONEXIÓN EN VIVO AL EXCEL (SIN CACHÉ)
+            fetch(SCRIPT_URL + "?id=" + orderId + "&t=" + Date.now())
+                .then(response => response.json())
+                .then(data => {
+                    if(data.error) {
+                        document.getElementById('loading-view').innerHTML = "<h1>ORDEN #" + orderId + " NO ENCONTRADA</h1>";
+                    } else {
+                        render(data);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById('loading-view').innerHTML = "<h1 style='color:red'>ERROR AL CONECTAR CON EL SERVIDOR</h1>";
+                });
         });
 
         function render(o) {
             document.getElementById('loading-view').style.display = 'none';
             document.getElementById('order-view').style.display = 'block';
 
-            // Mapeo dinámico de columnas
-            document.getElementById('order-main-title').innerText = "ORDEN DE " + o.Cliente;
-            document.getElementById('order-description').innerText = o.Descripcion || "Sin descripción adicional.";
+            // MAPEO DE DATOS (nombres exactos de tus columnas)
+            document.getElementById('order-main-title').innerText = "ORDEN DE " + (o.Cliente || "CLIENTE");
+            document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "Sin descripción.");
             document.getElementById('order-revisions').innerText = o.Revisiones || "0";
             document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
-            document.getElementById('order-status-text').innerText = o.Estatus.replace(/_/g, ' ');
-            document.getElementById('order-category').innerText = o.Categoria_Pago;
+            document.getElementById('order-status-text').innerText = (o.Estatus || "PENDIENTE").toString().replace(/_/g, ' ');
+            document.getElementById('order-category').innerText = o.Categoria_Pago || "PAGO";
 
-            if(o.Estatus === 'REVISION') {
+            // Si está en REVISION, mostrar video
+            if(o.Estatus === 'REVISION' && o.Link_YouTube) {
                 document.getElementById('preview-box').style.display = 'block';
-                document.getElementById('video-iframe').innerHTML = `<iframe src="${o.Link_YouTube.replace('watch?v=', 'embed/')}?modestbranding=1&rel=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
-            } else if(o.Estatus === 'COMPLETADO') {
-                document.getElementById('actions-area').innerHTML = `<a href="${o.Link_Drive}" target="_blank" class="btn-blackbear d-block text-center" style="text-decoration:none;">DESCARGAR MASTER 4K</a>`;
+                let videoUrl = o.Link_YouTube.toString();
+                // Convertir cualquier formato de YouTube a embed
+                videoUrl = videoUrl.replace('watch?v=', 'embed/');
+                videoUrl = videoUrl.replace('youtu.be/', 'youtube.com/embed/');
+                if(!videoUrl.includes('embed')) {
+                    videoUrl = videoUrl.replace('youtube.com/', 'youtube.com/embed/');
+                }
+                document.getElementById('video-iframe').innerHTML = 
+                    `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" 
+                     style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                     frameborder="0" allowfullscreen></iframe>`;
+            } 
+            // Si está COMPLETADO, mostrar botón de descarga
+            else if(o.Estatus === 'COMPLETADO' && o.Link_Drive) {
+                document.getElementById('actions-area').innerHTML = 
+                    `<a href="${o.Link_Drive}" target="_blank" class="btn-blackbear d-block text-center" 
+                     style="text-decoration:none; padding: 20px; font-size: 14px;">
+                     DESCARGAR MASTER 4K<br>
+                     <span style="font-size: 10px; opacity: 0.7; font-weight: 400;">Click para obtener el archivo final</span>
+                     </a>`;
             }
         }
 
         function handleFileSelected() {
             const file = document.getElementById('fileInput').files[0];
-            if(file) document.getElementById('upload-label').innerText = file.name;
+            if(file) {
+                // Validar tamaño (5MB máximo)
+                if(file.size > 5 * 1024 * 1024) {
+                    alert("El archivo es muy grande. Máximo 5MB.");
+                    document.getElementById('fileInput').value = '';
+                    return;
+                }
+                document.getElementById('upload-label').innerText = "ARCHIVO: " + file.name;
+                document.getElementById('upload-label').style.opacity = "1";
+                document.getElementById('upload-label').style.color = "#fff";
+            }
         }
 
         async function submitFile() {
@@ -235,16 +276,21 @@
                 formData.append('mimeType', file.type);
                 formData.append('fileName', `Orden_${orderId}_comprobante`);
                 formData.append('orderId', orderId);
-                formData.append('type', 'anticipo');
 
                 try {
-                    await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
-                    document.getElementById('upload-label').innerText = "ARCHIVO RECIBIDO";
-                    btn.innerText = "COMPROBANTE ENVIADO";
+                    // Enviar al mismo Apps Script
+                    await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+                    
+                    document.getElementById('upload-label').innerText = "✓ COMPROBANTE ENVIADO";
+                    document.getElementById('upload-label').style.color = "#4CAF50";
+                    btn.innerText = "EN COLA DE REVISIÓN";
                     btn.className = "btn-blackbear btn-sent";
                     btn.onclick = null;
+                    
+                    alert("Comprobante recibido. Revisaremos tu pago en breve.");
                 } catch (err) {
-                    alert("Error en el envío. Por favor, intenta de nuevo.");
+                    console.error(err);
+                    alert("Error al enviar. Intenta de nuevo o contacta por WhatsApp.");
                     btn.innerText = "ENVIAR PAGO";
                     btn.disabled = false;
                 }
