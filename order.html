@@ -13,8 +13,6 @@
 
     <style>
       body { font-family: 'Montserrat', sans-serif !important; background: transparent; color: #fff; overflow-x: hidden; }
-      
-      /* Fondo de video idéntico al index */
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
       .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
 
@@ -22,31 +20,26 @@
       .order-section { padding: 180px 0 100px 0; min-height: 85vh; }
       .info-panel { background: rgba(10,10,10,0.9); padding: 40px; border: 1px solid #1a1a1a; border-radius: 8px; backdrop-filter: blur(15px); }
 
-      /* Métodos de Pago y Contrato */
+      /* Elementos de Pago y Contrato */
       .pay-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
       .pay-link { padding: 10px; font-size: 10px; font-weight: 900; text-align: center; border-radius: 4px; text-decoration: none !important; color: #fff; }
-      .pay-paypal { background: #003087; }
-      .pay-wise { background: #00b5ff; }
-      .pay-binance { background: #F3BA2F; color: #000; }
+      .pay-paypal { background: #003087; } .pay-wise { background: #00b5ff; } .pay-binance { background: #F3BA2F; color: #000; }
 
-      .contract-container { background: #000; border: 1px solid #222; padding: 15px; height: 100px; overflow-y: scroll; font-size: 11px; color: #666; margin-bottom: 15px; }
+      .contract-container { background: #000; border: 1px solid #222; padding: 15px; height: 100px; overflow-y: scroll; font-size: 11px; color: #666; margin-bottom: 15px; text-align: left; }
       .accept-wrap { text-align: left; margin-bottom: 25px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
 
       /* Área de Carga */
       .upload-box-dotted { border: 2px dashed rgba(255,255,255,0.2); padding: 40px 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; cursor: pointer; }
-      .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
+      .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; }
       .btn-sent { background: #111 !important; color: #fff !important; border: 1px solid #333 !important; cursor: default; }
 
-      /* Footer Gris Sólido */
+      .badge-status { padding: 8px 15px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: inline-block; }
       .unslate_co--footer { background-color: #191919 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; }
-      .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; }
     </style>
 </head>
 <body>
 
-    <div class="video-bg-global">
-        <video autoplay loop muted playsinline><source src="video/bg.mp4" type="video/mp4"></video>
-    </div>
+    <div class="video-bg-global"><video autoplay loop muted playsinline><source src="video/bg.mp4" type="video/mp4"></video></div>
 
     <div class="unslate_co--site-wrap">
       
@@ -84,18 +77,13 @@
           <div id="order-view" style="display:none;">
               <div class="row">
                   <div class="col-lg-7">
-                      <span id="order-category" style="padding: 8px 15px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; margin-bottom: 20px; display: inline-block;"></span>
+                      <span id="order-category" class="badge-status"></span>
                       <h1 id="order-main-title" style="font-weight: 900; font-size: 3.5rem; text-transform: uppercase; line-height: 1; margin: 0;"></h1>
                       <h3 style="font-weight: 700; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px;">ESTADO DE PRODUCCIÓN</h3>
                       
                       <div class="mb-5">
-                          <h5 style="font-size: 10px; text-transform: uppercase; opacity: 0.3; font-weight: 800; margin-bottom: 10px;">Descripción del Proyecto</h5>
+                          <h5 style="font-size: 10px; text-transform: uppercase; opacity: 0.3; font-weight: 800;">Descripción del Proyecto</h5>
                           <p id="order-description" style="font-size: 18px; color: #ccc; line-height: 1.6;"></p>
-                      </div>
-
-                      <div id="preview-box" style="display:none;">
-                        <h5 style="font-size: 10px; text-transform: uppercase; opacity: 0.3; margin-bottom: 15px;">Vista Previa</h5>
-                        <div id="video-iframe" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid #222;"></div>
                       </div>
                   </div>
 
@@ -108,7 +96,12 @@
                           
                           <div class="mb-4 py-3 border-top border-bottom" style="border-color: #222 !important;">
                               <span style="font-size: 10px; text-transform: uppercase; opacity: 0.4; font-weight: 800;">Revisiones</span>
-                              <h4 style="font-weight: 900; margin: 5px 0 0 0;">DISPONIBLES: <span id="order-revisions" class="revision-badge">0</span></h4>
+                              <h4 style="font-weight: 900; margin: 5px 0 0 0;">DISPONIBLES: <span id="order-revisions" style="background: #fff; color: #000; padding: 2px 10px; border-radius: 3px;">0</span></h4>
+                          </div>
+
+                          <div class="mb-5">
+                            <span style="font-size: 10px; text-transform: uppercase; opacity: 0.4; font-weight: 800;">Inversión Total</span>
+                            <h3 id="order-price" style="font-weight: 900; margin: 0;">$0.00</h3>
                           </div>
 
                           <div id="actions-area">
@@ -119,9 +112,9 @@
                               </div>
                               <div class="contract-container">
                                   <strong>CONTRATO BLACKBEAR:</strong><br>
-                                  1. El anticipo valida el inicio del proyecto.<br>
-                                  2. El saldo final libera el Master en 4K.<br>
-                                  3. Se respetará el número de revisiones pactadas.
+                                  1. El anticipo no es reembolsable tras el inicio.<br>
+                                  2. Los archivos Master se liberan al liquidar el saldo final.<br>
+                                  3. El cliente acepta las revisiones estipuladas en el Excel.
                               </div>
                               <div class="accept-wrap">
                                   <input type="checkbox" id="accept-check"> <label for="accept-check">ACEPTO LOS TÉRMINOS Y CONDICIONES</label>
@@ -130,7 +123,7 @@
                                   <p id="upload-label" style="font-size: 11px; font-weight: 700; opacity: 0.5; text-transform: uppercase; margin: 0;">Sube tu comprobante (PNG/JPG)</p>
                               </div>
                               <input type="file" id="fileInput" class="d-none" onchange="handleFileSelected()">
-                              <button class="btn-blackbear" id="upload-btn" onclick="submitFile()">ENVIAR PAGO</button>
+                              <button class="btn-blackbear" id="upload-btn" onclick="submitFinal()">ENVIAR PAGO</button>
                           </div>
                       </div>
                   </div>
@@ -140,11 +133,7 @@
 
       <footer class="unslate_co--footer">
         <div class="container text-center">
-          <div class="footer-site-logo">
-            <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
-              <img src="images/logo.png" alt="BlackBear" style="height: 35px; width: auto;">
-            </a>
-          </div>
+          <div class="footer-site-logo"><a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;"><img src="images/logo.png" alt="BlackBear" style="height: 35px; width: auto;"></a></div>
           <p style="font-size:12px; opacity:0.3;">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
         </div>
       </footer>
@@ -153,7 +142,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script>
-        // "Cache-buster" para forzar la actualización del Excel
+        // "Cache-buster" para forzar actualización del Excel
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR7MfUJrspnPSDFqmPX0oPA_PtDE7312RnzngMrCwpGfgjRSvXD6jmiiDFVhAlbOTwmFmOEixPzBZ_z/pub?output=csv&t=" + new Date().getTime();
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxo0txYdwsl7p5YdBn4obClxFRQz3MXfgS1l6bHimyBP_p8FxPiSBvOdC8i7unntojGQQ/exec";
         let orderId = new URLSearchParams(window.location.search).get('id');
@@ -169,6 +158,7 @@
                         document.getElementById('order-main-title').innerText = "ORDEN DE " + o.Cliente;
                         document.getElementById('order-description').innerText = o.Descripcion || "Esperando descripción...";
                         document.getElementById('order-revisions').innerText = o.Revisiones || "0";
+                        document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
                         document.getElementById('order-status-text').innerText = o.Estatus.replace(/_/g, ' ');
                         document.getElementById('order-category').innerText = o.Categoria_Pago;
                     }
@@ -181,15 +171,14 @@
             if(file) document.getElementById('upload-label').innerText = file.name;
         }
 
-        async function submitFile() {
+        async function submitFinal() {
             const check = document.getElementById('accept-check');
             const file = document.getElementById('fileInput').files[0];
-            if(!check.checked) return alert("Acepta los términos primero.");
-            if(!file) return alert("Selecciona un archivo.");
+            if(!check.checked) return alert("Debes aceptar los términos.");
+            if(!file) return alert("Sube tu comprobante primero.");
 
             const btn = document.getElementById('upload-btn');
-            btn.innerText = "ENVIANDO...";
-            btn.disabled = true;
+            btn.innerText = "ENVIANDO..."; btn.disabled = true;
 
             const reader = new FileReader();
             reader.onload = async (e) => {
@@ -197,7 +186,7 @@
                 const data = new URLSearchParams();
                 data.append('fileBase64', base64);
                 data.append('mimeType', file.type);
-                data.append('fileName', `Orden_${orderId}_ticket`);
+                data.append('fileName', `Orden_${orderId}_anticipo`);
                 data.append('orderId', orderId);
                 data.append('type', 'anticipo');
 
