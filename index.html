@@ -1,14 +1,18 @@
 <!doctype html>
 <html lang="en">
   <head>
-   <title>BlackBear</title>
-<link rel="icon" type="image/png" href="images/icon.png">
+    <title>BlackBear</title>
+    <link rel="icon" type="image/png" href="images/icon.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <meta name="description" content="">
-    <meta name="keywords" content="html, css, javascript, jquery">
-    <meta name="author" content="">
+    <meta name="description" content="Professional Video Editor & Motion Designer">
+    <meta name="keywords" content="video editing, motion graphics, after effects, premiere pro">
+    <meta name="author" content="BlackBear">
+
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link rel="stylesheet" href="css/vendor/icomoon/style.css">
     <link rel="stylesheet" href="css/vendor/owl.carousel.min.css">
@@ -16,10 +20,9 @@
     <link rel="stylesheet" href="css/vendor/aos.css">
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="css/vendor/jquery.fancybox.min.css">
-    
-
-    <!-- Theme Style -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap" rel="stylesheet">
 
     <style>
       /* Fondo de video fijo detrás de todo el contenido */
@@ -50,367 +53,343 @@
 
       /* EL FOOTER: Se queda al final de la web, NO se queda fijo en el monitor */
       .unslate_co--footer {
-        background-color: #191919 !important; /* El tono gris sólido de tu imagen */
+        background-color: #191919 !important;
         position: relative !important;
         display: block !important;
-       z-index: 10 !important;
-        margin-top: 0;
-      }
+        z-index: 10 !important;
+        margin-top: 0;
+      }
 
-     #services-section .feature-v1 .wrap-icon img {
+      #services-section .feature-v1 .wrap-icon img {
         filter: brightness(0) invert(1) !important;
         -webkit-filter: brightness(0) invert(1) !important;
       }
 
       /* COPIA DESDE AQUÍ */
       #testimonial-section {
-  padding-bottom: 0 !important;
-}
+        padding-bottom: 0 !important;
+      }
 
-#journal-section {
-  padding-top: 0 !important;
-}
+      #journal-section {
+        padding-top: 0 !important;
+      }
 
-.testimonial-slider .owl-dots {
-  bottom: 0 !important;
-  position: relative !important;
-}
+      .testimonial-slider .owl-dots {
+        bottom: 0 !important;
+        position: relative !important;
+      }
 
-.testimonial-v1 .testimonial-inner-bg {
-  padding-bottom: 80px !important;
-}
+      .testimonial-v1 .testimonial-inner-bg {
+        padding-bottom: 80px !important;
+      }
 
-#dynamic-carousel {
-  max-width: 1300px !important;
-  margin: 0 auto !important;
-}
+      #dynamic-carousel {
+        max-width: 1300px !important;
+        margin: 0 auto !important;
+      }
 
-.testimonial-v1 blockquote {
-  max-width: 100%;
-  margin: 0 auto;
-}
+      .testimonial-v1 blockquote {
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
       .swipe-lottie-container {
-  text-align: center;
-  margin-top: -70px !important; 
-  width: 100%;
-  position: relative;
-  z-index: 10;
-}
+        text-align: center;
+        margin-top: -70px !important; 
+        width: 100%;
+        position: relative;
+        z-index: 10;
+      }
 
-dotlottie-player {
-  width: 120px !important; 
-  height: 120px !important;
-  display: inline-block;
-  transform: rotate(90deg);
-}
+      dotlottie-player {
+        width: 120px !important; 
+        height: 120px !important;
+        display: inline-block;
+        transform: rotate(90deg);
+      }
+
       /* --- MEJORA DE VISIBILIDAD Y ZOOM --- */
+      #journal-grid .blog-item {
+        position: relative;
+        overflow: hidden;
+        background: #000;
+      }
 
-/* Contenedor del post */
-#journal-grid .blog-item {
-  position: relative;
-  overflow: hidden; /* Corta la imagen cuando hace zoom */
-  background: #000; /* Fondo negro por si la imagen tarda en cargar */
-}
+      #journal-grid img {
+        filter: brightness(0.75);
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s ease;
+      }
 
-/* LA IMAGEN: Zoom suave al pasar el mouse */
-#journal-grid img {
-  filter: brightness(0.75); /* Un poco más oscura de base para que resalte el blanco */
-  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s ease;
-}
+      #journal-grid .blog-item:hover img {
+        transform: scale(1.1);
+        filter: brightness(0.9);
+      }
 
-#journal-grid .blog-item:hover img {
-  transform: scale(1.1); /* Efecto Lupa */
-  filter: brightness(0.9); /* Se aclara un poquito al interactuar */
-}
+      #journal-grid .overlay {
+        background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 50%, transparent 100%) !important;
+        opacity: 1 !important;
+        transition: background 0.3s ease;
+      }
 
-/* EL GRADIENTE: Sombra negra abajo para que el texto se lea SIEMPRE */
-#journal-grid .overlay {
-  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 50%, transparent 100%) !important;
-  opacity: 1 !important; /* Siempre visible */
-  transition: background 0.3s ease;
-}
+      #journal-grid .blog-item:hover .overlay {
+        background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 70%, transparent 100%) !important;
+      }
 
-#journal-grid .blog-item:hover .overlay {
-  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 70%, transparent 100%) !important;
-}
+      #journal-grid .portfolio-item-content {
+        padding: 40px 30px !important;
+      }
 
-/* EL TEXTO: Sombras y movimiento */
-#journal-grid .portfolio-item-content {
-  padding: 40px 30px !important; /* Más espacio interno */
-}
+      #journal-grid .portfolio-item-content h3 {
+        color: #ffffff !important;
+        text-shadow: 0 2px 15px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,0.5);
+        font-weight: 800 !important;
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+        transition: transform 0.3s ease;
+      }
 
-#journal-grid .portfolio-item-content h3 {
-  color: #ffffff !important;
-  text-shadow: 0 2px 15px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,0.5); /* Doble sombra para legibilidad total */
-  font-weight: 800 !important;
-  font-size: 1.6rem;
-  margin-bottom: 8px;
-  transition: transform 0.3s ease;
-}
+      #journal-grid .post-meta {
+        color: #ffffff !important;
+        opacity: 0.9;
+        text-shadow: 0 1px 8px rgba(0,0,0,1);
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: transform 0.3s ease;
+      }
 
-#journal-grid .post-meta {
-  color: #ffffff !important;
-  opacity: 0.9;
-  text-shadow: 0 1px 8px rgba(0,0,0,1);
-  font-weight: 600;
-  letter-spacing: 1px;
-  transition: transform 0.3s ease;
-}
+      #journal-grid .blog-item:hover h3, 
+      #journal-grid .blog-item:hover .post-meta {
+        transform: translateY(-5px);
+      }
 
-/* Efecto de resalte: El texto sube ligeramente al pasar el mouse */
-#journal-grid .blog-item:hover h3, 
-#journal-grid .blog-item:hover .post-meta {
-  transform: translateY(-5px);
-}
-     /* FIX DEFINITIVO: Texto blanco al escribir */
-.form-control, 
-.form-control:focus, 
-.form-control:active,
-textarea.form-control {
-  color: #ffffff !important; /* Forzamos el color blanco en todos los estados */
-  background: transparent !important;
-  border: none !important;
-  border-bottom: 1px solid rgba(255,255,255,0.2) !important;
-  border-radius: 0 !important;
-  padding: 10px 0 !important;
-  outline: none !important;
-  box-shadow: none !important;
-}
+      /* FIX DEFINITIVO: Texto blanco al escribir */
+      .form-control, 
+      .form-control:focus, 
+      .form-control:active,
+      textarea.form-control {
+        color: #ffffff !important;
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid rgba(255,255,255,0.2) !important;
+        border-radius: 0 !important;
+        padding: 10px 0 !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
 
-.form-control:focus {
-  border-bottom: 1px solid #ffffff !important;
-}
+      .form-control:focus {
+        border-bottom: 1px solid #ffffff !important;
+      }
 
-/* Asegura el color del cursor y del texto autocompletado */
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #ffffff !important;
-  caret-color: #ffffff !important;
-  transition: background-color 5000s ease-in-out 0s;
-}
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover, 
+      input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #ffffff !important;
+        caret-color: #ffffff !important;
+        transition: background-color 5000s ease-in-out 0s;
+      }
 
-/* También hacemos que los títulos (Name, Email, etc.) sean blancos */
-#contact-section label {
-  color: #ffffff !important;
-  font-weight: 600;
-} 
-/* PEGA ESTO */
-/* PEGA ESTO LITERALMENTE */
-/* --- ESTILO BLACKBEAR REFINADO --- */
-/* --- ESTILO BLACKBEAR DEFINITIVO --- */
-/* --- ESTILO BLACKBEAR DEFINITIVO --- */
-#project-single-view {
-    color: #ffffff !important;
-    font-family: inherit !important;
-}
+      #contact-section label {
+        color: #ffffff !important;
+        font-weight: 600;
+      }
 
-/* Título equilibrado */
-#project-title {
-    font-size: clamp(30px, 4vw, 48px) !important;
-    font-weight: 800 !important;
-    letter-spacing: -1px;
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    line-height: 1.1;
-}
+      /* --- ESTILO BLACKBEAR REFINADO --- */
+      #project-single-view {
+        color: #ffffff !important;
+        font-family: inherit !important;
+      }
 
-/* Centrado Vertical: Alinea el texto con el centro del video */
-.project-flex-row {
-    display: flex;
-    align-items: center; 
-    min-height: 500px;
-}
+      #project-title {
+        font-size: clamp(30px, 4vw, 48px) !important;
+        font-weight: 800 !important;
+        letter-spacing: -1px;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        line-height: 1.1;
+      }
 
-/* Metadatos: Diseño con jerarquía (Gris + Blanco Bold) */
-.meta-item { margin-bottom: 30px; opacity: 0; }
+      .project-flex-row {
+        display: flex;
+        align-items: center; 
+        min-height: 500px;
+      }
 
-.meta-header {
-    display: block;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #ffffff !important; 
-  opacity: 0.6;
-    font-weight: 700;
-    margin-bottom: 5px;
-}
+      .meta-item { 
+        margin-bottom: 30px; 
+        opacity: 0; 
+      }
 
-.meta-value {
-    display: block;
-    font-size: 15px;
-    color: #ffffff !important;
-    font-weight: 800;
-    text-transform: uppercase;
-}
+      .meta-header {
+        display: block;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #ffffff !important; 
+        opacity: 0.6;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
 
-/* --- BOTÓN DE CIERRE (X) FINAL Y REFINADO --- */
-.close-v1 { 
-    display: inline-flex !important; /* Forzamos que los elementos estén juntos */
-    align-items: center; 
-    justify-content: flex-end; 
-    text-decoration: none !important; 
-    transition: all 0.3s ease; 
-    cursor: pointer !important;
-    width: auto !important; /* Evitamos que ocupe toda la pantalla */
-    float: right; /* Lo pegamos a la derecha */
-}
+      .meta-value {
+        display: block;
+        font-size: 15px;
+        color: #ffffff !important;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
 
-/* Texto: Más pequeño (10px) y elegante */
-.close-v1 .icon-text { 
-    font-family: 'Montserrat', sans-serif !important; 
-    font-size: 10px; 
-    margin-right: 12px; /* Espacio justo con el círculo */
-    color: #ffffff !important; 
-    text-transform: uppercase; 
-    font-weight: 700; 
-    letter-spacing: 2px;
-}
+      .close-v1 { 
+        display: inline-flex !important;
+        align-items: center; 
+        justify-content: flex-end; 
+        text-decoration: none !important; 
+        transition: all 0.3s ease; 
+        cursor: pointer !important;
+        width: auto !important;
+        float: right;
+      }
 
-/* Círculo: Bajamos de 55px a 45px (el tamaño ideal) */
-.close-circle { 
-    width: 45px; height: 45px; 
-    border: 1px solid rgba(255,255,255,0.4); 
-    border-radius: 50%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 24px; /* La X también más pequeña */
-    color: #ffffff; 
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    padding-bottom: 4px; 
-}
+      .close-v1 .icon-text { 
+        font-family: 'Montserrat', sans-serif !important; 
+        font-size: 10px; 
+        margin-right: 12px;
+        color: #ffffff !important; 
+        text-transform: uppercase; 
+        font-weight: 700; 
+        letter-spacing: 2px;
+      }
 
-/* Zoom: Efecto sutil al pasar el mouse */
-.close-v1:hover .close-circle { 
-    background: #ffffff !important; 
-    color: #000000 !important; 
-    transform: scale(1.12); /* Zoom suave */
-}
+      .close-circle { 
+        width: 45px; 
+        height: 45px; 
+        border: 1px solid rgba(255,255,255,0.4); 
+        border-radius: 50%; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        font-size: 24px;
+        color: #ffffff; 
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding-bottom: 4px; 
+      }
+
+      .close-v1:hover .close-circle { 
+        background: #ffffff !important; 
+        color: #000000 !important; 
+        transform: scale(1.12);
+      }
+
       /* --- ESTILO PORTAFOLIO: TEXTO EN LA ESQUINA --- */
+      #posts .portfolio-item-content {
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        padding: 15px 20px !important;
+        text-align: left !important;
+        width: 100%;
+      }
 
-/* 1. Contenedor: Lo pegamos al fondo y a la izquierda */
-#posts .portfolio-item-content {
-  position: absolute !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  padding: 15px 20px !important; /* Ajusta este valor para pegarlo más o menos al borde */
-  text-align: left !important;
-  width: 100%;
-}
+      #posts .portfolio-item-content h3 {
+        font-size: 1.15rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 1.5px !important;
+        text-transform: uppercase;
+        margin: 0 !important;
+        line-height: 1.1;
+        color: #ffffff !important;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+      }
 
-/* 2. El Título: Bold, tamaño moderado y separado */
-#posts .portfolio-item-content h3 {
-  font-size: 1.15rem !important;    /* Tamaño más contenido, no tan grande */
-  font-weight: 800 !important;      /* Muy negrita */
-  letter-spacing: 1.5px !important; /* Separación elegante */
-  text-transform: uppercase;
-  margin: 0 !important;             /* Quitamos márgenes extra */
-  line-height: 1.1;
-  color: #ffffff !important;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.8); /* Asegura que se lea sobre la imagen */
-}
+      #posts .portfolio-item-content p {
+        font-size: 0.65rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 4px !important;
+        text-transform: uppercase;
+        margin-top: 4px !important;
+        margin-bottom: 0 !important;
+        opacity: 0.8;
+        color: #ffffff !important;
+      }
 
-/* 3. La Categoría (Reels/Video): Pequeña, muy separada y pegada al título */
-#posts .portfolio-item-content p {
-  font-size: 0.65rem !important;    /* Pequeño pero legible */
-  font-weight: 700 !important;      /* Bold */
-  letter-spacing: 4px !important;   /* Mucha separación entre letras */
-  text-transform: uppercase;
-  margin-top: 4px !important;       /* Espacio mínimo entre el título y la categoría */
-  margin-bottom: 0 !important;
-  opacity: 0.8;
-  color: #ffffff !important;
-}
-/* --- AJUSTE JOURNAL: TEXTO IZQUIERDA Y BOLD --- */
+      /* --- AJUSTE JOURNAL: TEXTO IZQUIERDA Y BOLD --- */
+      #journal-grid .portfolio-item-content {
+        padding: 20px !important;
+        text-align: left !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-end !important;
+        height: 100% !important;
+      }
 
-/* 1. Alineación del contenedor */
-#journal-grid .portfolio-item-content {
-  padding: 20px !important; /* Reducimos el margen para que pegue más al borde */
-  text-align: left !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-end !important; /* Empuja el texto al fondo del cuadro */
-  height: 100% !important;
-}
+      #journal-grid .portfolio-item-content h3 {
+        font-weight: 800 !important;
+        font-size: 1.25rem !important;
+        letter-spacing: 1px !important;
+        text-transform: none !important;
+        margin-bottom: 8px !important;
+        line-height: 1.2 !important;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.9) !important;
+      }
 
-/* 2. Título del Post: Bold y compacto */
-#journal-grid .portfolio-item-content h3 {
-  font-weight: 800 !important;      /* Negrita intensa */
-  font-size: 1.25rem !important;    /* Tamaño equilibrado */
-  letter-spacing: 1px !important;   /* Separación elegante */
-  text-transform: none !important;  /* Mantiene mayúsculas/minúsculas según escribas */
-  margin-bottom: 8px !important;    /* Espacio con el autor */
-  line-height: 1.2 !important;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.9) !important; /* Máxima legibilidad */
-}
+      #journal-grid .post-meta {
+        font-weight: 700 !important;
+        font-size: 0.75rem !important;
+        letter-spacing: 1.5px !important;
+        text-transform: uppercase !important; 
+        opacity: 0.9 !important;
+        color: #ffffff !important;
+        margin: 0 !important;
+      }
 
-/* 3. Meta Información (Autor y Tiempo): Bold y sutil */
-#journal-grid .post-meta {
-  font-weight: 700 !important;      /* Negrita para el autor */
-  font-size: 0.75rem !important;    /* Más pequeño para jerarquía */
-  letter-spacing: 1.5px !important; /* Más aire entre letras */
-  text-transform: uppercase !important; 
-  opacity: 0.9 !important;
-  color: #ffffff !important;
-  margin: 0 !important;
-}
+      #journal-grid .overlay {
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%) !important;
+      }
 
-/* 4. Aseguramos que el degradado ayude a la lectura */
-#journal-grid .overlay {
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%) !important;
-} 
-/* --- AJUSTE JOURNAL: TEXTO IZQUIERDA Y BOLD --- */
+      /* Loading states */
+      .loading-skeleton {
+        background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+        height: 200px;
+        border-radius: 4px;
+      }
 
-/* 1. Alineación del contenedor */
-#journal-grid .portfolio-item-content {
-  padding: 20px !important; /* Reducimos el margen para que pegue más al borde */
-  text-align: left !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-end !important; /* Empuja el texto al fondo del cuadro */
-  height: 100% !important;
-}
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
 
-/* 2. Título del Post: Bold y compacto */
-#journal-grid .portfolio-item-content h3 {
-  font-weight: 800 !important;      /* Negrita intensa */
-  font-size: 1.25rem !important;    /* Tamaño equilibrado */
-  letter-spacing: 1px !important;   /* Separación elegante */
-  text-transform: none !important;  /* Mantiene mayúsculas/minúsculas según escribas */
-  margin-bottom: 8px !important;    /* Espacio con el autor */
-  line-height: 1.2 !important;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.9) !important; /* Máxima legibilidad */
-}
+      .error-message {
+        color: #ff6b6b;
+        text-align: center;
+        padding: 20px;
+        font-weight: 600;
+      }
 
-/* 3. Meta Información (Autor y Tiempo): Bold y sutil */
-#journal-grid .post-meta {
-  font-weight: 700 !important;      /* Negrita para el autor */
-  font-size: 0.75rem !important;    /* Más pequeño para jerarquía */
-  letter-spacing: 1.5px !important; /* Más aire entre letras */
-  text-transform: uppercase !important; 
-  opacity: 0.9 !important;
-  color: #ffffff !important;
-  margin: 0 !important;
-}
-
-/* 4. Aseguramos que el degradado ayude a la lectura */
-#journal-grid .overlay {
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%) !important;
-}      
-
+      /* Reduced motion for accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        .video-bg-global video,
+        .cover-v1 video {
+          display: none;
+        }
+        .cover-v1 {
+          background: url('images/cover_bg_1.jpg') center/cover no-repeat;
+        }
+      }
     </style>
-<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
   </head>
   <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
 
-  <div class="video-bg-global">
-    <video autoplay loop muted playsinline>
-      <source src="video/bg.mp4" type="video/mp4">
-    </video>
-  </div>
+    <div class="video-bg-global">
+      <video autoplay loop muted playsinline poster="images/video-poster.jpg" preload="metadata">
+        <source src="video/bg.mp4" type="video/mp4">
+      </video>
+    </div>
 
     <nav class="unslate_co--site-mobile-menu">
       <div class="close-wrap d-flex">
@@ -425,476 +404,413 @@ input:-webkit-autofill:focus {
       <div class="site-mobile-inner"></div>
     </nav>
 
-
     <div class="unslate_co--site-wrap">
-
       <div class="unslate_co--site-inner">
-
         
-        <!-- END lines -->
-      
-      <nav class="unslate_co--site-nav site-nav-target">
+        <nav class="unslate_co--site-nav site-nav-target">
+          <div class="container">
+            <div class="row align-items-center justify-content-between text-left">
+              <div class="col-md-5 text-right">
+                <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                  <li><a href="#home-section" class="nav-link">Home</a></li>
+                  <li><a href="#portfolio-section" class="nav-link">Portfolio</a></li>
+                  <li><a href="#about-section" class="nav-link">About</a></li>
+                  <li><a href="#services-section" class="nav-link">Services</a></li>
+                </ul>
+              </div>
+              <div class="site-logo pos-absolute">
+                <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px; width: auto; vertical-align: middle;">
+                </a>
+              </div>
+              <div class="col-md-5 text-right text-lg-left">
+                <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                  <li><a href="#skills-section" class="nav-link">Skills</a></li>
+                  <li><a href="#testimonial-section" class="nav-link">Testimonial</a></li>
+                  <li><a href="#journal-section" class="nav-link">Journal</a></li>
+                  <li><a href="#contact-section" class="nav-link">Contact</a></li>
+                </ul>
 
-        <div class="container">
-        
-          <div class="row align-items-center justify-content-between text-left">
-            <div class="col-md-5 text-right">
-              <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
-               <li><a href="#home-section" class="nav-link">Home</a></li>
-                <li><a href="#portfolio-section" class="nav-link">Portfolio</a></li>
-                <li><a href="#about-section" class="nav-link">About</a></li>
-                <li><a href="#services-section" class="nav-link">Services</a></li>
-              </ul>
-            </div>
-            <div class="site-logo pos-absolute">
-  <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-    <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px; width: auto; vertical-align: middle;">
-  </a>
-</div>
-            <div class="col-md-5 text-right text-lg-left">
-              <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
-                <li><a href="#skills-section" class="nav-link">Skills</a></li>
-                <li><a href="#testimonial-section" class="nav-link">Testimonial</a></li>
-                <li><a href="#journal-section" class="nav-link">Journal</a></li>
-                <li><a href="#contact-section" class="nav-link">Contact</a></li>
-              </ul>
-
-              <ul class="site-nav-ul-none-onepage text-right d-inline-block d-lg-none">
-                <li><a href="#" class="js-menu-toggle">Menu</a></li>
-              </ul>
-
+                <ul class="site-nav-ul-none-onepage text-right d-inline-block d-lg-none">
+                  <li><a href="#" class="js-menu-toggle">Menu</a></li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        </nav>
 
-      </nav>
-      <!-- END nav -->
+        <div class="cover-v1" id="home-section" style="position: relative; overflow: hidden; background-color: #000; height: 100vh;">
+          <video autoplay loop muted playsinline poster="images/video-poster.jpg" preload="metadata" style="position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; z-index: 0; transform: translate(-50%, -50%); opacity: 0.6;">
+            <source src="video/animacion.mp4" type="video/mp4">
+          </video>
 
-   <div class="cover-v1" id="home-section" style="position: relative; overflow: hidden; background-color: #000; height: 100vh;">
-  <video autoplay loop muted playsinline style="position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; z-index: 0; transform: translate(-50%, -50%); opacity: 0.6;">
-    <source src="video/animacion.mp4" type="video/mp4">
-  </video>
+          <div class="container" style="position: relative; z-index: 1;">
+            <div class="row align-items-center" style="height: 100vh;">
+              <div class="col-md-10 mx-auto text-center">
+                <h1 class="heading">BlackBear</h1>
+                <h2 class="subheading" style="font-weight: 700;"><span class="typed" data-typed-items="VIDEO EDITOR, VISUAL EFFECTS, DESIGNER, DESIGN MOTION, CREATIVE MIND, COMPOSITION"></span></h2>
+              </div>
+            </div>
+          </div>
 
-  <div class="container" style="position: relative; z-index: 1;">
-    <div class="row align-items-center" style="height: 100vh;">
-      <div class="col-md-10 mx-auto text-center">
-       <h1 class="heading">BlackBear</h1>
-        <h2 class="subheading" style="font-weight: 700;"><span class="typed" data-typed-items="VIDEO EDITOR, VISUAL EFFECTS, DESIGNER, DESIGN MOTION, CREATIVE MIND, COMPOSITION"></span></h2>
-      </div>
-    </div>
-  </div>
-
-  <a href="#portfolio-section" class="mouse-wrap smoothscroll" style="z-index: 2;">
-    <span class="mouse"><span class="scroll"></span></span>
-    <span class="mouse-label">Scroll</span>
-  </a>
-</div>
-      <!-- END .cover-v1 -->
-
-
-     <div class="unslate_co--section" id="portfolio-section">
-  <div class="container">
-<div id="project-single-view" style="display:none; opacity:0; pointer-events: auto;">
-      <div class="row">
-        <div class="col-lg-12 text-right mb-5">
-          <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
-            <span class="icon-text">Back to Portfolio</span>
-            <span class="close-circle">×</span>
+          <a href="#portfolio-section" class="mouse-wrap smoothscroll" style="z-index: 2;">
+            <span class="mouse"><span class="scroll"></span></span>
+            <span class="mouse-label">Scroll</span>
           </a>
         </div>
-      </div>
-      <div class="row project-flex-row">
-        <div class="col-lg-7">
-          <h2 id="project-title"></h2>
-          <div id="project-visual-content"></div>
-        </div>
-        <div class="col-lg-4 offset-lg-1">
-          <div class="meta-item">
-            <span class="meta-header">Project Description</span>
-            <span id="project-desc" class="meta-value"></span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-header">Project Date</span>
-            <span id="project-date" class="meta-value"></span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-header">Client</span>
-            <span id="project-client" class="meta-value"></span>
-          </div>
-        </div>
-      </div>
-    </div>
 
- <div id="portfolio-grid-container" class="portfolio-wrapper">
-  
-  <div class="section-heading-wrap text-center mb-5">
-    <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Portfolio</span></h2>
-    <span class="gsap-reveal">
-      <img src="images/divider.png" alt="divider" width="76">
-    </span>
-  </div>
-
-  <div id="posts" class="row gutter-isotope-item">
-  </div>
-
-<div class="row mt-5">
-    <div class="col-12 d-flex justify-content-center gsap-reveal" data-aos="fade-up">
-      <a href="categories.html" class="btn btn-outline-pill btn-custom-light" style="padding: 15px 40px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; display: inline-block;">
-        Video Category
-      </a>
-    </div>
-  </div>
-  </div>
-  </div>
-</div>
-
-      <div class="unslate_co--section">
-        <div class="container">
-          <div class="owl-carousel logo-slider">
-            <div class="logo-v1 gsap-reveal">
-              <img src="images/logo-google.png" alt="Image" class="img-fluid">
-            </div>
-            <div class="logo-v1 gsap-reveal">
-              <img src="images/logo-puma.png" alt="Image" class="img-fluid">
-            </div>
-            <div class="logo-v1 gsap-reveal">
-              <img src="images/logo-paypal.png" alt="Image" class="img-fluid">
-            </div>
-            <div class="logo-v1 gsap-reveal">
-              <img src="images/logo-adobe.png" alt="Image" class="img-fluid">
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="unslate_co--section" id="about-section">
-        <div class="container">
-          
-          <div class="section-heading-wrap text-center mb-5">
-            <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">About Me</span></h2>
-            <span class="gsap-reveal">
-            <img src="images/divider.png" alt="divider" width="76">
-            </span>
-          </div>
-          
-
-          <div class="row mt-5 justify-content-between">
-            <div class="col-lg-7 mb-5 mb-lg-0">
-              <figure class="dotted-bg gsap-reveal-img ">
-               <img src="images/cover_bg_2.jpg" alt="BlackBear" class="img-fluid">
-              </figure>
-            </div>
-            <div class="col-lg-4 pr-lg-5">
-              <h3 class="mb-4 heading-h3"><span class="gsap-reveal">We can make it together</span></h3>
-              <p class="lead gsap-reveal">I am a versatile video editor focused on client satisfaction. I adapt to any project type, ensuring the final result perfectly matches your vision. We make it happen together.</p>
-              <p class="mb-4 gsap-reveal">Expert in Premiere, After Effects, and AI-driven workflows. As a freelancer, I deliver high-quality visual content by combining technical precision with the full power of the Adobe Creative Cloud.</p>
-              <p class="gsap-reveal"><a href="#" class="btn btn-outline-pill btn-custom-light">Download my CV</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="unslate_co--section" id="services-section">
-        <div class="container">
-
-          <div class="section-heading-wrap text-center mb-5">
-            <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Services</span></h2>
-            <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
-          </div>
-
-          <div class="row gutter-v3">
-            <div class="col-md-6 col-lg-4 mb-4">
-              <div class="feature-v1" data-aos="fade-up" data-aos-delay="0">
-                <div class="wrap-icon mb-3">
-                  <img src="images/svg/001-options.svg" alt="Image" width="45">
+        <div class="unslate_co--section" id="portfolio-section">
+          <div class="container">
+            <div id="project-single-view" style="display:none; opacity:0; pointer-events: auto;">
+              <div class="row">
+                <div class="col-lg-12 text-right mb-5">
+                  <a href="javascript:void(0)" onclick="closeProject()" class="close-v1">
+                    <span class="icon-text">Back to Portfolio</span>
+                    <span class="close-circle">×</span>
+                  </a>
                 </div>
-                <h3>Professional <br> Video Editing</h3>
-                <p>Narrative and commercial editing for any format. I transform raw footage into high-impact pieces that meet your goals.</p>
-              </div> 
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-              <div class="feature-v1" data-aos="fade-up" data-aos-delay="100">
-                <div class="wrap-icon mb-3">
-                  <img src="images/svg/002-chat.svg" alt="Icon" width="45">
+              </div>
+              <div class="row project-flex-row">
+                <div class="col-lg-7">
+                  <h2 id="project-title"></h2>
+                  <div id="project-visual-content"></div>
                 </div>
-                <h3>Motion <br> Graphics</h3>
-                <p>Advanced animations and visual effects. I bring dynamism and a professional edge to your projects through motion.</p>
-              </div> 
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-              <div class="feature-v1" data-aos="fade-up" data-aos-delay="200">
-                <div class="wrap-icon mb-3">
-                  <img src="images/svg/003-contact-book.svg" alt="Image" class="img-fluid" width="45">
+                <div class="col-lg-4 offset-lg-1">
+                  <div class="meta-item">
+                    <span class="meta-header">Project Description</span>
+                    <span id="project-desc" class="meta-value"></span>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-header">Project Date</span>
+                    <span id="project-date" class="meta-value"></span>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-header">Client</span>
+                    <span id="project-client" class="meta-value"></span>
+                  </div>
                 </div>
-                <h3>Social Media <br> Content</h3>
-                <p>Videos optimized for TikTok, Reels, and Shorts. Fast, dynamic editing designed specifically to grab attention online.</p>
-              </div> 
+              </div>
             </div>
 
-            <div class="col-md-6 col-lg-4 mb-4">
-              <div class="feature-v1" data-aos="fade-up" data-aos-delay="0">
-                <div class="wrap-icon mb-3">
-                  <img src="images/svg/004-percentage.svg" alt="Image" width="45">
-                </div>
-                <h3>Full <br> Post-Production</h3>
-                <p>Professional color grading and audio cleaning. I ensure every delivery has a flawless technical finish in both image and sound.</p>
-              </div> 
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-              <div class="feature-v1" data-aos="fade-up" data-aos-delay="100">
-                <div class="wrap-icon mb-3">
-                  <img src="images/svg/006-goal.svg" alt="Image" width="45">
-                </div>
-               <h3>Visual Asset <br> Design</h3>
-                <p>Graphic elements, covers, and visual resources. I use design tools to complement and enhance your video’s aesthetic.</p>
-              </div> 
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-              <div class="feature-v1" data-aos="fade-up" data-aos-delay="200">
-                <div class="wrap-icon mb-3">
-                  <img src="images/svg/005-line-chart.svg" alt="Image" width="45">
-                </div>
-                <h3>AI-Powered <br> Solutions</h3>
-                <p>Integrating AI tools into the workflow. Process optimization and innovative effects for truly unique results.</p>
-              </div> 
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="unslate_co--section section-counter" id="skills-section">
-        <div class="container">
-          <div class="section-heading-wrap text-center mb-5">
-            <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Skills</span></h2>
-            <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
-          </div>
-
-
-          <div class="row pt-5">
-            <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
-              <div class="counter-v1 text-center">
-                <span class="number-wrap">
-                  <span class="number number-counter" data-number="95">0</span>
-                  <span class="append-text">%</span>
+            <div id="portfolio-grid-container" class="portfolio-wrapper">
+              <div class="section-heading-wrap text-center mb-5">
+                <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Portfolio</span></h2>
+                <span class="gsap-reveal">
+                  <img src="images/divider.png" alt="divider" width="76">
                 </span>
-                <span class="counter-label">Premiere Pro</span>
               </div>
-            </div>
-            <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-              <div class="counter-v1 text-center">
-                <span class="number-wrap">
-                  <span class="number number-counter" data-number="90">0</span>
-                  <span class="append-text">%</span>
-                </span>
-                <span class="counter-label">After Effects</span>
+
+              <div id="posts" class="row gutter-isotope-item">
+                <div class="col-12 text-center"><div class="loading-skeleton"></div></div>
               </div>
-            </div>
-            <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-              <div class="counter-v1 text-center">
-                <span class="number-wrap">
-                  <span class="number number-counter" data-number="85">0</span>
-                  <span class="append-text">%</span>
-                </span>
-                <span class="counter-label">Photoshop</span>
-              </div>
-            </div>
-            <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-              <div class="counter-v1 text-center">
-                <span class="number-wrap">
-                  <span class="number number-counter" data-number="80">0</span>
-                  <span class="append-text">%</span>
-                </span>
-                <span class="counter-label">Illustrator</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- END .counter -->
 
-    <div class="unslate_co--section" id="testimonial-section">
-  <div class="container">
-    <div class="section-heading-wrap text-center mb-5">
-      <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Happy Clients</span></h2>
-      <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
-    </div>
-  </div>
-
-<div class="owl-carousel" id="dynamic-carousel" data-aos="fade-up">
-  </div>
-
-  <div class="swipe-lottie-container" data-aos="fade-in" data-aos-duration="3000">
-    <dotlottie-player 
-      src="images/scrol.lottie" 
-      background="transparent" 
-      speed="1" 
-      loop 
-      autoplay>
-    </dotlottie-player>
-  </div>
-</div> 
-
-<div class="unslate_co--section" id="journal-section">
-  <div class="container">
-    <div class="section-heading-wrap text-center mb-5">
-      <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Journal</span></h2>
-      <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
-    </div>
-
-    <div class="row gutter-v4 align-items-stretch" id="journal-grid">
-      <div class="col-12 text-center"><p>Cargando posts...</p></div>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const URL_EXCEL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=0&single=true&output=csv";
-  const $grid = document.getElementById('journal-grid');
-
-  Papa.parse(URL_EXCEL, {
-    download: true,
-    header: true,
-    complete: function(results) {
-      let posts = results.data.filter(p => p.ID && p.Titulo);
-      
-      // 1. MEZCLAR ALEATORIAMENTE
-      posts.sort(() => Math.random() - 0.5);
-
-      // 2. TOMAR SOLO LOS PRIMEROS 5
-      const selectedPosts = posts.slice(0, 5);
-
-      let htmlFinal = "";
-      selectedPosts.forEach((post, index) => {
-        // El primer post (index 0) es el grande, los demás pequeños
-        let colSize = (index === 0) ? "col-lg-8" : "col-lg-4";
-        
-        htmlFinal += `
-          <div class="col-sm-6 col-md-6 ${colSize} blog-post-entry" data-aos="fade-up" data-aos-delay="${index * 100}">
-            <a href="blog-single.html?id=${post.ID}" class="grid-item blog-item w-100 h-100">
-              <div class="overlay">
-                <div class="portfolio-item-content">
-                  <h3>${post.Titulo}</h3>
-                  <p class="post-meta">By ${post.Autor} <span class="small">&bullet;</span> ${post.TiempoLectura || '5 min read'}</p>
+              <div class="row mt-5">
+                <div class="col-12 d-flex justify-content-center gsap-reveal" data-aos="fade-up">
+                  <a href="categories.html" class="btn btn-outline-pill btn-custom-light" style="padding: 15px 40px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; display: inline-block;">
+                    Video Category
+                  </a>
                 </div>
               </div>
-              <img src="${post.ImagenPortada}" class="lazyload img-fluid" alt="${post.Titulo}" style="height: 100%; width: 100%; object-fit: cover;" />
-            </a>
-          </div>`;
-      });
+            </div>
+          </div>
+        </div>
 
-      $grid.innerHTML = htmlFinal;
-    }
-  });
-});
-</script>
-      <!-- END blog posts -->
+        <div class="unslate_co--section">
+          <div class="container">
+            <div class="owl-carousel logo-slider">
+              <div class="logo-v1 gsap-reveal">
+                <img src="images/logo-google.png" alt="Google" class="img-fluid">
+              </div>
+              <div class="logo-v1 gsap-reveal">
+                <img src="images/logo-puma.png" alt="Puma" class="img-fluid">
+              </div>
+              <div class="logo-v1 gsap-reveal">
+                <img src="images/logo-paypal.png" alt="PayPal" class="img-fluid">
+              </div>
+              <div class="logo-v1 gsap-reveal">
+                <img src="images/logo-adobe.png" alt="Adobe" class="img-fluid">
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <div class="unslate_co--section" id="about-section">
+          <div class="container">
+            <div class="section-heading-wrap text-center mb-5">
+              <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">About Me</span></h2>
+              <span class="gsap-reveal">
+                <img src="images/divider.png" alt="divider" width="76">
+              </span>
+            </div>
 
-      <div class="unslate_co--section" id="contact-section">
-        <div class="container">
-          <div class="section-heading-wrap text-center mb-5">
-            <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Get In Touch</span></h2>
-            <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
+            <div class="row mt-5 justify-content-between">
+              <div class="col-lg-7 mb-5 mb-lg-0">
+                <figure class="dotted-bg gsap-reveal-img">
+                  <img src="images/cover_bg_2.jpg" alt="BlackBear" class="img-fluid">
+                </figure>
+              </div>
+              <div class="col-lg-4 pr-lg-5">
+                <h3 class="mb-4 heading-h3"><span class="gsap-reveal">We can make it together</span></h3>
+                <p class="lead gsap-reveal">I am a versatile video editor focused on client satisfaction. I adapt to any project type, ensuring the final result perfectly matches your vision. We make it happen together.</p>
+                <p class="mb-4 gsap-reveal">Expert in Premiere, After Effects, and AI-driven workflows. As a freelancer, I deliver high-quality visual content by combining technical precision with the full power of the Adobe Creative Cloud.</p>
+                <p class="gsap-reveal"><a href="#" class="btn btn-outline-pill btn-custom-light">Download my CV</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="unslate_co--section" id="services-section">
+          <div class="container">
+            <div class="section-heading-wrap text-center mb-5">
+              <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Services</span></h2>
+              <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
+            </div>
+
+            <div class="row gutter-v3">
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-v1" data-aos="fade-up" data-aos-delay="0">
+                  <div class="wrap-icon mb-3">
+                    <img src="images/svg/001-options.svg" alt="Video Editing" width="45">
+                  </div>
+                  <h3>Professional <br> Video Editing</h3>
+                  <p>Narrative and commercial editing for any format. I transform raw footage into high-impact pieces that meet your goals.</p>
+                </div> 
+              </div>
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-v1" data-aos="fade-up" data-aos-delay="100">
+                  <div class="wrap-icon mb-3">
+                    <img src="images/svg/002-chat.svg" alt="Motion Graphics" width="45">
+                  </div>
+                  <h3>Motion <br> Graphics</h3>
+                  <p>Advanced animations and visual effects. I bring dynamism and a professional edge to your projects through motion.</p>
+                </div> 
+              </div>
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-v1" data-aos="fade-up" data-aos-delay="200">
+                  <div class="wrap-icon mb-3">
+                    <img src="images/svg/003-contact-book.svg" alt="Social Media" width="45">
+                  </div>
+                  <h3>Social Media <br> Content</h3>
+                  <p>Videos optimized for TikTok, Reels, and Shorts. Fast, dynamic editing designed specifically to grab attention online.</p>
+                </div> 
+              </div>
+
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-v1" data-aos="fade-up" data-aos-delay="0">
+                  <div class="wrap-icon mb-3">
+                    <img src="images/svg/004-percentage.svg" alt="Post Production" width="45">
+                  </div>
+                  <h3>Full <br> Post-Production</h3>
+                  <p>Professional color grading and audio cleaning. I ensure every delivery has a flawless technical finish in both image and sound.</p>
+                </div> 
+              </div>
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-v1" data-aos="fade-up" data-aos-delay="100">
+                  <div class="wrap-icon mb-3">
+                    <img src="images/svg/006-goal.svg" alt="Visual Design" width="45">
+                  </div>
+                  <h3>Visual Asset <br> Design</h3>
+                  <p>Graphic elements, covers, and visual resources. I use design tools to complement and enhance your video's aesthetic.</p>
+                </div> 
+              </div>
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-v1" data-aos="fade-up" data-aos-delay="200">
+                  <div class="wrap-icon mb-3">
+                    <img src="images/svg/005-line-chart.svg" alt="AI Solutions" width="45">
+                  </div>
+                  <h3>AI-Powered <br> Solutions</h3>
+                  <p>Integrating AI tools into the workflow. Process optimization and innovative effects for truly unique results.</p>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="unslate_co--section section-counter" id="skills-section">
+          <div class="container">
+            <div class="section-heading-wrap text-center mb-5">
+              <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Skills</span></h2>
+              <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
+            </div>
+
+            <div class="row pt-5">
+              <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+                <div class="counter-v1 text-center">
+                  <span class="number-wrap">
+                    <span class="number number-counter" data-number="95">0</span>
+                    <span class="append-text">%</span>
+                  </span>
+                  <span class="counter-label">Premiere Pro</span>
+                </div>
+              </div>
+              <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="counter-v1 text-center">
+                  <span class="number-wrap">
+                    <span class="number number-counter" data-number="90">0</span>
+                    <span class="append-text">%</span>
+                  </span>
+                  <span class="counter-label">After Effects</span>
+                </div>
+              </div>
+              <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="counter-v1 text-center">
+                  <span class="number-wrap">
+                    <span class="number number-counter" data-number="85">0</span>
+                    <span class="append-text">%</span>
+                  </span>
+                  <span class="counter-label">Photoshop</span>
+                </div>
+              </div>
+              <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="counter-v1 text-center">
+                  <span class="number-wrap">
+                    <span class="number number-counter" data-number="80">0</span>
+                    <span class="append-text">%</span>
+                  </span>
+                  <span class="counter-label">Illustrator</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="unslate_co--section" id="testimonial-section">
+          <div class="container">
+            <div class="section-heading-wrap text-center mb-5">
+              <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Happy Clients</span></h2>
+              <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
+            </div>
           </div>
 
+          <div class="owl-carousel" id="dynamic-carousel" data-aos="fade-up">
+            <div class="text-center p-5">Loading testimonials...</div>
+          </div>
 
-          <div class="row justify-content-between">
-            
-          <div class="col-md-6">
- <form method="post" id="contactFormMain">
-  <div class="form-group row mb-0">
-    <div class="col-lg-12 form-group">
-      <label>Name</label>
-      <input type="text" class="form-control" id="contact-name" required>
-    </div>
-    <div class="col-lg-6 form-group">
-      <label>Email (Optional)</label>
-      <input type="email" class="form-control" id="contact-email">
-    </div>
-    <div class="col-lg-6 form-group">
-      <label>Phone (Optional)</label>
-      <input type="text" class="form-control" id="contact-phone">
-    </div>
-    <div class="col-lg-12 form-group">
-      <label>Write your message...</label>
-      <textarea id="contact-message" cols="30" rows="7" class="form-control" required></textarea>
-    </div>
-  </div>
-  <p style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 20px;">* Please provide at least an email or a phone number.</p>
-  <div class="form-group row">
-    <div class="col-md-12 d-flex align-items-center">
-      <input type="submit" class="btn btn-outline-pill btn-custom-light mr-3" value="Send Message" id="contactSubmitBtn">
-      <span id="contact-loader" style="display:none; color: white;">🚀 Sending...</span>
-    </div>
-  </div>
-</form>
-</div>
+          <div class="swipe-lottie-container" data-aos="fade-in" data-aos-duration="3000">
+            <dotlottie-player 
+              src="images/scrol.lottie" 
+              background="transparent" 
+              speed="1" 
+              loop 
+              autoplay>
+            </dotlottie-player>
+          </div>
+        </div> 
 
-            <div class="col-md-4">
-  <div class="contact-info-v1">
-    <div class="gsap-reveal d-block">
-      <span class="d-block contact-info-label">Email</span>
-      <a href="mailto:maximolairdesign@gmail.com" class="contact-info-val">maximolairdesign@gmail.com</a>
-    </div>
-    <div class="gsap-reveal d-block">
-      <span class="d-block contact-info-label">Phone</span>
-      <a href="tel:+522211319056" class="contact-info-val">+52 2211319056</a>
-    </div>
-  </div>
-</div>
+        <div class="unslate_co--section" id="journal-section">
+          <div class="container">
+            <div class="section-heading-wrap text-center mb-5">
+              <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Journal</span></h2>
+              <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
+            </div>
 
+            <div class="row gutter-v4 align-items-stretch" id="journal-grid">
+              <div class="col-12 text-center"><div class="loading-skeleton"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="unslate_co--section" id="contact-section">
+          <div class="container">
+            <div class="section-heading-wrap text-center mb-5">
+              <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Get In Touch</span></h2>
+              <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
+            </div>
+
+            <div class="row justify-content-between">
+              <div class="col-md-6">
+                <form method="post" id="contactFormMain">
+                  <div class="form-group row mb-0">
+                    <div class="col-lg-12 form-group">
+                      <label>Name</label>
+                      <input type="text" class="form-control" id="contact-name" required>
+                    </div>
+                    <div class="col-lg-6 form-group">
+                      <label>Email (Optional)</label>
+                      <input type="email" class="form-control" id="contact-email">
+                    </div>
+                    <div class="col-lg-6 form-group">
+                      <label>Phone (Optional)</label>
+                      <input type="tel" class="form-control" id="contact-phone">
+                    </div>
+                    <div class="col-lg-12 form-group">
+                      <label>Write your message...</label>
+                      <textarea id="contact-message" cols="30" rows="7" class="form-control" required></textarea>
+                    </div>
+                  </div>
+                  <p style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 20px;">* Please provide at least an email or a phone number.</p>
+                  <div class="form-group row">
+                    <div class="col-md-12 d-flex align-items-center">
+                      <input type="submit" class="btn btn-outline-pill btn-custom-light mr-3" value="Send Message" id="contactSubmitBtn">
+                      <span id="contact-loader" style="display:none; color: white;">🚀 Sending...</span>
+                      <span id="contact-success" style="display:none; color: #4CAF50; font-weight: 600; margin-left: 10px;">✓ Message sent!</span>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div class="col-md-4">
+                <div class="contact-info-v1">
+                  <div class="gsap-reveal d-block">
+                    <span class="d-block contact-info-label">Email</span>
+                    <a href="mailto:maximolairdesign@gmail.com" class="contact-info-val">maximolairdesign@gmail.com</a>
+                  </div>
+                  <div class="gsap-reveal d-block">
+                    <span class="d-block contact-info-label">Phone</span>
+                    <a href="tel:+522211319056" class="contact-info-val">+52 2211319056</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      </div> <!-- END .unslate_co-site-inner -->
 
       <footer class="unslate_co--footer unslate_co--section">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-md-7">
-              
               <div class="footer-site-logo">
-  <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
-    <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px; width: auto; vertical-align: middle;">
-  </a>
-</div>
+                <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
+                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 35px; width: auto; vertical-align: middle;">
+                </a>
+              </div>
 
-<ul class="footer-site-social">
-  <li><a href="#">Facebook</a></li>
-  <li><a href="#">Instagram</a></li>
-</ul>
+              <ul class="footer-site-social">
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+              </ul>
 
               <p class="site-copyright">
-  Copyright &copy;
-  <script>
-    document.write(new Date().getFullYear());
-  </script> BlackBear. All rights reserved.
-</p>
-
+                Copyright &copy; <span id="current-year">2024</span> BlackBear. All rights reserved.
+              </p>
             </div>
           </div>
         </div>
       </footer>
-
-      
     </div>
-
-    
-    <!-- Loader -->
-    
 
     <script src="js/scripts-dist.js"></script>
     <script src="js/main.js"></script>
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+
     <script>
+      // Security: Escape HTML to prevent XSS
+      function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Set current year
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+
+      // Typed.js initialization
       document.addEventListener('DOMContentLoaded', function() {
         const typedElement = document.querySelector('.typed');
         if (typedElement) {
-          // Esta línea limpia los espacios extras entre las palabras
           let items = typedElement.getAttribute('data-typed-items').split(',').map(item => item.trim());
           
           new Typed('.typed', {
@@ -903,237 +819,319 @@ document.addEventListener('DOMContentLoaded', function() {
             backSpeed: 60,
             backDelay: 2500,
             loop: true,
-            smartBackspace: true, // Efecto de recorte inteligente que querías
+            smartBackspace: true,
             cursorChar: '|',
             autoInsertCss: true
           });
         }
       });
-    </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const googleSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKmvmO9lY24-_9fMoPRSKJzApwjQKC69bVdwseuQjaAoGbvs1LtuUEJ9k26gaIvRo03gDMN8pXKMDS/pub?gid=0&single=true&output=csv";
-  const $carousel = $('#dynamic-carousel');
+      // --- TESTIMONIALS CAROUSEL ---
+      document.addEventListener('DOMContentLoaded', function() {
+        const googleSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKmvmO9lY24-_9fMoPRSKJzApwjQKC69bVdwseuQjaAoGbvs1LtuUEJ9k26gaIvRo03gDMN8pXKMDS/pub?gid=0&single=true&output=csv";
+        const $carousel = $('#dynamic-carousel');
 
-  Papa.parse(googleSheetURL, {
-    download: true,
-    header: true,
-    complete: function(results) {
-      let datos = results.data;
-      
-      // 1. Filtramos filas vacías (para que no salgan cuadros negros)
-      const reseñasValidas = datos.filter(fila => fila.Texto && fila.Texto.trim() !== "");
+        Papa.parse(googleSheetURL, {
+          download: true,
+          header: true,
+          error: function(err) {
+            console.error('Error loading testimonials:', err);
+            $carousel.html('<div class="error-message">Unable to load testimonials.</div>');
+          },
+          complete: function(results) {
+            let data = results.data;
+            const validReviews = data.filter(row => row.Texto && row.Texto.trim() !== "");
 
-      // 2. Mezclamos aleatoriamente
-      reseñasValidas.sort(() => Math.random() - 0.5);
+            if (validReviews.length === 0) {
+              $carousel.html('<div class="text-center p-5">No testimonials available.</div>');
+              return;
+            }
 
-      // 3. Generamos el HTML (Importante el <div> extra para Owl Carousel)
-      let htmlFinal = "";
-      reseñasValidas.forEach(reseña => {
-        let fotoURL = reseña.Foto && reseña.Foto.trim() !== "" ? reseña.Foto : "images/person_man_1.jpg";
+            validReviews.sort(() => Math.random() - 0.5);
+
+            let html = "";
+            validReviews.forEach(review => {
+              let photoURL = review.Foto && review.Foto.trim() !== "" ? escapeHtml(review.Foto) : "images/person_man_1.jpg";
+              let name = escapeHtml(review.Nombre);
+              let text = escapeHtml(review.Texto);
+              let position = escapeHtml(review.Cargo || '');
+              
+              html += `
+                <div>
+                  <div class="testimonial-v1">
+                    <div class="testimonial-inner-bg">
+                      <span class="quote">&ldquo;</span>
+                      <blockquote>${text}</blockquote>
+                    </div>
+                    <div class="testimonial-author-info">
+                      <img src="${photoURL}" alt="${name}">
+                      <h3>${name}</h3>
+                      <span class="d-block position">${position}</span>
+                    </div>
+                  </div>
+                </div>`;
+            });
+
+            $carousel.html(html);
+
+            $carousel.owlCarousel({
+              items: 1,
+              loop: true,
+              margin: 30,
+              autoplay: true,
+              autoplayTimeout: 10000,
+              smartSpeed: 1000,
+              nav: false,
+              dots: true,
+              autoplayHoverPause: true
+            });
+          }
+        });
+      });
+
+      // --- JOURNAL/POSTS GRID ---
+      document.addEventListener('DOMContentLoaded', function() {
+        const URL_EXCEL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=0&single=true&output=csv";
+        const $grid = document.getElementById('journal-grid');
+
+        Papa.parse(URL_EXCEL, {
+          download: true,
+          header: true,
+          error: function(err) {
+            console.error('Error loading journal:', err);
+            $grid.innerHTML = '<div class="col-12 error-message">Failed to load posts. Please refresh.</div>';
+          },
+          complete: function(results) {
+            let posts = results.data.filter(p => p.ID && p.Titulo);
+            
+            if (posts.length === 0) {
+              $grid.innerHTML = '<div class="col-12 text-center"><p>No posts found.</p></div>';
+              return;
+            }
+
+            posts.sort(() => Math.random() - 0.5);
+            const selectedPosts = posts.slice(0, 5);
+
+            let html = "";
+            selectedPosts.forEach((post, index) => {
+              let colSize = (index === 0) ? "col-lg-8" : "col-lg-4";
+              let title = escapeHtml(post.Titulo);
+              let author = escapeHtml(post.Autor);
+              let readTime = escapeHtml(post.TiempoLectura || '5 min read');
+              let image = escapeHtml(post.ImagenPortada);
+              let id = escapeHtml(post.ID);
+              
+              html += `
+                <div class="col-sm-6 col-md-6 ${colSize} blog-post-entry" data-aos="fade-up" data-aos-delay="${index * 100}">
+                  <a href="blog-single.html?id=${id}" class="grid-item blog-item w-100 h-100">
+                    <div class="overlay">
+                      <div class="portfolio-item-content">
+                        <h3>${title}</h3>
+                        <p class="post-meta">By ${author} <span class="small">&bullet;</span> ${readTime}</p>
+                      </div>
+                    </div>
+                    <img src="${image}" class="lazyload img-fluid" alt="${title}" style="height: 100%; width: 100%; object-fit: cover;" loading="lazy" />
+                  </a>
+                </div>`;
+            });
+
+            $grid.innerHTML = html;
+          }
+        });
+      });
+
+      // --- PORTFOLIO LOGIC ---
+      document.addEventListener('DOMContentLoaded', function() {
+        const EXCEL_PORTFOLIO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
         
-        htmlFinal += `
-          <div>
-            <div class="testimonial-v1">
-              <div class="testimonial-inner-bg">
-                <span class="quote">&ldquo;</span>
-                <blockquote>${reseña.Texto}</blockquote>
-              </div>
-              <div class="testimonial-author-info">
-                <img src="${fotoURL}" alt="${reseña.Nombre}">
-                <h3>${reseña.Nombre}</h3>
-                <span class="d-block position">${reseña.Cargo || ''}</span>
-              </div>
-            </div>
-          </div>`;
-      });
+        window.portfolioItems = [];
 
-      // 4. Inyectamos las reseñas
-      $carousel.html(htmlFinal);
-
-      // 5. ACTIVAMOS EL CARRUSEL (Configurado a 10 segundos)
-      $carousel.owlCarousel({
-        items: 1,               // Una reseña a la vez
-        loop: true,              // Bucle infinito
-        margin: 30,
-        autoplay: true,          // Movimiento automático
-        autoplayTimeout: 10000,  // 10 segundos por slide
-        smartSpeed: 1000,        // Velocidad del deslizamiento
-        nav: false,
-        dots: true,              // Puntitos de navegación activados
-        autoplayHoverPause: true // Se pausa si pones el mouse encima
-      });
-    }
-  });
-});
-</script>
-    <script>
-// --- LÓGICA DEL PORTAFOLIO DINÁMICO ---
-document.addEventListener('DOMContentLoaded', function() {
-    // URL de tu Excel de Portafolio
-    const EXCEL_PORTFOLIO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
-    
-    window.portfolioItems = []; // Variable global para que openProject la vea
-
-    // 1. DESCARGAR DATOS DEL EXCEL
-    Papa.parse(EXCEL_PORTFOLIO, {
-        download: true,
-        header: true,
-        complete: function(results) {
-            // Filtramos los que tengan ID y Título
+        Papa.parse(EXCEL_PORTFOLIO, {
+          download: true,
+          header: true,
+          error: function(err) {
+            console.error('Error loading portfolio:', err);
+            document.getElementById('posts').innerHTML = '<div class="col-12 error-message">Failed to load portfolio. Please refresh.</div>';
+          },
+          complete: function(results) {
             window.portfolioItems = results.data.filter(p => p.ID && p.Titulo);
             
-            // Mezclar el portafolio aleatoriamente
-            window.portfolioItems.sort(() => Math.random() - 0.5);
-
-            if(window.portfolioItems.length > 0) {
-                // --- CAMBIO AQUÍ: Solo tomamos los primeros 9 ---
-                const itemsParaMostrar = window.portfolioItems.slice(0, 9);
-                renderPortfolioGrid(itemsParaMostrar);
-            } else {
-                document.getElementById('posts').innerHTML = '<div class="col-12 text-center"><p style="color:red;">No se encontraron proyectos en el Excel.</p></div>';
+            if(window.portfolioItems.length === 0) {
+              document.getElementById('posts').innerHTML = '<div class="col-12 text-center"><p>No projects found.</p></div>';
+              return;
             }
-        }
-    });
 
-    // 2. CREAR LOS CUADROS (GRID)
-    function renderPortfolioGrid(data) {
-        const $grid = $('#posts');
-        // Definimos moldes para que se vea variado (Index 15)
-        const moldClasses = ["", "item-portrait", "", "", "", "item-portrait", "item-portrait", "", ""];
-        
-        let html = "";
-        data.forEach((item, i) => {
+            window.portfolioItems.sort(() => Math.random() - 0.5);
+            const itemsToShow = window.portfolioItems.slice(0, 9);
+            renderPortfolioGrid(itemsToShow);
+          }
+        });
+
+        function renderPortfolioGrid(data) {
+          const $grid = $('#posts');
+          const moldClasses = ["", "item-portrait", "", "", "", "item-portrait", "item-portrait", "", ""];
+          
+          let html = "";
+          data.forEach((item, i) => {
             let claseExtra = moldClasses[i % moldClasses.length];
+            let title = escapeHtml(item.Titulo);
+            let category = escapeHtml(item.Category || 'Video');
+            let thumbnail = escapeHtml(item.ThumbnailURL);
+            let id = escapeHtml(item.ID);
+            
             html += `
-                <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${claseExtra} gsap-reveal-img">
-                    <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item isotope-item">
-                        <div class="overlay">
-                            <span class="wrap-icon icon-play_circle_filled"></span>
-                            <div class="portfolio-item-content">
-                                <h3>${item.Titulo}</h3>
-                                <p>${item.Category || 'Video'}</p>
-                            </div>
-                        </div>
-                        <img src="${item.ThumbnailURL}" class="lazyload img-fluid" alt="${item.Titulo}" style="width:100%; height:100%; object-fit:cover;">
-                    </a>
-                </div>`;
-        });
+              <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${claseExtra} gsap-reveal-img">
+                <a href="javascript:void(0)" onclick="openProject('${id}')" class="portfolio-item isotope-item">
+                  <div class="overlay">
+                    <span class="wrap-icon icon-play_circle_filled"></span>
+                    <div class="portfolio-item-content">
+                      <h3>${title}</h3>
+                      <p>${category}</p>
+                    </div>
+                  </div>
+                  <img src="${thumbnail}" class="lazyload img-fluid" alt="${title}" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
+                </a>
+              </div>`;
+          });
 
-        $grid.html(html);
+          $grid.html(html);
 
-        // REINICIAR ISOTOPE (Para que los cuadros se acomoden bien)
-        $grid.imagesLoaded().progress(function() {
+          $grid.imagesLoaded().progress(function() {
             $grid.isotope('reloadItems').isotope({
-                itemSelector: '.item',
-                layoutMode: 'masonry',
-                transitionDuration: '0.8s'
+              itemSelector: '.item',
+              layoutMode: 'masonry',
+              transitionDuration: '0.8s'
             });
-        });
-    }
-});
+          });
+        }
+      });
 
-// --- LÓGICA DE NAVEGACIÓN BLACKBEAR ---
+      // --- PROJECT NAVIGATION ---
+      window.openProject = function(id) {
+        const p = window.portfolioItems.find(x => x.ID == id);
+        if(!p) return;
 
-window.openProject = function(id) {
-    const p = window.portfolioItems.find(x => x.ID == id);
-    if(!p) return;
+        const title = escapeHtml(p.Titulo);
+        const desc = escapeHtml(p.Descripcion);
+        const date = escapeHtml(p.Fecha || "2024");
+        const client = escapeHtml(p.Cliente || "Private Client");
+        const url = p.VideoURL;
 
-    gsap.to("#portfolio-grid-container", { 
-        duration: 0.4, y: 20, opacity: 0, 
-        onComplete: () => {
+        gsap.to("#portfolio-grid-container", { 
+          duration: 0.4, 
+          y: 20, 
+          opacity: 0, 
+          onComplete: () => {
             document.getElementById('portfolio-grid-container').style.display = "none";
-            document.getElementById('project-title').innerText = p.Titulo;
-            document.getElementById('project-desc').innerText = p.Descripcion;
-            document.getElementById('project-date').innerText = p.Fecha || "2024";
-            document.getElementById('project-client').innerText = p.Cliente || "Private Client";
+            document.getElementById('project-title').textContent = title;
+            document.getElementById('project-desc').textContent = desc;
+            document.getElementById('project-date').textContent = date;
+            document.getElementById('project-client').textContent = client;
             
-            let url = p.VideoURL;
-            
-            // AQUÍ ESTÁ EL CAMBIO CON LOS 4 FILTROS + AUTOPLAY
-            let youtubeID = url.includes('v=') ? url.split('v=')[1].split('&')[0] : url.split('/').pop();
+            let youtubeID = "";
+            if (url.includes('v=')) {
+              youtubeID = url.split('v=')[1].split('&')[0];
+            } else if (url.includes('youtu.be/')) {
+              youtubeID = url.split('youtu.be/')[1].split('?')[0];
+            } else {
+              youtubeID = url.split('/').pop();
+            }
             
             let content = (url.includes('youtube.com') || url.includes('youtu.be')) 
-                ? `<div style="position:relative;padding-bottom:56.25%;height:0;">
-                    <iframe src="https://www.youtube.com/embed/${youtubeID}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&controls=1" 
-                    style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" 
-                    frameborder="0" 
-                    allowfullscreen></iframe>
-                   </div>`
-                : `<video controls autoplay style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
+              ? `<div style="position:relative;padding-bottom:56.25%;height:0;">
+                  <iframe src="https://www.youtube.com/embed/${escapeHtml(youtubeID)}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&controls=1" 
+                  style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" 
+                  frameborder="0" 
+                  allowfullscreen></iframe>
+                 </div>`
+              : `<video controls autoplay style="width:100%; border-radius:4px;"><source src="${escapeHtml(url)}" type="video/mp4"></video>`;
             
             document.getElementById('project-visual-content').innerHTML = content;
             window.scrollTo({top: $('#portfolio-section').offset().top - 70, behavior: 'smooth'});
             
-            gsap.fromTo("#project-single-view", { opacity: 0, y: 30, display: "block" }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" });
-            gsap.fromTo(".meta-item", { opacity: 0, x: 20 }, { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4, ease: "power2.out" });
-        }
-    });
-};
+            gsap.fromTo("#project-single-view", 
+              { opacity: 0, y: 30, display: "block" }, 
+              { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" }
+            );
+            gsap.fromTo(".meta-item", 
+              { opacity: 0, x: 20 }, 
+              { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4, ease: "power2.out" }
+            );
+          }
+        });
+      };
 
-window.closeProject = function() {
-    gsap.to("#project-single-view", { 
-        duration: 0.5, opacity: 0, y: 30, 
-        onComplete: () => {
+      window.closeProject = function() {
+        gsap.to("#project-single-view", { 
+          duration: 0.5, 
+          opacity: 0, 
+          y: 30, 
+          onComplete: () => {
             document.getElementById('project-single-view').style.display = "none";
             document.getElementById('project-visual-content').innerHTML = ""; 
             document.getElementById('portfolio-grid-container').style.display = "block";
-            gsap.fromTo("#portfolio-grid-container", { opacity: 0, y: 20 }, { duration: 0.6, opacity: 1, y: 0, ease: "power3.out", onComplete: () => { $('#posts').isotope('layout'); } });
+            gsap.fromTo("#portfolio-grid-container", 
+              { opacity: 0, y: 20 }, 
+              { duration: 0.6, opacity: 1, y: 0, ease: "power3.out", 
+                onComplete: () => { $('#posts').isotope('layout'); } 
+              }
+            );
+          }
+        });
+      };
+
+      // --- CONTACT FORM ---
+      document.getElementById('contactFormMain').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('contact-email').value.trim();
+        const phone = document.getElementById('contact-phone').value.trim();
+        
+        if (!email && !phone) {
+          alert("Please provide at least an email or a phone number so I can reach you.");
+          return;
         }
-    });
-};
-</script>
-<script>
-document.getElementById('contactFormMain').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const email = document.getElementById('contact-email').value.trim();
-  const phone = document.getElementById('contact-phone').value.trim();
-  
-  // VALIDACIÓN: Verifica que haya al menos una vía de contacto
-  if (!email && !phone) {
-    alert("Please provide at least an email or a phone number so I can reach you.");
-    return;
-  }
 
-  const btn = document.getElementById('contactSubmitBtn');
-  const loader = document.getElementById('contact-loader');
-  
-  // URL de tu Google Apps Script (obtenida de la versión más pulida)
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPOKE4AQa_YioNPWNkmqt2i1aYbblJB6QWTgHmacTapkku_wG8ZG-rwnO0q7z-TmqU/exec"; 
+        const btn = document.getElementById('contactSubmitBtn');
+        const loader = document.getElementById('contact-loader');
+        const success = document.getElementById('contact-success');
+        
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPOKE4AQa_YioNPWNkmqt2i1aYbblJB6QWTgHmacTapkku_wG8ZG-rwnO0q7z-TmqU/exec";
 
-  // Feedback visual: esconde el botón y muestra el "Sending..."
-  btn.style.display = 'none';
-  loader.style.display = 'inline-block';
+        btn.style.display = 'none';
+        loader.style.display = 'inline-block';
+        success.style.display = 'none';
 
-  const data = new URLSearchParams();
-  data.append('name', document.getElementById('contact-name').value);
-  data.append('email', email);
-  data.append('phone', phone);
-  data.append('message', document.getElementById('contact-message').value);
+        const data = new URLSearchParams();
+        data.append('name', document.getElementById('contact-name').value);
+        data.append('email', email);
+        data.append('phone', phone);
+        data.append('message', document.getElementById('contact-message').value);
 
-  // Envío de datos mediante fetch
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors', // Necesario para evitar bloqueos de CORS con Google Scripts
-    body: data
-  })
-  .then(() => {
-    alert("Message received! We'll get back to you shortly.");
-    document.getElementById('contactFormMain').reset(); // Limpia el formulario tras el éxito
-    btn.style.display = 'inline-block';
-    loader.style.display = 'none';
-  })
-  .catch(error => {
-    console.error("Error:", error);
-    alert("Something went wrong. Please try again.");
-    btn.style.display = 'inline-block';
-    loader.style.display = 'none';
-  });
-});
-</script>
+        fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: data
+        })
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.text();
+        })
+        .then(() => {
+          loader.style.display = 'none';
+          success.style.display = 'inline-block';
+          document.getElementById('contactFormMain').reset();
+          setTimeout(() => {
+            success.style.display = 'none';
+            btn.style.display = 'inline-block';
+          }, 3000);
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Something went wrong. Please try again or contact me directly via email.");
+          loader.style.display = 'none';
+          btn.style.display = 'inline-block';
+        });
+      });
+    </script>
   </body>
 </html>
-
