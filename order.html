@@ -148,7 +148,7 @@
                               <div class="upload-box-dotted" onclick="document.getElementById('fileInput').click()">
                                   <p id="upload-label" style="font-size: 11px; font-weight: 700; opacity: 0.5; text-transform: uppercase; margin: 0;">Sube tu comprobante (PNG/JPG)</p>
                               </div>
-                              <input type="file" id="fileInput" class="d-none" onchange="handleFileSelected()">
+                              <input type="file" id="fileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleFileSelected()">
                               <button class="btn-blackbear" id="upload-btn" onclick="submitFile()">ENVIAR PAGO</button>
                           </div>
                       </div>
@@ -176,8 +176,8 @@
     </div>
 
     <script>
-        // TU LINK DE APPS SCRIPT (YA LO TENÍAS)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxiDtZnwX43d4o09W3U_nPfr9u_eezQ3eKV7zCeIO5BOGCZiSnTt8DBM7fsR-MOKAoE-g/exec";
+        // 🚨 LINK NUEVO DEL APPS SCRIPT (YA CON CARPETA DE DRIVE CONFIGURADA)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLnTKKWyN8pLJt5uMXjnritxPazqsAp32q1IbqdH8XfSBnpIIcC2Y2teJRJJdWrypCzQ/exec";
         
         let orderId = new URLSearchParams(window.location.search).get('id');
 
@@ -207,7 +207,7 @@
             document.getElementById('loading-view').style.display = 'none';
             document.getElementById('order-view').style.display = 'block';
 
-            // MAPEO DE DATOS (nombres exactos de tus columnas)
+            // MAPEO DE DATOS (nombres exactos de tus columnas del Excel)
             document.getElementById('order-main-title').innerText = "ORDEN DE " + (o.Cliente || "CLIENTE");
             document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "Sin descripción.");
             document.getElementById('order-revisions').innerText = o.Revisiones || "0";
@@ -278,22 +278,37 @@
                 formData.append('orderId', orderId);
 
                 try {
-                    // Enviar al mismo Apps Script
-                    await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+                    // Enviar al Apps Script (usando POST)
+                    const response = await fetch(SCRIPT_URL, { 
+                        method: 'POST', 
+                        body: formData 
+                    });
                     
-                    document.getElementById('upload-label').innerText = "✓ COMPROBANTE ENVIADO";
-                    document.getElementById('upload-label').style.color = "#4CAF50";
-                    btn.innerText = "EN COLA DE REVISIÓN";
-                    btn.className = "btn-blackbear btn-sent";
-                    btn.onclick = null;
+                    const result = await response.json();
+                    console.log("Respuesta del servidor:", result);
                     
-                    alert("Comprobante recibido. Revisaremos tu pago en breve.");
+                    if(result.result === "success") {
+                        document.getElementById('upload-label').innerText = "✓ COMPROBANTE ENVIADO";
+                        document.getElementById('upload-label').style.color = "#4CAF50";
+                        btn.innerText = "EN COLA DE REVISIÓN";
+                        btn.className = "btn-blackbear btn-sent";
+                        btn.onclick = null;
+                        
+                        alert("¡Comprobante recibido! Lo revisaremos en breve.");
+                    } else {
+                        throw new Error(result.message || "Error desconocido");
+                    }
                 } catch (err) {
-                    console.error(err);
-                    alert("Error al enviar. Intenta de nuevo o contacta por WhatsApp.");
+                    console.error("Error completo:", err);
+                    alert("Error al enviar: " + err.message + "\nIntenta de nuevo o contacta por WhatsApp.");
                     btn.innerText = "ENVIAR PAGO";
                     btn.disabled = false;
                 }
+            };
+            reader.onerror = (err) => {
+                alert("Error al leer el archivo: " + err);
+                btn.innerText = "ENVIAR PAGO";
+                btn.disabled = false;
             };
             reader.readAsDataURL(file);
         }
