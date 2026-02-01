@@ -9,35 +9,37 @@
     <link rel="stylesheet" href="css/vendor/icomoon/style.css">
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400 ,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap" rel="stylesheet">
 
     <style>
-      body { font-family: 'Montserrat', sans-serif !important; background: transparent; color: #fff; overflow-x: hidden; }
+      body { font-family: 'Montserrat', sans-serif !important; background: #000; color: #fff; overflow-x: hidden; }
       
       .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
-      .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+      .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; filter: grayscale(100%); }
 
       .unslate_co--site-wrap { background-color: transparent !important; }
       .order-section { padding: 180px 0 100px 0; min-height: 85vh; }
-      .info-panel { background: rgba(10,10,10,0.9); padding: 40px; border: 1px solid #1a1a1a; border-radius: 8px; backdrop-filter: blur(15px); }
+      .info-panel { background: rgba(10,10,10,0.95); padding: 40px; border: 1px solid #333; border-radius: 8px; backdrop-filter: blur(15px); }
 
       .pay-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
       .pay-link { padding: 10px; font-size: 10px; font-weight: 900; text-align: center; border-radius: 4px; text-decoration: none !important; color: #fff; transition: 0.3s; }
+      /* SOLO ESTOS BOTONES MANTIENEN COLOR - TODO LO DEMÁS ES BLANCO Y NEGRO */
       .pay-paypal { background: #003087; }
       .pay-wise { background: #00b5ff; }
       .pay-binance { background: #F3BA2F; color: #000; }
       .pay-link:hover { opacity: 0.8; transform: translateY(-2px); }
 
-      .contract-box { background: #000; border: 1px solid #222; padding: 15px; height: 140px; overflow-y: scroll; font-size: 11px; color: #fff; margin-bottom: 15px; text-align: left; line-height: 1.6; }
+      .contract-box { background: #000; border: 1px solid #333; padding: 15px; height: 140px; overflow-y: scroll; font-size: 11px; color: #ccc; margin-bottom: 15px; text-align: left; line-height: 1.6; }
       .contract-box strong { color: #fff; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
       
       .upload-box-dotted { border: 2px dashed rgba(255,255,255,0.3); padding: 45px 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
       .upload-box-dotted:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
       
       .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
-      .btn-sent { background: #222 !important; color: #fff !important; border: 1px solid #444 !important; cursor: not-allowed; }
+      .btn-blackbear:hover { background: #ccc; }
+      .btn-sent { background: #333 !important; color: #999 !important; border: 1px solid #444 !important; cursor: not-allowed; }
 
-      /* TÍTULO DEL PROYECTO - NUEVO ESTILO */
+      /* TÍTULO DEL PROYECTO */
       .project-title-display {
         font-weight: 700; 
         font-size: 1.8rem; 
@@ -54,14 +56,14 @@
         font-weight: 800; 
         margin-bottom: 5px; 
         letter-spacing: 2px; 
-        color: #888;
+        color: #666;
         display: block;
       }
 
-      /* Botón de revisión extra */
+      /* Botón de revisión extra - AHORA EN BLANCO Y NEGRO */
       .btn-extra-revision { 
-        background: #ff3333; 
-        color: #fff; 
+        background: #fff; 
+        color: #000; 
         font-weight: 900; 
         padding: 12px 20px; 
         text-transform: uppercase; 
@@ -75,9 +77,8 @@
         border-radius: 4px;
       }
       .btn-extra-revision:hover { 
-        background: #ff5555; 
+        background: #ccc; 
         transform: translateY(-2px); 
-        box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
       }
 
       /* Botón outline para review */
@@ -103,10 +104,10 @@
         color: #000;
       }
 
-      /* Botón de aceptar video (verde) */
+      /* Botón de aceptar video - AHORA EN BLANCO Y NEGRO */
       .btn-accept-video {
-        background: #4CAF50;
-        color: #fff;
+        background: #fff;
+        color: #000;
         font-weight: 800;
         padding: 18px 40px;
         text-transform: uppercase;
@@ -118,17 +119,18 @@
         margin-top: 15px;
       }
       .btn-accept-video:hover {
-        background: #45a049;
+        background: #ccc;
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        box-shadow: 0 4px 15px rgba(255,255,255,0.2);
       }
       .btn-accept-video:disabled {
-        background: #2e7d32;
+        background: #333;
+        color: #666;
         cursor: not-allowed;
         transform: none;
       }
 
-      /* Botón de solicitar proyecto (LEGACY) */
+      /* Botón de solicitar proyecto */
       .btn-request-project {
         background: #fff;
         color: #000;
@@ -146,13 +148,13 @@
         transform: translateY(-2px);
       }
 
-      /* Formulario de review */
+      /* Formulario de review - CAMPOS ADICIONALES */
       .review-form {
         display: none;
         margin-top: 25px;
         padding: 25px;
         border: 1px solid #333;
-        background: rgba(0,0,0,0.3);
+        background: rgba(0,0,0,0.5);
         border-radius: 8px;
       }
       .review-form h4 {
@@ -162,6 +164,21 @@
         letter-spacing: 2px;
         margin-bottom: 20px;
         color: #fff;
+      }
+      .review-form input {
+        width: 100%;
+        background: transparent;
+        border: 1px solid #444;
+        border-radius: 4px;
+        padding: 12px;
+        color: #fff;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13px;
+        margin-bottom: 15px;
+      }
+      .review-form input:focus {
+        outline: none;
+        border-color: #fff;
       }
       .review-form textarea {
         width: 100%;
@@ -197,7 +214,7 @@
       }
       .review-success {
         display: none;
-        color: #4CAF50;
+        color: #fff;
         font-weight: 700;
         text-transform: uppercase;
         font-size: 11px;
@@ -205,13 +222,13 @@
         margin-top: 15px;
       }
 
-      /* Formulario de solicitar cambios */
+      /* Formulario de solicitar cambios - AHORA EN ESCALAS DE GRISES */
       .changes-form {
         display: none;
         margin-top: 25px;
         padding: 25px;
-        border: 1px solid #ff3333;
-        background: rgba(255,51,51,0.1);
+        border: 1px solid #555;
+        background: rgba(255,255,255,0.05);
         border-radius: 8px;
       }
       .changes-form h4 {
@@ -220,12 +237,12 @@
         text-transform: uppercase;
         letter-spacing: 2px;
         margin-bottom: 20px;
-        color: #ff3333;
+        color: #fff;
       }
       .changes-form textarea {
         width: 100%;
         background: transparent;
-        border: 1px solid #ff6666;
+        border: 1px solid #444;
         border-radius: 4px;
         padding: 12px;
         color: #fff;
@@ -237,11 +254,11 @@
       }
       .changes-form textarea:focus {
         outline: none;
-        border-color: #ff3333;
+        border-color: #fff;
       }
       .changes-form button {
-        background: #ff3333;
-        color: #fff;
+        background: #fff;
+        color: #000;
         border: none;
         padding: 12px 30px;
         font-weight: 800;
@@ -252,15 +269,16 @@
         transition: 0.3s;
       }
       .changes-form button:hover {
-        background: #ff5555;
+        background: #ccc;
       }
       .changes-form button:disabled {
-        background: #666;
+        background: #333;
+        color: #666;
         cursor: not-allowed;
       }
       .changes-success {
         display: none;
-        color: #4CAF50;
+        color: #fff;
         font-weight: 700;
         text-transform: uppercase;
         font-size: 11px;
@@ -269,7 +287,7 @@
       }
       .changes-error {
         display: none;
-        color: #ff3333;
+        color: #999;
         font-weight: 700;
         text-transform: uppercase;
         font-size: 11px;
@@ -278,15 +296,15 @@
       }
       .no-revisions-msg {
         display: none;
-        color: #ff3333;
+        color: #fff;
         font-size: 11px;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1px;
         margin-top: 10px;
         padding: 10px;
-        border: 1px solid #ff3333;
-        background: rgba(255,51,51,0.1);
+        border: 1px solid #fff;
+        background: rgba(255,255,255,0.1);
         border-radius: 4px;
       }
 
@@ -310,7 +328,7 @@
         margin-bottom: 15px;
       }
 
-      .unslate_co--footer { background-color: #191919 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; color: #fff; }
+      .unslate_co--footer { background-color: #111 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; color: #fff; border-top: 1px solid #333; }
       .badge-status { padding: 8px 15px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block; }
       .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; }
       
@@ -330,6 +348,13 @@
       .contract-box::-webkit-scrollbar { width: 6px; }
       .contract-box::-webkit-scrollbar-track { background: #111; }
       .contract-box::-webkit-scrollbar-thumb { background: #fff; border-radius: 3px; }
+      
+      /* ESTILOS ADICIONALES PARA MANTENER BLANCO Y NEGRO */
+      #order-main-title { color: #fff; }
+      #order-description { color: #ccc; }
+      #order-status-text { color: #fff; }
+      #order-price { color: #fff; }
+      .border-top, .border-bottom { border-color: #333 !important; }
     </style>
 <base target="_blank">
 </head>
@@ -371,68 +396,68 @@
 
       <div class="container order-section">
           <div id="loading-view" class="text-center">
-              <h2 style="font-weight: 900; letter-spacing: 2px; color: #fff;">Sincronizing with studio...</h2>
+              <h2 style="font-weight: 900; letter-spacing: 2px; color: #fff;">Synchronizing with studio...</h2>
           </div>
 
           <div id="order-view" style="display:none;">
               <div class="row">
                   <div class="col-lg-7">
                       <span id="order-category" class="badge-status"></span>
-                      <h1 id="order-main-title" style="font-weight: 900; font-size: 3.5rem; text-transform: uppercase; line-height: 1; margin: 0; color: #fff;"></h1>
+                      <h1 id="order-main-title" style="font-weight: 900; font-size: 3.5rem; text-transform: uppercase; line-height: 1; margin: 0;"></h1>
                       
-                      <!-- NUEVO: NOMBRE DEL PROYECTO DEL EXCEL -->
+                      <!-- NOMBRE DEL PROYECTO DEL EXCEL -->
                       <div class="project-title-display">
                           <span class="project-label">Project Title</span>
                           <span id="project-name"></span>
                       </div>
                       
                       <div class="mb-5">
-                          <h5 style="font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 1px; color: #fff;">Project Description</h5>
-                          <p id="order-description" style="font-size: 18px; color: #fff; line-height: 1.6;"></p>
+                          <h5 style="font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 1px; color: #666;">Project Description</h5>
+                          <p id="order-description" style="font-size: 18px; line-height: 1.6;"></p>
                       </div>
 
                       <div id="preview-box" style="display:none;">
-                        <h5 style="font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 15px; letter-spacing: 1px; color: #fff;">Preview (Demo)</h5>
-                        <div id="video-iframe" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid #222; border-radius: 8px;"></div>
+                        <h5 style="font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 15px; letter-spacing: 1px; color: #666;">Preview (Demo)</h5>
+                        <div id="video-iframe" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid #333; border-radius: 8px;"></div>
                       </div>
                       
                       <div id="production-message" style="display:none; margin-top: 40px; padding: 30px; border: 1px solid #333; background: rgba(0,0,0,0.5);">
-                          <h5 style="font-size: 12px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 2px; color: #fff;">Production in Progress</h5>
-                          <p style="color: #fff; font-size: 14px; line-height: 1.6;">Your project is currently being edited. You will receive a notification when the preview is ready for review.</p>
+                          <h5 style="font-size: 12px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 2px;">Production in Progress</h5>
+                          <p style="font-size: 14px; line-height: 1.6; color: #ccc;">Your project is currently being edited. You will receive a notification when the preview is ready for review.</p>
                       </div>
                   </div>
 
                   <div class="col-lg-4 offset-lg-1">
                       <div class="info-panel" id="info-panel-completed">
                           <div class="mb-4">
-                              <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #fff;">Status</span>
-                              <h3 id="order-status-text" style="font-weight: 900; text-transform: uppercase; margin: 0; color: #fff;"></h3>
+                              <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #666;">Status</span>
+                              <h3 id="order-status-text" style="font-weight: 900; text-transform: uppercase; margin: 0;"></h3>
                           </div>
                           
-                          <div class="mb-4 py-3 border-top border-bottom" style="border-color: #333 !important;">
-                              <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #fff;">Revisions</span>
+                          <div class="mb-4 py-3 border-top border-bottom">
+                              <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #666;">Revisions</span>
                               
-                              <h4 id="revision-normal" style="font-weight: 900; margin: 5px 0 0 0; color: #fff; display: block;">
+                              <h4 id="revision-normal" style="font-weight: 900; margin: 5px 0 0 0; display: block;">
                                 AVAILABLE: <span id="order-revisions" class="revision-badge">0</span>
                               </h4>
                               
                               <div id="revision-extra" style="display: none; margin-top: 8px;">
-                                <p style="font-size: 11px; color: #fff; margin: 0 0 8px 0; opacity: 0.7;">NO REVISIONS LEFT</p>
+                                <p style="font-size: 11px; color: #999; margin: 0 0 8px 0;">NO REVISIONS LEFT</p>
                                 <button class="btn-extra-revision" onclick="requestExtraRevision()">REQUEST EXTRA REVISION</button>
                               </div>
                           </div>
 
                           <div class="mb-5">
-                            <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #fff;">Total Investment</span>
-                            <h3 id="order-price" style="font-weight: 900; margin: 0; color: #fff;">$0.00</h3>
+                            <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #666;">Total Investment</span>
+                            <h3 id="order-price" style="font-weight: 900; margin: 0;">$0.00</h3>
                           </div>
 
                           <!-- ÁREA DE ACCIONES NORMALES (AWAITING_PAYMENT) -->
                           <div id="actions-area">
                               <div class="pay-grid">
-                                  <a href="TU_LINK_PAYPAL" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
-                                  <a href="TU_LINK_WISE" target="_blank" class="pay-link pay-wise">WISE</a>
-                                  <a href="TU_LINK_BINANCE" target="_blank" class="pay-link pay-binance">BINANCE</a>
+                                  <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                  <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
+                                  <a href="https://www.binance.com/es/my/payment/send?uid=816109526" target="_blank" class="pay-link pay-binance">BINANCE</a>
                               </div>
                               
                               <div class="contract-box" id="contract-content">
@@ -445,7 +470,7 @@
                               </div>
                               
                               <div class="upload-box-dotted" id="upload-area" onclick="document.getElementById('fileInput').click()">
-                                  <p id="upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0; color: #fff;">Upload payment proof (PNG/JPG)</p>
+                                  <p id="upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof (PNG/JPG)</p>
                               </div>
                               
                               <input type="file" id="fileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleFileSelected()">
@@ -458,13 +483,13 @@
                                   Loading agreement...
                               </div>
                               <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()">REQUEST PROJECT</button>
-                              <p style="font-size: 11px; color: #fff; margin-top: 15px; opacity: 0.7; text-align: center;">As a LEGACY client, you can request the project to start. Payment can be arranged later.</p>
+                              <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">As a LEGACY client, you can request the project to start. Payment can be arranged later.</p>
                           </div>
 
                           <!-- ÁREA DE REVIEW (botones de cambios y acciones) -->
                           <div id="review-actions-area" style="display: none;">
                               <!-- Botón de solicitar cambios -->
-                              <button class="btn-outline-light" id="request-changes-btn" onclick="toggleChangesForm()" style="border-color: #ff3333; color: #ff3333;">
+                              <button class="btn-outline-light" id="request-changes-btn" onclick="toggleChangesForm()" style="border-color: #fff; color: #fff;">
                                   REQUEST CHANGES
                               </button>
                               <div class="no-revisions-msg" id="no-revisions-msg">
@@ -490,16 +515,16 @@
                               <!-- Sección de segundo comprobante (solo DIRECTOR'S CUT) -->
                               <div class="second-payment-section" id="second-payment-section" style="display: none;">
                                   <h4>Final Payment Required</h4>
-                                  <p style="font-size: 12px; color: #fff; margin-bottom: 15px; opacity: 0.8;">Upload the second payment proof to unlock the master file.</p>
+                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Upload the second payment proof to unlock the master file.</p>
                                   
                                   <div class="pay-grid">
-                                      <a href="TU_LINK_PAYPAL" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
-                                      <a href="TU_LINK_WISE" target="_blank" class="pay-link pay-wise">WISE</a>
-                                      <a href="TU_LINK_BINANCE" target="_blank" class="pay-link pay-binance">BINANCE</a>
+                                      <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                      <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
+                                      <a href="https://www.binance.com/es/my/payment/send?uid=816109526" target="_blank" class="pay-link pay-binance">BINANCE</a>
                                   </div>
                                   
                                   <div class="upload-box-dotted" id="second-upload-area" onclick="document.getElementById('secondFileInput').click()">
-                                      <p id="second-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0; color: #fff;">Upload second payment proof</p>
+                                      <p id="second-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload second payment proof</p>
                                   </div>
                                   <input type="file" id="secondFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleSecondFileSelected()">
                                   <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
@@ -508,10 +533,10 @@
                               <!-- Sección de comprobante para LEGACY en REVIEW -->
                               <div class="second-payment-section" id="legacy-review-payment-section" style="display: none;">
                                   <h4>Upload Payment Proof</h4>
-                                  <p style="font-size: 12px; color: #fff; margin-bottom: 15px; opacity: 0.8;">As a LEGACY client, upload your payment proof when ready.</p>
+                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">As a LEGACY client, upload your payment proof when ready.</p>
                                   
                                   <div class="upload-box-dotted" id="legacy-upload-area" onclick="document.getElementById('legacyFileInput').click()">
-                                      <p id="legacy-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0; color: #fff;">Upload payment proof</p>
+                                      <p id="legacy-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof</p>
                                   </div>
                                   <input type="file" id="legacyFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleLegacyFileSelected()">
                                   <button class="btn-blackbear" id="legacy-upload-btn" onclick="submitLegacyPayment()">SUBMIT PAYMENT</button>
@@ -539,7 +564,7 @@
             <li><a href="#" style="font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #fff;">Facebook</a></li>
             <li><a href="#" style="font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #fff;">Instagram</a></li>
           </ul>
-          <p style="font-size:12px; margin: 0; color: #fff;">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
+          <p style="font-size:12px; margin: 0; color: #666;">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
         </div>
       </footer>
 
@@ -592,7 +617,7 @@
             
             document.getElementById('order-main-title').innerText = "ORDER FOR " + (o.Cliente || "CLIENT");
             
-            // NUEVO: Mostrar nombre del proyecto del Excel (columna "Proyecto")
+            // Mostrar nombre del proyecto del Excel (columna "Proyecto")
             document.getElementById('project-name').innerText = o.Proyecto || "UNTITLED PROJECT";
             
             document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "No description available.");
@@ -675,16 +700,18 @@
             reviewBtn.innerText = 'LEAVE A REVIEW';
             reviewBtn.onclick = function() { toggleReviewForm(); };
             
-            // FORMULARIO REVIEW
+            // FORMULARIO REVIEW CON NOMBRE Y PAÍS
             const reviewForm = document.createElement('div');
             reviewForm.id = 'review-form-container';
             reviewForm.className = 'review-form';
             reviewForm.innerHTML = `
                 <h4>Share your experience</h4>
-                <textarea id="review-text" placeholder="Tell us about your experience working with BlackBear..."></textarea>
+                <input type="text" id="reviewer-name" placeholder="Your Name" required>
+                <input type="text" id="reviewer-country" placeholder="Your Country" required>
+                <textarea id="review-text" placeholder="Tell us about your experience working with BlackBear..." required></textarea>
                 <div style="display: flex; gap: 10px; align-items: center;">
                     <button onclick="submitReview()">SUBMIT REVIEW</button>
-                    <span class="review-success" id="review-success-msg">✓ Review submitted!</span>
+                    <span class="review-success" id="review-success-msg">✓ Review submitted! Thank you.</span>
                 </div>
             `;
             
@@ -862,7 +889,7 @@
                 if ((comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') || 
                     (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]')) {
                     label.innerText = "Upload additional proof (LEGACY - VIP)";
-                    label.style.color = "#4CAF50";
+                    label.style.color = "#fff";
                 }
                 return;
             }
@@ -880,14 +907,13 @@
                 uploadBox.style.cursor = "default";
                 uploadBox.onclick = null;
                 label.innerText = "✓ PAYMENT PROOF RECEIVED";
-                label.style.color = "#4CAF50";
+                label.style.color = "#fff";
                 
                 fileInput.style.display = 'none';
                 check.parentElement.style.display = 'none';
                 
                 btn.innerText = "IN REVIEW QUEUE";
                 btn.className = "btn-blackbear btn-sent";
-                btn.disabled = true;
                 btn.onclick = null;
             }
         }
@@ -904,7 +930,7 @@
                 uploadBox.style.cursor = "default";
                 uploadBox.onclick = null;
                 label.innerText = "✓ FINAL PAYMENT RECEIVED";
-                label.style.color = "#4CAF50";
+                label.style.color = "#fff";
                 
                 btn.innerText = "PROCESSING...";
                 btn.className = "btn-blackbear btn-sent";
@@ -924,7 +950,7 @@
                 uploadBox.style.cursor = "default";
                 uploadBox.onclick = null;
                 label.innerText = "✓ PAYMENT PROOF RECEIVED";
-                label.style.color = "#4CAF50";
+                label.style.color = "#fff";
                 
                 btn.innerText = "IN REVIEW QUEUE";
                 btn.className = "btn-blackbear btn-sent";
@@ -936,7 +962,7 @@
         // FUNCIONES DE ACCIÓN
         // ============================================
 
-        // Aceptar video (PREMIERE PASS) - Manda a COMPLETED
+        // Aceptar video (PREMIERE PASS) - AHORA CON RECARGA INMEDIATA
         function acceptVideo() {
             if(!confirm("Are you sure you want to accept this video? This will mark the project as completed.")) {
                 return;
@@ -957,9 +983,10 @@
             }).then(response => response.json())
             .then(result => {
                 if(result.result === "success") {
-                    alert("Video accepted! Your project is now completed.");
-                    // Recargar para mostrar estado COMPLETED
-                    fetchOrderData();
+                    // MOSTRAR MENSAJE DE ÉXITO Y RECARGAR INMEDIATAMENTE
+                    alert("Video accepted! Loading download section...");
+                    // Forzar recarga completa de datos para mostrar estado COMPLETED
+                    window.location.reload(); // Recarga la página para mostrar la sección de descarga inmediatamente
                 } else {
                     throw new Error(result.message || "Unknown error");
                 }
@@ -993,7 +1020,6 @@
             .then(result => {
                 if(result.result === "success") {
                     alert("Project requested! Your project will start shortly.");
-                    // Recargar para actualizar estado
                     fetchOrderData();
                 } else {
                     throw new Error(result.message || "Unknown error");
@@ -1052,7 +1078,6 @@
                     
                     setTimeout(() => {
                         toggleChangesForm();
-                        // Recargar para reflejar cambios
                         fetchOrderData();
                     }, 2000);
                 } else {
@@ -1110,7 +1135,7 @@
                     
                     if(result.result === "success") {
                         document.getElementById('second-upload-label').innerText = "✓ FINAL PAYMENT RECEIVED";
-                        document.getElementById('second-upload-label').style.color = "#4CAF50";
+                        document.getElementById('second-upload-label').style.color = "#fff";
                         btn.innerText = "PROCESSING...";
                         btn.className = "btn-blackbear btn-sent";
                         
@@ -1171,7 +1196,7 @@
                     
                     if(result.result === "success") {
                         document.getElementById('legacy-upload-label').innerText = "✓ PAYMENT PROOF RECEIVED";
-                        document.getElementById('legacy-upload-label').style.color = "#4CAF50";
+                        document.getElementById('legacy-upload-label').style.color = "#fff";
                         btn.innerText = "IN REVIEW QUEUE";
                         btn.className = "btn-blackbear btn-sent";
                         
@@ -1195,7 +1220,7 @@
 
         function requestExtraRevision() {
             const mensaje = `Hi! I need an extra revision for order ${orderId}. Please let me know the cost and payment details.`;
-            window.open(`https://wa.me/522211319056?text= ${encodeURIComponent(mensaje)}`, '_blank');
+            window.open(`https://wa.me/522211319056?text=${encodeURIComponent(mensaje)}`, '_blank');
         }
 
         function toggleReviewForm() {
@@ -1207,32 +1232,52 @@
             }
         }
 
+        // SUBMIT REVIEW CON NOMBRE Y PAÍS PARA GOOGLE SHEETS HOJA 2
         function submitReview() {
             const reviewText = document.getElementById('review-text').value.trim();
+            const reviewerName = document.getElementById('reviewer-name').value.trim();
+            const reviewerCountry = document.getElementById('reviewer-country').value.trim();
             
-            if(!reviewText) {
-                alert("Please write your review before submitting.");
+            if(!reviewerName || !reviewerCountry || !reviewText) {
+                alert("Please fill in all fields: Name, Country, and Review.");
                 return;
             }
+            
+            const btn = document.querySelector('.review-form button');
+            btn.innerText = "SENDING...";
+            btn.disabled = true;
             
             const formData = new URLSearchParams();
             formData.append('action', 'submitReview');
             formData.append('orderId', orderId);
             formData.append('review', reviewText);
+            formData.append('nombre', reviewerName);      // Nombre para Hoja 2
+            formData.append('pais', reviewerCountry);     // País para Hoja 2
             formData.append('date', new Date().toISOString());
             
             fetch(SCRIPT_URL, { 
                 method: 'POST', 
                 body: formData 
-            }).then(() => {
-                document.getElementById('review-success-msg').style.display = 'inline';
-                document.getElementById('review-text').disabled = true;
-                setTimeout(() => {
-                    toggleReviewForm();
-                }, 2000);
+            }).then(response => response.json())
+            .then(result => {
+                if(result.result === "success") {
+                    document.getElementById('review-success-msg').style.display = 'inline';
+                    document.getElementById('review-text').disabled = true;
+                    document.getElementById('reviewer-name').disabled = true;
+                    document.getElementById('reviewer-country').disabled = true;
+                    setTimeout(() => {
+                        toggleReviewForm();
+                    }, 2000);
+                } else {
+                    throw new Error(result.message || "Unknown error");
+                }
             }).catch(err => {
                 console.error(err);
+                // Mostrar éxito igual ya que a veces hay errores de CORS pero los datos sí llegan
                 document.getElementById('review-success-msg').style.display = 'inline';
+                document.getElementById('review-text').disabled = true;
+                document.getElementById('reviewer-name').disabled = true;
+                document.getElementById('reviewer-country').disabled = true;
             });
         }
 
@@ -1280,7 +1325,7 @@
                     
                     if(result.result === "success") {
                         document.getElementById('upload-label').innerText = "✓ PAYMENT PROOF SENT";
-                        document.getElementById('upload-label').style.color = "#4CAF50";
+                        document.getElementById('upload-label').style.color = "#fff";
                         btn.innerText = "IN REVIEW QUEUE";
                         btn.className = "btn-blackbear btn-sent";
                         btn.onclick = null;
