@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/vendor/icomoon/style.css">
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400 ,700,900&display=swap" rel="stylesheet">
 
     <style>
       body { font-family: 'Montserrat', sans-serif !important; background: transparent; color: #fff; overflow-x: hidden; }
@@ -36,6 +36,27 @@
       
       .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
       .btn-sent { background: #222 !important; color: #fff !important; border: 1px solid #444 !important; cursor: not-allowed; }
+
+      /* TÍTULO DEL PROYECTO - NUEVO ESTILO */
+      .project-title-display {
+        font-weight: 700; 
+        font-size: 1.8rem; 
+        color: #fff; 
+        margin-top: 15px; 
+        margin-bottom: 30px;
+        text-transform: uppercase; 
+        letter-spacing: 2px;
+        opacity: 0.9;
+      }
+      .project-label {
+        font-size: 10px; 
+        text-transform: uppercase; 
+        font-weight: 800; 
+        margin-bottom: 5px; 
+        letter-spacing: 2px; 
+        color: #888;
+        display: block;
+      }
 
       /* Botón de revisión extra */
       .btn-extra-revision { 
@@ -80,6 +101,49 @@
       .btn-outline-light:hover {
         background: #fff;
         color: #000;
+      }
+
+      /* Botón de aceptar video (verde) */
+      .btn-accept-video {
+        background: #4CAF50;
+        color: #fff;
+        font-weight: 800;
+        padding: 18px 40px;
+        text-transform: uppercase;
+        border: none;
+        letter-spacing: 3px;
+        width: 100%;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 15px;
+      }
+      .btn-accept-video:hover {
+        background: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      }
+      .btn-accept-video:disabled {
+        background: #2e7d32;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Botón de solicitar proyecto (LEGACY) */
+      .btn-request-project {
+        background: #fff;
+        color: #000;
+        font-weight: 800;
+        padding: 18px 40px;
+        text-transform: uppercase;
+        border: none;
+        letter-spacing: 3px;
+        width: 100%;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .btn-request-project:hover {
+        background: #ccc;
+        transform: translateY(-2px);
       }
 
       /* Formulario de review */
@@ -141,6 +205,111 @@
         margin-top: 15px;
       }
 
+      /* Formulario de solicitar cambios */
+      .changes-form {
+        display: none;
+        margin-top: 25px;
+        padding: 25px;
+        border: 1px solid #ff3333;
+        background: rgba(255,51,51,0.1);
+        border-radius: 8px;
+      }
+      .changes-form h4 {
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        color: #ff3333;
+      }
+      .changes-form textarea {
+        width: 100%;
+        background: transparent;
+        border: 1px solid #ff6666;
+        border-radius: 4px;
+        padding: 12px;
+        color: #fff;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13px;
+        resize: vertical;
+        min-height: 120px;
+        margin-bottom: 15px;
+      }
+      .changes-form textarea:focus {
+        outline: none;
+        border-color: #ff3333;
+      }
+      .changes-form button {
+        background: #ff3333;
+        color: #fff;
+        border: none;
+        padding: 12px 30px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 11px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .changes-form button:hover {
+        background: #ff5555;
+      }
+      .changes-form button:disabled {
+        background: #666;
+        cursor: not-allowed;
+      }
+      .changes-success {
+        display: none;
+        color: #4CAF50;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 1px;
+        margin-top: 15px;
+      }
+      .changes-error {
+        display: none;
+        color: #ff3333;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 1px;
+        margin-top: 15px;
+      }
+      .no-revisions-msg {
+        display: none;
+        color: #ff3333;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ff3333;
+        background: rgba(255,51,51,0.1);
+        border-radius: 4px;
+      }
+
+      /* Sección de subir segundo comprobante */
+      .second-payment-section {
+        margin-top: 25px;
+        padding: 25px;
+        border: 1px solid #444;
+        background: rgba(0,0,0,0.3);
+        border-radius: 8px;
+      }
+      .second-payment-section h4 {
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        color: #fff;
+      }
+      .second-payment-section .upload-box-dotted {
+        margin-bottom: 15px;
+      }
+
       .unslate_co--footer { background-color: #191919 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; color: #fff; }
       .badge-status { padding: 8px 15px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block; }
       .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; }
@@ -155,12 +324,14 @@
       @media (max-width: 768px) {
         .pay-grid { grid-template-columns: 1fr; }
         .order-section { padding: 100px 0 50px 0; }
+        .project-title-display { font-size: 1.4rem; }
       }
       
       .contract-box::-webkit-scrollbar { width: 6px; }
       .contract-box::-webkit-scrollbar-track { background: #111; }
       .contract-box::-webkit-scrollbar-thumb { background: #fff; border-radius: 3px; }
     </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -209,7 +380,13 @@
                       <span id="order-category" class="badge-status"></span>
                       <h1 id="order-main-title" style="font-weight: 900; font-size: 3.5rem; text-transform: uppercase; line-height: 1; margin: 0; color: #fff;"></h1>
                       
-                      <div class="mb-5" style="margin-top: 40px;">
+                      <!-- NUEVO: NOMBRE DEL PROYECTO DEL EXCEL -->
+                      <div class="project-title-display">
+                          <span class="project-label">Project Title</span>
+                          <span id="project-name"></span>
+                      </div>
+                      
+                      <div class="mb-5">
                           <h5 style="font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 1px; color: #fff;">Project Description</h5>
                           <p id="order-description" style="font-size: 18px; color: #fff; line-height: 1.6;"></p>
                       </div>
@@ -250,6 +427,7 @@
                             <h3 id="order-price" style="font-weight: 900; margin: 0; color: #fff;">$0.00</h3>
                           </div>
 
+                          <!-- ÁREA DE ACCIONES NORMALES (AWAITING_PAYMENT) -->
                           <div id="actions-area">
                               <div class="pay-grid">
                                   <a href="TU_LINK_PAYPAL" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
@@ -274,6 +452,73 @@
                               <button class="btn-blackbear" id="upload-btn" onclick="submitFile()">SUBMIT PAYMENT</button>
                           </div>
 
+                          <!-- ÁREA DE ACCIONES PARA LEGACY AWAITING_PAYMENT -->
+                          <div id="legacy-request-area" style="display: none;">
+                              <div class="contract-box" id="legacy-contract-content">
+                                  Loading agreement...
+                              </div>
+                              <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()">REQUEST PROJECT</button>
+                              <p style="font-size: 11px; color: #fff; margin-top: 15px; opacity: 0.7; text-align: center;">As a LEGACY client, you can request the project to start. Payment can be arranged later.</p>
+                          </div>
+
+                          <!-- ÁREA DE REVIEW (botones de cambios y acciones) -->
+                          <div id="review-actions-area" style="display: none;">
+                              <!-- Botón de solicitar cambios -->
+                              <button class="btn-outline-light" id="request-changes-btn" onclick="toggleChangesForm()" style="border-color: #ff3333; color: #ff3333;">
+                                  REQUEST CHANGES
+                              </button>
+                              <div class="no-revisions-msg" id="no-revisions-msg">
+                                  No revisions available. Please request an extra revision.
+                              </div>
+                              
+                              <!-- Formulario de solicitar cambios -->
+                              <div class="changes-form" id="changes-form-container">
+                                  <h4>Describe the changes needed</h4>
+                                  <textarea id="changes-text" placeholder="Describe in detail what changes you need..."></textarea>
+                                  <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                      <button onclick="submitChangesRequest()">SEND REQUEST</button>
+                                      <span class="changes-success" id="changes-success-msg">✓ Changes requested! Revision count updated.</span>
+                                      <span class="changes-error" id="changes-error-msg">✗ Error sending request. Please try again.</span>
+                                  </div>
+                              </div>
+
+                              <!-- Botón de aceptar video (solo PREMIERE PASS) -->
+                              <button class="btn-accept-video" id="accept-video-btn" onclick="acceptVideo()" style="display: none;">
+                                  ACCEPT VIDEO
+                              </button>
+
+                              <!-- Sección de segundo comprobante (solo DIRECTOR'S CUT) -->
+                              <div class="second-payment-section" id="second-payment-section" style="display: none;">
+                                  <h4>Final Payment Required</h4>
+                                  <p style="font-size: 12px; color: #fff; margin-bottom: 15px; opacity: 0.8;">Upload the second payment proof to unlock the master file.</p>
+                                  
+                                  <div class="pay-grid">
+                                      <a href="TU_LINK_PAYPAL" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                      <a href="TU_LINK_WISE" target="_blank" class="pay-link pay-wise">WISE</a>
+                                      <a href="TU_LINK_BINANCE" target="_blank" class="pay-link pay-binance">BINANCE</a>
+                                  </div>
+                                  
+                                  <div class="upload-box-dotted" id="second-upload-area" onclick="document.getElementById('secondFileInput').click()">
+                                      <p id="second-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0; color: #fff;">Upload second payment proof</p>
+                                  </div>
+                                  <input type="file" id="secondFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleSecondFileSelected()">
+                                  <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
+                              </div>
+
+                              <!-- Sección de comprobante para LEGACY en REVIEW -->
+                              <div class="second-payment-section" id="legacy-review-payment-section" style="display: none;">
+                                  <h4>Upload Payment Proof</h4>
+                                  <p style="font-size: 12px; color: #fff; margin-bottom: 15px; opacity: 0.8;">As a LEGACY client, upload your payment proof when ready.</p>
+                                  
+                                  <div class="upload-box-dotted" id="legacy-upload-area" onclick="document.getElementById('legacyFileInput').click()">
+                                      <p id="legacy-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0; color: #fff;">Upload payment proof</p>
+                                  </div>
+                                  <input type="file" id="legacyFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleLegacyFileSelected()">
+                                  <button class="btn-blackbear" id="legacy-upload-btn" onclick="submitLegacyPayment()">SUBMIT PAYMENT</button>
+                              </div>
+                          </div>
+
+                          <!-- ÁREA COMPLETADA -->
                           <div id="completed-actions" style="display: none;">
                           </div>
 
@@ -301,9 +546,12 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLnTKKWyN8pLJt5uMXjnritxPazqsAp32q1IbqdH8XfSBnpIIcC2Y2teJRJJdWrypCzQ/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLnTKKWyN8pLJt5uMXjnritxPazqsAp32q1IbqdH8XfSBnpIIcC2Y2teJRJJdWrypCzQ/exec ";
         
         let orderId = new URLSearchParams(window.location.search).get('id');
+        let currentOrderData = null;
+        let currentCategory = "";
+        let currentStatus = "";
 
         document.addEventListener('DOMContentLoaded', () => {
             if(!orderId) {
@@ -311,12 +559,17 @@
                 return;
             }
 
+            fetchOrderData();
+        });
+
+        function fetchOrderData() {
             fetch(SCRIPT_URL + "?id=" + orderId + "&t=" + Date.now())
                 .then(response => response.json())
                 .then(data => {
                     if(data.error) {
                         document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER #" + orderId + " NOT FOUND</h1>";
                     } else {
+                        currentOrderData = data;
                         render(data);
                     }
                 })
@@ -324,7 +577,7 @@
                     console.error(err);
                     document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>SERVER CONNECTION ERROR</h1>";
                 });
-        });
+        }
 
         function render(o) {
             document.getElementById('loading-view').style.display = 'none';
@@ -334,7 +587,14 @@
             const estatus = (o.Estatus || "AWAITING_PAYMENT").toString();
             const revisiones = parseInt(o.Revisiones) || 0;
             
+            currentCategory = categoria;
+            currentStatus = estatus;
+            
             document.getElementById('order-main-title').innerText = "ORDER FOR " + (o.Cliente || "CLIENT");
+            
+            // NUEVO: Mostrar nombre del proyecto del Excel (columna "Proyecto")
+            document.getElementById('project-name').innerText = o.Proyecto || "UNTITLED PROJECT";
+            
             document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "No description available.");
             document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
             
@@ -347,6 +607,29 @@
             document.getElementById('order-status-text').innerText = statusDisplay;
             document.getElementById('order-category').innerText = categoria || "PAYMENT";
 
+            // Actualizar revisiones
+            updateRevisionsDisplay(revisiones);
+
+            // Renderizar contrato según categoría
+            renderContract(categoria);
+            renderLegacyContract(categoria);
+
+            // Manejar estados
+            if(estatus === 'COMPLETED') {
+                renderCompletedState(o);
+            }
+            else if(estatus === 'IN_PRODUCTION') {
+                renderInProductionState();
+            } 
+            else if(estatus === 'REVIEW') {
+                renderReviewState(o, categoria, revisiones);
+            }
+            else if(estatus === 'AWAITING_PAYMENT') {
+                renderAwaitingPaymentState(o, categoria);
+            }
+        }
+
+        function updateRevisionsDisplay(revisiones) {
             if(revisiones === 0) {
                 document.getElementById('revision-normal').style.display = 'none';
                 document.getElementById('revision-extra').style.display = 'block';
@@ -355,91 +638,158 @@
                 document.getElementById('revision-extra').style.display = 'none';
                 document.getElementById('order-revisions').innerText = revisiones;
             }
+        }
 
-            renderContract(categoria);
-
-            if(estatus === 'COMPLETED') {
-                document.getElementById('actions-area').style.display = 'none';
-                
-                if(o.Link_YouTube) {
-                    document.getElementById('preview-box').style.display = 'block';
-                    let videoUrl = o.Link_YouTube.toString();
-                    videoUrl = videoUrl.replace('watch?v=', 'embed/');
-                    videoUrl = videoUrl.replace('youtu.be/', 'youtube.com/embed/');
-                    if(!videoUrl.includes('embed')) {
-                        videoUrl = videoUrl.replace('youtube.com/', 'youtube.com/embed/');
-                    }
-                    document.getElementById('video-iframe').innerHTML = 
-                        `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" 
-                         style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-                         frameborder="0" allowfullscreen></iframe>`;
-                }
-                
-                const completedDiv = document.getElementById('completed-actions');
-                completedDiv.style.display = 'block';
-                
-                // BOTÓN MÁS PEQUEÑO - padding reducido, font-size menor
-                const downloadBtn = document.createElement('a');
-                downloadBtn.href = o.Link_Drive || '#';
-                downloadBtn.target = '_blank';
-                downloadBtn.className = 'btn-blackbear d-block text-center';
-                downloadBtn.style.textDecoration = 'none';
-                downloadBtn.style.padding = '12px 20px'; // Antes 18px 40px
-                downloadBtn.style.fontSize = '12px'; // Antes tamaño default (~16px)
-                downloadBtn.style.letterSpacing = '2px'; // Antes 3px
-                downloadBtn.innerHTML = `DOWNLOAD VIDEO`;
-                
-                const reviewBtn = document.createElement('button');
-                reviewBtn.className = 'btn-outline-light';
-                reviewBtn.innerText = 'LEAVE A REVIEW';
-                reviewBtn.onclick = function() { toggleReviewForm(); };
-                
-                const reviewForm = document.createElement('div');
-                reviewForm.id = 'review-form-container';
-                reviewForm.className = 'review-form';
-                reviewForm.innerHTML = `
-                    <h4>Share your experience</h4>
-                    <textarea id="review-text" placeholder="Tell us about your experience working with BlackBear..."></textarea>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <button onclick="submitReview()">SUBMIT REVIEW</button>
-                        <span class="review-success" id="review-success-msg">✓ Review submitted!</span>
-                    </div>
-                `;
-                
-                completedDiv.appendChild(downloadBtn);
-                completedDiv.appendChild(reviewBtn);
-                completedDiv.appendChild(reviewForm);
+        function renderCompletedState(o) {
+            document.getElementById('actions-area').style.display = 'none';
+            document.getElementById('legacy-request-area').style.display = 'none';
+            document.getElementById('review-actions-area').style.display = 'none';
+            
+            if(o.Link_YouTube) {
+                document.getElementById('preview-box').style.display = 'block';
+                let videoUrl = getEmbedUrl(o.Link_YouTube);
+                document.getElementById('video-iframe').innerHTML = 
+                    `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" 
+                     style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                     frameborder="0" allowfullscreen></iframe>`;
             }
-            else if(estatus === 'IN_PRODUCTION') {
-                document.getElementById('actions-area').style.display = 'none';
-                document.getElementById('production-message').style.display = 'block';
+            
+            const completedDiv = document.getElementById('completed-actions');
+            completedDiv.style.display = 'block';
+            completedDiv.innerHTML = ''; // Limpiar contenido previo
+            
+            // BOTÓN DOWNLOAD
+            const downloadBtn = document.createElement('a');
+            downloadBtn.href = o.Link_Drive || '#';
+            downloadBtn.target = '_blank';
+            downloadBtn.className = 'btn-blackbear d-block text-center';
+            downloadBtn.style.textDecoration = 'none';
+            downloadBtn.style.padding = '12px 20px';
+            downloadBtn.style.fontSize = '12px';
+            downloadBtn.style.letterSpacing = '2px';
+            downloadBtn.innerHTML = `DOWNLOAD VIDEO`;
+            
+            // BOTÓN REVIEW
+            const reviewBtn = document.createElement('button');
+            reviewBtn.className = 'btn-outline-light';
+            reviewBtn.innerText = 'LEAVE A REVIEW';
+            reviewBtn.onclick = function() { toggleReviewForm(); };
+            
+            // FORMULARIO REVIEW
+            const reviewForm = document.createElement('div');
+            reviewForm.id = 'review-form-container';
+            reviewForm.className = 'review-form';
+            reviewForm.innerHTML = `
+                <h4>Share your experience</h4>
+                <textarea id="review-text" placeholder="Tell us about your experience working with BlackBear..."></textarea>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button onclick="submitReview()">SUBMIT REVIEW</button>
+                    <span class="review-success" id="review-success-msg">✓ Review submitted!</span>
+                </div>
+            `;
+            
+            completedDiv.appendChild(downloadBtn);
+            completedDiv.appendChild(reviewBtn);
+            completedDiv.appendChild(reviewForm);
+        }
+
+        function renderInProductionState() {
+            document.getElementById('actions-area').style.display = 'none';
+            document.getElementById('legacy-request-area').style.display = 'none';
+            document.getElementById('review-actions-area').style.display = 'none';
+            document.getElementById('completed-actions').style.display = 'none';
+            document.getElementById('production-message').style.display = 'block';
+        }
+
+        function renderReviewState(o, categoria, revisiones) {
+            const catUpper = categoria.toUpperCase();
+            
+            // Ocultar áreas normales
+            document.getElementById('actions-area').style.display = 'none';
+            document.getElementById('legacy-request-area').style.display = 'none';
+            document.getElementById('completed-actions').style.display = 'none';
+            document.getElementById('production-message').style.display = 'none';
+            
+            // Mostrar área de review
+            document.getElementById('review-actions-area').style.display = 'block';
+            
+            // Mostrar video si hay Link_YouTube
+            if(o.Link_YouTube) {
+                document.getElementById('preview-box').style.display = 'block';
+                let videoUrl = getEmbedUrl(o.Link_YouTube);
+                document.getElementById('video-iframe').innerHTML = 
+                    `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" 
+                     style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                     frameborder="0" allowfullscreen></iframe>`;
+            }
+            
+            // Configurar botón de solicitar cambios
+            const changesBtn = document.getElementById('request-changes-btn');
+            const noRevisionsMsg = document.getElementById('no-revisions-msg');
+            
+            if(revisiones > 0) {
+                changesBtn.style.display = 'inline-block';
+                changesBtn.disabled = false;
+                noRevisionsMsg.style.display = 'none';
+            } else {
+                changesBtn.style.display = 'none';
+                noRevisionsMsg.style.display = 'block';
+            }
+            
+            // Configurar según categoría
+            if(catUpper.includes('PREMIERE')) {
+                // PREMIERE PASS: Botón de aceptar video
+                document.getElementById('accept-video-btn').style.display = 'block';
+                document.getElementById('second-payment-section').style.display = 'none';
+                document.getElementById('legacy-review-payment-section').style.display = 'none';
             } 
-            else if(estatus === 'REVIEW') {
-                document.getElementById('actions-area').style.display = 'none';
+            else if(catUpper.includes('DIRECTOR')) {
+                // DIRECTOR'S CUT: Segundo comprobante
+                document.getElementById('accept-video-btn').style.display = 'none';
+                document.getElementById('second-payment-section').style.display = 'block';
+                document.getElementById('legacy-review-payment-section').style.display = 'none';
                 
-                const catUpper = categoria.toUpperCase();
-                if((catUpper.includes('DIRECTOR') || catUpper.includes('LEGACY')) && o.Link_YouTube) {
-                    document.getElementById('preview-box').style.display = 'block';
-                    let videoUrl = o.Link_YouTube.toString();
-                    videoUrl = videoUrl.replace('watch?v=', 'embed/');
-                    videoUrl = videoUrl.replace('youtu.be/', 'youtube.com/embed/');
-                    if(!videoUrl.includes('embed')) {
-                        videoUrl = videoUrl.replace('youtube.com/', 'youtube.com/embed/');
-                    }
-                    document.getElementById('video-iframe').innerHTML = 
-                        `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" 
-                         style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-                         frameborder="0" allowfullscreen></iframe>`;
-                } else {
-                    document.getElementById('production-message').style.display = 'block';
-                    document.getElementById('production-message').innerHTML = 
-                        `<h5 style="font-size: 12px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 2px; color: #fff;">Under Review</h5>
-                         <p style="color: #fff; font-size: 14px; line-height: 1.6;">Your project is being reviewed. You will receive the final files shortly.</p>`;
-                }
+                // Verificar si ya subió el segundo comprobante
+                checkSecondPaymentStatus(o);
+            } 
+            else if(catUpper.includes('LEGACY')) {
+                // LEGACY: Comprobante de pago
+                document.getElementById('accept-video-btn').style.display = 'none';
+                document.getElementById('second-payment-section').style.display = 'none';
+                document.getElementById('legacy-review-payment-section').style.display = 'block';
+                
+                // Verificar si ya subió comprobante
+                checkLegacyPaymentStatus(o);
             }
-            else {
+        }
+
+        function renderAwaitingPaymentState(o, categoria) {
+            const catUpper = categoria.toUpperCase();
+            
+            document.getElementById('production-message').style.display = 'none';
+            document.getElementById('completed-actions').style.display = 'none';
+            document.getElementById('review-actions-area').style.display = 'none';
+            
+            if(catUpper.includes('LEGACY')) {
+                // LEGACY: Mostrar botón de solicitar proyecto
+                document.getElementById('actions-area').style.display = 'none';
+                document.getElementById('legacy-request-area').style.display = 'block';
+            } else {
+                // Otras categorías: Flujo normal de pago
+                document.getElementById('actions-area').style.display = 'block';
+                document.getElementById('legacy-request-area').style.display = 'none';
                 checkIfAlreadyUploaded(o);
             }
+        }
+
+        function getEmbedUrl(youtubeUrl) {
+            let url = youtubeUrl.toString();
+            url = url.replace('watch?v=', 'embed/');
+            url = url.replace('youtu.be/', 'youtube.com/embed/');
+            if(!url.includes('embed')) {
+                url = url.replace('youtube.com/', 'youtube.com/embed/');
+            }
+            return url;
         }
 
         function renderContract(categoria) {
@@ -483,6 +833,25 @@
             contractBox.innerHTML = html;
         }
 
+        function renderLegacyContract(categoria) {
+            const contractBox = document.getElementById('legacy-contract-content');
+            if(!contractBox) return;
+            
+            const cat = categoria.toString().toUpperCase().trim();
+            
+            if (cat.includes('LEGACY')) {
+                contractBox.innerHTML = `<strong>LEGACY STATUS AGREEMENT:</strong><br>
+                        <span style="color: #fff;">VIP Priority Access</span><br>
+                        Exclusive terms and priority delivery reserved for returning and high-volume clients.<br><br>
+                        1. Exclusive terms and guaranteed priority delivery.<br>
+                        2. Payment flexibility: submit proof of payment in parts or at a later date.<br>
+                        3. Direct access to production team and priority support.<br>
+                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
+            } else {
+                contractBox.innerHTML = renderContract(categoria);
+            }
+        }
+
         function checkIfAlreadyUploaded(o) {
             const comprobante1 = o.Comprobante_1 || "";
             const comprobante2 = o.Comprobante_2 || "";
@@ -523,9 +892,310 @@
             }
         }
 
+        function checkSecondPaymentStatus(o) {
+            const comprobante2 = o.Comprobante_2 || "";
+            
+            if (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]') {
+                const uploadBox = document.getElementById('second-upload-area');
+                const btn = document.getElementById('second-upload-btn');
+                const label = document.getElementById('second-upload-label');
+                
+                uploadBox.style.borderColor = "#333";
+                uploadBox.style.cursor = "default";
+                uploadBox.onclick = null;
+                label.innerText = "✓ FINAL PAYMENT RECEIVED";
+                label.style.color = "#4CAF50";
+                
+                btn.innerText = "PROCESSING...";
+                btn.className = "btn-blackbear btn-sent";
+                btn.disabled = true;
+            }
+        }
+
+        function checkLegacyPaymentStatus(o) {
+            const comprobante1 = o.Comprobante_1 || "";
+            
+            if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
+                const uploadBox = document.getElementById('legacy-upload-area');
+                const btn = document.getElementById('legacy-upload-btn');
+                const label = document.getElementById('legacy-upload-label');
+                
+                uploadBox.style.borderColor = "#333";
+                uploadBox.style.cursor = "default";
+                uploadBox.onclick = null;
+                label.innerText = "✓ PAYMENT PROOF RECEIVED";
+                label.style.color = "#4CAF50";
+                
+                btn.innerText = "IN REVIEW QUEUE";
+                btn.className = "btn-blackbear btn-sent";
+                btn.disabled = true;
+            }
+        }
+
+        // ============================================
+        // FUNCIONES DE ACCIÓN
+        // ============================================
+
+        // Aceptar video (PREMIERE PASS) - Manda a COMPLETED
+        function acceptVideo() {
+            if(!confirm("Are you sure you want to accept this video? This will mark the project as completed.")) {
+                return;
+            }
+            
+            const btn = document.getElementById('accept-video-btn');
+            btn.innerText = "PROCESSING...";
+            btn.disabled = true;
+            
+            const formData = new URLSearchParams();
+            formData.append('action', 'acceptVideo');
+            formData.append('orderId', orderId);
+            formData.append('date', new Date().toISOString());
+            
+            fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                body: formData 
+            }).then(response => response.json())
+            .then(result => {
+                if(result.result === "success") {
+                    alert("Video accepted! Your project is now completed.");
+                    // Recargar para mostrar estado COMPLETED
+                    fetchOrderData();
+                } else {
+                    throw new Error(result.message || "Unknown error");
+                }
+            }).catch(err => {
+                console.error(err);
+                alert("Error: " + err.message);
+                btn.innerText = "ACCEPT VIDEO";
+                btn.disabled = false;
+            });
+        }
+
+        // Solicitar proyecto (LEGACY AWAITING_PAYMENT)
+        function requestLegacyProject() {
+            if(!confirm("Request project start? As a LEGACY client, your project will begin immediately.")) {
+                return;
+            }
+            
+            const btn = document.getElementById('request-project-btn');
+            btn.innerText = "SENDING REQUEST...";
+            btn.disabled = true;
+            
+            const formData = new URLSearchParams();
+            formData.append('action', 'requestLegacyProject');
+            formData.append('orderId', orderId);
+            formData.append('date', new Date().toISOString());
+            
+            fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                body: formData 
+            }).then(response => response.json())
+            .then(result => {
+                if(result.result === "success") {
+                    alert("Project requested! Your project will start shortly.");
+                    // Recargar para actualizar estado
+                    fetchOrderData();
+                } else {
+                    throw new Error(result.message || "Unknown error");
+                }
+            }).catch(err => {
+                console.error(err);
+                alert("Error: " + err.message);
+                btn.innerText = "REQUEST PROJECT";
+                btn.disabled = false;
+            });
+        }
+
+        // Solicitar cambios (todas las REVIEW)
+        function toggleChangesForm() {
+            const form = document.getElementById('changes-form-container');
+            if(form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+
+        function submitChangesRequest() {
+            const changesText = document.getElementById('changes-text').value.trim();
+            
+            if(!changesText) {
+                alert("Please describe the changes you need.");
+                return;
+            }
+            
+            const btn = document.querySelector('.changes-form button');
+            btn.innerText = "SENDING...";
+            btn.disabled = true;
+            
+            const formData = new URLSearchParams();
+            formData.append('action', 'requestChanges');
+            formData.append('orderId', orderId);
+            formData.append('changes', changesText);
+            formData.append('date', new Date().toISOString());
+            
+            fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                body: formData 
+            }).then(response => response.json())
+            .then(result => {
+                if(result.result === "success") {
+                    document.getElementById('changes-success-msg').style.display = 'inline';
+                    document.getElementById('changes-error-msg').style.display = 'none';
+                    document.getElementById('changes-text').disabled = true;
+                    
+                    // Actualizar contador de revisiones
+                    const currentRevisions = parseInt(document.getElementById('order-revisions').innerText) || 0;
+                    if(currentRevisions > 0) {
+                        updateRevisionsDisplay(currentRevisions - 1);
+                    }
+                    
+                    setTimeout(() => {
+                        toggleChangesForm();
+                        // Recargar para reflejar cambios
+                        fetchOrderData();
+                    }, 2000);
+                } else {
+                    throw new Error(result.message || "Unknown error");
+                }
+            }).catch(err => {
+                console.error(err);
+                document.getElementById('changes-error-msg').style.display = 'inline';
+                document.getElementById('changes-success-msg').style.display = 'none';
+                btn.innerText = "SEND REQUEST";
+                btn.disabled = false;
+            });
+        }
+
+        // Segundo pago (DIRECTOR'S CUT)
+        function handleSecondFileSelected() {
+            const file = document.getElementById('secondFileInput').files[0];
+            if(file) {
+                if(file.size > 5 * 1024 * 1024) {
+                    alert("File too large. Maximum 5MB.");
+                    document.getElementById('secondFileInput').value = '';
+                    return;
+                }
+                document.getElementById('second-upload-label').innerText = "FILE: " + file.name;
+                document.getElementById('second-upload-label').style.color = "#fff";
+            }
+        }
+
+        function submitSecondPayment() {
+            const file = document.getElementById('secondFileInput').files[0];
+            
+            if(!file) return alert("Please select your payment proof first.");
+            
+            const btn = document.getElementById('second-upload-btn');
+            btn.innerText = "SENDING...";
+            btn.disabled = true;
+            
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const base64 = e.target.result.split(',')[1];
+                const formData = new URLSearchParams();
+                formData.append('action', 'submitSecondPayment');
+                formData.append('fileBase64', base64);
+                formData.append('mimeType', file.type);
+                formData.append('fileName', `Order_${orderId}_final_payment`);
+                formData.append('orderId', orderId);
+                
+                try {
+                    const response = await fetch(SCRIPT_URL, { 
+                        method: 'POST', 
+                        body: formData 
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if(result.result === "success") {
+                        document.getElementById('second-upload-label').innerText = "✓ FINAL PAYMENT RECEIVED";
+                        document.getElementById('second-upload-label').style.color = "#4CAF50";
+                        btn.innerText = "PROCESSING...";
+                        btn.className = "btn-blackbear btn-sent";
+                        
+                        alert("Final payment received! Your master file will be delivered shortly.");
+                    } else {
+                        throw new Error(result.message || "Unknown error");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Error sending: " + err.message);
+                    btn.innerText = "SUBMIT FINAL PAYMENT";
+                    btn.disabled = false;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Pago LEGACY en REVIEW
+        function handleLegacyFileSelected() {
+            const file = document.getElementById('legacyFileInput').files[0];
+            if(file) {
+                if(file.size > 5 * 1024 * 1024) {
+                    alert("File too large. Maximum 5MB.");
+                    document.getElementById('legacyFileInput').value = '';
+                    return;
+                }
+                document.getElementById('legacy-upload-label').innerText = "FILE: " + file.name;
+                document.getElementById('legacy-upload-label').style.color = "#fff";
+            }
+        }
+
+        function submitLegacyPayment() {
+            const file = document.getElementById('legacyFileInput').files[0];
+            
+            if(!file) return alert("Please select your payment proof first.");
+            
+            const btn = document.getElementById('legacy-upload-btn');
+            btn.innerText = "SENDING...";
+            btn.disabled = true;
+            
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const base64 = e.target.result.split(',')[1];
+                const formData = new URLSearchParams();
+                formData.append('action', 'submitLegacyPayment');
+                formData.append('fileBase64', base64);
+                formData.append('mimeType', file.type);
+                formData.append('fileName', `Order_${orderId}_payment`);
+                formData.append('orderId', orderId);
+                
+                try {
+                    const response = await fetch(SCRIPT_URL, { 
+                        method: 'POST', 
+                        body: formData 
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if(result.result === "success") {
+                        document.getElementById('legacy-upload-label').innerText = "✓ PAYMENT PROOF RECEIVED";
+                        document.getElementById('legacy-upload-label').style.color = "#4CAF50";
+                        btn.innerText = "IN REVIEW QUEUE";
+                        btn.className = "btn-blackbear btn-sent";
+                        
+                        alert("Payment proof received! Thank you for your payment.");
+                    } else {
+                        throw new Error(result.message || "Unknown error");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Error sending: " + err.message);
+                    btn.innerText = "SUBMIT PAYMENT";
+                    btn.disabled = false;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ============================================
+        // FUNCIONES EXISTENTES
+        // ============================================
+
         function requestExtraRevision() {
             const mensaje = `Hi! I need an extra revision for order ${orderId}. Please let me know the cost and payment details.`;
-            window.open(`https://wa.me/522211319056?text=${encodeURIComponent(mensaje)}`, '_blank');
+            window.open(`https://wa.me/522211319056?text= ${encodeURIComponent(mensaje)}`, '_blank');
         }
 
         function toggleReviewForm() {
