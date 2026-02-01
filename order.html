@@ -37,6 +37,28 @@
       .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
       .btn-sent { background: #222 !important; color: #fff !important; border: 1px solid #444 !important; cursor: not-allowed; }
 
+      /* NUEVO: Botón de revisión extra */
+      .btn-extra-revision { 
+        background: #ff3333; 
+        color: #fff; 
+        font-weight: 900; 
+        padding: 12px 20px; 
+        text-transform: uppercase; 
+        border: none; 
+        letter-spacing: 2px; 
+        font-size: 10px;
+        width: 100%; 
+        cursor: pointer; 
+        transition: 0.3s;
+        margin-top: 10px;
+        border-radius: 4px;
+      }
+      .btn-extra-revision:hover { 
+        background: #ff5555; 
+        transform: translateY(-2px); 
+        box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
+      }
+
       .unslate_co--footer { background-color: #191919 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; color: #fff; }
       .badge-status { padding: 8px 15px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block; }
       .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; }
@@ -114,7 +136,6 @@
                         <div id="video-iframe" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid #222; border-radius: 8px;"></div>
                       </div>
                       
-                      <!-- Mensaje para IN_PRODUCTION -->
                       <div id="production-message" style="display:none; margin-top: 40px; padding: 30px; border: 1px solid #333; background: rgba(0,0,0,0.5);">
                           <h5 style="font-size: 12px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 2px; color: #fff;">Production in Progress</h5>
                           <p style="color: #fff; font-size: 14px; line-height: 1.6;">Your project is currently being edited. You will receive a notification when the preview is ready for review.</p>
@@ -130,7 +151,17 @@
                           
                           <div class="mb-4 py-3 border-top border-bottom" style="border-color: #333 !important;">
                               <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #fff;">Revisions</span>
-                              <h4 style="font-weight: 900; margin: 5px 0 0 0; color: #fff;">AVAILABLE: <span id="order-revisions" class="revision-badge">0</span></h4>
+                              
+                              <!-- Normal: Muestra el número -->
+                              <h4 id="revision-normal" style="font-weight: 900; margin: 5px 0 0 0; color: #fff; display: block;">
+                                AVAILABLE: <span id="order-revisions" class="revision-badge">0</span>
+                              </h4>
+                              
+                              <!-- Extra: Muestra el botón cuando es 0 -->
+                              <div id="revision-extra" style="display: none; margin-top: 8px;">
+                                <p style="font-size: 11px; color: #fff; margin: 0 0 8px 0; opacity: 0.7;">NO REVISIONS LEFT</p>
+                                <button class="btn-extra-revision" onclick="requestExtraRevision()">REQUEST EXTRA REVISION</button>
+                              </div>
                           </div>
 
                           <div class="mb-5">
@@ -216,10 +247,10 @@
 
             const categoria = (o.Categoria_Pago || "").toString();
             const estatus = (o.Estatus || "AWAITING_PAYMENT").toString();
+            const revisiones = parseInt(o.Revisiones) || 0;
             
             document.getElementById('order-main-title').innerText = "ORDER FOR " + (o.Cliente || "CLIENT");
             document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "No description available.");
-            document.getElementById('order-revisions').innerText = o.Revisiones || "0";
             document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
             
             let statusDisplay = estatus.replace(/_/g, ' ');
@@ -231,20 +262,26 @@
             document.getElementById('order-status-text').innerText = statusDisplay;
             document.getElementById('order-category').innerText = categoria || "PAYMENT";
 
+            // LÓGICA DE REVISIONES: Si es 0, muestra botón extra
+            if(revisiones === 0) {
+                document.getElementById('revision-normal').style.display = 'none';
+                document.getElementById('revision-extra').style.display = 'block';
+            } else {
+                document.getElementById('revision-normal').style.display = 'block';
+                document.getElementById('revision-extra').style.display = 'none';
+                document.getElementById('order-revisions').innerText = revisiones;
+            }
+
             renderContract(categoria);
 
-            // IN_PRODUCTION: Ocultar actions-area (pagos/subida) y mostrar mensaje
             if(estatus === 'IN_PRODUCTION') {
                 document.getElementById('actions-area').style.display = 'none';
                 document.getElementById('production-message').style.display = 'block';
             } 
-            // REVIEW: Solo mostrar preview si es Director's Cut o Legacy
             else if(estatus === 'REVIEW') {
-                // Ocultar pagos primero (ya están pagando en review)
                 document.getElementById('actions-area').style.display = 'none';
                 
                 const catUpper = categoria.toUpperCase();
-                // Solo Director's Cut o Legacy ven el preview
                 if((catUpper.includes('DIRECTOR') || catUpper.includes('LEGACY')) && o.Link_YouTube) {
                     document.getElementById('preview-box').style.display = 'block';
                     let videoUrl = o.Link_YouTube.toString();
@@ -258,14 +295,12 @@
                          style="position:absolute;top:0;left:0;width:100%;height:100%;" 
                          frameborder="0" allowfullscreen></iframe>`;
                 } else {
-                    // Para Premiere Pass u otros en REVIEW, mostrar mensaje diferente
                     document.getElementById('production-message').style.display = 'block';
                     document.getElementById('production-message').innerHTML = 
                         `<h5 style="font-size: 12px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 2px; color: #fff;">Under Review</h5>
                          <p style="color: #fff; font-size: 14px; line-height: 1.6;">Your project is being reviewed. You will receive the final files shortly.</p>`;
                 }
             } 
-            // COMPLETED: Botón de descarga
             else if(estatus === 'COMPLETED' && o.Link_Drive) {
                 document.getElementById('actions-area').innerHTML = 
                     `<a href="${o.Link_Drive}" target="_blank" class="btn-blackbear d-block text-center" 
@@ -274,7 +309,6 @@
                      <span style="font-size: 10px; font-weight: 400; color: #fff;">Click to get your final file</span>
                      </a>`;
             }
-            // AWAITING_PAYMENT: Verificar si ya subió comprobante
             else {
                 checkIfAlreadyUploaded(o);
             }
@@ -359,6 +393,14 @@
                 btn.disabled = true;
                 btn.onclick = null;
             }
+        }
+
+        function requestExtraRevision() {
+            // Aquí puedes poner: window.location.href = "https://wa.me/522211319056?text=Request%20extra%20revision%20for%20order%20" + orderId;
+            // O un mailto:
+            alert("Extra revision requested for Order " + orderId + ".\n\nContact us to proceed with payment.");
+            // Ejemplo de redirección a WhatsApp (descomenta la línea de abajo si quieres):
+            // window.open(`https://wa.me/522211319056?text=Hi!%20I%20need%20an%20extra%20revision%20for%20order%20${orderId}`, '_blank');
         }
 
         function handleFileSelected() {
