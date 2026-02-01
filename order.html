@@ -48,7 +48,7 @@
 
       /* MENSAJES DE ESPERA VERIFICACIÓN */
       .waiting-verification-msg {
-        padding: 25px;
+        padding: 30px;
         border: 2px solid #fff;
         background: rgba(255,255,255,0.05);
         text-align: center;
@@ -60,17 +60,19 @@
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 2px;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         color: #fff;
       }
       .waiting-verification-msg p {
         font-size: 12px;
         color: #999;
         margin: 0;
+        line-height: 1.5;
       }
-      .waiting-verification-msg .icon {
-        font-size: 24px;
-        margin-bottom: 10px;
+      .waiting-verification-msg .lock-icon {
+        font-size: 36px;
+        margin-bottom: 15px;
+        display: block;
       }
 
       .project-title-display { font-weight: 700; font-size: 1.8rem; color: #fff; margin-top: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; }
@@ -136,34 +138,6 @@
       #order-status-text { color: #fff; }
       #order-price { color: #fff; }
       .border-top, .border-bottom { border-color: #333 !important; }
-
-      /* Mensaje de bloqueo por comprobante enviado */
-      .payment-locked-msg {
-        background: rgba(255,255,255,0.05);
-        border: 2px solid #fff;
-        padding: 30px;
-        text-align: center;
-        border-radius: 8px;
-        margin-top: 20px;
-      }
-      .payment-locked-msg h3 {
-        font-size: 14px;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 10px;
-        color: #fff;
-      }
-      .payment-locked-msg p {
-        font-size: 12px;
-        color: #999;
-        margin: 0;
-      }
-      .payment-locked-msg .lock-icon {
-        font-size: 32px;
-        margin-bottom: 15px;
-        opacity: 0.5;
-      }
     </style>
 <base target="_blank">
 </head>
@@ -300,11 +274,11 @@
                                   <button class="btn-blackbear" id="upload-btn" onclick="submitFile()">SUBMIT PAYMENT</button>
                               </div>
 
-                              <!-- Mensaje cuando ya se envió comprobante (bloqueo) -->
+                              <!-- Mensaje bloqueo primer pago -->
                               <div id="first-payment-waiting" class="waiting-verification-msg" style="display: none;">
-                                <div class="icon">🔒</div>
+                                <span class="lock-icon">🔒</span>
                                 <h4>PAYMENT PROOF SENT</h4>
-                                <p>Your payment is under review.<br>Production will begin once verified.</p>
+                                <p>Your payment is under manual review by our team.<br>Production will begin once verified.<br><br><small>This may take a few hours during business days.</small></p>
                               </div>
                           </div>
 
@@ -316,11 +290,11 @@
                               <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()">REQUEST PROJECT START</button>
                               <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">As a LEGACY client, click above to begin production immediately.</p>
                               
-                              <!-- Mensaje de Legacy luego de solicitar -->
+                              <!-- Mensaje Legacy solicitado -->
                               <div id="legacy-requested-msg" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
-                                <div class="icon">✓</div>
+                                <span class="lock-icon">✓</span>
                                 <h4>PROJECT REQUESTED</h4>
-                                <p>Your project has been sent to production.</p>
+                                <p>Your project has been sent to production.<br>You will be notified when the preview is ready.</p>
                               </div>
                           </div>
 
@@ -368,13 +342,13 @@
 
                                   <!-- Mensaje bloqueo segundo pago -->
                                   <div id="second-payment-waiting" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
-                                    <div class="icon">🔒</div>
+                                    <span class="lock-icon">🔒</span>
                                     <h4>FINAL PAYMENT UNDER REVIEW</h4>
-                                    <p>Your final payment is being verified.<br>The master file will be available soon.</p>
+                                    <p>Your final payment is being verified manually.<br>The master file will be available once approved.<br><br><small>Do not refresh this page.</small></p>
                                   </div>
                               </div>
 
-                              <!-- Pago Legacy en Review (por si acaso) -->
+                              <!-- Pago Legacy en Review -->
                               <div class="second-payment-section" id="legacy-review-payment-section" style="display: none;">
                                   <h4>Upload Payment Proof</h4>
                                   <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">As a LEGACY client, upload your payment proof when ready.</p>
@@ -394,9 +368,9 @@
                                   </div>
 
                                   <div id="legacy-payment-waiting" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
-                                    <div class="icon">🔒</div>
+                                    <span class="lock-icon">🔒</span>
                                     <h4>PAYMENT RECEIVED</h4>
-                                    <p>Payment proof received and under review.</p>
+                                    <p>Payment proof received and under manual review.</p>
                                   </div>
                               </div>
                           </div>
@@ -438,7 +412,7 @@
         let currentOrderData = null;
         let currentCategory = "";
         let currentStatus = "";
-        let isSubmitting = false; // Flag para evitar doble envío
+        let isSubmitting = false;
 
         document.addEventListener('DOMContentLoaded', () => {
             if(!orderId) {
@@ -478,8 +452,8 @@
             document.getElementById('loading-view').style.display = 'none';
             document.getElementById('order-view').style.display = 'block';
 
-            const categoria = (o.Categoria_Pago || "").toString();
-            const estatus = (o.Estatus || "AWAITING_PAYMENT").toString();
+            const categoria = (o.Categoria_Pago || "").toString().trim();
+            const estatus = (o.Estatus || "AWAITING_PAYMENT").toString().trim();
             const revisiones = parseInt(o.Revisiones) || 0;
             
             currentCategory = categoria;
@@ -500,13 +474,42 @@
             document.getElementById('order-category').innerText = categoria || "PAYMENT";
 
             updateRevisionsDisplay(revisiones);
-            renderContract(categoria);
-            renderLegacyContract(categoria);
+            
+            // Verificar si hay bloqueos activos por verificación pendiente
+            const paymentLock = localStorage.getItem(`payment_lock_${orderId}`);
+            const hasComprobante1 = o.Comprobante_1 && o.Comprobante_1.startsWith('http') && o.Comprobante_1 !== '[Imagen]';
+            const hasComprobante2 = o.Comprobante_2 && o.Comprobante_2.startsWith('http') && o.Comprobante_2 !== '[Imagen]';
+            const catUpper = categoria.toUpperCase();
+            
+            // Lógica de override para evitar cambios automáticos del backend
+            let effectiveStatus = estatus;
+            
+            // Si hay lock de primer pago y aún no hay preview (YouTube link), forzar AWAITING_PAYMENT visual
+            if (paymentLock === 'first_pending' && !o.Link_YouTube) {
+                effectiveStatus = 'AWAITING_PAYMENT_LOCKED';
+            }
+            
+            // Si hay lock de segundo pago y aún no hay link de descarga, forzar REVIEW_LOCKED
+            if (paymentLock === 'second_pending' && !o.Link_Drive && catUpper.includes('DIRECTOR')) {
+                effectiveStatus = 'REVIEW_LOCKED';
+            }
+            
+            // También detectar sin localStorage: si hay comprobante1 pero no preview, es pending
+            if (hasComprobante1 && !o.Link_YouTube && (estatus === 'IN_PRODUCTION' || estatus === 'AWAITING_PAYMENT')) {
+                effectiveStatus = 'AWAITING_PAYMENT_LOCKED';
+            }
+            
+            // Si hay comprobante2 en Director's Cut pero no hay download link, está pendiente de verificación
+            if (hasComprobante2 && catUpper.includes('DIRECTOR') && !o.Link_Drive && estatus === 'COMPLETED') {
+                effectiveStatus = 'REVIEW_LOCKED';
+            }
 
-            if(estatus === 'COMPLETED') renderCompletedState(o);
-            else if(estatus === 'IN_PRODUCTION') renderInProductionState();
-            else if(estatus === 'REVIEW') renderReviewState(o, categoria, revisiones);
-            else if(estatus === 'AWAITING_PAYMENT') renderAwaitingPaymentState(o, categoria);
+            if(effectiveStatus === 'COMPLETED') renderCompletedState(o);
+            else if(effectiveStatus === 'IN_PRODUCTION') renderInProductionState();
+            else if(effectiveStatus === 'REVIEW') renderReviewState(o, categoria, revisiones);
+            else if(effectiveStatus === 'AWAITING_PAYMENT') renderAwaitingPaymentState(o, categoria);
+            else if(effectiveStatus === 'AWAITING_PAYMENT_LOCKED') renderAwaitingPaymentLocked(o, categoria);
+            else if(effectiveStatus === 'REVIEW_LOCKED') renderReviewLocked(o, categoria, revisiones);
         }
 
         function updateRevisionsDisplay(revisiones) {
@@ -521,9 +524,7 @@
         }
 
         function renderCompletedState(o) {
-            document.getElementById('actions-area').style.display = 'none';
-            document.getElementById('legacy-request-area').style.display = 'none';
-            document.getElementById('review-actions-area').style.display = 'none';
+            hideAllAreas();
             
             if(o.Link_YouTube) {
                 document.getElementById('preview-box').style.display = 'block';
@@ -578,23 +579,21 @@
                 completedDiv.appendChild(reviewBtn);
                 completedDiv.appendChild(reviewForm);
             }
+            
+            // Limpiar locks cuando esté completado realmente
+            localStorage.removeItem(`payment_lock_${orderId}`);
+            localStorage.removeItem(`legacy_requested_${orderId}`);
         }
 
         function renderInProductionState() {
-            document.getElementById('actions-area').style.display = 'none';
-            document.getElementById('legacy-request-area').style.display = 'none';
-            document.getElementById('review-actions-area').style.display = 'none';
-            document.getElementById('completed-actions').style.display = 'none';
+            hideAllAreas();
             document.getElementById('production-message').style.display = 'block';
         }
 
         function renderReviewState(o, categoria, revisiones) {
+            hideAllAreas();
             const catUpper = categoria.toUpperCase();
             
-            document.getElementById('actions-area').style.display = 'none';
-            document.getElementById('legacy-request-area').style.display = 'none';
-            document.getElementById('completed-actions').style.display = 'none';
-            document.getElementById('production-message').style.display = 'none';
             document.getElementById('review-actions-area').style.display = 'block';
             
             if(o.Link_YouTube) {
@@ -616,97 +615,163 @@
                 noRevisionsMsg.style.display = 'block';
             }
             
+            // Resetear displays específicos
+            document.getElementById('second-payment-section').style.display = 'none';
+            document.getElementById('legacy-review-payment-section').style.display = 'none';
+            document.getElementById('accept-video-btn').style.display = 'none';
+            
             if(catUpper.includes('PREMIERE')) {
-                // Premiere Pass: Botón aceptar video (ya pagó todo)
                 document.getElementById('accept-video-btn').style.display = 'block';
-                document.getElementById('second-payment-section').style.display = 'none';
-                document.getElementById('legacy-review-payment-section').style.display = 'none';
             } else if(catUpper.includes('DIRECTOR')) {
-                // Director's Cut: Segundo pago requerido
+                document.getElementById('second-payment-section').style.display = 'block';
+                // Verificar si ya se envió segundo comprobante pero aún no se aprueba
+                if (o.Comprobante_2 && o.Comprobante_2.startsWith('http') && o.Comprobante_2 !== '[Imagen]') {
+                    showSecondPaymentWaiting();
+                } else {
+                    showSecondPaymentForm();
+                }
+            } else if(catUpper.includes('LEGACY')) {
+                document.getElementById('legacy-review-payment-section').style.display = 'block';
+                if (o.Comprobante_1 && o.Comprobante_1.startsWith('http') && o.Comprobante_1 !== '[Imagen]') {
+                    showLegacyPaymentWaiting();
+                } else {
+                    showLegacyPaymentForm();
+                }
+            }
+        }
+
+        // NUEVO: Estado intermedio para Director's Cut con segundo pago pendiente de verificar
+        function renderReviewLocked(o, categoria, revisiones) {
+            hideAllAreas();
+            const catUpper = categoria.toUpperCase();
+            
+            // Mostrar preview si existe
+            if(o.Link_YouTube) {
+                document.getElementById('preview-box').style.display = 'block';
+                let videoUrl = getEmbedUrl(o.Link_YouTube);
+                document.getElementById('video-iframe').innerHTML = 
+                    `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
+            }
+            
+            document.getElementById('review-actions-area').style.display = 'block';
+            
+            // Ocultar botones de cambios si no hay revisiones
+            const changesBtn = document.getElementById('request-changes-btn');
+            if(revisiones > 0) {
+                changesBtn.style.display = 'inline-block';
+                document.getElementById('no-revisions-msg').style.display = 'none';
+            } else {
+                changesBtn.style.display = 'none';
+                document.getElementById('no-revisions-msg').style.display = 'block';
+            }
+            
+            // Solo para Director's Cut: mostrar mensaje de espera de segundo pago
+            if(catUpper.includes('DIRECTOR')) {
                 document.getElementById('accept-video-btn').style.display = 'none';
                 document.getElementById('second-payment-section').style.display = 'block';
                 document.getElementById('legacy-review-payment-section').style.display = 'none';
                 
-                // Verificar si ya envió segundo comprobante
-                checkSecondPaymentStatus(o);
-            } else if(catUpper.includes('LEGACY')) {
-                // Legacy: Pago flexible
-                document.getElementById('accept-video-btn').style.display = 'none';
-                document.getElementById('second-payment-section').style.display = 'none';
-                document.getElementById('legacy-review-payment-section').style.display = 'block';
-                checkLegacyPaymentStatus(o);
+                // SIEMPRE mostrar el mensaje de espera en modo locked
+                showSecondPaymentWaiting();
+            } else {
+                // Para otros, comportamiento normal de review
+                renderReviewState(o, categoria, revisiones);
             }
         }
 
         function renderAwaitingPaymentState(o, categoria) {
-            const catUpper = categoria.toUpperCase();
-            const comprobante1 = o.Comprobante_1 || "";
-            const tieneComprobante = comprobante1 && comprobante1.startsWith('http') && comprobante1 !== '[Imagen]';
+            hideAllAreas();
+            const catUpper = categoria.toUpperCase().trim();
             
-            document.getElementById('production-message').style.display = 'none';
-            document.getElementById('completed-actions').style.display = 'none';
-            document.getElementById('review-actions-area').style.display = 'none';
+            console.log("Rendering AWAITING_PAYMENT for category:", catUpper);
             
-            if(catUpper.includes('LEGACY')) {
-                // LEGACY: Solo mostrar contrato y botón de solicitud
+            // Verificar si es LEGACY - debe ser condición exacta
+            if(catUpper === 'LEGACY' || catUpper.includes('LEGACY')) {
+                console.log("Detected LEGACY status");
                 document.getElementById('actions-area').style.display = 'none';
                 document.getElementById('legacy-request-area').style.display = 'block';
                 
-                // Si ya solicitó el proyecto (verificar por estado o localStorage)
+                // Verificar si ya solicitó el proyecto
                 const requested = localStorage.getItem(`legacy_requested_${orderId}`) || o.Estatus === 'IN_PRODUCTION';
                 if(requested) {
                     document.getElementById('request-project-btn').style.display = 'none';
                     document.getElementById('legacy-requested-msg').style.display = 'block';
+                } else {
+                    document.getElementById('request-project-btn').style.display = 'block';
+                    document.getElementById('legacy-requested-msg').style.display = 'none';
                 }
+                
+                renderLegacyContract(categoria);
             } else {
                 // Premiere Pass o Director's Cut
+                console.log("Detected regular category (Premiere/Director)");
                 document.getElementById('actions-area').style.display = 'block';
                 document.getElementById('legacy-request-area').style.display = 'none';
                 
-                if (tieneComprobante) {
-                    // Si ya hay comprobante, mostrar mensaje de espera y bloquear form
-                    blockActionsAreaForWaiting();
+                // Verificar si hay comprobante pendiente (por si el localStorage se perdió pero hay datos)
+                if (o.Comprobante_1 && o.Comprobante_1.startsWith('http') && o.Comprobante_1 !== '[Imagen]') {
+                    showFirstPaymentWaiting();
                 } else {
-                    // Si no hay comprobante, mostrar formulario normal
-                    unblockActionsArea();
+                    showFirstPaymentForm();
                 }
+                
+                renderContract(categoria);
             }
         }
 
-        function blockActionsAreaForWaiting() {
-            document.getElementById('payment-form-content').style.display = 'none';
-            document.getElementById('first-payment-waiting').style.display = 'block';
+        // NUEVO: Vista bloqueada para primer pago enviado (evita salto a IN_PRODUCTION)
+        function renderAwaitingPaymentLocked(o, categoria) {
+            hideAllAreas();
+            const catUpper = categoria.toUpperCase();
+            
+            // Similar a AWAITING_PAYMENT pero forzando el mensaje de espera
+            if(catUpper.includes('LEGACY')) {
+                document.getElementById('legacy-request-area').style.display = 'block';
+                document.getElementById('request-project-btn').style.display = 'none';
+                document.getElementById('legacy-requested-msg').style.display = 'block';
+            } else {
+                document.getElementById('actions-area').style.display = 'block';
+                showFirstPaymentWaiting();
+            }
         }
 
-        function unblockActionsArea() {
+        function hideAllAreas() {
+            document.getElementById('actions-area').style.display = 'none';
+            document.getElementById('legacy-request-area').style.display = 'none';
+            document.getElementById('review-actions-area').style.display = 'none';
+            document.getElementById('completed-actions').style.display = 'none';
+            document.getElementById('production-message').style.display = 'none';
+            document.getElementById('preview-box').style.display = 'none';
+        }
+
+        function showFirstPaymentForm() {
             document.getElementById('payment-form-content').style.display = 'block';
             document.getElementById('first-payment-waiting').style.display = 'none';
         }
 
-        function checkSecondPaymentStatus(o) {
-            const comprobante2 = o.Comprobante_2 || "";
-            const tieneComprobante2 = comprobante2 && comprobante2.startsWith('http') && comprobante2 !== '[Imagen]';
-            
-            if (tieneComprobante2) {
-                document.getElementById('second-payment-form').style.display = 'none';
-                document.getElementById('second-payment-waiting').style.display = 'block';
-            } else {
-                document.getElementById('second-payment-form').style.display = 'block';
-                document.getElementById('second-payment-waiting').style.display = 'none';
-            }
+        function showFirstPaymentWaiting() {
+            document.getElementById('payment-form-content').style.display = 'none';
+            document.getElementById('first-payment-waiting').style.display = 'block';
         }
 
-        function checkLegacyPaymentStatus(o) {
-            const comprobante1 = o.Comprobante_1 || "";
-            const tieneComprobante = comprobante1 && comprobante1.startsWith('http') && comprobante1 !== '[Imagen]';
-            
-            if (tieneComprobante) {
-                document.getElementById('legacy-payment-form').style.display = 'none';
-                document.getElementById('legacy-payment-waiting').style.display = 'block';
-            } else {
-                document.getElementById('legacy-payment-form').style.display = 'block';
-                document.getElementById('legacy-payment-waiting').style.display = 'none';
-            }
+        function showSecondPaymentForm() {
+            document.getElementById('second-payment-form').style.display = 'block';
+            document.getElementById('second-payment-waiting').style.display = 'none';
+        }
+
+        function showSecondPaymentWaiting() {
+            document.getElementById('second-payment-form').style.display = 'none';
+            document.getElementById('second-payment-waiting').style.display = 'block';
+        }
+
+        function showLegacyPaymentForm() {
+            document.getElementById('legacy-payment-form').style.display = 'block';
+            document.getElementById('legacy-payment-waiting').style.display = 'none';
+        }
+
+        function showLegacyPaymentWaiting() {
+            document.getElementById('legacy-payment-form').style.display = 'none';
+            document.getElementById('legacy-payment-waiting').style.display = 'block';
         }
 
         function getEmbedUrl(youtubeUrl) {
@@ -728,7 +793,7 @@
                 html = `<strong>PREMIERE PASS AGREEMENT:</strong><br>
                         <span style="color: #fff;">100% Upfront Payment</span><br>
                         Pay in full to start production and receive your final product with no remaining balance.<br><br>
-                        1. Full payment validates immediate project start.<br>
+                        1. Full payment validates immediate project start after manual verification.<br>
                         2. Master file delivered watermark-free with no outstanding balance.<br>
                         3. Client is entitled to revisions as specified in the order.<br>
                         4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
@@ -736,17 +801,9 @@
                 html = `<strong>DIRECTOR'S CUT AGREEMENT:</strong><br>
                         <span style="color: #fff;">50/50 Payment Split</span><br>
                         50% deposit to begin; remaining 50% balance to unlock the Master file (no watermarks).<br><br>
-                        1. 50% deposit validates project start and is non-refundable.<br>
+                        1. 50% deposit validates project start after manual verification.<br>
                         2. Final Master file delivered upon payment of remaining 50% balance.<br>
                         3. Client is entitled to revisions as specified in the order.<br>
-                        4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
-            } else if (cat.includes('LEGACY')) {
-                html = `<strong>LEGACY STATUS AGREEMENT:</strong><br>
-                        <span style="color: #fff;">VIP Priority Access</span><br>
-                        Exclusive terms and priority delivery reserved for returning and high-volume clients.<br><br>
-                        1. Exclusive terms and guaranteed priority delivery.<br>
-                        2. Payment flexibility: submit proof of payment in parts or at a later date.<br>
-                        3. Direct access to production team and priority support.<br>
                         4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
             } else {
                 html = `<strong>STANDARD SERVICE AGREEMENT:</strong><br>
@@ -772,8 +829,6 @@
                         2. Payment flexibility: submit proof of payment in parts or at a later date.<br>
                         3. Direct access to production team and priority support.<br>
                         4. BlackBear retains portfolio rights unless NDA agreement is signed.`;
-            } else {
-                contractBox.innerHTML = renderContract(categoria);
             }
         }
 
@@ -885,7 +940,7 @@
         }
 
         function submitSecondPayment() {
-            if(isSubmitting) return; // Evitar doble click
+            if(isSubmitting) return;
             isSubmitting = true;
             
             const file = document.getElementById('secondFileInput').files[0];
@@ -915,11 +970,10 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        alert("Final payment received! Under review...");
-                        // Mostrar mensaje de espera inmediatamente sin esperar reload
-                        document.getElementById('second-payment-form').style.display = 'none';
-                        document.getElementById('second-payment-waiting').style.display = 'block';
-                        setTimeout(() => fetchOrderData(), 2000);
+                        // GUARDAR LOCK para evitar salto a COMPLETED
+                        localStorage.setItem(`payment_lock_${orderId}`, 'second_pending');
+                        alert("Final payment received! Under manual review...");
+                        showSecondPaymentWaiting();
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
@@ -975,8 +1029,7 @@
                     
                     if(result.result === "success") {
                         alert("Payment proof received! Thank you.");
-                        document.getElementById('legacy-payment-form').style.display = 'none';
-                        document.getElementById('legacy-payment-waiting').style.display = 'block';
+                        showLegacyPaymentWaiting();
                         setTimeout(() => fetchOrderData(), 2000);
                     } else {
                         throw new Error(result.message || "Unknown error");
@@ -1015,18 +1068,14 @@
             const btn = document.querySelector('.review-form button');
             btn.innerText = "SENDING...";
             btn.disabled = true;
-            btn.style.cursor = "not-allowed";
             
-            // IMPORTANTE: Agregar action para que el Apps Script sepa qué hacer
             const formData = new URLSearchParams();
-            formData.append('action', 'submitReview'); // Agregar esta línea en tu Apps Script
+            formData.append('action', 'submitReview');
             formData.append('nombre', reviewerName);           
             formData.append('pais', reviewerCountry);          
             formData.append('texto', reviewText);              
             formData.append('fecha', new Date().toISOString()); 
             formData.append('orderId', orderId);               
-            
-            console.log("Enviando review a:", REVIEWS_SCRIPT_URL);
             
             fetch(REVIEWS_SCRIPT_URL, { 
                 method: 'POST', 
@@ -1035,40 +1084,28 @@
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
-            .then(response => {
-                console.log("Response status:", response.status);
-                return response.text(); 
-            })
+            .then(response => response.text())
             .then(text => {
-                console.log("Response text:", text);
                 try {
                     return JSON.parse(text);
                 } catch (e) {
-                    console.log("Respuesta no es JSON:", text);
-                    return { result: "success" }; 
+                    return { result: "success" };
                 }
             })
             .then(result => {
-                console.log("Resultado:", result);
                 if(result.result === "success" || result.status === "ok" || !result.error) {
                     localStorage.setItem(`review_sent_${orderId}`, 'true');
                     document.getElementById('review-success-msg').style.display = 'inline';
-                    setTimeout(() => { 
-                        window.location.reload(); 
-                    }, 2000);
+                    setTimeout(() => { window.location.reload(); }, 2000);
                 } else {
                     throw new Error(result.message || "Error al guardar");
                 }
             })
             .catch(err => {
-                console.error("Error en fetch:", err);
-                // Fallback: asumir éxito para no bloquear al usuario
+                console.error("Error:", err);
                 localStorage.setItem(`review_sent_${orderId}`, 'true');
                 document.getElementById('review-success-msg').style.display = 'inline';
-                document.getElementById('review-success-msg').innerText = "✓ Review submitted! (Processing...)";
-                setTimeout(() => { 
-                    window.location.reload(); 
-                }, 2000);
+                setTimeout(() => { window.location.reload(); }, 2000);
             });
         }
 
@@ -1082,7 +1119,7 @@
         }
 
         async function submitFile() {
-            if(isSubmitting) return; // Bloquear doble envío
+            if(isSubmitting) return;
             isSubmitting = true;
             
             const check = document.getElementById('accept-check');
@@ -1118,10 +1155,10 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        alert("Payment proof sent! Under review...");
-                        // Mostrar bloqueo inmediatamente sin esperar reload
-                        blockActionsAreaForWaiting();
-                        setTimeout(() => fetchOrderData(), 2000);
+                        // GUARDAR LOCK para evitar salto automático a IN_PRODUCTION
+                        localStorage.setItem(`payment_lock_${orderId}`, 'first_pending');
+                        alert("Payment proof sent! Under manual review...");
+                        showFirstPaymentWaiting();
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
