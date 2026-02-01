@@ -38,7 +38,7 @@
 
       .btn-request-project { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
       .btn-request-project:hover { background: #ccc; transform: translateY(-2px); }
-      .btn-request-project:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
+      .btn-request-project:disabled { background: #333; color: #666; cursor: not-allowed; }
 
       .btn-accept-video { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 15px; }
       .btn-accept-video:hover { background: #ccc; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
@@ -50,7 +50,6 @@
       .binance-modal h3 { color: #F3BA2F; font-size: 18px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
       .binance-data { background: #000; border: 1px solid #333; padding: 20px; margin-bottom: 20px; text-align: left; }
       .binance-data p { margin: 5px 0; font-size: 13px; color: #fff; }
-      .binance-data strong { color: #F3BA2F; }
       .close-modal { background: #333; color: #fff; border: none; padding: 10px 20px; margin-top: 10px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
       .close-modal:hover { background: #555; }
 
@@ -207,7 +206,7 @@
                       
                       <div id="production-message" style="display:none; margin-top: 40px; padding: 30px; border: 1px solid #333; background: rgba(0,0,0,0.5);">
                           <h5 style="font-size: 12px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 2px;">Production in Progress</h5>
-                          <p style="font-size: 14px; line-height: 1.6; color: #ccc;">Your project is currently being edited. You will receive a notification when the preview is ready for review.</p>
+                          <p style="font-size: 14px; line-height: 1.6; color: #ccc;">Your project is currently being edited in queue order. You will receive a notification when the preview is ready for review.</p>
                       </div>
                   </div>
 
@@ -238,7 +237,7 @@
 
                           <!-- ÁREA AWAITING_PAYMENT (Premiere y Director) -->
                           <div id="actions-area">
-                              <!-- Formulario normal -->
+                              <!-- Formulario de pago -->
                               <div id="payment-form-content">
                                   <div class="pay-grid" id="main-pay-grid">
                                       <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
@@ -263,11 +262,11 @@
                                   <button class="btn-blackbear" id="upload-btn" onclick="submitFile()" disabled>SUBMIT PAYMENT</button>
                               </div>
 
-                              <!-- Mensaje cuando ya envió comprobante (mismo estado AWAITING_PAYMENT pero bloqueado) -->
+                              <!-- Mensaje comprobante enviado (AWAITING_PAYMENT bloqueado) -->
                               <div id="first-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                 <span class="lock-icon">🔒</span>
                                 <h4>PAYMENT PROOF SENT</h4>
-                                <p>Your payment proof has been received and is pending verification.<br><br>Status remains AWAITING_PAYMENT until administrator approval.</p>
+                                <p>Your payment proof has been received.<br><br>Status: AWAITING_PAYMENT<br>Waiting for administrator verification.<br><br><small>Projects are handled in order of request and payment verification.</small></p>
                               </div>
                           </div>
 
@@ -284,14 +283,7 @@
                               </div>
                               
                               <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()" disabled>REQUEST PROJECT START</button>
-                              <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">As a LEGACY client, click above to begin production immediately after accepting terms.</p>
-                              
-                              <!-- Mensaje Legacy solicitado (YA lo solicitó, esperando que admin lo mueva a IN_PRODUCTION) -->
-                              <div id="legacy-requested-msg" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
-                                <span class="lock-icon">✓</span>
-                                <h4>PROJECT REQUESTED</h4>
-                                <p>Request sent. Status remains AWAITING_PAYMENT until administrator moves it to production.</p>
-                              </div>
+                              <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">Projects are produced in order of request. Legacy clients receive priority queue placement.</p>
                           </div>
 
                           <!-- ÁREA REVIEW -->
@@ -316,10 +308,10 @@
                                   ACCEPT VIDEO
                               </button>
 
-                              <!-- Segundo pago Director's Cut -->
+                              <!-- Segundo pago Director's Cut (MANUAL - espera verificación admin) -->
                               <div class="second-payment-section" id="second-payment-section" style="display: none;">
                                   <h4>Final Payment Required</h4>
-                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Upload the second payment proof to complete the order.</p>
+                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Upload the second payment proof. Administrator verification required to unlock master file.</p>
                                   
                                   <div id="second-payment-form">
                                       <div class="pay-grid" style="margin-bottom: 15px;">
@@ -335,15 +327,15 @@
                                       <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
                                   </div>
 
-                                  <!-- Mensaje espera segundo pago (sigue en REVIEW, no salta a COMPLETED) -->
+                                  <!-- Mensaje espera segundo pago -->
                                   <div id="second-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                     <span class="lock-icon">🔒</span>
                                     <h4>FINAL PAYMENT SENT</h4>
-                                    <p>Second payment proof received.<br><br>Status remains UNDER REVIEW until administrator approval.</p>
+                                    <p>Second payment proof received.<br><br>Status: UNDER REVIEW<br>Waiting for administrator verification to complete order.</p>
                                   </div>
                               </div>
 
-                              <!-- Pago Legacy en Review -->
+                              <!-- Pago Legacy en Review (opcional) -->
                               <div class="second-payment-section" id="legacy-review-payment-section" style="display: none;">
                                   <h4>Optional Payment</h4>
                                   <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Submit your payment proof when ready.</p>
@@ -462,25 +454,20 @@
 
             updateRevisionsDisplay(revisiones);
 
-            // CONTROL MANUAL - El Excel decide el estado, pero usamos sessionStorage para saber si el usuario ya envió comprobante
-                
-            // 1. LEGACY STATUS en AWAITING_PAYMENT
+            // RENDER POR ESTADO EXACTO DEL EXCEL
+            
             if (estatus === 'AWAITING_PAYMENT' && catUpper.includes('LEGACY')) {
                 renderLegacyArea(o);
             }
-            // 2. PREMIERE/DIRECTOR en AWAITING_PAYMENT
             else if (estatus === 'AWAITING_PAYMENT') {
                 renderAwaitingPaymentArea(o, catUpper);
             }
-            // 3. IN_PRODUCTION (Control manual del admin)
             else if (estatus === 'IN_PRODUCTION') {
                 renderProductionArea();
             }
-            // 4. REVIEW (Control manual del admin)
             else if (estatus === 'REVIEW') {
                 renderReviewArea(o, catUpper, revisiones);
             }
-            // 5. COMPLETED (Control manual del admin)
             else if (estatus === 'COMPLETED') {
                 renderCompletedArea(o);
             }
@@ -503,17 +490,10 @@
             document.getElementById('legacy-request-area').style.display = 'block';
             document.getElementById('legacy-contract-content').innerHTML = renderLegacyContractText();
             
-            // Verificar si ya solicitó (para mostrar mensaje de espera)
-            const requested = sessionStorage.getItem(`legacy_requested_${orderId}`);
-            if(requested) {
-                document.getElementById('request-project-btn').style.display = 'none';
-                document.querySelector('#legacy-request-area .accept-wrap').style.display = 'none';
-                document.getElementById('legacy-requested-msg').style.display = 'block';
-            } else {
-                document.getElementById('request-project-btn').style.display = 'block';
-                document.getElementById('legacy-requested-msg').style.display = 'none';
-                toggleLegacyButton();
-            }
+            // Si es Legacy y está en AWAITING_PAYMENT, siempre mostrar el formulario (no hay "espera" porque al hacer clic pasa automático a producción)
+            document.getElementById('request-project-btn').style.display = 'block';
+            document.querySelector('#legacy-request-area .accept-wrap').style.display = 'block';
+            toggleLegacyButton();
         }
 
         // PREMIERE / DIRECTOR en AWAITING_PAYMENT
@@ -522,15 +502,13 @@
             document.getElementById('actions-area').style.display = 'block';
             document.getElementById('contract-content').innerHTML = renderContractText(catUpper);
             
-            // Verificar si ya envió comprobante (para mostrar bloqueo pero mantener estado AWAITING_PAYMENT)
-            const sent = sessionStorage.getItem(`comprobante1_sent_${orderId}`);
+            // Verificar si ya envió comprobante (sessionStorage temporal solo para no perder la vista al recargar antes de que el admin procese)
+            const sent = sessionStorage.getItem(`comprobante1_${orderId}`);
             
             if(sent) {
-                // Mostrar mensaje de espera - el estado sigue siendo AWAITING_PAYMENT hasta que el admin lo mueva manualmente
                 document.getElementById('payment-form-content').style.display = 'none';
                 document.getElementById('first-payment-waiting').style.display = 'block';
             } else {
-                // Mostrar formulario
                 document.getElementById('payment-form-content').style.display = 'block';
                 document.getElementById('first-payment-waiting').style.display = 'none';
                 toggleSubmitButton();
@@ -541,8 +519,7 @@
             hideAllAreas();
             document.getElementById('production-message').style.display = 'block';
             // Limpiar sessionStorage de primer pago ya que ya está en producción
-            sessionStorage.removeItem(`comprobante1_sent_${orderId}`);
-            sessionStorage.removeItem(`legacy_requested_${orderId}`);
+            sessionStorage.removeItem(`comprobante1_${orderId}`);
         }
 
         function renderReviewArea(o, catUpper, revisiones) {
@@ -571,18 +548,17 @@
             document.getElementById('second-payment-section').style.display = 'none';
             document.getElementById('legacy-review-payment-section').style.display = 'none';
             
-            // PREMIERE: Botón aceptar video
+            // PREMIERE: Botón aceptar video (AUTOMÁTICO A COMPLETED)
             if(catUpper.includes('PREMIERE')) {
                 document.getElementById('accept-video-btn').style.display = 'block';
             }
-            // DIRECTOR: Segundo pago
+            // DIRECTOR: Segundo pago (MANUAL - espera verificación admin)
             else if(catUpper.includes('DIRECTOR')) {
                 document.getElementById('second-payment-section').style.display = 'block';
                 
                 // Verificar si ya envió segundo comprobante
-                const secondSent = sessionStorage.getItem(`comprobante2_sent_${orderId}`);
+                const secondSent = sessionStorage.getItem(`comprobante2_${orderId}`);
                 if(secondSent) {
-                    // Mostrar espera - el estado sigue siendo REVIEW hasta que admin lo mueva a COMPLETED
                     document.getElementById('second-payment-form').style.display = 'none';
                     document.getElementById('second-payment-waiting').style.display = 'block';
                 } else {
@@ -590,10 +566,10 @@
                     document.getElementById('second-payment-waiting').style.display = 'none';
                 }
             }
-            // LEGACY: Pago opcional
+            // LEGACY: Pago opcional en review
             else if(catUpper.includes('LEGACY')) {
                 document.getElementById('legacy-review-payment-section').style.display = 'block';
-                const legacySent = sessionStorage.getItem(`legacy_payment_sent_${orderId}`);
+                const legacySent = sessionStorage.getItem(`legacy_pay_${orderId}`);
                 if(legacySent) {
                     document.getElementById('legacy-payment-form').style.display = 'none';
                     document.getElementById('legacy-payment-waiting').style.display = 'block';
@@ -630,7 +606,7 @@
             completedDiv.appendChild(downloadBtn);
             
             // Review
-            if(!sessionStorage.getItem(`review_sent_${orderId}`)) {
+            if(!sessionStorage.getItem(`review_${orderId}`)) {
                 const reviewBtn = document.createElement('button');
                 reviewBtn.className = 'btn-outline-light';
                 reviewBtn.innerText = 'LEAVE A REVIEW';
@@ -656,11 +632,10 @@
                 completedDiv.appendChild(msg);
             }
             
-            // Limpiar todos los locks
-            sessionStorage.removeItem(`comprobante1_sent_${orderId}`);
-            sessionStorage.removeItem(`comprobante2_sent_${orderId}`);
-            sessionStorage.removeItem(`legacy_requested_${orderId}`);
-            sessionStorage.removeItem(`legacy_payment_sent_${orderId}`);
+            // Limpiar todos los sessionStorage
+            sessionStorage.removeItem(`comprobante1_${orderId}`);
+            sessionStorage.removeItem(`comprobante2_${orderId}`);
+            sessionStorage.removeItem(`legacy_pay_${orderId}`);
         }
 
         function hideAllAreas() {
@@ -673,34 +648,32 @@
         }
 
         function renderContractText(cat) {
+            // Textos actualizados mencionando orden de producción
             if (cat.includes('PREMIERE')) {
                 return `<strong>PREMIERE PASS AGREEMENT:</strong><br>
-                        <span style="color: #fff;">100% Upfront Payment</span><br>
-                        Pay in full to start production.<br><br>
-                        1. Full payment validates immediate project start after manual verification.<br>
-                        2. Master file delivered watermark-free.<br>
-                        3. Client is entitled to revisions as specified.<br>
-                        4. BlackBear retains portfolio rights.`;
+                        <span style="color: #fff;">100% Upfront Payment | Priority Queue</span><br><br>
+                        1. Full payment required to enter production queue.<br>
+                        2. Projects are completed in order of payment verification.<br>
+                        3. Upon acceptance in Review, order completes automatically.<br>
+                        4. Master file delivered watermark-free immediately upon acceptance.`;
             } else if (cat.includes('DIRECTOR')) {
                 return `<strong>DIRECTOR'S CUT AGREEMENT:</strong><br>
-                        <span style="color: #fff;">50/50 Payment Split</span><br>
-                        50% deposit to begin; 50% to unlock Master file.<br><br>
-                        1. Deposit validates project start after manual verification.<br>
-                        2. Final payment required for Master file.<br>
-                        3. Client is entitled to revisions.<br>
-                        4. BlackBear retains portfolio rights.`;
+                        <span style="color: #fff;">50/50 Payment Split | Standard Queue</span><br><br>
+                        1. 50% deposit required to enter production queue.<br>
+                        2. Projects are completed in order of deposit verification.<br>
+                        3. Final 50% required to unlock Master file after admin verification.<br>
+                        4. Review stage allows revision requests before final payment.`;
             }
             return `<strong>SERVICE AGREEMENT:</strong><br>Standard terms apply.`;
         }
 
         function renderLegacyContractText() {
             return `<strong>LEGACY STATUS AGREEMENT:</strong><br>
-                    <span style="color: #fff;">VIP Priority Access</span><br>
-                    Exclusive terms for returning clients.<br><br>
-                    1. Priority delivery guaranteed.<br>
-                    2. Flexible payment terms.<br>
-                    3. Direct access to production team.<br>
-                    4. BlackBear retains portfolio rights.`;
+                    <span style="color: #fff;">VIP Priority Queue | Flexible Terms</span><br><br>
+                    1. Immediate priority queue placement upon request.<br>
+                    2. Production begins automatically upon clicking "Request Project Start".<br>
+                    3. Payment may be submitted before, during, or after production.<br>
+                    4. Guaranteed delivery time regardless of standard queue.`;
         }
 
         function getEmbedUrl(url) {
@@ -720,6 +693,38 @@
             if(btn) btn.disabled = !(check && check.checked);
         }
 
+        // 1. LEGACY REQUEST - AUTOMÁTICO A IN_PRODUCTION
+        function requestLegacyProject() {
+            const check = document.getElementById('legacy-accept-check');
+            if(!check.checked) {
+                alert("You must accept the terms and conditions.");
+                return;
+            }
+            
+            if(!confirm("Request project start? Production will begin immediately.")) return;
+            
+            const btn = document.getElementById('request-project-btn');
+            btn.innerText = "STARTING PRODUCTION...";
+            btn.disabled = true;
+            
+            const formData = new URLSearchParams();
+            formData.append('action', 'requestLegacyProject');
+            formData.append('orderId', orderId);
+            
+            fetch(SCRIPT_URL, { method: 'POST', body: formData })
+                .then(r => r.json())
+                .then(result => {
+                    if(result.result === "success") {
+                        // AUTOMÁTICO: Al recargar estará en IN_PRODUCTION
+                        window.location.reload();
+                    }
+                }).catch(err => {
+                    alert("Error: " + err.message);
+                    btn.innerText = "REQUEST PROJECT START";
+                    btn.disabled = false;
+                });
+        }
+
         function handleFileSelected() {
             const file = document.getElementById('fileInput').files[0];
             if(file) {
@@ -733,6 +738,7 @@
             }
         }
 
+        // Primer pago - Manual (espera verificación admin)
         async function submitFile() {
             if(isSubmitting) return;
             isSubmitting = true;
@@ -746,9 +752,8 @@
 
             const reader = new FileReader();
             reader.onload = async (e) => {
-                const base64 = e.target.result.split(',')[1];
                 const formData = new URLSearchParams();
-                formData.append('fileBase64', base64);
+                formData.append('fileBase64', e.target.result.split(',')[1]);
                 formData.append('mimeType', file.type);
                 formData.append('fileName', `Order_${orderId}_payment`);
                 formData.append('orderId', orderId);
@@ -758,14 +763,10 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        // Marcar como enviado pero NO cambiar estado - el admin controla eso en el Excel
-                        sessionStorage.setItem(`comprobante1_sent_${orderId}`, 'true');
-                        
-                        // Mostrar vista de espera manteniendo AWAITING_PAYMENT
+                        sessionStorage.setItem(`comprobante1_${orderId}`, 'true');
+                        // Mostrar espera - el admin debe mover a IN_PRODUCTION manualmente
                         document.getElementById('payment-form-content').style.display = 'none';
                         document.getElementById('first-payment-waiting').style.display = 'block';
-                    } else {
-                        throw new Error(result.message);
                     }
                 } catch (err) {
                     alert("Error: " + err.message);
@@ -777,11 +778,12 @@
             reader.readAsDataURL(file);
         }
 
+        // 2. PREMIERE ACCEPT - AUTOMÁTICO A COMPLETED
         function acceptVideo() {
-            if(!confirm("Accept video? This will complete the project.")) return;
+            if(!confirm("Accept video? This will complete the project and unlock the download immediately.")) return;
             
             const btn = document.getElementById('accept-video-btn');
-            btn.innerText = "PROCESSING...";
+            btn.innerText = "COMPLETING ORDER...";
             btn.disabled = true;
             
             const formData = new URLSearchParams();
@@ -792,45 +794,12 @@
                 .then(r => r.json())
                 .then(result => {
                     if(result.result === "success") {
+                        // AUTOMÁTICO: Recargar y estará en COMPLETED
                         window.location.reload();
                     }
                 }).catch(err => {
                     alert("Error: " + err.message);
                     btn.innerText = "ACCEPT VIDEO";
-                    btn.disabled = false;
-                });
-        }
-
-        function requestLegacyProject() {
-            const check = document.getElementById('legacy-accept-check');
-            if(!check.checked) {
-                alert("You must accept the terms and conditions.");
-                return;
-            }
-            
-            if(!confirm("Request project start?")) return;
-            
-            const btn = document.getElementById('request-project-btn');
-            btn.innerText = "SENDING...";
-            btn.disabled = true;
-            
-            const formData = new URLSearchParams();
-            formData.append('action', 'requestLegacyProject');
-            formData.append('orderId', orderId);
-            
-            fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(r => r.json())
-                .then(result => {
-                    if(result.result === "success") {
-                        sessionStorage.setItem(`legacy_requested_${orderId}`, 'true');
-                        // Mantener AWAITING_PAYMENT visual, solo cambiar UI interna
-                        document.getElementById('request-project-btn').style.display = 'none';
-                        document.querySelector('#legacy-request-area .accept-wrap').style.display = 'none';
-                        document.getElementById('legacy-requested-msg').style.display = 'block';
-                    }
-                }).catch(err => {
-                    alert("Error: " + err.message);
-                    btn.innerText = "REQUEST PROJECT START";
                     btn.disabled = false;
                 });
         }
@@ -844,9 +813,6 @@
             const text = document.getElementById('changes-text').value.trim();
             if(!text) { alert("Describe the changes."); return; }
             
-            const btn = document.querySelector('.changes-form button');
-            btn.innerText = "SENDING...";
-            
             const formData = new URLSearchParams();
             formData.append('action', 'requestChanges');
             formData.append('orderId', orderId);
@@ -857,9 +823,6 @@
                 .then(result => {
                     document.getElementById('changes-success-msg').style.display = 'inline';
                     document.getElementById('changes-text').disabled = true;
-                }).catch(err => {
-                    alert("Error sending request.");
-                    btn.innerText = "SEND REQUEST";
                 });
         }
 
@@ -871,6 +834,7 @@
             }
         }
 
+        // Segundo pago Director's Cut - Manual (espera verificación admin)
         function submitSecondPayment() {
             if(isSubmitting) return;
             isSubmitting = true;
@@ -896,10 +860,8 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        // Marcar como enviado pero NO cambiar a COMPLETED - el admin controla eso
-                        sessionStorage.setItem(`comprobante2_sent_${orderId}`, 'true');
-                        
-                        // Mostrar espera manteniendo REVIEW
+                        sessionStorage.setItem(`comprobante2_${orderId}`, 'true');
+                        // Mantener en REVIEW - el admin debe mover a COMPLETED manualmente
                         document.getElementById('second-payment-form').style.display = 'none';
                         document.getElementById('second-payment-waiting').style.display = 'block';
                     }
@@ -917,9 +879,6 @@
             const file = document.getElementById('legacyFileInput').files[0];
             if(!file) return;
             
-            const btn = event.target;
-            btn.innerText = "SENDING...";
-            
             const reader = new FileReader();
             reader.onload = async (e) => {
                 const formData = new URLSearchParams();
@@ -929,7 +888,7 @@
                 
                 fetch(SCRIPT_URL, { method: 'POST', body: formData })
                     .then(() => {
-                        sessionStorage.setItem(`legacy_payment_sent_${orderId}`, 'true');
+                        sessionStorage.setItem(`legacy_pay_${orderId}`, 'true');
                         document.getElementById('legacy-payment-form').style.display = 'none';
                         document.getElementById('legacy-payment-waiting').style.display = 'block';
                     });
@@ -959,7 +918,7 @@
             
             fetch(REVIEWS_SCRIPT_URL, { method: 'POST', body: formData })
                 .then(() => {
-                    sessionStorage.setItem(`review_sent_${orderId}`, 'true');
+                    sessionStorage.setItem(`review_${orderId}`, 'true');
                     window.location.reload();
                 });
         }
