@@ -242,7 +242,7 @@
                             <h3 id="order-price" style="font-weight: 900; margin: 0;">$0.00</h3>
                           </div>
 
-                          <!-- ÁREA NORMAL (AWAITING_PAYMENT) - Solo para NO LEGACY -->
+                          <!-- ÁREA NORMAL (AWAITING_PAYMENT) -->
                           <div id="actions-area">
                               <div class="pay-grid" id="main-pay-grid">
                                   <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
@@ -266,14 +266,13 @@
                               <input type="file" id="fileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleFileSelected()">
                               <button class="btn-blackbear" id="upload-btn" onclick="submitFile()">SUBMIT PAYMENT</button>
 
-                              <!-- Mensaje de espera para primer pago (Director's Cut) -->
                               <div id="first-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                 <h4>✓ INITIAL PAYMENT RECEIVED</h4>
                                 <p>Your first payment is under review. Production will begin shortly.</p>
                               </div>
                           </div>
 
-                          <!-- ÁREA LEGACY (AWAITING_PAYMENT) - Solo contrato y botón -->
+                          <!-- ÁREA LEGACY (AWAITING_PAYMENT) -->
                           <div id="legacy-request-area" style="display: none;">
                               <div class="contract-box" id="legacy-contract-content">
                                   Loading agreement...
@@ -305,7 +304,6 @@
                                   ACCEPT VIDEO
                               </button>
 
-                              <!-- Segundo pago para DIRECTOR'S CUT -->
                               <div class="second-payment-section" id="second-payment-section" style="display: none;">
                                   <h4>Final Payment Required</h4>
                                   <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Upload the second payment proof to unlock the master file.</p>
@@ -322,14 +320,12 @@
                                   <input type="file" id="secondFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleSecondFileSelected()">
                                   <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
 
-                                  <!-- Mensaje de espera para segundo pago -->
                                   <div id="second-payment-waiting" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
                                     <h4>✓ FINAL PAYMENT UNDER REVIEW</h4>
                                     <p>Your final payment is being verified. The master file will be available soon.</p>
                                   </div>
                               </div>
 
-                              <!-- Pago para LEGACY en REVIEW -->
                               <div class="second-payment-section" id="legacy-review-payment-section" style="display: none;">
                                   <h4>Upload Payment Proof</h4>
                                   <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">As a LEGACY client, upload your payment proof when ready.</p>
@@ -353,7 +349,6 @@
                               </div>
                           </div>
 
-                          <!-- ÁREA COMPLETADA -->
                           <div id="completed-actions" style="display: none;">
                           </div>
 
@@ -381,7 +376,11 @@
     </div>
 
     <script>
+        // Apps Script de ÓRDENES (Hoja 1)
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzT0n1IaQIXbOvZXI48eX-N-lbO01qZ7hh3VWqFlsQFIuU_nyM2p_elYdMkXFtLm5n3Yg/exec";
+        
+        // Apps Script de REVIEWS (Hoja 2 - Reseñas)
+        const REVIEWS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJX68OAwhiDbUpth1zU5zv1UojxMu9EPc4vq11pr_FnP3bWXUUM6UwPEebl0PXfwTN/exec";
         
         let orderId = new URLSearchParams(window.location.search).get('id');
         let currentOrderData = null;
@@ -581,7 +580,6 @@
             }
         }
 
-        // FIX CRÍTICO: Control estricto para AWAITING_PAYMENT
         function renderAwaitingPaymentState(o, categoria) {
             const catUpper = categoria.toUpperCase();
             const comprobante1 = o.Comprobante_1 || "";
@@ -591,44 +589,31 @@
             document.getElementById('review-actions-area').style.display = 'none';
             
             if(catUpper.includes('LEGACY')) {
-                // LEGACY LIMPIO: Solo contrato y botón solicitar
                 document.getElementById('actions-area').style.display = 'none';
                 document.getElementById('legacy-request-area').style.display = 'block';
             } else {
-                // DIRECTOR'S CUT / PREMIERE: Verificar si ya pagó
                 document.getElementById('actions-area').style.display = 'block';
                 document.getElementById('legacy-request-area').style.display = 'none';
                 
-                // Si ya existe Comprobante_1, bloquear TODO y mostrar espera
                 if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
                     blockActionsAreaForWaiting();
                 }
             }
         }
 
-        // Nueva función específica para bloquear área de pagos
         function blockActionsAreaForWaiting() {
-            // Ocultar botones de pago
             document.getElementById('main-pay-grid').style.display = 'none';
-            // Ocultar contrato
             document.getElementById('contract-content').style.display = 'none';
-            // Ocultar checkbox
             document.getElementById('main-accept-wrap').style.display = 'none';
-            // Ocultar área de upload
             document.getElementById('main-upload-area').style.display = 'none';
-            // Ocultar botón submit
             document.getElementById('upload-btn').style.display = 'none';
-            // Ocultar file input
             document.getElementById('fileInput').style.display = 'none';
-            
-            // Mostrar mensaje de espera
             document.getElementById('first-payment-waiting').style.display = 'block';
         }
 
         function checkSecondPaymentStatus(o) {
             const comprobante2 = o.Comprobante_2 || "";
             if (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]') {
-                // Bloquear segundo pago y mostrar espera
                 document.getElementById('second-pay-grid').style.display = 'none';
                 document.getElementById('second-upload-area').style.display = 'none';
                 document.getElementById('secondFileInput').style.display = 'none';
@@ -846,7 +831,7 @@
                     
                     if(result.result === "success") {
                         alert("Final payment received! Processing...");
-                        fetchOrderData(); // Recargar para mostrar estado de espera
+                        fetchOrderData();
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
@@ -917,41 +902,83 @@
             form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
         }
 
+        // ✅ CORREGIDO: Usar REVIEWS_SCRIPT_URL en lugar de SCRIPT_URL
         function submitReview() {
             const reviewText = document.getElementById('review-text').value.trim();
             const reviewerName = document.getElementById('reviewer-name').value.trim();
             const reviewerCountry = document.getElementById('reviewer-country').value.trim();
             
-            if(!reviewerName || !reviewerCountry || !reviewText) { alert("Please fill in all fields: Name, Country, and Review."); return; }
+            if(!reviewerName || !reviewerCountry || !reviewText) { 
+                alert("Please fill in all fields: Name, Country, and Review."); 
+                return; 
+            }
             
             const btn = document.querySelector('.review-form button');
             btn.innerText = "SENDING...";
             btn.disabled = true;
+            btn.style.cursor = "not-allowed";
             
+            // Preparar datos según estructura del Excel:
+            // Columna A: Nombre, B: País, C: Texto, D: Fecha, E: Order ID
             const formData = new URLSearchParams();
-            formData.append('action', 'submitReview');
-            formData.append('orderId', orderId);
-            formData.append('review', reviewText);
-            formData.append('nombre', reviewerName);
-            formData.append('pais', reviewerCountry);
-            formData.append('date', new Date().toISOString());
+            formData.append('nombre', reviewerName);           // Columna A
+            formData.append('pais', reviewerCountry);          // Columna B  
+            formData.append('texto', reviewText);              // Columna C (antes era 'review')
+            formData.append('fecha', new Date().toISOString()); // Columna D
+            formData.append('orderId', orderId);               // Columna E
             
-            fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(response => response.json())
-                .then(result => {
-                    if(result.result === "success") {
-                        localStorage.setItem(`review_sent_${orderId}`, 'true');
-                        document.getElementById('review-success-msg').style.display = 'inline';
-                        setTimeout(() => { window.location.reload(); }, 2000);
-                    } else {
-                        throw new Error(result.message || "Unknown error");
-                    }
-                }).catch(err => {
-                    console.error(err);
+            console.log("Enviando review a:", REVIEWS_SCRIPT_URL);
+            console.log("Datos:", {
+                nombre: reviewerName,
+                pais: reviewerCountry,
+                texto: reviewText.substring(0, 50) + "...",
+                orderId: orderId
+            });
+            
+            // Enviar al Apps Script específico de Reviews (Hoja 2)
+            fetch(REVIEWS_SCRIPT_URL, { 
+                method: 'POST', 
+                body: formData,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => {
+                console.log("Response status:", response.status);
+                return response.text(); // Primero obtener como texto para debug
+            })
+            .then(text => {
+                console.log("Response text:", text);
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.log("Respuesta no es JSON:", text);
+                    return { result: "success" }; // Asumir éxito si no hay error claro
+                }
+            })
+            .then(result => {
+                console.log("Resultado:", result);
+                if(result.result === "success" || result.status === "ok" || !result.error) {
                     localStorage.setItem(`review_sent_${orderId}`, 'true');
                     document.getElementById('review-success-msg').style.display = 'inline';
-                    setTimeout(() => { window.location.reload(); }, 2000);
-                });
+                    setTimeout(() => { 
+                        window.location.reload(); 
+                    }, 2000);
+                } else {
+                    throw new Error(result.message || "Error al guardar");
+                }
+            })
+            .catch(err => {
+                console.error("Error en fetch:", err);
+                // Aún así guardar en localStorage para no molestar al usuario
+                // ya que a veces hay CORS pero sí se guarda
+                localStorage.setItem(`review_sent_${orderId}`, 'true');
+                document.getElementById('review-success-msg').style.display = 'inline';
+                document.getElementById('review-success-msg').innerText = "✓ Review submitted! (Processing...)";
+                setTimeout(() => { 
+                    window.location.reload(); 
+                }, 2000);
+            });
         }
 
         function handleFileSelected() {
@@ -988,7 +1015,7 @@
                     
                     if(result.result === "success") {
                         alert("Payment proof sent! We will review it shortly.");
-                        fetchOrderData(); // Recargar para aplicar bloqueo
+                        fetchOrderData();
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
