@@ -49,14 +49,14 @@
       /* MENSAJES DE ESPERA VERIFICACIÓN */
       .waiting-verification-msg {
         padding: 25px;
-        border: 1px solid #fff;
+        border: 2px solid #fff;
         background: rgba(255,255,255,0.05);
         text-align: center;
         margin-top: 20px;
         border-radius: 8px;
       }
       .waiting-verification-msg h4 {
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -64,9 +64,13 @@
         color: #fff;
       }
       .waiting-verification-msg p {
-        font-size: 11px;
+        font-size: 12px;
         color: #999;
         margin: 0;
+      }
+      .waiting-verification-msg .icon {
+        font-size: 24px;
+        margin-bottom: 10px;
       }
 
       .project-title-display { font-weight: 700; font-size: 1.8rem; color: #fff; margin-top: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; }
@@ -132,6 +136,34 @@
       #order-status-text { color: #fff; }
       #order-price { color: #fff; }
       .border-top, .border-bottom { border-color: #333 !important; }
+
+      /* Mensaje de bloqueo por comprobante enviado */
+      .payment-locked-msg {
+        background: rgba(255,255,255,0.05);
+        border: 2px solid #fff;
+        padding: 30px;
+        text-align: center;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+      .payment-locked-msg h3 {
+        font-size: 14px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+        color: #fff;
+      }
+      .payment-locked-msg p {
+        font-size: 12px;
+        color: #999;
+        margin: 0;
+      }
+      .payment-locked-msg .lock-icon {
+        font-size: 32px;
+        margin-bottom: 15px;
+        opacity: 0.5;
+      }
     </style>
 <base target="_blank">
 </head>
@@ -242,33 +274,37 @@
                             <h3 id="order-price" style="font-weight: 900; margin: 0;">$0.00</h3>
                           </div>
 
-                          <!-- ÁREA NORMAL (AWAITING_PAYMENT) -->
+                          <!-- ÁREA NORMAL (AWAITING_PAYMENT) - Premiere y Director -->
                           <div id="actions-area">
-                              <div class="pay-grid" id="main-pay-grid">
-                                  <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
-                                  <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
-                                  <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
+                              <div id="payment-form-content">
+                                  <div class="pay-grid" id="main-pay-grid">
+                                      <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                      <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
+                                      <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
+                                  </div>
+                                  
+                                  <div class="contract-box" id="contract-content">
+                                      Loading agreement...
+                                  </div>
+                                  
+                                  <div class="accept-wrap" id="main-accept-wrap">
+                                      <input type="checkbox" id="accept-check"> 
+                                      <label for="accept-check">I ACCEPT THE TERMS AND CONDITIONS</label>
+                                  </div>
+                                  
+                                  <div class="upload-box-dotted" id="main-upload-area" onclick="document.getElementById('fileInput').click()">
+                                      <p id="upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof (PNG/JPG)</p>
+                                  </div>
+                                  
+                                  <input type="file" id="fileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleFileSelected()">
+                                  <button class="btn-blackbear" id="upload-btn" onclick="submitFile()">SUBMIT PAYMENT</button>
                               </div>
-                              
-                              <div class="contract-box" id="contract-content">
-                                  Loading agreement...
-                              </div>
-                              
-                              <div class="accept-wrap" id="main-accept-wrap">
-                                  <input type="checkbox" id="accept-check"> 
-                                  <label for="accept-check">I ACCEPT THE TERMS AND CONDITIONS</label>
-                              </div>
-                              
-                              <div class="upload-box-dotted" id="main-upload-area" onclick="document.getElementById('fileInput').click()">
-                                  <p id="upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof (PNG/JPG)</p>
-                              </div>
-                              
-                              <input type="file" id="fileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleFileSelected()">
-                              <button class="btn-blackbear" id="upload-btn" onclick="submitFile()">SUBMIT PAYMENT</button>
 
+                              <!-- Mensaje cuando ya se envió comprobante (bloqueo) -->
                               <div id="first-payment-waiting" class="waiting-verification-msg" style="display: none;">
-                                <h4>✓ INITIAL PAYMENT RECEIVED</h4>
-                                <p>Your first payment is under review. Production will begin shortly.</p>
+                                <div class="icon">🔒</div>
+                                <h4>PAYMENT PROOF SENT</h4>
+                                <p>Your payment is under review.<br>Production will begin once verified.</p>
                               </div>
                           </div>
 
@@ -279,6 +315,13 @@
                               </div>
                               <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()">REQUEST PROJECT START</button>
                               <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">As a LEGACY client, click above to begin production immediately.</p>
+                              
+                              <!-- Mensaje de Legacy luego de solicitar -->
+                              <div id="legacy-requested-msg" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
+                                <div class="icon">✓</div>
+                                <h4>PROJECT REQUESTED</h4>
+                                <p>Your project has been sent to production.</p>
+                              </div>
                           </div>
 
                           <!-- ÁREA DE REVIEW -->
@@ -304,46 +347,55 @@
                                   ACCEPT VIDEO
                               </button>
 
+                              <!-- Segundo pago para Director's Cut -->
                               <div class="second-payment-section" id="second-payment-section" style="display: none;">
                                   <h4>Final Payment Required</h4>
                                   <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Upload the second payment proof to unlock the master file.</p>
                                   
-                                  <div class="pay-grid" id="second-pay-grid">
-                                      <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
-                                      <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
-                                      <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
+                                  <div id="second-payment-form">
+                                      <div class="pay-grid" id="second-pay-grid">
+                                          <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                          <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
+                                          <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
+                                      </div>
+                                      
+                                      <div class="upload-box-dotted" id="second-upload-area" onclick="document.getElementById('secondFileInput').click()">
+                                          <p id="second-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload second payment proof</p>
+                                      </div>
+                                      <input type="file" id="secondFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleSecondFileSelected()">
+                                      <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
                                   </div>
-                                  
-                                  <div class="upload-box-dotted" id="second-upload-area" onclick="document.getElementById('secondFileInput').click()">
-                                      <p id="second-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload second payment proof</p>
-                                  </div>
-                                  <input type="file" id="secondFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleSecondFileSelected()">
-                                  <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
 
+                                  <!-- Mensaje bloqueo segundo pago -->
                                   <div id="second-payment-waiting" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
-                                    <h4>✓ FINAL PAYMENT UNDER REVIEW</h4>
-                                    <p>Your final payment is being verified. The master file will be available soon.</p>
+                                    <div class="icon">🔒</div>
+                                    <h4>FINAL PAYMENT UNDER REVIEW</h4>
+                                    <p>Your final payment is being verified.<br>The master file will be available soon.</p>
                                   </div>
                               </div>
 
+                              <!-- Pago Legacy en Review (por si acaso) -->
                               <div class="second-payment-section" id="legacy-review-payment-section" style="display: none;">
                                   <h4>Upload Payment Proof</h4>
                                   <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">As a LEGACY client, upload your payment proof when ready.</p>
                                   
-                                  <div class="pay-grid" id="legacy-pay-grid">
-                                      <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
-                                      <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
-                                      <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
+                                  <div id="legacy-payment-form">
+                                      <div class="pay-grid" id="legacy-pay-grid">
+                                          <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                          <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
+                                          <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
+                                      </div>
+                                      
+                                      <div class="upload-box-dotted" id="legacy-upload-area" onclick="document.getElementById('legacyFileInput').click()">
+                                          <p id="legacy-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof</p>
+                                      </div>
+                                      <input type="file" id="legacyFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleLegacyFileSelected()">
+                                      <button class="btn-blackbear" id="legacy-upload-btn" onclick="submitLegacyPayment()">SUBMIT PAYMENT</button>
                                   </div>
-                                  
-                                  <div class="upload-box-dotted" id="legacy-upload-area" onclick="document.getElementById('legacyFileInput').click()">
-                                      <p id="legacy-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof</p>
-                                  </div>
-                                  <input type="file" id="legacyFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleLegacyFileSelected()">
-                                  <button class="btn-blackbear" id="legacy-upload-btn" onclick="submitLegacyPayment()">SUBMIT PAYMENT</button>
 
                                   <div id="legacy-payment-waiting" class="waiting-verification-msg" style="display: none; margin-top: 20px;">
-                                    <h4>✓ PAYMENT RECEIVED</h4>
+                                    <div class="icon">🔒</div>
+                                    <h4>PAYMENT RECEIVED</h4>
                                     <p>Payment proof received and under review.</p>
                                   </div>
                               </div>
@@ -386,6 +438,7 @@
         let currentOrderData = null;
         let currentCategory = "";
         let currentStatus = "";
+        let isSubmitting = false; // Flag para evitar doble envío
 
         document.addEventListener('DOMContentLoaded', () => {
             if(!orderId) {
@@ -564,15 +617,20 @@
             }
             
             if(catUpper.includes('PREMIERE')) {
+                // Premiere Pass: Botón aceptar video (ya pagó todo)
                 document.getElementById('accept-video-btn').style.display = 'block';
                 document.getElementById('second-payment-section').style.display = 'none';
                 document.getElementById('legacy-review-payment-section').style.display = 'none';
             } else if(catUpper.includes('DIRECTOR')) {
+                // Director's Cut: Segundo pago requerido
                 document.getElementById('accept-video-btn').style.display = 'none';
                 document.getElementById('second-payment-section').style.display = 'block';
                 document.getElementById('legacy-review-payment-section').style.display = 'none';
+                
+                // Verificar si ya envió segundo comprobante
                 checkSecondPaymentStatus(o);
             } else if(catUpper.includes('LEGACY')) {
+                // Legacy: Pago flexible
                 document.getElementById('accept-video-btn').style.display = 'none';
                 document.getElementById('second-payment-section').style.display = 'none';
                 document.getElementById('legacy-review-payment-section').style.display = 'block';
@@ -583,53 +641,71 @@
         function renderAwaitingPaymentState(o, categoria) {
             const catUpper = categoria.toUpperCase();
             const comprobante1 = o.Comprobante_1 || "";
+            const tieneComprobante = comprobante1 && comprobante1.startsWith('http') && comprobante1 !== '[Imagen]';
             
             document.getElementById('production-message').style.display = 'none';
             document.getElementById('completed-actions').style.display = 'none';
             document.getElementById('review-actions-area').style.display = 'none';
             
             if(catUpper.includes('LEGACY')) {
+                // LEGACY: Solo mostrar contrato y botón de solicitud
                 document.getElementById('actions-area').style.display = 'none';
                 document.getElementById('legacy-request-area').style.display = 'block';
+                
+                // Si ya solicitó el proyecto (verificar por estado o localStorage)
+                const requested = localStorage.getItem(`legacy_requested_${orderId}`) || o.Estatus === 'IN_PRODUCTION';
+                if(requested) {
+                    document.getElementById('request-project-btn').style.display = 'none';
+                    document.getElementById('legacy-requested-msg').style.display = 'block';
+                }
             } else {
+                // Premiere Pass o Director's Cut
                 document.getElementById('actions-area').style.display = 'block';
                 document.getElementById('legacy-request-area').style.display = 'none';
                 
-                if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
+                if (tieneComprobante) {
+                    // Si ya hay comprobante, mostrar mensaje de espera y bloquear form
                     blockActionsAreaForWaiting();
+                } else {
+                    // Si no hay comprobante, mostrar formulario normal
+                    unblockActionsArea();
                 }
             }
         }
 
         function blockActionsAreaForWaiting() {
-            document.getElementById('main-pay-grid').style.display = 'none';
-            document.getElementById('contract-content').style.display = 'none';
-            document.getElementById('main-accept-wrap').style.display = 'none';
-            document.getElementById('main-upload-area').style.display = 'none';
-            document.getElementById('upload-btn').style.display = 'none';
-            document.getElementById('fileInput').style.display = 'none';
+            document.getElementById('payment-form-content').style.display = 'none';
             document.getElementById('first-payment-waiting').style.display = 'block';
+        }
+
+        function unblockActionsArea() {
+            document.getElementById('payment-form-content').style.display = 'block';
+            document.getElementById('first-payment-waiting').style.display = 'none';
         }
 
         function checkSecondPaymentStatus(o) {
             const comprobante2 = o.Comprobante_2 || "";
-            if (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]') {
-                document.getElementById('second-pay-grid').style.display = 'none';
-                document.getElementById('second-upload-area').style.display = 'none';
-                document.getElementById('secondFileInput').style.display = 'none';
-                document.getElementById('second-upload-btn').style.display = 'none';
+            const tieneComprobante2 = comprobante2 && comprobante2.startsWith('http') && comprobante2 !== '[Imagen]';
+            
+            if (tieneComprobante2) {
+                document.getElementById('second-payment-form').style.display = 'none';
                 document.getElementById('second-payment-waiting').style.display = 'block';
+            } else {
+                document.getElementById('second-payment-form').style.display = 'block';
+                document.getElementById('second-payment-waiting').style.display = 'none';
             }
         }
 
         function checkLegacyPaymentStatus(o) {
             const comprobante1 = o.Comprobante_1 || "";
-            if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
-                document.getElementById('legacy-pay-grid').style.display = 'none';
-                document.getElementById('legacy-upload-area').style.display = 'none';
-                document.getElementById('legacyFileInput').style.display = 'none';
-                document.getElementById('legacy-upload-btn').style.display = 'none';
+            const tieneComprobante = comprobante1 && comprobante1.startsWith('http') && comprobante1 !== '[Imagen]';
+            
+            if (tieneComprobante) {
+                document.getElementById('legacy-payment-form').style.display = 'none';
                 document.getElementById('legacy-payment-waiting').style.display = 'block';
+            } else {
+                document.getElementById('legacy-payment-form').style.display = 'block';
+                document.getElementById('legacy-payment-waiting').style.display = 'none';
             }
         }
 
@@ -746,6 +822,7 @@
                 .then(response => response.json())
                 .then(result => {
                     if(result.result === "success") {
+                        localStorage.setItem(`legacy_requested_${orderId}`, 'true');
                         alert("Project requested! Your project will start shortly.");
                         fetchOrderData();
                     } else {
@@ -808,10 +885,18 @@
         }
 
         function submitSecondPayment() {
+            if(isSubmitting) return; // Evitar doble click
+            isSubmitting = true;
+            
             const file = document.getElementById('secondFileInput').files[0];
-            if(!file) return alert("Please select your payment proof first.");
+            if(!file) { 
+                alert("Please select your payment proof first."); 
+                isSubmitting = false;
+                return; 
+            }
             
             const btn = document.getElementById('second-upload-btn');
+            const originalText = btn.innerText;
             btn.innerText = "SENDING...";
             btn.disabled = true;
             
@@ -830,16 +915,20 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        alert("Final payment received! Processing...");
-                        fetchOrderData();
+                        alert("Final payment received! Under review...");
+                        // Mostrar mensaje de espera inmediatamente sin esperar reload
+                        document.getElementById('second-payment-form').style.display = 'none';
+                        document.getElementById('second-payment-waiting').style.display = 'block';
+                        setTimeout(() => fetchOrderData(), 2000);
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
                 } catch (err) {
                     console.error(err);
                     alert("Error sending: " + err.message);
-                    btn.innerText = "SUBMIT FINAL PAYMENT";
+                    btn.innerText = originalText;
                     btn.disabled = false;
+                    isSubmitting = false;
                 }
             };
             reader.readAsDataURL(file);
@@ -855,10 +944,18 @@
         }
 
         function submitLegacyPayment() {
+            if(isSubmitting) return;
+            isSubmitting = true;
+            
             const file = document.getElementById('legacyFileInput').files[0];
-            if(!file) return alert("Please select your payment proof first.");
+            if(!file) { 
+                alert("Please select your payment proof first."); 
+                isSubmitting = false;
+                return; 
+            }
             
             const btn = document.getElementById('legacy-upload-btn');
+            const originalText = btn.innerText;
             btn.innerText = "SENDING...";
             btn.disabled = true;
             
@@ -878,15 +975,18 @@
                     
                     if(result.result === "success") {
                         alert("Payment proof received! Thank you.");
-                        fetchOrderData();
+                        document.getElementById('legacy-payment-form').style.display = 'none';
+                        document.getElementById('legacy-payment-waiting').style.display = 'block';
+                        setTimeout(() => fetchOrderData(), 2000);
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
                 } catch (err) {
                     console.error(err);
                     alert("Error sending: " + err.message);
-                    btn.innerText = "SUBMIT PAYMENT";
+                    btn.innerText = originalText;
                     btn.disabled = false;
+                    isSubmitting = false;
                 }
             };
             reader.readAsDataURL(file);
@@ -902,7 +1002,6 @@
             form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
         }
 
-        // ✅ CORREGIDO: Usar REVIEWS_SCRIPT_URL en lugar de SCRIPT_URL
         function submitReview() {
             const reviewText = document.getElementById('review-text').value.trim();
             const reviewerName = document.getElementById('reviewer-name').value.trim();
@@ -918,24 +1017,17 @@
             btn.disabled = true;
             btn.style.cursor = "not-allowed";
             
-            // Preparar datos según estructura del Excel:
-            // Columna A: Nombre, B: País, C: Texto, D: Fecha, E: Order ID
+            // IMPORTANTE: Agregar action para que el Apps Script sepa qué hacer
             const formData = new URLSearchParams();
-            formData.append('nombre', reviewerName);           // Columna A
-            formData.append('pais', reviewerCountry);          // Columna B  
-            formData.append('texto', reviewText);              // Columna C (antes era 'review')
-            formData.append('fecha', new Date().toISOString()); // Columna D
-            formData.append('orderId', orderId);               // Columna E
+            formData.append('action', 'submitReview'); // Agregar esta línea en tu Apps Script
+            formData.append('nombre', reviewerName);           
+            formData.append('pais', reviewerCountry);          
+            formData.append('texto', reviewText);              
+            formData.append('fecha', new Date().toISOString()); 
+            formData.append('orderId', orderId);               
             
             console.log("Enviando review a:", REVIEWS_SCRIPT_URL);
-            console.log("Datos:", {
-                nombre: reviewerName,
-                pais: reviewerCountry,
-                texto: reviewText.substring(0, 50) + "...",
-                orderId: orderId
-            });
             
-            // Enviar al Apps Script específico de Reviews (Hoja 2)
             fetch(REVIEWS_SCRIPT_URL, { 
                 method: 'POST', 
                 body: formData,
@@ -945,7 +1037,7 @@
             })
             .then(response => {
                 console.log("Response status:", response.status);
-                return response.text(); // Primero obtener como texto para debug
+                return response.text(); 
             })
             .then(text => {
                 console.log("Response text:", text);
@@ -953,7 +1045,7 @@
                     return JSON.parse(text);
                 } catch (e) {
                     console.log("Respuesta no es JSON:", text);
-                    return { result: "success" }; // Asumir éxito si no hay error claro
+                    return { result: "success" }; 
                 }
             })
             .then(result => {
@@ -970,8 +1062,7 @@
             })
             .catch(err => {
                 console.error("Error en fetch:", err);
-                // Aún así guardar en localStorage para no molestar al usuario
-                // ya que a veces hay CORS pero sí se guarda
+                // Fallback: asumir éxito para no bloquear al usuario
                 localStorage.setItem(`review_sent_${orderId}`, 'true');
                 document.getElementById('review-success-msg').style.display = 'inline';
                 document.getElementById('review-success-msg').innerText = "✓ Review submitted! (Processing...)";
@@ -991,12 +1082,25 @@
         }
 
         async function submitFile() {
+            if(isSubmitting) return; // Bloquear doble envío
+            isSubmitting = true;
+            
             const check = document.getElementById('accept-check');
             const file = document.getElementById('fileInput').files[0];
-            if(!check.checked) return alert("You must accept the terms and conditions.");
-            if(!file) return alert("Please select your payment proof first.");
+            
+            if(!check.checked) { 
+                alert("You must accept the terms and conditions."); 
+                isSubmitting = false;
+                return; 
+            }
+            if(!file) { 
+                alert("Please select your payment proof first."); 
+                isSubmitting = false;
+                return; 
+            }
 
             const btn = document.getElementById('upload-btn');
+            const originalText = btn.innerText;
             btn.innerText = "SENDING...";
             btn.disabled = true;
 
@@ -1014,16 +1118,19 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        alert("Payment proof sent! We will review it shortly.");
-                        fetchOrderData();
+                        alert("Payment proof sent! Under review...");
+                        // Mostrar bloqueo inmediatamente sin esperar reload
+                        blockActionsAreaForWaiting();
+                        setTimeout(() => fetchOrderData(), 2000);
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
                 } catch (err) {
                     console.error(err);
                     alert("Error sending: " + err.message);
-                    btn.innerText = "SUBMIT PAYMENT";
+                    btn.innerText = originalText;
                     btn.disabled = false;
+                    isSubmitting = false;
                 }
             };
             reader.readAsDataURL(file);
