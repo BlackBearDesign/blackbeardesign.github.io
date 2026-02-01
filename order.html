@@ -1,24 +1,39 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
-    <title>Producción | Dreamset Studios</title>
+    <title>Estado de Producción | Dreamset Studios</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    
     <style>
         body { background-color: #000; color: #fff; font-family: 'Montserrat', sans-serif; }
         .order-container { padding: 100px 0; min-height: 100vh; }
+        
+        /* Estilos de Etiquetas de Pago */
         .badge-status { padding: 8px 15px; border-radius: 4px; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: inline-block; }
         .PREMIERE-PASS { background: #fff; color: #000; }
         .DIRECTORS-CUT { background: #333; color: #fff; border: 1px solid #555; }
         .LEGACY-STATUS { background: #ffd700; color: #000; }
-        .contract-box { height: 180px; overflow-y: scroll; border: 1px solid #222; padding: 20px; background: #080808; font-size: 13px; text-align: left; margin-bottom: 20px; color: #aaa; }
-        .upload-area { border: 2px dashed #333; padding: 40px; text-align: center; border-radius: 10px; transition: 0.3s; }
+        
+        /* Cuadro de Contrato */
+        .contract-box { height: 180px; overflow-y: scroll; border: 1px solid #222; padding: 20px; background: #080808; font-size: 13px; text-align: left; margin-bottom: 20px; color: #aaa; line-height: 1.6; }
+        
+        /* Área de Carga */
+        .upload-area { border: 2px dashed #333; padding: 40px; text-align: center; border-radius: 10px; transition: 0.3s; margin-top: 20px; }
         .upload-area:hover { border-color: #fff; }
-        .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 15px 30px; text-transform: uppercase; border: none; letter-spacing: 2px; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; border: 1px solid #333; }
+        
+        .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 15px 30px; text-transform: uppercase; border: none; letter-spacing: 2px; width: 100%; transition: 0.3s; }
+        .btn-blackbear:hover { background: #ccc; cursor: pointer; }
+
+        /* Contenedor de Video */
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; border: 1px solid #333; background: #111; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        .info-panel { background: #0a0a0a; padding: 30px; border: 1px solid #1a1a1a; border-radius: 8px; }
+        .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; margin-left: 10px; }
     </style>
 </head>
 <body>
@@ -29,26 +44,44 @@
         </div>
 
         <div id="order-view" style="display:none;">
-            <div class="row align-items-center">
+            <div class="row">
                 <div class="col-lg-7">
                     <span id="order-category" class="badge-status"></span>
-                    <h1 id="order-title" style="font-weight: 900; font-size: 3.5rem; text-transform: uppercase; line-height: 1;"></h1>
-                    <p id="order-client" class="mb-5" style="letter-spacing: 3px; opacity: 0.5; text-transform: uppercase; font-weight: 700;"></p>
+                    <h1 id="order-title" style="font-weight: 900; font-size: 3rem; text-transform: uppercase; line-height: 1; margin-bottom: 20px;"></h1>
                     
-                    <div id="video-preview-section" style="display:none;">
-                        <h5 class="mb-3 text-uppercase" style="letter-spacing: 2px; font-size: 12px; opacity: 0.7;">Vista Previa (Marca de Agua)</h5>
+                    <div class="mb-4">
+                        <h5 class="text-uppercase small" style="letter-spacing: 2px; opacity: 0.5;">Descripción del Proyecto</h5>
+                        <p id="order-description" style="font-size: 16px; color: #ccc;"></p>
+                    </div>
+
+                    <p id="order-client" class="mb-5" style="letter-spacing: 3px; opacity: 0.4; text-transform: uppercase; font-weight: 700; font-size: 11px;"></p>
+                    
+                    <div id="video-preview-section" style="display:none;" class="mt-4">
+                        <h5 class="mb-3 text-uppercase" style="letter-spacing: 2px; font-size: 11px; opacity: 0.7;">Vista Previa (Marca de Agua)</h5>
                         <div class="video-container" id="video-iframe"></div>
                     </div>
                 </div>
 
                 <div class="col-lg-4 offset-lg-1">
-                    <div class="mb-5">
-                        <span class="d-block small text-uppercase" style="letter-spacing: 2px; opacity: 0.4;">Estatus del Proyecto</span>
-                        <h3 id="order-status-text" style="font-weight: 800; text-transform: uppercase;"></h3>
-                    </div>
-
-                    <div id="actions-area">
+                    <div class="info-panel">
+                        <div class="mb-4">
+                            <span class="d-block small text-uppercase" style="letter-spacing: 2px; opacity: 0.4;">Estatus Actual</span>
+                            <h3 id="order-status-text" style="font-weight: 800; text-transform: uppercase; color: #fff;"></h3>
                         </div>
+
+                        <div class="mb-4 border-top border-bottom py-3" style="border-color: #222 !important;">
+                            <span class="d-block small text-uppercase" style="letter-spacing: 2px; opacity: 0.4;">Revisiones Disponibles</span>
+                            <h4 style="font-weight: 800; margin: 0;">Disponibles: <span id="order-revisions" class="revision-badge">0</span></h4>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <span class="d-block small text-uppercase" style="letter-spacing: 2px; opacity: 0.4;">Inversión Total</span>
+                            <h4 id="order-price" style="font-weight: 700; color: #fff;"></h4>
+                        </div>
+
+                        <div id="actions-area">
+                            </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,15 +89,16 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script>
+        // CONFIGURACIÓN DE ENLACES
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR7MfUJrspnPSDFqmPX0oPA_PtDE7312RnzngMrCwpGfgjRSvXD6jmiiDFVhAlbOTwmFmOEixPzBZ_z/pub?output=csv";
-        const APPS_SCRIPT_URL = "TU_URL_DE_APPS_SCRIPT_AQUI"; // PASO 3
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxo0txYdwsl7p5YdBn4obClxFRQz3MXfgS1l6bHimyBP_p8FxPiSBvOdC8i7unntojGQQ/exec";
 
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
 
             if(!id) {
-                document.getElementById('loading-view').innerHTML = "<h1>ERROR: ID DE ORDEN NO VALIDO</h1>";
+                document.getElementById('loading-view').innerHTML = "<h1>ID DE ORDEN REQUERIDO</h1>";
                 return;
             }
 
@@ -74,7 +108,7 @@
                 complete: (results) => {
                     const data = results.data.find(row => row.ID === id);
                     if(data) renderOrder(data);
-                    else document.getElementById('loading-view').innerHTML = "<h1>ORDEN NO ENCONTRADA</h1>";
+                    else document.getElementById('loading-view').innerHTML = "<h1>ORDEN #" + id + " NO ENCONTRADA</h1>";
                 }
             });
         });
@@ -83,66 +117,88 @@
             document.getElementById('loading-view').style.display = 'none';
             document.getElementById('order-view').style.display = 'block';
 
+            // Carga de Datos Básicos (Columnas C, D, E)
             document.getElementById('order-title').innerText = order.Proyecto;
-            document.getElementById('order-client').innerText = `Cliente: ${order.Cliente}`;
-            document.getElementById('order-status-text').innerText = order.Estatus.replace('_', ' ');
+            document.getElementById('order-description').innerText = order.Descripcion || "Sin descripción adicional.";
+            document.getElementById('order-revisions').innerText = order.Revisiones || "0";
             
+            document.getElementById('order-client').innerText = `CLIENTE: ${order.Cliente}`;
+            document.getElementById('order-price').innerText = order.Precio_Total;
+            document.getElementById('order-status-text').innerText = order.Estatus.replace(/_/g, ' ');
+            
+            // Estilo de Categoría (Columna F)
             const cat = document.getElementById('order-category');
             cat.innerText = order.Categoria_Pago;
-            cat.className = `badge-status ${order.Categoria_Pago.replace(' ', '-').replace('’', '')}`;
+            cat.className = `badge-status ${order.Categoria_Pago.replace(/\s+/g, '-').replace(/’/g, '')}`;
 
             const actions = document.getElementById('actions-area');
             
+            // Lógica por Estatus (Columna H)
             if(order.Estatus === 'ESPERANDO_PAGO') {
                 actions.innerHTML = `
                     <div class="contract-box">
                         <p><strong>CONTRATO DE PRODUCCIÓN - DREAMSET STUDIOS</strong></p>
-                        <p>1. Se requiere el anticipo para iniciar activos de IA y renderizado.</p>
-                        <p>2. El archivo final se libera tras el pago total.</p>
-                        <p>3. La productora retiene derechos de exhibición para portafolio.</p>
+                        <p>1. OBJETO: Creación de contenido audiovisual mediante técnicas de IA y edición profesional.</p>
+                        <p>2. PAGOS: El inicio de producción requiere la validación del comprobante de anticipo según la categoría seleccionada.</p>
+                        <p>3. DERECHOS: Dreamset Studios retiene derechos de exhibición para portafolio a menos que se acuerde un NDA.</p>
                     </div>
                     <div class="mb-3">
-                        <input type="checkbox" id="accept"> <label for="accept" class="small">ACEPTO LOS TÉRMINOS</label>
+                        <input type="checkbox" id="accept"> <label for="accept" class="small">ACEPTO LOS TÉRMINOS Y CONDICIONES</label>
                     </div>
                     <div class="upload-area">
+                        <p class="small opacity-50">Sube tu comprobante de anticipo (PNG/JPG)</p>
                         <input type="file" id="fileInput" class="d-none" onchange="handleUpload('${order.ID}', 'anticipo')">
-                        <button class="btn btn-blackbear" onclick="document.getElementById('fileInput').click()">SUBIR COMPROBANTE</button>
+                        <button class="btn-blackbear" onclick="document.getElementById('fileInput').click()">ENVIAR PAGO</button>
                     </div>`;
+            } else if(order.Estatus === 'EN_PRODUCCION') {
+                actions.innerHTML = `<div class="p-4 text-center border border-secondary">
+                    <p class="mb-0">🎬 Tu proyecto está en la fase de renderizado y composición. Te notificaremos cuando el demo esté listo.</p>
+                </div>`;
             } else if(order.Estatus === 'REVISION') {
                 document.getElementById('video-preview-section').style.display = 'block';
-                document.getElementById('video-iframe').innerHTML = `<iframe src="${order.Link_YouTube.replace('watch?v=', 'embed/')}?autoplay=1&modestbranding=1" frameborder="0" allowfullscreen></iframe>`;
+                document.getElementById('video-iframe').innerHTML = `<iframe src="${order.Link_YouTube.replace('watch?v=', 'embed/')}?modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>`;
+                
                 actions.innerHTML = `
-                    <p class="small opacity-50 mb-4">Revisa el demo. Si estás conforme, liquida el saldo para descargar el master sin marca de agua.</p>
+                    <p class="small opacity-50 mb-3">Si el resultado es correcto, procede con el pago final para liberar el archivo Master.</p>
                     <input type="file" id="fileInputFinal" class="d-none" onchange="handleUpload('${order.ID}', 'final')">
-                    <button class="btn btn-blackbear btn-block" onclick="document.getElementById('fileInputFinal').click()">PAGAR SALDO Y FINALIZAR</button>`;
+                    <button class="btn-blackbear" onclick="document.getElementById('fileInputFinal').click()">LIQUIDAR Y FINALIZAR</button>
+                    <button class="btn btn-outline-secondary btn-block btn-sm mt-3" style="color:#666">SOLICITAR CAMBIOS</button>`;
             } else if(order.Estatus === 'COMPLETADO') {
                 actions.innerHTML = `
-                    <a href="${order.Link_Drive}" target="_blank" class="btn btn-blackbear btn-block mb-3">DESCARGAR MASTER 4K</a>
-                    <div class="mt-5 p-3" style="border: 1px solid #222;">
-                        <p class="small">¿Te gustó el resultado? Déjanos una reseña.</p>
-                        <button class="btn btn-outline-light btn-sm">DEJAR REVIEW</button>
+                    <a href="${order.Link_Drive}" target="_blank" class="btn-blackbear d-block text-center mb-4">DESCARGAR MASTER 4K</a>
+                    <div class="mt-4 p-3 border border-dark">
+                        <p class="small text-center mb-0">¡Gracias por confiar en nuestra visión!</p>
                     </div>`;
             }
         }
 
         async function handleUpload(orderId, type) {
-            if(document.getElementById('accept') && !document.getElementById('accept').checked) return alert("Acepta el contrato.");
+            const check = document.getElementById('accept');
+            if(check && !check.checked) return alert("Debes aceptar el contrato para continuar.");
             
-            const file = document.querySelector('input[type=file]').files[0];
+            const fileInput = document.querySelector('input[type=file]');
+            const file = fileInput.files[0];
+            if(!file) return;
+
             const reader = new FileReader();
             reader.onload = async (e) => {
                 const base64 = e.target.result.split(',')[1];
                 const formData = new URLSearchParams();
                 formData.append('fileBase64', base64);
                 formData.append('mimeType', file.type);
-                formData.append('fileName', `Pago_${orderId}_${type}`);
+                formData.append('fileName', `Orden_${orderId}_${type}_${file.name}`);
                 formData.append('orderId', orderId);
                 formData.append('type', type);
 
-                alert("Enviando comprobante... No cierres la página.");
-                await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
-                alert("¡Recibido! Dreamset Studios validará tu pago en breve.");
-                location.reload();
+                alert("Enviando comprobante al estudio... Por favor espera.");
+                
+                try {
+                    await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
+                    alert("¡Comprobante recibido con éxito! Validaremos tu pago en breve.");
+                    location.reload();
+                } catch (err) {
+                    alert("Error en el envío. Por favor intenta de nuevo.");
+                }
             };
             reader.readAsDataURL(file);
         }
