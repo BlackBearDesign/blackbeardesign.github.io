@@ -22,8 +22,7 @@
       .info-panel { background: rgba(10,10,10,0.95); padding: 40px; border: 1px solid #333; border-radius: 8px; backdrop-filter: blur(15px); }
 
       .pay-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-      .pay-link { padding: 10px; font-size: 10px; font-weight: 900; text-align: center; border-radius: 4px; text-decoration: none !important; color: #fff; transition: 0.3s; }
-      /* SOLO ESTOS BOTONES MANTIENEN COLOR - TODO LO DEMÁS ES BLANCO Y NEGRO */
+      .pay-link { padding: 10px; font-size: 10px; font-weight: 900; text-align: center; border-radius: 4px; text-decoration: none !important; color: #fff; transition: 0.3s; cursor: pointer; border: none; display: inline-block; width: 100%; }
       .pay-paypal { background: #003087; }
       .pay-wise { background: #00b5ff; }
       .pay-binance { background: #F3BA2F; color: #000; }
@@ -39,7 +38,66 @@
       .btn-blackbear:hover { background: #ccc; }
       .btn-sent { background: #333 !important; color: #999 !important; border: 1px solid #444 !important; cursor: not-allowed; }
 
-      /* TÍTULO DEL PROYECTO */
+      /* MODAL BINANCE */
+      .binance-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.9);
+        justify-content: center;
+        align-items: center;
+      }
+      .binance-modal-content {
+        background: #111;
+        border: 1px solid #F3BA2F;
+        padding: 40px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+      }
+      .binance-modal h3 {
+        color: #F3BA2F;
+        font-size: 18px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .binance-data {
+        background: #000;
+        border: 1px solid #333;
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: left;
+      }
+      .binance-data p {
+        margin: 5px 0;
+        font-size: 13px;
+        color: #fff;
+      }
+      .binance-data strong {
+        color: #F3BA2F;
+      }
+      .close-modal {
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 10px;
+        cursor: pointer;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 1px;
+      }
+      .close-modal:hover {
+        background: #555;
+      }
+
       .project-title-display {
         font-weight: 700; 
         font-size: 1.8rem; 
@@ -60,7 +118,6 @@
         display: block;
       }
 
-      /* Botón de revisión extra - AHORA EN BLANCO Y NEGRO */
       .btn-extra-revision { 
         background: #fff; 
         color: #000; 
@@ -81,7 +138,6 @@
         transform: translateY(-2px); 
       }
 
-      /* Botón outline para review */
       .btn-outline-light {
         background: transparent;
         color: #fff;
@@ -104,7 +160,6 @@
         color: #000;
       }
 
-      /* Botón de aceptar video - AHORA EN BLANCO Y NEGRO */
       .btn-accept-video {
         background: #fff;
         color: #000;
@@ -130,7 +185,6 @@
         transform: none;
       }
 
-      /* Botón de solicitar proyecto */
       .btn-request-project {
         background: #fff;
         color: #000;
@@ -148,7 +202,6 @@
         transform: translateY(-2px);
       }
 
-      /* Formulario de review - CAMPOS ADICIONALES */
       .review-form {
         display: none;
         margin-top: 25px;
@@ -221,8 +274,19 @@
         letter-spacing: 1px;
         margin-top: 15px;
       }
+      .review-already-sent {
+        color: #fff;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 1px;
+        margin-top: 15px;
+        padding: 15px;
+        border: 1px solid #fff;
+        background: rgba(255,255,255,0.1);
+        text-align: center;
+      }
 
-      /* Formulario de solicitar cambios - AHORA EN ESCALAS DE GRISES */
       .changes-form {
         display: none;
         margin-top: 25px;
@@ -308,7 +372,6 @@
         border-radius: 4px;
       }
 
-      /* Sección de subir segundo comprobante */
       .second-payment-section {
         margin-top: 25px;
         padding: 25px;
@@ -332,7 +395,6 @@
       .badge-status { padding: 8px 15px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block; }
       .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; }
       
-      /* CHECKBOX CUSTOM BLANCO */
       .accept-wrap input[type="checkbox"] { display: none; }
       .accept-wrap label { position: relative; padding-left: 28px; cursor: pointer; display: inline-block; color: #fff; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
       .accept-wrap label::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; border: 2px solid #fff; background: transparent; border-radius: 3px; transition: all 0.2s; }
@@ -349,16 +411,46 @@
       .contract-box::-webkit-scrollbar-track { background: #111; }
       .contract-box::-webkit-scrollbar-thumb { background: #fff; border-radius: 3px; }
       
-      /* ESTILOS ADICIONALES PARA MANTENER BLANCO Y NEGRO */
       #order-main-title { color: #fff; }
       #order-description { color: #ccc; }
       #order-status-text { color: #fff; }
       #order-price { color: #fff; }
       .border-top, .border-bottom { border-color: #333 !important; }
+      
+      /* MENSAJE DE ESPERA PARA COMPROBANTE */
+      .waiting-review {
+        background: #111;
+        border: 1px solid #444;
+        padding: 20px;
+        text-align: center;
+        margin-top: 15px;
+      }
+      .waiting-review p {
+        margin: 0;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+        color: #fff;
+      }
     </style>
 <base target="_blank">
 </head>
 <body>
+
+    <!-- MODAL BINANCE -->
+    <div id="binanceModal" class="binance-modal" onclick="closeBinanceModal(event)">
+      <div class="binance-modal-content" onclick="event.stopPropagation()">
+        <h3>Binance Payment Details</h3>
+        <div class="binance-data">
+          <p><strong>Nickname:</strong> BlackBearVideos</p>
+          <p><strong>Binance ID (UID):</strong> 816109526</p>
+        </div>
+        <a href="https://www.binance.com/es/my/payment/send?uid=816109526" target="_blank" class="pay-link pay-binance" style="margin-bottom: 10px;">GO TO BINANCE PAY</a>
+        <br>
+        <button class="close-modal" onclick="closeBinanceModal()">CLOSE</button>
+      </div>
+    </div>
 
     <div class="video-bg-global">
         <video autoplay loop muted playsinline><source src="video/bg.mp4" type="video/mp4"></video>
@@ -405,7 +497,6 @@
                       <span id="order-category" class="badge-status"></span>
                       <h1 id="order-main-title" style="font-weight: 900; font-size: 3.5rem; text-transform: uppercase; line-height: 1; margin: 0;"></h1>
                       
-                      <!-- NOMBRE DEL PROYECTO DEL EXCEL -->
                       <div class="project-title-display">
                           <span class="project-label">Project Title</span>
                           <span id="project-name"></span>
@@ -452,12 +543,12 @@
                             <h3 id="order-price" style="font-weight: 900; margin: 0;">$0.00</h3>
                           </div>
 
-                          <!-- ÁREA DE ACCIONES NORMALES (AWAITING_PAYMENT) -->
+                          <!-- ÁREA DE ACCIONES NORMALES (AWAITING_PAYMENT) - SOLO PARA NO-LEGACY -->
                           <div id="actions-area">
                               <div class="pay-grid">
                                   <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
                                   <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
-                                  <a href="https://www.binance.com/es/my/payment/send?uid=816109526" target="_blank" class="pay-link pay-binance">BINANCE</a>
+                                  <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
                               </div>
                               
                               <div class="contract-box" id="contract-content">
@@ -482,13 +573,12 @@
                               <div class="contract-box" id="legacy-contract-content">
                                   Loading agreement...
                               </div>
-                              <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()">REQUEST PROJECT</button>
-                              <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">As a LEGACY client, you can request the project to start. Payment can be arranged later.</p>
+                              <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()">SOLICITAR PROYECTO</button>
+                              <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">As a LEGACY client, click to start production. Payment will be requested later.</p>
                           </div>
 
-                          <!-- ÁREA DE REVIEW (botones de cambios y acciones) -->
+                          <!-- ÁREA DE REVIEW -->
                           <div id="review-actions-area" style="display: none;">
-                              <!-- Botón de solicitar cambios -->
                               <button class="btn-outline-light" id="request-changes-btn" onclick="toggleChangesForm()" style="border-color: #fff; color: #fff;">
                                   REQUEST CHANGES
                               </button>
@@ -496,7 +586,6 @@
                                   No revisions available. Please request an extra revision.
                               </div>
                               
-                              <!-- Formulario de solicitar cambios -->
                               <div class="changes-form" id="changes-form-container">
                                   <h4>Describe the changes needed</h4>
                                   <textarea id="changes-text" placeholder="Describe in detail what changes you need..."></textarea>
@@ -507,7 +596,6 @@
                                   </div>
                               </div>
 
-                              <!-- Botón de aceptar video (solo PREMIERE PASS) -->
                               <button class="btn-accept-video" id="accept-video-btn" onclick="acceptVideo()" style="display: none;">
                                   ACCEPT VIDEO
                               </button>
@@ -520,7 +608,7 @@
                                   <div class="pay-grid">
                                       <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
                                       <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
-                                      <a href="https://www.binance.com/es/my/payment/send?uid=816109526" target="_blank" class="pay-link pay-binance">BINANCE</a>
+                                      <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
                                   </div>
                                   
                                   <div class="upload-box-dotted" id="second-upload-area" onclick="document.getElementById('secondFileInput').click()">
@@ -532,8 +620,14 @@
 
                               <!-- Sección de comprobante para LEGACY en REVIEW -->
                               <div class="second-payment-section" id="legacy-review-payment-section" style="display: none;">
-                                  <h4>Upload Payment Proof</h4>
-                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">As a LEGACY client, upload your payment proof when ready.</p>
+                                  <h4>Payment Required</h4>
+                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">As a LEGACY client, please upload your payment proof.</p>
+                                  
+                                  <div class="pay-grid">
+                                      <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                      <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
+                                      <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
+                                  </div>
                                   
                                   <div class="upload-box-dotted" id="legacy-upload-area" onclick="document.getElementById('legacyFileInput').click()">
                                       <p id="legacy-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof</p>
@@ -571,12 +665,15 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzT0n1IaQIXbOvZXI48eX-N-lbO01qZ7hh3VWqFlsQFIuU_nyM2p_elYdMkXFtLm5n3Yg/exec";
+        // URLS DE SCRIPTS
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPhxeh2ywPPBL3DXXNUFX12Pu19ycRMp_Sc2C0WLui5fWIeDx8VGWlAd687oYO7lyU/exec";
+        const REVIEWS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPhxeh2ywPPBL3DXXNUFX12Pu19ycRMp_Sc2C0WLui5fWIeDx8VGWlAd687oYO7lyU/exec";
         
         let orderId = new URLSearchParams(window.location.search).get('id');
         let currentOrderData = null;
         let currentCategory = "";
         let currentStatus = "";
+        let firstPaymentUploaded = false;
 
         document.addEventListener('DOMContentLoaded', () => {
             if(!orderId) {
@@ -604,6 +701,18 @@
                 });
         }
 
+        // MODAL BINANCE
+        function openBinanceModal() {
+            document.getElementById('binanceModal').style.display = 'flex';
+        }
+        
+        function closeBinanceModal(e) {
+            if (e && e.target !== document.getElementById('binanceModal') && !e.target.classList.contains('close-modal')) {
+                return;
+            }
+            document.getElementById('binanceModal').style.display = 'none';
+        }
+
         function render(o) {
             document.getElementById('loading-view').style.display = 'none';
             document.getElementById('order-view').style.display = 'block';
@@ -616,10 +725,7 @@
             currentStatus = estatus;
             
             document.getElementById('order-main-title').innerText = "ORDER FOR " + (o.Cliente || "CLIENT");
-            
-            // Mostrar nombre del proyecto del Excel (columna "Proyecto")
             document.getElementById('project-name').innerText = o.Proyecto || "UNTITLED PROJECT";
-            
             document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "No description available.");
             document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
             
@@ -632,14 +738,10 @@
             document.getElementById('order-status-text').innerText = statusDisplay;
             document.getElementById('order-category').innerText = categoria || "PAYMENT";
 
-            // Actualizar revisiones
             updateRevisionsDisplay(revisiones);
-
-            // Renderizar contrato según categoría
             renderContract(categoria);
             renderLegacyContract(categoria);
 
-            // Manejar estados
             if(estatus === 'COMPLETED') {
                 renderCompletedState(o);
             }
@@ -681,7 +783,7 @@
             
             const completedDiv = document.getElementById('completed-actions');
             completedDiv.style.display = 'block';
-            completedDiv.innerHTML = ''; // Limpiar contenido previo
+            completedDiv.innerHTML = '';
             
             // BOTÓN DOWNLOAD
             const downloadBtn = document.createElement('a');
@@ -694,30 +796,39 @@
             downloadBtn.style.letterSpacing = '2px';
             downloadBtn.innerHTML = `DOWNLOAD VIDEO`;
             
-            // BOTÓN REVIEW
-            const reviewBtn = document.createElement('button');
-            reviewBtn.className = 'btn-outline-light';
-            reviewBtn.innerText = 'LEAVE A REVIEW';
-            reviewBtn.onclick = function() { toggleReviewForm(); };
+            // VERIFICAR SI YA SE ENVIÓ REVIEW
+            const reviewSent = localStorage.getItem(`review_sent_${orderId}`);
             
-            // FORMULARIO REVIEW CON NOMBRE Y PAÍS
-            const reviewForm = document.createElement('div');
-            reviewForm.id = 'review-form-container';
-            reviewForm.className = 'review-form';
-            reviewForm.innerHTML = `
-                <h4>Share your experience</h4>
-                <input type="text" id="reviewer-name" placeholder="Your Name" required>
-                <input type="text" id="reviewer-country" placeholder="Your Country" required>
-                <textarea id="review-text" placeholder="Tell us about your experience working with BlackBear..." required></textarea>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <button onclick="submitReview()">SUBMIT REVIEW</button>
-                    <span class="review-success" id="review-success-msg">✓ Review submitted! Thank you.</span>
-                </div>
-            `;
-            
-            completedDiv.appendChild(downloadBtn);
-            completedDiv.appendChild(reviewBtn);
-            completedDiv.appendChild(reviewForm);
+            if(reviewSent) {
+                const alreadySentMsg = document.createElement('div');
+                alreadySentMsg.className = 'review-already-sent';
+                alreadySentMsg.innerHTML = '✓ THANK YOU FOR YOUR REVIEW';
+                completedDiv.appendChild(downloadBtn);
+                completedDiv.appendChild(alreadySentMsg);
+            } else {
+                const reviewBtn = document.createElement('button');
+                reviewBtn.className = 'btn-outline-light';
+                reviewBtn.innerText = 'LEAVE A REVIEW';
+                reviewBtn.onclick = function() { toggleReviewForm(); };
+                
+                const reviewForm = document.createElement('div');
+                reviewForm.id = 'review-form-container';
+                reviewForm.className = 'review-form';
+                reviewForm.innerHTML = `
+                    <h4>Share your experience</h4>
+                    <input type="text" id="reviewer-name" placeholder="Your Name" required>
+                    <input type="text" id="reviewer-country" placeholder="Your Country" required>
+                    <textarea id="review-text" placeholder="Tell us about your experience working with BlackBear..." required></textarea>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button onclick="submitReview()">SUBMIT REVIEW</button>
+                        <span class="review-success" id="review-success-msg">✓ Review submitted! Thank you.</span>
+                    </div>
+                `;
+                
+                completedDiv.appendChild(downloadBtn);
+                completedDiv.appendChild(reviewBtn);
+                completedDiv.appendChild(reviewForm);
+            }
         }
 
         function renderInProductionState() {
@@ -731,16 +842,12 @@
         function renderReviewState(o, categoria, revisiones) {
             const catUpper = categoria.toUpperCase();
             
-            // Ocultar áreas normales
             document.getElementById('actions-area').style.display = 'none';
             document.getElementById('legacy-request-area').style.display = 'none';
             document.getElementById('completed-actions').style.display = 'none';
             document.getElementById('production-message').style.display = 'none';
-            
-            // Mostrar área de review
             document.getElementById('review-actions-area').style.display = 'block';
             
-            // Mostrar video si hay Link_YouTube
             if(o.Link_YouTube) {
                 document.getElementById('preview-box').style.display = 'block';
                 let videoUrl = getEmbedUrl(o.Link_YouTube);
@@ -750,7 +857,6 @@
                      frameborder="0" allowfullscreen></iframe>`;
             }
             
-            // Configurar botón de solicitar cambios
             const changesBtn = document.getElementById('request-changes-btn');
             const noRevisionsMsg = document.getElementById('no-revisions-msg');
             
@@ -763,29 +869,23 @@
                 noRevisionsMsg.style.display = 'block';
             }
             
-            // Configurar según categoría
             if(catUpper.includes('PREMIERE')) {
-                // PREMIERE PASS: Botón de aceptar video
                 document.getElementById('accept-video-btn').style.display = 'block';
                 document.getElementById('second-payment-section').style.display = 'none';
                 document.getElementById('legacy-review-payment-section').style.display = 'none';
             } 
             else if(catUpper.includes('DIRECTOR')) {
-                // DIRECTOR'S CUT: Segundo comprobante
                 document.getElementById('accept-video-btn').style.display = 'none';
                 document.getElementById('second-payment-section').style.display = 'block';
                 document.getElementById('legacy-review-payment-section').style.display = 'none';
                 
-                // Verificar si ya subió el segundo comprobante
                 checkSecondPaymentStatus(o);
             } 
             else if(catUpper.includes('LEGACY')) {
-                // LEGACY: Comprobante de pago
                 document.getElementById('accept-video-btn').style.display = 'none';
                 document.getElementById('second-payment-section').style.display = 'none';
                 document.getElementById('legacy-review-payment-section').style.display = 'block';
                 
-                // Verificar si ya subió comprobante
                 checkLegacyPaymentStatus(o);
             }
         }
@@ -798,11 +898,11 @@
             document.getElementById('review-actions-area').style.display = 'none';
             
             if(catUpper.includes('LEGACY')) {
-                // LEGACY: Mostrar botón de solicitar proyecto
+                // LEGACY: Solo mostrar botón de solicitar proyecto
                 document.getElementById('actions-area').style.display = 'none';
                 document.getElementById('legacy-request-area').style.display = 'block';
             } else {
-                // Otras categorías: Flujo normal de pago
+                // PREMIERE Y DIRECTOR: Mostrar área de pago normal
                 document.getElementById('actions-area').style.display = 'block';
                 document.getElementById('legacy-request-area').style.display = 'none';
                 checkIfAlreadyUploaded(o);
@@ -821,6 +921,7 @@
 
         function renderContract(categoria) {
             const contractBox = document.getElementById('contract-content');
+            if(!contractBox) return;
             const cat = categoria.toString().toUpperCase().trim();
             
             let html = '';
@@ -881,40 +982,36 @@
 
         function checkIfAlreadyUploaded(o) {
             const comprobante1 = o.Comprobante_1 || "";
-            const comprobante2 = o.Comprobante_2 || "";
             const categoria = (o.Categoria_Pago || "").toString().toUpperCase();
             
-            if (categoria.includes('LEGACY')) {
-                const label = document.getElementById('upload-label');
-                if ((comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') || 
-                    (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]')) {
-                    label.innerText = "Upload additional proof (LEGACY - VIP)";
-                    label.style.color = "#fff";
-                }
-                return;
-            }
-            
-            if ((comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') || 
-                (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]')) {
-                
-                const uploadBox = document.querySelector('.upload-box-dotted');
+            if (comprobante1.startsWith('http') && comprobante1 !== '[Imagen]') {
+                // YA SUBIÓ - MOSTRAR MENSAJE DE ESPERA (NO AUTOMÁTICO A PRODUCCIÓN)
+                const uploadBox = document.querySelector('#actions-area .upload-box-dotted');
                 const fileInput = document.getElementById('fileInput');
                 const btn = document.getElementById('upload-btn');
                 const label = document.getElementById('upload-label');
                 const check = document.getElementById('accept-check');
+                const payGrid = document.querySelector('#actions-area .pay-grid');
+                const contractBox = document.getElementById('contract-content');
                 
+                // Ocultar elementos de pago
+                if(payGrid) payGrid.style.display = 'none';
+                if(contractBox) contractBox.style.display = 'none';
+                if(check && check.parentElement) check.parentElement.style.display = 'none';
+                if(fileInput) fileInput.style.display = 'none';
+                
+                // Cambiar upload area a mensaje de espera
                 uploadBox.style.borderColor = "#333";
                 uploadBox.style.cursor = "default";
                 uploadBox.onclick = null;
-                label.innerText = "✓ PAYMENT PROOF RECEIVED";
+                label.innerText = "✓ PAYMENT PROOF UNDER REVIEW";
                 label.style.color = "#fff";
                 
-                fileInput.style.display = 'none';
-                check.parentElement.style.display = 'none';
-                
-                btn.innerText = "IN REVIEW QUEUE";
+                btn.innerText = "WAITING FOR VERIFICATION";
                 btn.className = "btn-blackbear btn-sent";
                 btn.onclick = null;
+                
+                firstPaymentUploaded = true;
             }
         }
 
@@ -922,17 +1019,21 @@
             const comprobante2 = o.Comprobante_2 || "";
             
             if (comprobante2.startsWith('http') && comprobante2 !== '[Imagen]') {
+                // YA SUBIÓ SEGUNDO PAGO - NO AUTOMÁTICO A COMPLETED
                 const uploadBox = document.getElementById('second-upload-area');
                 const btn = document.getElementById('second-upload-btn');
                 const label = document.getElementById('second-upload-label');
+                const payGrid = document.getElementById('second-payment-section').querySelector('.pay-grid');
+                
+                if(payGrid) payGrid.style.display = 'none';
                 
                 uploadBox.style.borderColor = "#333";
                 uploadBox.style.cursor = "default";
                 uploadBox.onclick = null;
-                label.innerText = "✓ FINAL PAYMENT RECEIVED";
+                label.innerText = "✓ FINAL PAYMENT UNDER REVIEW";
                 label.style.color = "#fff";
                 
-                btn.innerText = "PROCESSING...";
+                btn.innerText = "WAITING FOR VERIFICATION";
                 btn.className = "btn-blackbear btn-sent";
                 btn.disabled = true;
             }
@@ -945,6 +1046,9 @@
                 const uploadBox = document.getElementById('legacy-upload-area');
                 const btn = document.getElementById('legacy-upload-btn');
                 const label = document.getElementById('legacy-upload-label');
+                const payGrid = document.getElementById('legacy-review-payment-section').querySelector('.pay-grid');
+                
+                if(payGrid) payGrid.style.display = 'none';
                 
                 uploadBox.style.borderColor = "#333";
                 uploadBox.style.cursor = "default";
@@ -958,11 +1062,6 @@
             }
         }
 
-        // ============================================
-        // FUNCIONES DE ACCIÓN
-        // ============================================
-
-        // Aceptar video (PREMIERE PASS) - AHORA CON RECARGA INMEDIATA
         function acceptVideo() {
             if(!confirm("Are you sure you want to accept this video? This will mark the project as completed.")) {
                 return;
@@ -983,10 +1082,8 @@
             }).then(response => response.json())
             .then(result => {
                 if(result.result === "success") {
-                    // MOSTRAR MENSAJE DE ÉXITO Y RECARGAR INMEDIATAMENTE
                     alert("Video accepted! Loading download section...");
-                    // Forzar recarga completa de datos para mostrar estado COMPLETED
-                    window.location.reload(); // Recarga la página para mostrar la sección de descarga inmediatamente
+                    window.location.reload();
                 } else {
                     throw new Error(result.message || "Unknown error");
                 }
@@ -998,7 +1095,6 @@
             });
         }
 
-        // Solicitar proyecto (LEGACY AWAITING_PAYMENT)
         function requestLegacyProject() {
             if(!confirm("Request project start? As a LEGACY client, your project will begin immediately.")) {
                 return;
@@ -1027,12 +1123,11 @@
             }).catch(err => {
                 console.error(err);
                 alert("Error: " + err.message);
-                btn.innerText = "REQUEST PROJECT";
+                btn.innerText = "SOLICITAR PROYECTO";
                 btn.disabled = false;
             });
         }
 
-        // Solicitar cambios (todas las REVIEW)
         function toggleChangesForm() {
             const form = document.getElementById('changes-form-container');
             if(form.style.display === 'none' || form.style.display === '') {
@@ -1070,7 +1165,6 @@
                     document.getElementById('changes-error-msg').style.display = 'none';
                     document.getElementById('changes-text').disabled = true;
                     
-                    // Actualizar contador de revisiones
                     const currentRevisions = parseInt(document.getElementById('order-revisions').innerText) || 0;
                     if(currentRevisions > 0) {
                         updateRevisionsDisplay(currentRevisions - 1);
@@ -1092,7 +1186,6 @@
             });
         }
 
-        // Segundo pago (DIRECTOR'S CUT)
         function handleSecondFileSelected() {
             const file = document.getElementById('secondFileInput').files[0];
             if(file) {
@@ -1134,12 +1227,23 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        document.getElementById('second-upload-label').innerText = "✓ FINAL PAYMENT RECEIVED";
-                        document.getElementById('second-upload-label').style.color = "#fff";
-                        btn.innerText = "PROCESSING...";
-                        btn.className = "btn-blackbear btn-sent";
+                        // MOSTRAR MENSAJE DE ESPERA EN LUGAR DE COMPLETED AUTOMÁTICO
+                        const uploadBox = document.getElementById('second-upload-area');
+                        const payGrid = document.getElementById('second-payment-section').querySelector('.pay-grid');
                         
-                        alert("Final payment received! Your master file will be delivered shortly.");
+                        if(payGrid) payGrid.style.display = 'none';
+                        
+                        uploadBox.style.borderColor = "#333";
+                        uploadBox.style.cursor = "default";
+                        uploadBox.onclick = null;
+                        document.getElementById('second-upload-label').innerText = "✓ FINAL PAYMENT SENT - UNDER REVIEW";
+                        document.getElementById('second-upload-label').style.color = "#fff";
+                        
+                        btn.innerText = "WAITING FOR VERIFICATION";
+                        btn.className = "btn-blackbear btn-sent";
+                        btn.disabled = true;
+                        
+                        alert("Payment proof sent! We will review it and unlock your download shortly.");
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
@@ -1153,7 +1257,6 @@
             reader.readAsDataURL(file);
         }
 
-        // Pago LEGACY en REVIEW
         function handleLegacyFileSelected() {
             const file = document.getElementById('legacyFileInput').files[0];
             if(file) {
@@ -1195,8 +1298,17 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
+                        const uploadBox = document.getElementById('legacy-upload-area');
+                        const payGrid = document.getElementById('legacy-review-payment-section').querySelector('.pay-grid');
+                        
+                        if(payGrid) payGrid.style.display = 'none';
+                        
+                        uploadBox.style.borderColor = "#333";
+                        uploadBox.style.cursor = "default";
+                        uploadBox.onclick = null;
                         document.getElementById('legacy-upload-label').innerText = "✓ PAYMENT PROOF RECEIVED";
                         document.getElementById('legacy-upload-label').style.color = "#fff";
+                        
                         btn.innerText = "IN REVIEW QUEUE";
                         btn.className = "btn-blackbear btn-sent";
                         
@@ -1214,10 +1326,6 @@
             reader.readAsDataURL(file);
         }
 
-        // ============================================
-        // FUNCIONES EXISTENTES
-        // ============================================
-
         function requestExtraRevision() {
             const mensaje = `Hi! I need an extra revision for order ${orderId}. Please let me know the cost and payment details.`;
             window.open(`https://wa.me/522211319056?text=${encodeURIComponent(mensaje)}`, '_blank');
@@ -1232,7 +1340,6 @@
             }
         }
 
-        // SUBMIT REVIEW CON NOMBRE Y PAÍS PARA GOOGLE SHEETS HOJA 2
         function submitReview() {
             const reviewText = document.getElementById('review-text').value.trim();
             const reviewerName = document.getElementById('reviewer-name').value.trim();
@@ -1251,33 +1358,37 @@
             formData.append('action', 'submitReview');
             formData.append('orderId', orderId);
             formData.append('review', reviewText);
-            formData.append('nombre', reviewerName);      // Nombre para Hoja 2
-            formData.append('pais', reviewerCountry);     // País para Hoja 2
+            formData.append('nombre', reviewerName);
+            formData.append('pais', reviewerCountry);
             formData.append('date', new Date().toISOString());
             
-            fetch(SCRIPT_URL, { 
+            fetch(REVIEWS_SCRIPT_URL, { 
                 method: 'POST', 
                 body: formData 
             }).then(response => response.json())
             .then(result => {
                 if(result.result === "success") {
+                    localStorage.setItem(`review_sent_${orderId}`, 'true');
                     document.getElementById('review-success-msg').style.display = 'inline';
                     document.getElementById('review-text').disabled = true;
                     document.getElementById('reviewer-name').disabled = true;
                     document.getElementById('reviewer-country').disabled = true;
                     setTimeout(() => {
-                        toggleReviewForm();
+                        window.location.reload();
                     }, 2000);
                 } else {
-                    throw new Error(result.message || "Unknown error");
+                    throw new Error(result.message || "Error saving review");
                 }
             }).catch(err => {
                 console.error(err);
-                // Mostrar éxito igual ya que a veces hay errores de CORS pero los datos sí llegan
+                localStorage.setItem(`review_sent_${orderId}`, 'true');
                 document.getElementById('review-success-msg').style.display = 'inline';
                 document.getElementById('review-text').disabled = true;
                 document.getElementById('reviewer-name').disabled = true;
                 document.getElementById('reviewer-country').disabled = true;
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             });
         }
 
@@ -1324,13 +1435,27 @@
                     const result = await response.json();
                     
                     if(result.result === "success") {
-                        document.getElementById('upload-label').innerText = "✓ PAYMENT PROOF SENT";
+                        // MOSTRAR ESTADO DE ESPERA EN LUGAR DE AUTOMÁTICO
+                        const uploadBox = document.querySelector('#actions-area .upload-box-dotted');
+                        const payGrid = document.querySelector('#actions-area .pay-grid');
+                        const contractBox = document.getElementById('contract-content');
+                        const check = document.getElementById('accept-check');
+                        
+                        if(payGrid) payGrid.style.display = 'none';
+                        if(contractBox) contractBox.style.display = 'none';
+                        if(check && check.parentElement) check.parentElement.style.display = 'none';
+                        
+                        uploadBox.style.borderColor = "#333";
+                        uploadBox.style.cursor = "default";
+                        uploadBox.onclick = null;
+                        document.getElementById('upload-label').innerText = "✓ PAYMENT PROOF SENT - UNDER REVIEW";
                         document.getElementById('upload-label').style.color = "#fff";
-                        btn.innerText = "IN REVIEW QUEUE";
+                        
+                        btn.innerText = "WAITING FOR VERIFICATION";
                         btn.className = "btn-blackbear btn-sent";
                         btn.onclick = null;
                         
-                        alert("Payment proof received! We will review it shortly.");
+                        alert("Payment proof sent! We will review it shortly and start production.");
                     } else {
                         throw new Error(result.message || "Unknown error");
                     }
