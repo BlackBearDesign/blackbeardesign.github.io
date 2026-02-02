@@ -389,9 +389,11 @@
 
     </div>
 <script>
-    // ✅ URL ACTUALIZADA - Nueva implementación
+    // URL principal de órdenes
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXTcdw7e2d3qsI_bppdreM9zOk79xNQIjtwC3rejgAjPswzM6AOjX-bI6Evpu71tysQQ/exec";
-    const REVIEWS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJX68OAwhiDbUpth1zU5zv1UojxMu9EPc4vq11pr_FnP3bWXUUM6UwPEebl0PXfwTN/exec";
+    
+    // URL de reviews ACTUALIZADA (nuevo deployment)
+    const REVIEWS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLASJveMIZzhOpkYhMT6VbVDzaXy2Mle6bqCbDKCgoNkbi7CNes9wRilPhWkJ3DzC1/exec";
     
     let orderId = new URLSearchParams(window.location.search).get('id');
     let currentOrderData = null;
@@ -671,15 +673,15 @@
                     2. Administrator will verify payment manually.<br>
                     3. Upon acceptance in Review, order completes automatically.<br>
                     4. Master file delivered immediately upon acceptance.<br><br>
-                    5. After uploading your payment proof, your order will remain "Awaiting Payment" until the administrator manually verifies and moves it to "In Production". Please allow up to 24 hours for verification during business days.</span>`;
+                    <span style="color: #fff; font-size:11px;">5. After uploading your payment proof, your order will remain "Awaiting Payment" until the administrator manually verifies and moves it to "In Production". Please allow up to 24 hours for verification during business days.</span>`;
         } else if (cat.includes('DIRECTOR')) {
             return `<strong>DIRECTOR'S CUT AGREEMENT:</strong><br>
                     <span style="color: #fff;">50/50 Payment Split | Standard Queue</span><br><br>
                     1. 50% deposit required to enter production queue.<br>
                     2. Administrator will verify first payment manually.<br>
                     3. Final 50% required to unlock Master file.<br>
-                    4. Final payment also requires manual verification.<br><br>
-                    <span style="color: #fff; font-size:11px;">5. After uploading your payment proof, your order will remain "Awaiting Payment" until the administrator manually verifies and moves it to "In Production". Please allow up to 24 hours for verification during business days.</span>`;
+                    4. Final payment also requires manual verification.<br>
+                    5. After uploading your payment proof, your order will remain "Awaiting Payment" until the administrator manually verifies and moves it to "In Production". Please allow up to 24 hours for verification during business days.</span>`;
         }
         return `<strong>SERVICE AGREEMENT:</strong><br>Standard terms apply.`;
     }
@@ -986,7 +988,6 @@
         }
     }
 
-    // CORREGIDO: Selector específico para el botón de submit en LEGACY
     function submitLegacyPayment() {
         if(isSubmitting) return;
         isSubmitting = true;
@@ -997,7 +998,6 @@
             return; 
         }
         
-        // Selector específico para el botón blanco (btn-blackbear) dentro del formulario LEGACY
         const btn = document.querySelector('#legacy-payment-form .btn-blackbear');
         const originalText = btn ? btn.innerText : "SUBMIT PAYMENT";
         if(btn) {
@@ -1061,9 +1061,13 @@
         const country = document.getElementById('reviewer-country').value.trim();
         const text = document.getElementById('review-text').value.trim();
         
-        if(!name || !country || !text) { alert("Fill all fields."); return; }
+        if(!name || !country || !text) { 
+            alert("Fill all fields."); 
+            return; 
+        }
         
         const btn = document.querySelector('#review-form-container button');
+        const originalText = btn.innerText;
         btn.disabled = true;
         btn.innerText = "SENDING...";
         
@@ -1074,16 +1078,33 @@
         formData.append('texto', text);
         formData.append('orderId', orderId);
         
-        fetch(REVIEWS_SCRIPT_URL, { method: 'POST', body: formData })
-            .then(r => r.json())
-            .then(() => {
+        fetch(REVIEWS_SCRIPT_URL, { 
+            method: 'POST', 
+            body: formData 
+        })
+        .then(async r => {
+            const textResponse = await r.text();
+            
+            try {
+                return JSON.parse(textResponse);
+            } catch (e) {
+                throw new Error("Server response invalid: " + textResponse.substring(0, 100));
+            }
+        })
+        .then(data => {
+            if(data.result === "success") {
                 sessionStorage.setItem(`review_${orderId}`, 'true');
+                alert("Thank you for your review!");
                 window.location.reload();
-            })
-            .catch(err => {
-                alert("Error sending review. Please try again.");
-                btn.disabled = false;
-                btn.innerText = "SUBMIT REVIEW";
-            });
+            } else {
+                throw new Error(data.message || "Server error");
+            }
+        })
+        .catch(err => {
+            console.error("Error:", err);
+            alert("Error sending review: " + err.message);
+            btn.disabled = false;
+            btn.innerText = originalText;
+        });
     }
 </script>
