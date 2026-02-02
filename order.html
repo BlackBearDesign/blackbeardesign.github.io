@@ -390,213 +390,233 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzT0n1IaQIXbOvZXI48eX-N-lbO01qZ7hh3VWqFlsQFIuU_nyM2p_elYdMkXFtLm5n3Yg/exec";
-        const REVIEWS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJX68OAwhiDbUpth1zU5zv1UojxMu9EPc4vq11pr_FnP3bWXUUM6UwPEebl0PXfwTN/exec";
+    // ✅ URL ACTUALIZADA - Nueva implementación
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXTcdw7e2d3qsI_bppdreM9zOk79xNQIjtwC3rejgAjPswzM6AOjX-bI6Evpu71tysQQ/exec";
+    
+    // Si también cambiaste el de reviews, actualiza aquí (si no, déjalo como estaba)
+    const REVIEWS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJX68OAwhiDbUpth1zU5zv1UojxMu9EPc4vq11pr_FnP3bWXUUM6UwPEebl0PXfwTN/exec";
+    
+    let orderId = new URLSearchParams(window.location.search).get('id');
+    let currentOrderData = null;
+    let isSubmitting = false;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if(!orderId) {
+            document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER ID REQUIRED</h1>";
+            return;
+        }
         
-        let orderId = new URLSearchParams(window.location.search).get('id');
-        let currentOrderData = null;
-        let isSubmitting = false;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if(!orderId) {
-                document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER ID REQUIRED</h1>";
-                return;
-            }
-            fetchOrderData();
+        cleanupOldStorage();
+        fetchOrderData();
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeBinanceModal();
         });
+    });
 
-        function fetchOrderData() {
-            fetch(SCRIPT_URL + "?id=" + orderId + "&t=" + Date.now())
-                .then(response => response.json())
-                .then(data => {
-                    if(data.error) {
-                        document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER NOT FOUND</h1>";
-                    } else {
-                        currentOrderData = data;
-                        render(data);
+    function cleanupOldStorage() {
+        const now = Date.now();
+        const sevenDays = 7 * 24 * 60 * 60 * 1000;
+        
+        for (let i = sessionStorage.length - 1; i >= 0; i--) {
+            const key = sessionStorage.key(i);
+            if (key && (key.startsWith('comprobante') || key.startsWith('legacy_pay'))) {
+                try {
+                    const data = JSON.parse(sessionStorage.getItem(key));
+                    if (data && data.timestamp && (now - data.timestamp > sevenDays)) {
+                        sessionStorage.removeItem(key);
                     }
-                })
-                .catch(err => {
-                    document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>CONNECTION ERROR</h1>";
-                });
-        }
-
-        function openBinanceModal() { document.getElementById('binanceModal').style.display = 'flex'; }
-        function closeBinanceModal(e) { 
-            if (!e || e.target === document.getElementById('binanceModal') || e.target.classList.contains('close-modal')) {
-                document.getElementById('binanceModal').style.display = 'none'; 
+                } catch(e) {}
             }
         }
+    }
 
-        function render(o) {
-            document.getElementById('loading-view').style.display = 'none';
-            document.getElementById('order-view').style.display = 'block';
-
-            const categoria = (o.Categoria_Pago || "").toString().trim();
-            const estatus = (o.Estatus || "AWAITING_PAYMENT").toString().trim();
-            const revisiones = parseInt(o.Revisiones) || 0;
-            const catUpper = categoria.toUpperCase();
-            
-            // Datos básicos
-            document.getElementById('order-main-title').innerText = "ORDER FOR " + (o.Cliente || "CLIENT");
-            document.getElementById('project-name').innerText = o.Proyecto || "UNTITLED PROJECT";
-            document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "No description available.");
-            document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
-            
-            let statusDisplay = estatus.replace(/_/g, ' ');
-            if(estatus === "AWAITING_PAYMENT") statusDisplay = "AWAITING PAYMENT";
-            if(estatus === "IN_PRODUCTION") statusDisplay = "IN PRODUCTION";
-            if(estatus === "REVIEW") statusDisplay = "UNDER REVIEW";
-            if(estatus === "COMPLETED") statusDisplay = "COMPLETED";
-            
-            document.getElementById('order-status-text').innerText = statusDisplay;
-            document.getElementById('order-category').innerText = categoria || "PAYMENT";
-
-            updateRevisionsDisplay(revisiones);
-
-            // RENDER POR ESTADO EXACTO DEL EXCEL
-            
-            if (estatus === 'AWAITING_PAYMENT' && catUpper.includes('LEGACY')) {
-                renderLegacyArea(o);
-            }
-            else if (estatus === 'AWAITING_PAYMENT') {
-                renderAwaitingPaymentArea(o, catUpper);
-            }
-            else if (estatus === 'IN_PRODUCTION') {
-                renderProductionArea();
-            }
-            else if (estatus === 'REVIEW') {
-                renderReviewArea(o, catUpper, revisiones);
-            }
-            else if (estatus === 'COMPLETED') {
-                renderCompletedArea(o);
-            }
-        }
-
-        function updateRevisionsDisplay(revisiones) {
-            if(revisiones === 0) {
-                document.getElementById('revision-normal').style.display = 'none';
-                document.getElementById('revision-extra').style.display = 'block';
-            } else {
-                document.getElementById('revision-normal').style.display = 'block';
-                document.getElementById('revision-extra').style.display = 'none';
-                document.getElementById('order-revisions').innerText = revisiones;
-            }
-        }
-
-        // LEGACY: Solo Status, Revisions, Total Investment, Contrato, Checkbox y Botón
-        function renderLegacyArea(o) {
-            hideAllAreas();
-            document.getElementById('legacy-request-area').style.display = 'block';
-            document.getElementById('legacy-contract-content').innerHTML = renderLegacyContractText();
-            
-            // Si es Legacy y está en AWAITING_PAYMENT, siempre mostrar el formulario (no hay "espera" porque al hacer clic pasa automático a producción)
-            document.getElementById('request-project-btn').style.display = 'block';
-            document.querySelector('#legacy-request-area .accept-wrap').style.display = 'block';
-            toggleLegacyButton();
-        }
-
-        // PREMIERE / DIRECTOR en AWAITING_PAYMENT
-        function renderAwaitingPaymentArea(o, catUpper) {
-            hideAllAreas();
-            document.getElementById('actions-area').style.display = 'block';
-            document.getElementById('contract-content').innerHTML = renderContractText(catUpper);
-            
-            // Verificar si ya envió comprobante (sessionStorage temporal solo para no perder la vista al recargar antes de que el admin procese)
-            const sent = sessionStorage.getItem(`comprobante1_${orderId}`);
-            
-            if(sent) {
-                document.getElementById('payment-form-content').style.display = 'none';
-                document.getElementById('first-payment-waiting').style.display = 'block';
-            } else {
-                document.getElementById('payment-form-content').style.display = 'block';
-                document.getElementById('first-payment-waiting').style.display = 'none';
-                toggleSubmitButton();
-            }
-        }
-
-        function renderProductionArea() {
-            hideAllAreas();
-            document.getElementById('production-message').style.display = 'block';
-            // Limpiar sessionStorage de primer pago ya que ya está en producción
-            sessionStorage.removeItem(`comprobante1_${orderId}`);
-        }
-
-        function renderReviewArea(o, catUpper, revisiones) {
-            hideAllAreas();
-            document.getElementById('review-actions-area').style.display = 'block';
-            
-            // Mostrar preview si existe
-            if(o.Link_YouTube) {
-                document.getElementById('preview-box').style.display = 'block';
-                let videoUrl = getEmbedUrl(o.Link_YouTube);
-                document.getElementById('video-iframe').innerHTML = 
-                    `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
-            }
-            
-            // Configurar botones de cambios
-            if(revisiones > 0) {
-                document.getElementById('request-changes-btn').style.display = 'inline-block';
-                document.getElementById('no-revisions-msg').style.display = 'none';
-            } else {
-                document.getElementById('request-changes-btn').style.display = 'none';
-                document.getElementById('no-revisions-msg').style.display = 'block';
-            }
-            
-            // Resetear vistas específicas
-            document.getElementById('accept-video-btn').style.display = 'none';
-            document.getElementById('second-payment-section').style.display = 'none';
-            document.getElementById('legacy-review-payment-section').style.display = 'none';
-            
-            // PREMIERE: Botón aceptar video (AUTOMÁTICO A COMPLETED)
-            if(catUpper.includes('PREMIERE')) {
-                document.getElementById('accept-video-btn').style.display = 'block';
-            }
-            // DIRECTOR: Segundo pago (MANUAL - espera verificación admin)
-            else if(catUpper.includes('DIRECTOR')) {
-                document.getElementById('second-payment-section').style.display = 'block';
-                
-                // Verificar si ya envió segundo comprobante
-                const secondSent = sessionStorage.getItem(`comprobante2_${orderId}`);
-                if(secondSent) {
-                    document.getElementById('second-payment-form').style.display = 'none';
-                    document.getElementById('second-payment-waiting').style.display = 'block';
+    function fetchOrderData() {
+        fetch(SCRIPT_URL + "?id=" + orderId + "&t=" + Date.now())
+            .then(response => response.json())
+            .then(data => {
+                if(data.error) {
+                    document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>ORDER NOT FOUND</h1>";
                 } else {
-                    document.getElementById('second-payment-form').style.display = 'block';
-                    document.getElementById('second-payment-waiting').style.display = 'none';
+                    currentOrderData = data;
+                    render(data);
                 }
-            }
-            // LEGACY: Pago opcional en review
-            else if(catUpper.includes('LEGACY')) {
-                document.getElementById('legacy-review-payment-section').style.display = 'block';
-                const legacySent = sessionStorage.getItem(`legacy_pay_${orderId}`);
-                if(legacySent) {
-                    document.getElementById('legacy-payment-form').style.display = 'none';
-                    document.getElementById('legacy-payment-waiting').style.display = 'block';
-                } else {
-                    document.getElementById('legacy-payment-form').style.display = 'block';
-                    document.getElementById('legacy-payment-waiting').style.display = 'none';
-                }
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('loading-view').innerHTML = "<h1 style='color:#fff'>CONNECTION ERROR</h1>";
+            });
+    }
+
+    function openBinanceModal() { 
+        document.getElementById('binanceModal').style.display = 'flex'; 
+    }
+    
+    function closeBinanceModal(e) { 
+        if (!e || e.target === document.getElementById('binanceModal') || e.target.classList.contains('close-modal')) {
+            document.getElementById('binanceModal').style.display = 'none'; 
+        }
+    }
+
+    function render(o) {
+        document.getElementById('loading-view').style.display = 'none';
+        document.getElementById('order-view').style.display = 'block';
+
+        const categoria = (o.Categoria_Pago || "").toString().trim();
+        const estatus = (o.Estatus || "AWAITING_PAYMENT").toString().trim();
+        const revisiones = parseInt(o.Revisiones) || 0;
+        const catUpper = categoria.toUpperCase();
+        const comprobante1 = o.Comprobante_1 || "";
+        const comprobante2 = o.Comprobante_2 || "";
+        
+        document.getElementById('order-main-title').innerText = "ORDER FOR " + (o.Cliente || "CLIENT");
+        document.getElementById('project-name').innerText = o.Proyecto || "UNTITLED PROJECT";
+        document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "No description available.");
+        document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
+        
+        let statusDisplay = estatus.replace(/_/g, ' ');
+        if(estatus === "AWAITING_PAYMENT") statusDisplay = "AWAITING PAYMENT";
+        if(estatus === "IN_PRODUCTION") statusDisplay = "IN PRODUCTION";
+        if(estatus === "REVIEW") statusDisplay = "UNDER REVIEW";
+        if(estatus === "COMPLETED") statusDisplay = "COMPLETED";
+        
+        document.getElementById('order-status-text').innerText = statusDisplay;
+        document.getElementById('order-category').innerText = categoria || "PAYMENT";
+
+        updateRevisionsDisplay(revisiones);
+
+        if (estatus === 'AWAITING_PAYMENT' && catUpper.includes('LEGACY')) {
+            renderLegacyArea(o);
+        }
+        else if (estatus === 'AWAITING_PAYMENT') {
+            const hasProof = comprobante1 !== "" || checkSessionStorage(`comprobante1_${orderId}`);
+            renderAwaitingPaymentArea(o, catUpper, hasProof);
+        }
+        else if (estatus === 'IN_PRODUCTION') {
+            renderProductionArea();
+        }
+        else if (estatus === 'REVIEW') {
+            renderReviewArea(o, catUpper, revisiones);
+        }
+        else if (estatus === 'COMPLETED') {
+            renderCompletedArea(o);
+        }
+    }
+
+    function updateRevisionsDisplay(revisiones) {
+        if(revisiones === 0) {
+            document.getElementById('revision-normal').style.display = 'none';
+            document.getElementById('revision-extra').style.display = 'block';
+        } else {
+            document.getElementById('revision-normal').style.display = 'block';
+            document.getElementById('revision-extra').style.display = 'none';
+            document.getElementById('order-revisions').innerText = revisiones;
+        }
+    }
+
+    function renderLegacyArea(o) {
+        hideAllAreas();
+        document.getElementById('legacy-request-area').style.display = 'block';
+        document.getElementById('legacy-contract-content').innerHTML = renderLegacyContractText();
+        document.getElementById('request-project-btn').style.display = 'block';
+        document.querySelector('#legacy-request-area .accept-wrap').style.display = 'block';
+        toggleLegacyButton();
+    }
+
+    function renderAwaitingPaymentArea(o, catUpper, hasProof) {
+        hideAllAreas();
+        document.getElementById('actions-area').style.display = 'block';
+        document.getElementById('contract-content').innerHTML = renderContractText(catUpper);
+        
+        if(hasProof) {
+            document.getElementById('payment-form-content').style.display = 'none';
+            document.getElementById('first-payment-waiting').style.display = 'block';
+        } else {
+            document.getElementById('payment-form-content').style.display = 'block';
+            document.getElementById('first-payment-waiting').style.display = 'none';
+            resetUploadForm();
+            toggleSubmitButton();
+        }
+    }
+
+    function renderProductionArea() {
+        hideAllAreas();
+        document.getElementById('production-message').style.display = 'block';
+        sessionStorage.removeItem(`comprobante1_${orderId}`);
+    }
+
+    function renderReviewArea(o, catUpper, revisiones) {
+        hideAllAreas();
+        document.getElementById('review-actions-area').style.display = 'block';
+        
+        if(o.Link_YouTube) {
+            document.getElementById('preview-box').style.display = 'block';
+            let videoUrl = getEmbedUrl(o.Link_YouTube);
+            document.getElementById('video-iframe').innerHTML = 
+                `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
+        }
+        
+        if(revisiones > 0) {
+            document.getElementById('request-changes-btn').style.display = 'inline-block';
+            document.getElementById('no-revisions-msg').style.display = 'none';
+        } else {
+            document.getElementById('request-changes-btn').style.display = 'none';
+            document.getElementById('no-revisions-msg').style.display = 'block';
+        }
+        
+        document.getElementById('accept-video-btn').style.display = 'none';
+        document.getElementById('second-payment-section').style.display = 'none';
+        document.getElementById('legacy-review-payment-section').style.display = 'none';
+        document.getElementById('changes-form-container').style.display = 'none';
+        
+        if(catUpper.includes('PREMIERE')) {
+            document.getElementById('accept-video-btn').style.display = 'block';
+        }
+        else if(catUpper.includes('DIRECTOR')) {
+            document.getElementById('second-payment-section').style.display = 'block';
+            const secondSent = (o.Comprobante_2 && o.Comprobante_2 !== "") || checkSessionStorage(`comprobante2_${orderId}`);
+            
+            if(secondSent) {
+                document.getElementById('second-payment-form').style.display = 'none';
+                document.getElementById('second-payment-waiting').style.display = 'block';
+            } else {
+                document.getElementById('second-payment-form').style.display = 'block';
+                document.getElementById('second-payment-waiting').style.display = 'none';
+                resetSecondUploadForm();
             }
         }
-
-        function renderCompletedArea(o) {
-            hideAllAreas();
-            document.getElementById('completed-actions').style.display = 'block';
+        else if(catUpper.includes('LEGACY')) {
+            document.getElementById('legacy-review-payment-section').style.display = 'block';
+            const legacySent = (o.Comprobante_1 && o.Comprobante_1 !== "") || checkSessionStorage(`legacy_pay_${orderId}`);
             
-            if(o.Link_YouTube) {
-                document.getElementById('preview-box').style.display = 'block';
-                let videoUrl = getEmbedUrl(o.Link_YouTube);
-                document.getElementById('video-iframe').innerHTML = 
-                    `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
+            if(legacySent) {
+                document.getElementById('legacy-payment-form').style.display = 'none';
+                document.getElementById('legacy-payment-waiting').style.display = 'block';
+            } else {
+                document.getElementById('legacy-payment-form').style.display = 'block';
+                document.getElementById('legacy-payment-waiting').style.display = 'none';
+                resetLegacyUploadForm();
             }
-            
-            const completedDiv = document.getElementById('completed-actions');
-            completedDiv.innerHTML = '';
-            
-            // Botón descarga
+        }
+    }
+
+    function renderCompletedArea(o) {
+        hideAllAreas();
+        document.getElementById('completed-actions').style.display = 'block';
+        
+        if(o.Link_YouTube) {
+            document.getElementById('preview-box').style.display = 'block';
+            let videoUrl = getEmbedUrl(o.Link_YouTube);
+            document.getElementById('video-iframe').innerHTML = 
+                `<iframe src="${videoUrl}?modestbranding=1&rel=0&controls=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>`;
+        }
+        
+        const completedDiv = document.getElementById('completed-actions');
+        completedDiv.innerHTML = '';
+        
+        if(o.Link_Drive) {
             const downloadBtn = document.createElement('a');
-            downloadBtn.href = o.Link_Drive || '#';
+            downloadBtn.href = o.Link_Drive;
             downloadBtn.target = '_blank';
             downloadBtn.className = 'btn-blackbear d-block text-center mb-4';
             downloadBtn.style.textDecoration = 'none';
@@ -604,324 +624,469 @@
             downloadBtn.style.fontSize = '12px';
             downloadBtn.innerText = 'DOWNLOAD VIDEO';
             completedDiv.appendChild(downloadBtn);
+        }
+        
+        if(!sessionStorage.getItem(`review_${orderId}`)) {
+            const reviewBtn = document.createElement('button');
+            reviewBtn.className = 'btn-outline-light';
+            reviewBtn.innerText = 'LEAVE A REVIEW';
+            reviewBtn.onclick = toggleReviewForm;
+            completedDiv.appendChild(reviewBtn);
             
-            // Review
-            if(!sessionStorage.getItem(`review_${orderId}`)) {
-                const reviewBtn = document.createElement('button');
-                reviewBtn.className = 'btn-outline-light';
-                reviewBtn.innerText = 'LEAVE A REVIEW';
-                reviewBtn.onclick = toggleReviewForm;
-                completedDiv.appendChild(reviewBtn);
+            const reviewForm = document.createElement('div');
+            reviewForm.id = 'review-form-container';
+            reviewForm.className = 'review-form';
+            reviewForm.innerHTML = `
+                <h4>Share your experience</h4>
+                <input type="text" id="reviewer-name" placeholder="Your Name" required>
+                <input type="text" id="reviewer-country" placeholder="Your Country" required>
+                <textarea id="review-text" placeholder="Tell us about your experience..." required></textarea>
+                <button onclick="submitReview()">SUBMIT REVIEW</button>
+                <span class="review-success" id="review-success-msg" style="display:none; color:#fff; margin-left:10px;">✓ Thank you!</span>
+            `;
+            completedDiv.appendChild(reviewForm);
+        } else {
+            const msg = document.createElement('div');
+            msg.className = 'waiting-verification-msg';
+            msg.innerHTML = '<h4>✓ THANK YOU FOR YOUR REVIEW</h4>';
+            completedDiv.appendChild(msg);
+        }
+        
+        sessionStorage.removeItem(`comprobante1_${orderId}`);
+        sessionStorage.removeItem(`comprobante2_${orderId}`);
+        sessionStorage.removeItem(`legacy_pay_${orderId}`);
+    }
+
+    function hideAllAreas() {
+        document.getElementById('actions-area').style.display = 'none';
+        document.getElementById('legacy-request-area').style.display = 'none';
+        document.getElementById('review-actions-area').style.display = 'none';
+        document.getElementById('completed-actions').style.display = 'none';
+        document.getElementById('production-message').style.display = 'none';
+        document.getElementById('preview-box').style.display = 'none';
+    }
+
+    function renderContractText(cat) {
+        if (cat.includes('PREMIERE')) {
+            return `<strong>PREMIERE PASS AGREEMENT:</strong><br>
+                    <span style="color: #fff;">100% Upfront Payment | Priority Queue</span><br><br>
+                    1. Full payment required to enter production queue.<br>
+                    2. Administrator will verify payment manually.<br>
+                    3. Upon acceptance in Review, order completes automatically.<br>
+                    4. Master file delivered immediately upon acceptance.<br><br>
+                    <span style="color: #F3BA2F; font-size:11px;">⚠️ IMPORTANT: After uploading your payment proof, your order will remain "Awaiting Payment" until the administrator manually verifies and moves it to "In Production".</span>`;
+        } else if (cat.includes('DIRECTOR')) {
+            return `<strong>DIRECTOR'S CUT AGREEMENT:</strong><br>
+                    <span style="color: #fff;">50/50 Payment Split | Standard Queue</span><br><br>
+                    1. 50% deposit required to enter production queue.<br>
+                    2. Administrator will verify first payment manually.<br>
+                    3. Final 50% required to unlock Master file.<br>
+                    4. Final payment also requires manual verification.<br><br>
+                    <span style="color: #F3BA2F; font-size:11px;">⚠️ IMPORTANT: Both payments require manual verification. After uploading the final payment, the order will remain in "Review" until administrator manually marks it as "Completed".</span>`;
+        }
+        return `<strong>SERVICE AGREEMENT:</strong><br>Standard terms apply.`;
+    }
+
+    function renderLegacyContractText() {
+        return `<strong>LEGACY STATUS AGREEMENT:</strong><br>
+                <span style="color: #fff;">VIP Priority Queue | Flexible Terms</span><br><br>
+                1. Immediate priority queue placement upon request.<br>
+                2. Production begins automatically upon clicking "Request Project Start".<br>
+                3. Payment may be submitted before, during, or after production.<br>
+                4. Guaranteed delivery time regardless of standard queue.`;
+    }
+
+    function getEmbedUrl(url) {
+        if(!url) return '';
+        try {
+            const urlObj = new URL(url);
+            let videoId = '';
+            
+            if (urlObj.hostname.includes('youtube.com')) {
+                videoId = urlObj.searchParams.get('v');
+            } else if (urlObj.hostname.includes('youtu.be')) {
+                videoId = urlObj.pathname.slice(1);
+            }
+            
+            return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+        } catch (e) {
+            return url;
+        }
+    }
+
+    function toggleSubmitButton() {
+        const check = document.getElementById('accept-check');
+        const file = document.getElementById('fileInput').files.length > 0;
+        const btn = document.getElementById('upload-btn');
+        if(btn) btn.disabled = !(check && check.checked && file);
+    }
+
+    function toggleLegacyButton() {
+        const check = document.getElementById('legacy-accept-check');
+        const btn = document.getElementById('request-project-btn');
+        if(btn) btn.disabled = !(check && check.checked);
+    }
+
+    function checkSessionStorage(key) {
+        try {
+            const item = sessionStorage.getItem(key);
+            if (!item) return false;
+            const data = JSON.parse(item);
+            return data && data.value === 'true';
+        } catch(e) {
+            return sessionStorage.getItem(key) === 'true';
+        }
+    }
+
+    function setSessionStorage(key, value) {
+        const data = { value: value, timestamp: Date.now() };
+        sessionStorage.setItem(key, JSON.stringify(data));
+    }
+
+    function resetUploadForm() {
+        document.getElementById('fileInput').value = '';
+        document.getElementById('upload-label').innerText = "Upload payment proof (PNG/JPG)";
+        document.getElementById('accept-check').checked = false;
+    }
+
+    function resetSecondUploadForm() {
+        document.getElementById('secondFileInput').value = '';
+        document.getElementById('second-upload-label').innerText = "Upload second payment proof";
+    }
+
+    function resetLegacyUploadForm() {
+        document.getElementById('legacyFileInput').value = '';
+        document.getElementById('legacy-upload-label').innerText = "Upload payment proof";
+    }
+
+    function requestLegacyProject() {
+        const check = document.getElementById('legacy-accept-check');
+        if(!check.checked) {
+            alert("You must accept the terms and conditions.");
+            return;
+        }
+        
+        if(!confirm("Request project start? Production will begin immediately.")) return;
+        
+        const btn = document.getElementById('request-project-btn');
+        btn.innerText = "STARTING PRODUCTION...";
+        btn.disabled = true;
+        
+        const formData = new URLSearchParams();
+        formData.append('action', 'requestLegacyProject');
+        formData.append('orderId', orderId);
+        
+        fetch(SCRIPT_URL, { method: 'POST', body: formData })
+            .then(r => r.json())
+            .then(result => {
+                if(result.result === "success") {
+                    window.location.reload();
+                } else {
+                    throw new Error(result.message || "Error starting project");
+                }
+            }).catch(err => {
+                alert("Error: " + err.message);
+                btn.innerText = "REQUEST PROJECT START";
+                btn.disabled = false;
+            });
+    }
+
+    function handleFileSelected() {
+        const file = document.getElementById('fileInput').files[0];
+        if(file) {
+            if(file.size > 5 * 1024 * 1024) { 
+                alert("File too large. Max 5MB."); 
+                document.getElementById('fileInput').value = ''; 
+                return; 
+            }
+            document.getElementById('upload-label').innerText = "FILE: " + file.name;
+            toggleSubmitButton();
+        }
+    }
+
+    async function submitFile() {
+        if(isSubmitting) return;
+        isSubmitting = true;
+        
+        const file = document.getElementById('fileInput').files[0];
+        if(!file) { isSubmitting = false; return; }
+
+        const btn = document.getElementById('upload-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "SENDING...";
+        btn.disabled = true;
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            const formData = new URLSearchParams();
+            formData.append('fileBase64', e.target.result.split(',')[1]);
+            formData.append('mimeType', file.type);
+            formData.append('fileName', `Order_${orderId}_payment`);
+            formData.append('orderId', orderId);
+
+            try {
+                const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+                const result = await response.json();
                 
-                const reviewForm = document.createElement('div');
-                reviewForm.id = 'review-form-container';
-                reviewForm.className = 'review-form';
-                reviewForm.innerHTML = `
-                    <h4>Share your experience</h4>
-                    <input type="text" id="reviewer-name" placeholder="Your Name" required>
-                    <input type="text" id="reviewer-country" placeholder="Your Country" required>
-                    <textarea id="review-text" placeholder="Tell us about your experience..." required></textarea>
-                    <button onclick="submitReview()">SUBMIT REVIEW</button>
-                    <span class="review-success" id="review-success-msg">✓ Thank you!</span>
-                `;
-                completedDiv.appendChild(reviewForm);
-            } else {
-                const msg = document.createElement('div');
-                msg.className = 'waiting-verification-msg';
-                msg.innerHTML = '<h4>✓ THANK YOU FOR YOUR REVIEW</h4>';
-                completedDiv.appendChild(msg);
-            }
-            
-            // Limpiar todos los sessionStorage
-            sessionStorage.removeItem(`comprobante1_${orderId}`);
-            sessionStorage.removeItem(`comprobante2_${orderId}`);
-            sessionStorage.removeItem(`legacy_pay_${orderId}`);
-        }
-
-        function hideAllAreas() {
-            document.getElementById('actions-area').style.display = 'none';
-            document.getElementById('legacy-request-area').style.display = 'none';
-            document.getElementById('review-actions-area').style.display = 'none';
-            document.getElementById('completed-actions').style.display = 'none';
-            document.getElementById('production-message').style.display = 'none';
-            document.getElementById('preview-box').style.display = 'none';
-        }
-
-        function renderContractText(cat) {
-            // Textos actualizados mencionando orden de producción
-            if (cat.includes('PREMIERE')) {
-                return `<strong>PREMIERE PASS AGREEMENT:</strong><br>
-                        <span style="color: #fff;">100% Upfront Payment | Priority Queue</span><br><br>
-                        1. Full payment required to enter production queue.<br>
-                        2. Projects are completed in order of payment verification.<br>
-                        3. Upon acceptance in Review, order completes automatically.<br>
-                        4. Master file delivered watermark-free immediately upon acceptance.`;
-            } else if (cat.includes('DIRECTOR')) {
-                return `<strong>DIRECTOR'S CUT AGREEMENT:</strong><br>
-                        <span style="color: #fff;">50/50 Payment Split | Standard Queue</span><br><br>
-                        1. 50% deposit required to enter production queue.<br>
-                        2. Projects are completed in order of deposit verification.<br>
-                        3. Final 50% required to unlock Master file after admin verification.<br>
-                        4. Review stage allows revision requests before final payment.`;
-            }
-            return `<strong>SERVICE AGREEMENT:</strong><br>Standard terms apply.`;
-        }
-
-        function renderLegacyContractText() {
-            return `<strong>LEGACY STATUS AGREEMENT:</strong><br>
-                    <span style="color: #fff;">VIP Priority Queue | Flexible Terms</span><br><br>
-                    1. Immediate priority queue placement upon request.<br>
-                    2. Production begins automatically upon clicking "Request Project Start".<br>
-                    3. Payment may be submitted before, during, or after production.<br>
-                    4. Guaranteed delivery time regardless of standard queue.`;
-        }
-
-        function getEmbedUrl(url) {
-            return url.toString().replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/');
-        }
-
-        function toggleSubmitButton() {
-            const check = document.getElementById('accept-check');
-            const file = document.getElementById('fileInput').files.length > 0;
-            const btn = document.getElementById('upload-btn');
-            if(btn) btn.disabled = !(check && check.checked && file);
-        }
-
-        function toggleLegacyButton() {
-            const check = document.getElementById('legacy-accept-check');
-            const btn = document.getElementById('request-project-btn');
-            if(btn) btn.disabled = !(check && check.checked);
-        }
-
-        // 1. LEGACY REQUEST - AUTOMÁTICO A IN_PRODUCTION
-        function requestLegacyProject() {
-            const check = document.getElementById('legacy-accept-check');
-            if(!check.checked) {
-                alert("You must accept the terms and conditions.");
-                return;
-            }
-            
-            if(!confirm("Request project start? Production will begin immediately.")) return;
-            
-            const btn = document.getElementById('request-project-btn');
-            btn.innerText = "STARTING PRODUCTION...";
-            btn.disabled = true;
-            
-            const formData = new URLSearchParams();
-            formData.append('action', 'requestLegacyProject');
-            formData.append('orderId', orderId);
-            
-            fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(r => r.json())
-                .then(result => {
-                    if(result.result === "success") {
-                        // AUTOMÁTICO: Al recargar estará en IN_PRODUCTION
-                        window.location.reload();
-                    }
-                }).catch(err => {
-                    alert("Error: " + err.message);
-                    btn.innerText = "REQUEST PROJECT START";
-                    btn.disabled = false;
-                });
-        }
-
-        function handleFileSelected() {
-            const file = document.getElementById('fileInput').files[0];
-            if(file) {
-                if(file.size > 5 * 1024 * 1024) { 
-                    alert("File too large. Max 5MB."); 
-                    document.getElementById('fileInput').value = ''; 
-                    return; 
+                if(result.result === "success") {
+                    setSessionStorage(`comprobante1_${orderId}`, 'true');
+                    document.getElementById('payment-form-content').style.display = 'none';
+                    document.getElementById('first-payment-waiting').style.display = 'block';
+                } else {
+                    throw new Error(result.message || "Error uploading file");
                 }
-                document.getElementById('upload-label').innerText = "FILE: " + file.name;
-                toggleSubmitButton();
+            } catch (err) {
+                alert("Error: " + err.message);
+                btn.innerText = originalText;
+                btn.disabled = false;
+            } finally {
+                isSubmitting = false;
             }
-        }
+        };
+        reader.onerror = () => {
+            alert("Error reading file");
+            btn.innerText = originalText;
+            btn.disabled = false;
+            isSubmitting = false;
+        };
+        reader.readAsDataURL(file);
+    }
 
-        // Primer pago - Manual (espera verificación admin)
-        async function submitFile() {
-            if(isSubmitting) return;
-            isSubmitting = true;
-            
-            const file = document.getElementById('fileInput').files[0];
-            if(!file) { isSubmitting = false; return; }
-
-            const btn = document.getElementById('upload-btn');
-            btn.innerText = "SENDING...";
-            btn.disabled = true;
-
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const formData = new URLSearchParams();
-                formData.append('fileBase64', e.target.result.split(',')[1]);
-                formData.append('mimeType', file.type);
-                formData.append('fileName', `Order_${orderId}_payment`);
-                formData.append('orderId', orderId);
-
-                try {
-                    const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
-                    const result = await response.json();
-                    
-                    if(result.result === "success") {
-                        sessionStorage.setItem(`comprobante1_${orderId}`, 'true');
-                        // Mostrar espera - el admin debe mover a IN_PRODUCTION manualmente
-                        document.getElementById('payment-form-content').style.display = 'none';
-                        document.getElementById('first-payment-waiting').style.display = 'block';
-                    }
-                } catch (err) {
-                    alert("Error: " + err.message);
-                    btn.innerText = "SUBMIT PAYMENT";
-                    btn.disabled = false;
-                    isSubmitting = false;
+    function acceptVideo() {
+        if(!confirm("Accept video? This will complete the project and unlock the download immediately.")) return;
+        
+        const btn = document.getElementById('accept-video-btn');
+        btn.innerText = "COMPLETING ORDER...";
+        btn.disabled = true;
+        
+        const formData = new URLSearchParams();
+        formData.append('action', 'acceptVideo');
+        formData.append('orderId', orderId);
+        
+        fetch(SCRIPT_URL, { method: 'POST', body: formData })
+            .then(r => r.json())
+            .then(result => {
+                if(result.result === "success") {
+                    window.location.reload();
+                } else {
+                    throw new Error(result.message || "Error completing order");
                 }
-            };
-            reader.readAsDataURL(file);
-        }
+            }).catch(err => {
+                alert("Error: " + err.message);
+                btn.innerText = "ACCEPT VIDEO";
+                btn.disabled = false;
+            });
+    }
 
-        // 2. PREMIERE ACCEPT - AUTOMÁTICO A COMPLETED
-        function acceptVideo() {
-            if(!confirm("Accept video? This will complete the project and unlock the download immediately.")) return;
-            
-            const btn = document.getElementById('accept-video-btn');
-            btn.innerText = "COMPLETING ORDER...";
-            btn.disabled = true;
-            
-            const formData = new URLSearchParams();
-            formData.append('action', 'acceptVideo');
-            formData.append('orderId', orderId);
-            
-            fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(r => r.json())
-                .then(result => {
-                    if(result.result === "success") {
-                        // AUTOMÁTICO: Recargar y estará en COMPLETED
-                        window.location.reload();
-                    }
-                }).catch(err => {
-                    alert("Error: " + err.message);
-                    btn.innerText = "ACCEPT VIDEO";
-                    btn.disabled = false;
-                });
-        }
+    function toggleChangesForm() {
+        const form = document.getElementById('changes-form-container');
+        form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    }
 
-        function toggleChangesForm() {
-            const form = document.getElementById('changes-form-container');
-            form.style.display = form.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function submitChangesRequest() {
-            const text = document.getElementById('changes-text').value.trim();
-            if(!text) { alert("Describe the changes."); return; }
-            
-            const formData = new URLSearchParams();
-            formData.append('action', 'requestChanges');
-            formData.append('orderId', orderId);
-            formData.append('changes', text);
-            
-            fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                .then(r => r.json())
-                .then(result => {
+    function submitChangesRequest() {
+        const text = document.getElementById('changes-text').value.trim();
+        if(!text) { alert("Describe the changes."); return; }
+        
+        const btn = document.querySelector('#changes-form-container button');
+        btn.disabled = true;
+        btn.innerText = "SENDING...";
+        
+        const formData = new URLSearchParams();
+        formData.append('action', 'requestChanges');
+        formData.append('orderId', orderId);
+        formData.append('changes', text);
+        
+        fetch(SCRIPT_URL, { method: 'POST', body: formData })
+            .then(r => r.json())
+            .then(result => {
+                if(result.result === "success") {
                     document.getElementById('changes-success-msg').style.display = 'inline';
                     document.getElementById('changes-text').disabled = true;
-                });
-        }
+                    btn.innerText = "SENT";
+                    const currentRev = parseInt(document.getElementById('order-revisions').innerText) || 0;
+                    if(currentRev > 0) updateRevisionsDisplay(currentRev - 1);
+                } else {
+                    throw new Error(result.message);
+                }
+            })
+            .catch(err => {
+                alert("Error: " + err.message);
+                btn.disabled = false;
+                btn.innerText = "SEND REQUEST";
+            });
+    }
 
-        function handleSecondFileSelected() {
-            const file = document.getElementById('secondFileInput').files[0];
-            if(file) {
-                if(file.size > 5 * 1024 * 1024) { alert("File too large."); return; }
-                document.getElementById('second-upload-label').innerText = "FILE: " + file.name;
+    function handleSecondFileSelected() {
+        const file = document.getElementById('secondFileInput').files[0];
+        if(file) {
+            if(file.size > 5 * 1024 * 1024) { 
+                alert("File too large. Max 5MB."); 
+                document.getElementById('secondFileInput').value = ''; 
+                return; 
             }
+            document.getElementById('second-upload-label').innerText = "FILE: " + file.name;
         }
+    }
 
-        // Segundo pago Director's Cut - Manual (espera verificación admin)
-        function submitSecondPayment() {
-            if(isSubmitting) return;
-            isSubmitting = true;
+    function submitSecondPayment() {
+        if(isSubmitting) return;
+        isSubmitting = true;
+        
+        const file = document.getElementById('secondFileInput').files[0];
+        if(!file) { isSubmitting = false; return; }
+        
+        const btn = document.getElementById('second-upload-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "SENDING...";
+        btn.disabled = true;
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            const formData = new URLSearchParams();
+            formData.append('action', 'submitSecondPayment');
+            formData.append('fileBase64', e.target.result.split(',')[1]);
+            formData.append('mimeType', file.type);
+            formData.append('fileName', `Order_${orderId}_final`);
+            formData.append('orderId', orderId);
             
-            const file = document.getElementById('secondFileInput').files[0];
-            if(!file) { isSubmitting = false; return; }
-            
-            const btn = document.getElementById('second-upload-btn');
+            try {
+                const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+                const result = await response.json();
+                
+                if(result.result === "success") {
+                    setSessionStorage(`comprobante2_${orderId}`, 'true');
+                    document.getElementById('second-payment-form').style.display = 'none';
+                    document.getElementById('second-payment-waiting').style.display = 'block';
+                } else {
+                    throw new Error(result.message || "Error uploading payment");
+                }
+            } catch (err) {
+                alert("Error: " + err.message);
+                btn.innerText = originalText;
+                btn.disabled = false;
+            } finally {
+                isSubmitting = false;
+            }
+        };
+        reader.onerror = () => {
+            alert("Error reading file");
+            btn.innerText = originalText;
+            btn.disabled = false;
+            isSubmitting = false;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function handleLegacyFileSelected() {
+        const file = document.getElementById('legacyFileInput').files[0];
+        if(file) {
+            if(file.size > 5 * 1024 * 1024) { 
+                alert("File too large. Max 5MB."); 
+                document.getElementById('legacyFileInput').value = ''; 
+                return; 
+            }
+            document.getElementById('legacy-upload-label').innerText = "FILE: " + file.name;
+        }
+    }
+
+    function submitLegacyPayment() {
+        if(isSubmitting) return;
+        isSubmitting = true;
+        
+        const file = document.getElementById('legacyFileInput').files[0];
+        if(!file) { 
+            isSubmitting = false;
+            return; 
+        }
+        
+        const btn = document.querySelector('#legacy-payment-form button');
+        const originalText = btn ? btn.innerText : "SUBMIT PAYMENT";
+        if(btn) {
             btn.innerText = "SENDING...";
             btn.disabled = true;
-
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const formData = new URLSearchParams();
-                formData.append('action', 'submitSecondPayment');
-                formData.append('fileBase64', e.target.result.split(',')[1]);
-                formData.append('mimeType', file.type);
-                formData.append('fileName', `Order_${orderId}_final`);
-                formData.append('orderId', orderId);
-                
-                try {
-                    const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
-                    const result = await response.json();
-                    
-                    if(result.result === "success") {
-                        sessionStorage.setItem(`comprobante2_${orderId}`, 'true');
-                        // Mantener en REVIEW - el admin debe mover a COMPLETED manualmente
-                        document.getElementById('second-payment-form').style.display = 'none';
-                        document.getElementById('second-payment-waiting').style.display = 'block';
-                    }
-                } catch (err) {
-                    alert("Error: " + err.message);
-                    btn.innerText = "SUBMIT FINAL PAYMENT";
-                    btn.disabled = false;
-                    isSubmitting = false;
-                }
-            };
-            reader.readAsDataURL(file);
         }
-
-        function submitLegacyPayment() {
-            const file = document.getElementById('legacyFileInput').files[0];
-            if(!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const formData = new URLSearchParams();
-                formData.append('action', 'submitLegacyPayment');
-                formData.append('fileBase64', e.target.result.split(',')[1]);
-                formData.append('orderId', orderId);
-                
-                fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                    .then(() => {
-                        sessionStorage.setItem(`legacy_pay_${orderId}`, 'true');
-                        document.getElementById('legacy-payment-form').style.display = 'none';
-                        document.getElementById('legacy-payment-waiting').style.display = 'block';
-                    });
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function requestExtraRevision() {
-            const msg = `Hi! I need an extra revision for order ${orderId}.`;
-            window.open(`https://wa.me/522211319056?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function submitReview() {
-            const name = document.getElementById('reviewer-name').value.trim();
-            const country = document.getElementById('reviewer-country').value.trim();
-            const text = document.getElementById('review-text').value.trim();
-            
-            if(!name || !country || !text) { alert("Fill all fields."); return; }
-            
+        
+        const reader = new FileReader();
+        reader.onload = async (e) => {
             const formData = new URLSearchParams();
-            formData.append('action', 'submitReview');
-            formData.append('nombre', name);
-            formData.append('pais', country);
-            formData.append('texto', text);
+            formData.append('action', 'submitLegacyPayment');
+            formData.append('fileBase64', e.target.result.split(',')[1]);
+            formData.append('mimeType', file.type);
+            formData.append('fileName', `Order_${orderId}_legacy`);
             formData.append('orderId', orderId);
-            formData.append('fecha', new Date().toISOString());
             
-            fetch(REVIEWS_SCRIPT_URL, { method: 'POST', body: formData })
-                .then(() => {
-                    sessionStorage.setItem(`review_${orderId}`, 'true');
-                    window.location.reload();
-                });
-        }
-    </script>
+            try {
+                const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+                const result = await response.json();
+                
+                if(result.result === "success") {
+                    setSessionStorage(`legacy_pay_${orderId}`, 'true');
+                    document.getElementById('legacy-payment-form').style.display = 'none';
+                    document.getElementById('legacy-payment-waiting').style.display = 'block';
+                } else {
+                    throw new Error(result.message || "Error uploading payment");
+                }
+            } catch (err) {
+                alert("Error: " + err.message);
+                if(btn) {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                }
+            } finally {
+                isSubmitting = false;
+            }
+        };
+        reader.onerror = () => {
+            alert("Error reading file");
+            if(btn) {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+            isSubmitting = false;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function requestExtraRevision() {
+        const msg = `Hi! I need an extra revision for order ${orderId}.`;
+        window.open(`https://wa.me/522211319056?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function toggleReviewForm() {
+        const form = document.getElementById('review-form-container');
+        if(form) form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function submitReview() {
+        const name = document.getElementById('reviewer-name').value.trim();
+        const country = document.getElementById('reviewer-country').value.trim();
+        const text = document.getElementById('review-text').value.trim();
+        
+        if(!name || !country || !text) { alert("Fill all fields."); return; }
+        
+        const btn = document.querySelector('#review-form-container button');
+        btn.disabled = true;
+        btn.innerText = "SENDING...";
+        
+        const formData = new URLSearchParams();
+        formData.append('action', 'submitReview');
+        formData.append('nombre', name);
+        formData.append('pais', country);
+        formData.append('texto', text);
+        formData.append('orderId', orderId);
+        
+        fetch(REVIEWS_SCRIPT_URL, { method: 'POST', body: formData })
+            .then(r => r.json())
+            .then(() => {
+                sessionStorage.setItem(`review_${orderId}`, 'true');
+                window.location.reload();
+            })
+            .catch(err => {
+                alert("Error sending review. Please try again.");
+                btn.disabled = false;
+                btn.innerText = "SUBMIT REVIEW";
+            });
+    }
+</script>
 </body>
 </html>
