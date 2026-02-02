@@ -1,3 +1,393 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <title>Estado de Producción | BlackBear</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="images/icon.png">
+    
+    <link rel="stylesheet" href="css/vendor/icomoon/style.css">
+    <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap" rel="stylesheet">
+
+    <style>
+      body { font-family: 'Montserrat', sans-serif !important; background: #000; color: #fff; overflow-x: hidden; }
+      .video-bg-global { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #000; }
+      .video-bg-global video { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; filter: grayscale(100%); }
+      .unslate_co--site-wrap { background-color: transparent !important; }
+      .order-section { padding: 180px 0 100px 0; min-height: 85vh; }
+      .info-panel { background: rgba(10,10,10,0.95); padding: 40px; border: 1px solid #333; border-radius: 8px; backdrop-filter: blur(15px); }
+
+      .pay-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+      .pay-link { padding: 10px; font-size: 10px; font-weight: 900; text-align: center; border-radius: 4px; text-decoration: none !important; color: #fff; transition: 0.3s; cursor: pointer; border: none; display: inline-block; width: 100%; }
+      .pay-paypal { background: #003087; }
+      .pay-wise { background: #00b5ff; }
+      .pay-binance { background: #F3BA2F; color: #000; }
+      .pay-link:hover { opacity: 0.8; transform: translateY(-2px); }
+
+      .contract-box { background: #000; border: 1px solid #333; padding: 15px; height: 140px; overflow-y: scroll; font-size: 11px; color: #ccc; margin-bottom: 15px; text-align: left; line-height: 1.6; }
+      .contract-box strong { color: #fff; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+      
+      .upload-box-dotted { border: 2px dashed rgba(255,255,255,0.3); padding: 45px 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
+      .upload-box-dotted:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
+      
+      .btn-blackbear { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
+      .btn-blackbear:hover { background: #ccc; }
+      .btn-blackbear:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+      .btn-request-project { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; }
+      .btn-request-project:hover { background: #ccc; transform: translateY(-2px); }
+      .btn-request-project:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+      .btn-accept-video { background: #fff; color: #000; font-weight: 800; padding: 18px 40px; text-transform: uppercase; border: none; letter-spacing: 3px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+      .btn-accept-video:hover { background: #ccc; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
+      .btn-accept-video:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+      /* MODAL BINANCE */
+      .binance-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+      .binance-modal-content { background: #111; border: 1px solid #F3BA2F; padding: 40px; border-radius: 10px; text-align: center; max-width: 400px; width: 90%; }
+      .binance-modal h3 { color: #F3BA2F; font-size: 18px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+      .binance-data { background: #000; border: 1px solid #333; padding: 20px; margin-bottom: 20px; text-align: left; }
+      .binance-data p { margin: 5px 0; font-size: 13px; color: #fff; }
+      .close-modal { background: #333; color: #fff; border: none; padding: 10px 20px; margin-top: 10px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+      .close-modal:hover { background: #555; }
+
+      /* MENSAJES DE ESPERA */
+      .waiting-verification-msg {
+        padding: 30px;
+        border: 2px solid #fff;
+        background: rgba(255,255,255,0.05);
+        text-align: center;
+        margin-top: 0;
+        border-radius: 8px;
+      }
+      .waiting-verification-msg h4 {
+        font-size: 14px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        color: #fff;
+      }
+      .waiting-verification-msg p {
+        font-size: 12px;
+        color: #999;
+        margin: 0;
+      }
+      .waiting-verification-msg .lock-icon {
+        font-size: 36px;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .project-title-display { font-weight: 700; font-size: 1.8rem; color: #fff; margin-top: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; }
+      .project-label { font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 5px; letter-spacing: 2px; color: #666; display: block; }
+
+      .btn-extra-revision { background: #fff; color: #000; font-weight: 900; padding: 12px 20px; text-transform: uppercase; border: none; letter-spacing: 2px; font-size: 10px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 10px; border-radius: 4px; }
+      
+      .btn-outline-light { background: transparent; color: #fff; border: 1px solid #fff; font-weight: 800; padding: 15px 30px; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 15px; text-decoration: none; display: inline-block; text-align: center; }
+      .btn-outline-light:hover { background: #fff; color: #000; }
+
+      .review-form { display: none; margin-top: 25px; padding: 25px; border: 1px solid #333; background: rgba(0,0,0,0.5); border-radius: 8px; }
+      .review-form h4 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #fff; }
+      .review-form input { width: 100%; background: transparent; border: 1px solid #444; border-radius: 4px; padding: 12px; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 13px; margin-bottom: 15px; }
+      .review-form textarea { width: 100%; background: transparent; border: 1px solid #444; border-radius: 4px; padding: 12px; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 13px; resize: vertical; min-height: 100px; margin-bottom: 15px; }
+      .review-form button { background: #fff; color: #000; border: none; padding: 12px 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; cursor: pointer; transition: 0.3s; }
+      .review-success { display: none; color: #fff; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; margin-top: 15px; }
+
+      .changes-form { display: none; margin-top: 25px; padding: 25px; border: 1px solid #555; background: rgba(255,255,255,0.05); border-radius: 8px; }
+      .changes-form h4 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #fff; }
+      .changes-form textarea { width: 100%; background: transparent; border: 1px solid #444; border-radius: 4px; padding: 12px; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 13px; resize: vertical; min-height: 120px; margin-bottom: 15px; }
+      .changes-form button { background: #fff; color: #000; border: none; padding: 12px 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; cursor: pointer; transition: 0.3s; }
+
+      .second-payment-section { margin-top: 25px; padding: 25px; border: 1px solid #444; background: rgba(0,0,0,0.3); border-radius: 8px; }
+      .second-payment-section h4 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; color: #fff; }
+
+      .unslate_co--footer { background-color: #111 !important; position: relative !important; z-index: 10 !important; padding: 60px 0; color: #fff; border-top: 1px solid #333; }
+      .badge-status { padding: 8px 15px; background: #fff; color: #000; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block; }
+      .revision-badge { background: #fff; color: #000; padding: 2px 10px; font-weight: 900; border-radius: 3px; }
+      
+      .accept-wrap input[type="checkbox"] { display: none; }
+      .accept-wrap label { position: relative; padding-left: 28px; cursor: pointer; display: inline-block; color: #fff; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+      .accept-wrap label::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; border: 2px solid #fff; background: transparent; border-radius: 3px; transition: all 0.2s; }
+      .accept-wrap input[type="checkbox"]:checked + label::before { background: #fff; border-color: #fff; }
+      .accept-wrap input[type="checkbox"]:checked + label::after { content: '✓'; position: absolute; left: 3px; top: 50%; transform: translateY(-50%); color: #000; font-size: 14px; font-weight: 900; line-height: 1; }
+      
+      @media (max-width: 768px) { .pay-grid { grid-template-columns: 1fr; } .order-section { padding: 100px 0 50px 0; } }
+      
+      .contract-box::-webkit-scrollbar { width: 6px; }
+      .contract-box::-webkit-scrollbar-track { background: #111; }
+      .contract-box::-webkit-scrollbar-thumb { background: #fff; border-radius: 3px; }
+      
+      #order-main-title { color: #fff; }
+      #order-description { color: #ccc; }
+      #order-status-text { color: #fff; }
+      #order-price { color: #fff; }
+      .border-top, .border-bottom { border-color: #333 !important; }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- MODAL BINANCE -->
+    <div id="binanceModal" class="binance-modal" onclick="closeBinanceModal(event)">
+      <div class="binance-modal-content" onclick="event.stopPropagation()">
+        <h3>Binance Payment Details</h3>
+        <div class="binance-data">
+          <p><strong>Nickname:</strong> BlackBearVideos</p>
+          <p><strong>Binance ID (UID):</strong> 816109526</p>
+        </div>
+        <a href="https://www.binance.com/es/my/payment/send?uid=816109526" target="_blank" class="pay-link pay-binance" style="margin-bottom: 10px;">GO TO BINANCE PAY</a>
+        <br>
+        <button class="close-modal" onclick="closeBinanceModal()">CLOSE</button>
+      </div>
+    </div>
+
+    <div class="video-bg-global">
+        <video autoplay loop muted playsinline><source src="video/bg.mp4" type="video/mp4"></video>
+    </div>
+
+    <div class="unslate_co--site-wrap">
+      
+      <nav class="unslate_co--site-nav site-nav-target">
+        <div class="container">
+          <div class="row align-items-center justify-content-between">
+            <div class="col-md-5 text-right">
+              <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                <li><a href="index.html#home-section" class="nav-link">Home</a></li>
+                <li><a href="index.html#portfolio-section" class="nav-link">Portfolio</a></li>
+                <li><a href="index.html#about-section" class="nav-link">About</a></li>
+                <li><a href="index.html#services-section" class="nav-link">Services</a></li>
+              </ul>
+            </div>
+            <div class="site-logo pos-absolute">
+              <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                <img src="images/logo.png" alt="BlackBear" style="height: 40px; width: auto; vertical-align: middle;">
+              </a>
+            </div>
+            <div class="col-md-5 text-left">
+              <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                <li><a href="index.html#skills-section" class="nav-link">Skills</a></li>
+                <li><a href="index.html#testimonial-section" class="nav-link">Testimonial</a></li>
+                <li><a href="index.html#journal-section" class="nav-link">Journal</a></li>
+                <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container order-section">
+          <div id="loading-view" class="text-center">
+              <h2 style="font-weight: 900; letter-spacing: 2px; color: #fff;">Synchronizing with studio...</h2>
+          </div>
+
+          <div id="order-view" style="display:none;">
+              <div class="row">
+                  <div class="col-lg-7">
+                      <span id="order-category" class="badge-status"></span>
+                      <h1 id="order-main-title" style="font-weight: 900; font-size: 3.5rem; text-transform: uppercase; line-height: 1; margin: 0;"></h1>
+                      
+                      <div class="project-title-display">
+                          <span class="project-label">Project Title</span>
+                          <span id="project-name"></span>
+                      </div>
+                      
+                      <div class="mb-5">
+                          <h5 style="font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 1px; color: #666;">Project Description</h5>
+                          <p id="order-description" style="font-size: 18px; line-height: 1.6;"></p>
+                      </div>
+
+                      <div id="preview-box" style="display:none;">
+                        <h5 style="font-size: 10px; text-transform: uppercase; font-weight: 800; margin-bottom: 15px; letter-spacing: 1px; color: #666;">Preview (Demo)</h5>
+                        <div id="video-iframe" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid #333; border-radius: 8px;"></div>
+                      </div>
+                      
+                      <div id="production-message" style="display:none; margin-top: 40px; padding: 30px; border: 1px solid #333; background: rgba(0,0,0,0.5);">
+                          <h5 style="font-size: 12px; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 2px;">Production in Progress</h5>
+                          <p style="font-size: 14px; line-height: 1.6; color: #ccc;">Your project is currently being edited in queue order. You will receive a notification when the preview is ready for review.</p>
+                      </div>
+                  </div>
+
+                  <div class="col-lg-4 offset-lg-1">
+                      <div class="info-panel">
+                          <div class="mb-4">
+                              <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #666;">Status</span>
+                              <h3 id="order-status-text" style="font-weight: 900; text-transform: uppercase; margin: 0;"></h3>
+                          </div>
+                          
+                          <div class="mb-4 py-3 border-top border-bottom">
+                              <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #666;">Revisions</span>
+                              
+                              <h4 id="revision-normal" style="font-weight: 900; margin: 5px 0 0 0; display: block;">
+                                AVAILABLE: <span id="order-revisions" class="revision-badge">0</span>
+                              </h4>
+                              
+                              <div id="revision-extra" style="display: none; margin-top: 8px;">
+                                <p style="font-size: 11px; color: #999; margin: 0 0 8px 0;">NO REVISIONS LEFT</p>
+                                <button class="btn-extra-revision" onclick="requestExtraRevision()">REQUEST EXTRA REVISION</button>
+                              </div>
+                          </div>
+
+                          <div class="mb-5">
+                            <span style="font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; color: #666;">Total Investment</span>
+                            <h3 id="order-price" style="font-weight: 900; margin: 0;">$0.00</h3>
+                          </div>
+
+                          <!-- ÁREA AWAITING_PAYMENT (Premiere y Director) -->
+                          <div id="actions-area">
+                              <!-- Formulario de pago -->
+                              <div id="payment-form-content">
+                                  <div class="pay-grid" id="main-pay-grid">
+                                      <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                      <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
+                                      <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
+                                  </div>
+                                  
+                                  <div class="contract-box" id="contract-content">
+                                      Loading agreement...
+                                  </div>
+                                  
+                                  <div class="accept-wrap" style="margin-bottom: 20px;">
+                                      <input type="checkbox" id="accept-check" onchange="toggleSubmitButton()"> 
+                                      <label for="accept-check">I ACCEPT THE TERMS AND CONDITIONS</label>
+                                  </div>
+                                  
+                                  <div class="upload-box-dotted" id="main-upload-area" onclick="document.getElementById('fileInput').click()">
+                                      <p id="upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof (PNG/JPG)</p>
+                                  </div>
+                                  
+                                  <input type="file" id="fileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleFileSelected()">
+                                  <button class="btn-blackbear" id="upload-btn" onclick="submitFile()" disabled>SUBMIT PAYMENT</button>
+                              </div>
+
+                              <!-- Mensaje comprobante enviado (AWAITING_PAYMENT bloqueado) -->
+                              <div id="first-payment-waiting" class="waiting-verification-msg" style="display: none;">
+                                <span class="lock-icon">🔒</span>
+                                <h4>PAYMENT PROOF SENT</h4>
+                                <p>Your payment proof has been received.<br><br>Status: AWAITING_PAYMENT<br>Waiting for administrator verification.<br><br><small>Projects are handled in order of request and payment verification.</small></p>
+                              </div>
+                          </div>
+
+                          <!-- ÁREA LEGACY (AWAITING_PAYMENT) -->
+                          <div id="legacy-request-area" style="display: none;">
+                              <div class="contract-box" id="legacy-contract-content">
+                                  Loading agreement...
+                              </div>
+                              
+                              <!-- Checkbox aceptar contrato -->
+                              <div class="accept-wrap" style="margin-bottom: 20px;">
+                                  <input type="checkbox" id="legacy-accept-check" onchange="toggleLegacyButton()"> 
+                                  <label for="legacy-accept-check">I ACCEPT THE TERMS AND CONDITIONS</label>
+                              </div>
+                              
+                              <button class="btn-request-project" id="request-project-btn" onclick="requestLegacyProject()" disabled>REQUEST PROJECT START</button>
+                              <p style="font-size: 11px; color: #999; margin-top: 15px; text-align: center;">Projects are produced in order of request. Legacy clients receive priority queue placement.</p>
+                          </div>
+
+                          <!-- ÁREA REVIEW -->
+                          <div id="review-actions-area" style="display: none;">
+                              <button class="btn-outline-light" id="request-changes-btn" onclick="toggleChangesForm()">
+                                  REQUEST CHANGES
+                              </button>
+                              <div class="no-revisions-msg" id="no-revisions-msg" style="display: none; color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; padding: 10px; border: 1px solid #fff; background: rgba(255,255,255,0.1); border-radius: 4px;">
+                                  No revisions available. Please request an extra revision.
+                              </div>
+                              
+                              <div class="changes-form" id="changes-form-container" style="display: none;">
+                                  <h4>Describe the changes needed</h4>
+                                  <textarea id="changes-text" placeholder="Describe in detail what changes you need..."></textarea>
+                                  <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                      <button onclick="submitChangesRequest()">SEND REQUEST</button>
+                                      <span class="changes-success" id="changes-success-msg">✓ Changes requested!</span>
+                                  </div>
+                              </div>
+
+                              <button class="btn-accept-video" id="accept-video-btn" onclick="acceptVideo()" style="display: none;">
+                                  ACCEPT VIDEO
+                              </button>
+
+                              <!-- Segundo pago Director's Cut (MANUAL - espera verificación admin) -->
+                              <div class="second-payment-section" id="second-payment-section" style="display: none;">
+                                  <h4>Final Payment Required</h4>
+                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Upload the second payment proof. Administrator verification required to unlock master file.</p>
+                                  
+                                  <div id="second-payment-form">
+                                      <div class="pay-grid" style="margin-bottom: 15px;">
+                                          <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                          <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
+                                          <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
+                                      </div>
+                                      
+                                      <div class="upload-box-dotted" onclick="document.getElementById('secondFileInput').click()">
+                                          <p id="second-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload second payment proof</p>
+                                      </div>
+                                      <input type="file" id="secondFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleSecondFileSelected()">
+                                      <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
+                                  </div>
+
+                                  <!-- Mensaje espera segundo pago -->
+                                  <div id="second-payment-waiting" class="waiting-verification-msg" style="display: none;">
+                                    <span class="lock-icon">🔒</span>
+                                    <h4>FINAL PAYMENT SENT</h4>
+                                    <p>Second payment proof received.<br><br>Status: UNDER REVIEW<br>Waiting for administrator verification to complete order.</p>
+                                  </div>
+                              </div>
+
+                              <!-- Pago Legacy en Review (opcional) -->
+                              <div class="second-payment-section" id="legacy-review-payment-section" style="display: none;">
+                                  <h4>Optional Payment</h4>
+                                  <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Submit your payment proof when ready.</p>
+                                  
+                                  <div id="legacy-payment-form">
+                                      <div class="pay-grid" style="margin-bottom: 15px;">
+                                          <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
+                                          <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
+                                          <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
+                                      </div>
+                                      
+                                      <div class="upload-box-dotted" onclick="document.getElementById('legacyFileInput').click()">
+                                          <p id="legacy-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof</p>
+                                      </div>
+                                      <input type="file" id="legacyFileInput" class="d-none" accept="image/png,image/jpeg,image/jpg" onchange="handleLegacyFileSelected()">
+                                      <button class="btn-blackbear" onclick="submitLegacyPayment()">SUBMIT PAYMENT</button>
+                                  </div>
+
+                                  <div id="legacy-payment-waiting" class="waiting-verification-msg" style="display: none;">
+                                    <span class="lock-icon">🔒</span>
+                                    <h4>PAYMENT SENT</h4>
+                                    <p>Payment proof received.</p>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <!-- ÁREA COMPLETED -->
+                          <div id="completed-actions" style="display: none;">
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <footer class="unslate_co--footer">
+        <div class="container text-center">
+          <div class="footer-site-logo">
+            <a href="index.html" style="background: white; padding: 8px 12px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
+              <img src="images/logo.png" alt="BlackBear" style="height: 35px; width: auto; vertical-align: middle;">
+            </a>
+          </div>
+          <ul class="footer-site-social" style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+            <li><a href="#" style="font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #fff;">Facebook</a></li>
+            <li><a href="#" style="font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #fff;">Instagram</a></li>
+          </ul>
+          <p style="font-size:12px; margin: 0; color: #666;">Copyright &copy; 2026 BlackBear. All rights reserved.</p>
+        </div>
+      </footer>
+
+    </div>
 <script>
     // ✅ URL ACTUALIZADA - Nueva implementación
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXTcdw7e2d3qsI_bppdreM9zOk79xNQIjtwC3rejgAjPswzM6AOjX-bI6Evpu71tysQQ/exec";
