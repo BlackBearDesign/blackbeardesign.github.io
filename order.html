@@ -20,35 +20,57 @@
       .info-panel { background: rgba(10,10,10,0.95); padding: 40px; border: 1px solid #333; border-radius: 8px; backdrop-filter: blur(15px); }
 
       .pay-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+      .pay-grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+      .pay-grid-banks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; margin-top: 10px; }
       .pay-link { padding: 10px; font-size: 10px; font-weight: 900; text-align: center; border-radius: 4px; text-decoration: none !important; color: #fff; transition: 0.3s; cursor: pointer; border: none; display: inline-block; width: 100%; }
       .pay-paypal { background: #003087; }
       .pay-wise { background: #00b5ff; }
       .pay-binance { background: #F3BA2F; color: #000; }
+      .pay-mexico { background: #6C2C91; }
+      .pay-spain { background: #AA151B; }
       .pay-link:hover { opacity: 0.8; transform: translateY(-2px); }
 
-      .contract-box { background: #000; border: 1px solid #333; padding: 20px; height: 200px; overflow-y: scroll; font-size: 11px; color: #fff; margin-bottom: 0; text-align: left; line-height: 1.8; position: relative; }
+      /* CONTAINER DEL CONTRATO CON BORDE BLANCO COMPLETO */
+      .contract-wrapper {
+        border: 1px solid #fff;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      
+      .contract-box { 
+        background: #000; 
+        border: none;
+        padding: 20px; 
+        height: 200px; 
+        overflow-y: scroll; 
+        font-size: 11px; 
+        color: #fff; 
+        margin-bottom: 0; 
+        text-align: left; 
+        line-height: 1.8; 
+        position: relative; 
+      }
       .contract-box strong { color: #fff; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
       .contract-box br { margin-bottom: 8px; display: block; content: ""; }
       
-      /* Indicador de scroll - AHORA EN BLANCO */
+      /* Indicador de scroll - AHORA EN BLANCO Y DENTRO DEL BORDE */
       .scroll-indicator { 
         text-align: center; 
         padding: 10px; 
         background: rgba(255,255,255,0.05); 
-        border: 1px solid #333; 
-        border-top: none; 
+        border-top: 1px solid #333; 
         font-size: 9px; 
         color: #fff; 
         text-transform: uppercase; 
         letter-spacing: 2px; 
-        margin-bottom: 20px;
         transition: all 0.3s;
         font-weight: 700;
       }
       .scroll-indicator.completed { 
         background: rgba(255,255,255,0.1); 
         color: #fff; 
-        border-color: #fff;
+        border-top-color: #fff;
       }
       .scroll-indicator::after {
         content: ' ↓';
@@ -78,18 +100,34 @@
       .btn-accept-video:hover { background: #ccc; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
       .btn-accept-video:disabled { background: #333; color: #666; cursor: not-allowed; }
 
-      /* MODAL BINANCE */
-      .binance-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
-      .binance-modal-content { background: #111; border: 1px solid #F3BA2F; padding: 40px; border-radius: 10px; text-align: center; max-width: 400px; width: 90%; }
-      .binance-modal h3 { color: #F3BA2F; font-size: 18px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
-      .binance-data { background: #000; border: 1px solid #333; padding: 20px; margin-bottom: 20px; text-align: left; }
-      .binance-data p { margin: 5px 0; font-size: 13px; color: #fff; }
-      .close-modal { background: #333; color: #fff; border: none; padding: 10px 20px; margin-top: 10px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+      /* MODALES DE PAGO */
+      .bank-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+      .bank-modal-content { background: #111; border: 1px solid #fff; padding: 40px; border-radius: 10px; text-align: center; max-width: 450px; width: 90%; }
+      .bank-modal h3 { color: #fff; font-size: 16px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+      .bank-data { background: #000; border: 1px solid #333; padding: 20px; margin-bottom: 20px; text-align: left; }
+      .bank-data p { margin: 8px 0; font-size: 13px; color: #fff; word-break: break-all; }
+      .bank-data strong { color: #fff; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+      .close-modal { background: #333; color: #fff; border: none; padding: 12px 30px; margin-top: 10px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 2px; }
       .close-modal:hover { background: #555; }
+      .copy-btn { 
+        background: #fff; 
+        color: #000; 
+        border: none; 
+        padding: 8px 16px; 
+        margin-top: 15px; 
+        cursor: pointer; 
+        font-weight: 700; 
+        text-transform: uppercase; 
+        font-size: 10px; 
+        letter-spacing: 1px;
+        transition: 0.3s;
+      }
+      .copy-btn:hover { background: #ccc; }
+      .copy-success { color: #4CAF50; font-size: 11px; margin-top: 8px; display: none; }
 
       /* MENSAJES DE ESPERA */
       .waiting-verification-msg {
-        padding: 30px;
+        padding: 40px 30px;
         border: 2px solid #fff;
         background: rgba(255,255,255,0.05);
         text-align: center;
@@ -97,22 +135,31 @@
         border-radius: 8px;
       }
       .waiting-verification-msg h4 {
-        font-size: 14px;
+        font-size: 18px;
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 15px;
+        letter-spacing: 3px;
+        margin-bottom: 20px;
         color: #fff;
       }
       .waiting-verification-msg p {
-        font-size: 12px;
-        color: #999;
+        font-size: 13px;
+        color: #ccc;
         margin: 0;
+        line-height: 1.8;
+        letter-spacing: 1px;
       }
       .waiting-verification-msg .lock-icon {
-        font-size: 36px;
-        margin-bottom: 15px;
+        font-size: 48px;
+        margin-bottom: 20px;
         display: block;
+      }
+      .waiting-verification-msg .status-text {
+        font-size: 11px;
+        color: #999;
+        margin-top: 15px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
       }
 
       .project-title-display { font-weight: 700; font-size: 1.8rem; color: #fff; margin-top: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; }
@@ -157,7 +204,12 @@
         border-color: #666;
       }
       
-      @media (max-width: 768px) { .pay-grid { grid-template-columns: 1fr; } .order-section { padding: 100px 0 50px 0; } }
+      @media (max-width: 768px) { 
+        .pay-grid { grid-template-columns: 1fr; } 
+        .pay-grid-4 { grid-template-columns: 1fr; }
+        .pay-grid-banks { grid-template-columns: 1fr; }
+        .order-section { padding: 100px 0 50px 0; } 
+      }
       
       .contract-box::-webkit-scrollbar { width: 6px; }
       .contract-box::-webkit-scrollbar-track { background: #111; }
@@ -168,22 +220,72 @@
       #order-status-text { color: #fff; }
       #order-price { color: #fff; }
       .border-top, .border-bottom { border-color: #333 !important; }
+
+      /* Estilo para el mensaje de email enviado */
+      .email-success-msg {
+        display: none;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 10px;
+        padding: 15px;
+        border: 1px solid #fff;
+        background: rgba(255,255,255,0.1);
+        border-radius: 4px;
+        text-align: center;
+      }
     </style>
 <base target="_blank">
 </head>
 <body>
 
     <!-- MODAL BINANCE -->
-    <div id="binanceModal" class="binance-modal" onclick="closeBinanceModal(event)">
-      <div class="binance-modal-content" onclick="event.stopPropagation()">
+    <div id="binanceModal" class="bank-modal" onclick="closeBinanceModal(event)">
+      <div class="bank-modal-content" onclick="event.stopPropagation()">
         <h3>Binance Payment Details</h3>
-        <div class="binance-data">
+        <div class="bank-data">
           <p><strong>Nickname:</strong> BlackBearVideos</p>
           <p><strong>Binance ID (UID):</strong> 816109526</p>
         </div>
         <a href="https://www.binance.com/es/my/payment/send?uid=816109526" target="_blank" class="pay-link pay-binance" style="margin-bottom: 10px;">GO TO BINANCE PAY</a>
         <br>
         <button class="close-modal" onclick="closeBinanceModal()">CLOSE</button>
+      </div>
+    </div>
+
+    <!-- MODAL TRANSFERENCIA MÉXICO -->
+    <div id="mexicoModal" class="bank-modal" onclick="closeMexicoModal(event)">
+      <div class="bank-modal-content" onclick="event.stopPropagation()">
+        <h3>🏦 Transferencia Interbancaria México</h3>
+        <div class="bank-data">
+          <p><strong>CLABE Interbancaria:</strong></p>
+          <p style="font-size: 16px; letter-spacing: 2px; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 4px;">638180000152347149</p>
+          <p style="margin-top: 15px;"><strong>Banco:</strong> Nu</p>
+          <p><strong>Titular:</strong> Maximo Lair Hernández</p>
+        </div>
+        <button class="copy-btn" onclick="copyToClipboard('638180000152347149', 'mexico')">COPIAR CLABE</button>
+        <p class="copy-success" id="mexico-success">✓ Copiado al portapapeles</p>
+        <br>
+        <button class="close-modal" onclick="closeMexicoModal()">CERRAR</button>
+      </div>
+    </div>
+
+    <!-- MODAL TRANSFERENCIA IBAN ESPAÑA -->
+    <div id="spainModal" class="bank-modal" onclick="closeSpainModal(event)">
+      <div class="bank-modal-content" onclick="event.stopPropagation()">
+        <h3>🇪🇸 Transferencia IBAN España</h3>
+        <div class="bank-data">
+          <p><strong>IBAN:</strong></p>
+          <p style="font-size: 14px; letter-spacing: 1px; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 4px;">ES74 3081 0018 8150 0038 2882</p>
+          <p style="margin-top: 15px;"><strong>Titular:</strong> Sara Franceschy Temis</p>
+          <p><strong>Banco:</strong> Openbank (Santander)</p>
+        </div>
+        <button class="copy-btn" onclick="copyToClipboard('ES7430810018815000382882', 'spain')">COPIAR IBAN</button>
+        <p class="copy-success" id="spain-success">✓ Copiado al portapapeles</p>
+        <br>
+        <button class="close-modal" onclick="closeSpainModal()">CERRAR</button>
       </div>
     </div>
 
@@ -270,6 +372,10 @@
                               <div id="revision-extra" style="display: none; margin-top: 8px;">
                                 <p style="font-size: 11px; color: #999; margin: 0 0 8px 0;">NO REVISIONS LEFT</p>
                                 <button class="btn-extra-revision" onclick="requestExtraRevision()">REQUEST EXTRA REVISION</button>
+                                <div class="email-success-msg" id="email-success-msg">
+                                  ✓ Request sent via email<br>
+                                  <span style="font-size: 10px; color: #999;">Check your inbox for confirmation</span>
+                                </div>
                               </div>
                           </div>
 
@@ -288,10 +394,19 @@
                                       <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
                                   </div>
                                   
-                                  <div class="contract-box" id="contract-content">
-                                      Loading agreement...
+                                  <!-- BOTONES DE TRANSFERENCIA BANCARIA -->
+                                  <div class="pay-grid-banks">
+                                      <button onclick="openMexicoModal()" class="pay-link pay-mexico" type="button">🇲🇽 TRANSFER MÉXICO</button>
+                                      <button onclick="openSpainModal()" class="pay-link pay-spain" type="button">🇪🇸 IBAN ESPAÑA</button>
                                   </div>
-                                  <div class="scroll-indicator" id="main-scroll-indicator">Scroll down to read all terms</div>
+                                  
+                                  <!-- CONTAINER DEL CONTRATO CON BORDE BLANCO -->
+                                  <div class="contract-wrapper">
+                                    <div class="contract-box" id="contract-content">
+                                        Loading agreement...
+                                    </div>
+                                    <div class="scroll-indicator" id="main-scroll-indicator">Scroll down to read all terms</div>
+                                  </div>
                                   
                                   <div class="accept-wrap" style="margin-bottom: 20px;">
                                       <input type="checkbox" id="accept-check" onchange="toggleSubmitButton()" disabled> 
@@ -306,20 +421,24 @@
                                   <button class="btn-blackbear" id="upload-btn" onclick="submitFile()" disabled>SUBMIT PAYMENT</button>
                               </div>
 
-                              <!-- Mensaje comprobante enviado (AWAITING_PAYMENT bloqueado) -->
+                              <!-- Mensaje comprobante enviado (AWAITING_PAYMENT bloqueado) - ACTUALIZADO -->
                               <div id="first-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                 <span class="lock-icon">🔒</span>
                                 <h4>PAYMENT PROOF SENT</h4>
-                                <p>Your payment proof has been received.<br><br>Status: AWAITING_PAYMENT<br>Waiting for administrator verification.<br><br><small>Projects are handled in order of request and payment verification.</small></p>
+                                <p>Projects are handled in order of request.</p>
+                                <p class="status-text">AWAITING_PAYMENT<br>Waiting for administrator verification.</p>
                               </div>
                           </div>
 
                           <!-- ÁREA LEGACY (AWAITING_PAYMENT) -->
                           <div id="legacy-request-area" style="display: none;">
-                              <div class="contract-box" id="legacy-contract-content">
-                                  Loading agreement...
+                              <!-- CONTAINER DEL CONTRATO CON BORDE BLANCO -->
+                              <div class="contract-wrapper">
+                                <div class="contract-box" id="legacy-contract-content">
+                                    Loading agreement...
+                                </div>
+                                <div class="scroll-indicator" id="legacy-scroll-indicator">Scroll down to read all terms</div>
                               </div>
-                              <div class="scroll-indicator" id="legacy-scroll-indicator">Scroll down to read all terms</div>
                               
                               <!-- Checkbox aceptar contrato -->
                               <div class="accept-wrap" style="margin-bottom: 20px;">
@@ -365,6 +484,12 @@
                                           <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
                                       </div>
                                       
+                                      <!-- BOTONES DE TRANSFERENCIA BANCARIA PARA SEGUNDO PAGO -->
+                                      <div class="pay-grid-banks" style="margin-bottom: 15px;">
+                                          <button onclick="openMexicoModal()" class="pay-link pay-mexico" type="button">🇲🇽 TRANSFER MÉXICO</button>
+                                          <button onclick="openSpainModal()" class="pay-link pay-spain" type="button">🇪🇸 IBAN ESPAÑA</button>
+                                      </div>
+                                      
                                       <div class="upload-box-dotted" onclick="document.getElementById('secondFileInput').click()">
                                           <p id="second-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload second payment proof</p>
                                       </div>
@@ -372,11 +497,12 @@
                                       <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
                                   </div>
 
-                                  <!-- Mensaje espera segundo pago -->
+                                  <!-- Mensaje espera segundo pago - ACTUALIZADO -->
                                   <div id="second-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                     <span class="lock-icon">🔒</span>
                                     <h4>FINAL PAYMENT SENT</h4>
-                                    <p>Second payment proof received.<br><br>Status: UNDER REVIEW<br>Waiting for administrator verification to complete order.</p>
+                                    <p>Projects are handled in order of request.</p>
+                                    <p class="status-text">UNDER REVIEW<br>Waiting for administrator verification to complete order.</p>
                                   </div>
                               </div>
 
@@ -392,6 +518,12 @@
                                           <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
                                       </div>
                                       
+                                      <!-- BOTONES DE TRANSFERENCIA BANCARIA PARA LEGACY -->
+                                      <div class="pay-grid-banks" style="margin-bottom: 15px;">
+                                          <button onclick="openMexicoModal()" class="pay-link pay-mexico" type="button">🇲🇽 TRANSFER MÉXICO</button>
+                                          <button onclick="openSpainModal()" class="pay-link pay-spain" type="button">🇪🇸 IBAN ESPAÑA</button>
+                                      </div>
+                                      
                                       <div class="upload-box-dotted" onclick="document.getElementById('legacyFileInput').click()">
                                           <p id="legacy-upload-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0;">Upload payment proof</p>
                                       </div>
@@ -402,7 +534,8 @@
                                   <div id="legacy-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                     <span class="lock-icon">🔒</span>
                                     <h4>PAYMENT SENT</h4>
-                                    <p>Payment proof received.</p>
+                                    <p>Projects are handled in order of request.</p>
+                                    <p class="status-text">Payment proof received.</p>
                                   </div>
                               </div>
                           </div>
@@ -440,6 +573,9 @@
     // URL de reviews ACTUALIZADA (nuevo deployment)
     const REVIEWS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLASJveMIZzhOpkYhMT6VbVDzaXy2Mle6bqCbDKCgoNkbi7CNes9wRilPhWkJ3DzC1/exec";
     
+    // EMAIL PARA SOLICITUDES DE REVISION EXTRA
+    const REVISION_EMAIL = "blackbear@blackbear.com"; // Cambia esto por tu email real
+    
     let orderId = new URLSearchParams(window.location.search).get('id');
     let currentOrderData = null;
     let isSubmitting = false;
@@ -454,7 +590,11 @@
         fetchOrderData();
         
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeBinanceModal();
+            if (e.key === 'Escape') {
+                closeBinanceModal();
+                closeMexicoModal();
+                closeSpainModal();
+            }
         });
     });
 
@@ -492,6 +632,7 @@
             });
     }
 
+    // FUNCIONES MODAL BINANCE
     function openBinanceModal() { 
         document.getElementById('binanceModal').style.display = 'flex'; 
     }
@@ -500,6 +641,57 @@
         if (!e || e.target === document.getElementById('binanceModal') || e.target.classList.contains('close-modal')) {
             document.getElementById('binanceModal').style.display = 'none'; 
         }
+    }
+
+    // FUNCIONES MODAL MÉXICO
+    function openMexicoModal() { 
+        document.getElementById('mexicoModal').style.display = 'flex'; 
+    }
+    
+    function closeMexicoModal(e) { 
+        if (!e || e.target === document.getElementById('mexicoModal') || e.target.classList.contains('close-modal')) {
+            document.getElementById('mexicoModal').style.display = 'none'; 
+            // Reset copy success message
+            document.getElementById('mexico-success').style.display = 'none';
+        }
+    }
+
+    // FUNCIONES MODAL ESPAÑA
+    function openSpainModal() { 
+        document.getElementById('spainModal').style.display = 'flex'; 
+    }
+    
+    function closeSpainModal(e) { 
+        if (!e || e.target === document.getElementById('spainModal') || e.target.classList.contains('close-modal')) {
+            document.getElementById('spainModal').style.display = 'none'; 
+            // Reset copy success message
+            document.getElementById('spain-success').style.display = 'none';
+        }
+    }
+
+    // COPIAR AL PORTAPAPELES
+    function copyToClipboard(text, type) {
+        navigator.clipboard.writeText(text).then(() => {
+            const successMsg = document.getElementById(type + '-success');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 3000);
+        }).catch(err => {
+            // Fallback para navegadores antiguos
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            
+            const successMsg = document.getElementById(type + '-success');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 3000);
+        });
     }
 
     // Nueva función: Configurar scroll detection para contratos
@@ -1446,9 +1638,43 @@ By clicking "I Accept the Terms and Conditions" in the web system, or by submitt
         reader.readAsDataURL(file);
     }
 
+    // FUNCIÓN ACTUALIZADA: Enviar email en lugar de WhatsApp
     function requestExtraRevision() {
-        const msg = `Hi! I need an extra revision for order ${orderId}.`;
-        window.open(`https://wa.me/522211319056?text=${encodeURIComponent(msg)}`, '_blank');
+        const subject = `Extra Revision Request - Order ${orderId}`;
+        const body = `Hi BlackBear Team,
+
+I would like to request an extra revision for my project.
+
+Order ID: ${orderId}
+Project: ${document.getElementById('project-name').innerText}
+Client: ${currentOrderData ? currentOrderData.Cliente : 'Client'}
+
+Please contact me with the details for the additional revision.
+
+Best regards`;
+        
+        // Abrir cliente de email
+        window.location.href = `mailto:${REVISION_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        
+        // Mostrar mensaje de confirmación
+        const successMsg = document.getElementById('email-success-msg');
+        successMsg.style.display = 'block';
+        
+        // Opcional: También puedes enviar a tu backend para notificación
+        notifyExtraRevisionRequest();
+    }
+
+    // Notificación opcional al backend
+    function notifyExtraRevisionRequest() {
+        const formData = new URLSearchParams();
+        formData.append('action', 'notifyExtraRevision');
+        formData.append('orderId', orderId);
+        formData.append('clientEmail', currentOrderData ? currentOrderData.Cliente_Email || '' : '');
+        
+        fetch(SCRIPT_URL, { 
+            method: 'POST', 
+            body: formData 
+        }).catch(err => console.log('Notification sent'));
     }
 
     function toggleReviewForm() {
