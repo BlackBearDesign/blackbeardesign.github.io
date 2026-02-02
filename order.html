@@ -26,8 +26,40 @@
       .pay-binance { background: #F3BA2F; color: #000; }
       .pay-link:hover { opacity: 0.8; transform: translateY(-2px); }
 
-      .contract-box { background: #000; border: 1px solid #333; padding: 15px; height: 140px; overflow-y: scroll; font-size: 11px; color: #ccc; margin-bottom: 15px; text-align: left; line-height: 1.6; }
+      .contract-box { background: #000; border: 1px solid #333; padding: 15px; height: 140px; overflow-y: scroll; font-size: 11px; color: #ccc; margin-bottom: 0; text-align: left; line-height: 1.6; position: relative; }
       .contract-box strong { color: #fff; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+      
+      /* Indicador de scroll */
+      .scroll-indicator { 
+        text-align: center; 
+        padding: 8px; 
+        background: rgba(255,255,255,0.05); 
+        border: 1px solid #333; 
+        border-top: none; 
+        font-size: 10px; 
+        color: #666; 
+        text-transform: uppercase; 
+        letter-spacing: 1px; 
+        margin-bottom: 15px;
+        transition: all 0.3s;
+      }
+      .scroll-indicator.completed { 
+        background: rgba(0,255,0,0.1); 
+        color: #0f0; 
+        border-color: #0f0;
+      }
+      .scroll-indicator::after {
+        content: ' ↓';
+        animation: bounce 1s infinite;
+      }
+      .scroll-indicator.completed::after {
+        content: ' ✓';
+        animation: none;
+      }
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(3px); }
+      }
       
       .upload-box-dotted { border: 2px dashed rgba(255,255,255,0.3); padding: 45px 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
       .upload-box-dotted:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
@@ -113,6 +145,15 @@
       .accept-wrap label::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; border: 2px solid #fff; background: transparent; border-radius: 3px; transition: all 0.2s; }
       .accept-wrap input[type="checkbox"]:checked + label::before { background: #fff; border-color: #fff; }
       .accept-wrap input[type="checkbox"]:checked + label::after { content: '✓'; position: absolute; left: 3px; top: 50%; transform: translateY(-50%); color: #000; font-size: 14px; font-weight: 900; line-height: 1; }
+      
+      /* Checkbox deshabilitado visual */
+      .accept-wrap input[type="checkbox"]:disabled + label { 
+        opacity: 0.5; 
+        cursor: not-allowed; 
+      }
+      .accept-wrap input[type="checkbox"]:disabled + label::before {
+        border-color: #666;
+      }
       
       @media (max-width: 768px) { .pay-grid { grid-template-columns: 1fr; } .order-section { padding: 100px 0 50px 0; } }
       
@@ -248,9 +289,10 @@
                                   <div class="contract-box" id="contract-content">
                                       Loading agreement...
                                   </div>
+                                  <div class="scroll-indicator" id="main-scroll-indicator">Scroll down to read all terms</div>
                                   
                                   <div class="accept-wrap" style="margin-bottom: 20px;">
-                                      <input type="checkbox" id="accept-check" onchange="toggleSubmitButton()"> 
+                                      <input type="checkbox" id="accept-check" onchange="toggleSubmitButton()" disabled> 
                                       <label for="accept-check">I ACCEPT THE TERMS AND CONDITIONS</label>
                                   </div>
                                   
@@ -275,10 +317,11 @@
                               <div class="contract-box" id="legacy-contract-content">
                                   Loading agreement...
                               </div>
+                              <div class="scroll-indicator" id="legacy-scroll-indicator">Scroll down to read all terms</div>
                               
                               <!-- Checkbox aceptar contrato -->
                               <div class="accept-wrap" style="margin-bottom: 20px;">
-                                  <input type="checkbox" id="legacy-accept-check" onchange="toggleLegacyButton()"> 
+                                  <input type="checkbox" id="legacy-accept-check" onchange="toggleLegacyButton()" disabled> 
                                   <label for="legacy-accept-check">I ACCEPT THE TERMS AND CONDITIONS</label>
                               </div>
                               
@@ -457,6 +500,56 @@
         }
     }
 
+    // Nueva función: Configurar scroll detection para contratos
+    function setupContractScroll(contractBoxId, checkboxId, indicatorId) {
+        const contractBox = document.getElementById(contractBoxId);
+        const checkbox = document.getElementById(checkboxId);
+        const indicator = document.getElementById(indicatorId);
+        
+        if (!contractBox || !checkbox) return;
+        
+        // Resetear checkbox
+        checkbox.checked = false;
+        checkbox.disabled = true;
+        if(indicator) {
+            indicator.classList.remove('completed');
+            indicator.innerText = "Scroll down to read all terms";
+        }
+        
+        // Remover listener anterior si existe (para evitar duplicados)
+        contractBox.removeEventListener('scroll', contractBox.scrollHandler);
+        
+        // Crear nuevo handler
+        contractBox.scrollHandler = function() {
+            const scrolled = contractBox.scrollTop + contractBox.clientHeight;
+            const height = contractBox.scrollHeight;
+            
+            // Si llegó al final (con margen de 5px)
+            if (scrolled >= height - 5) {
+                checkbox.disabled = false;
+                if(indicator) {
+                    indicator.classList.add('completed');
+                    indicator.innerText = "Terms read completely";
+                }
+                // Remover listener una vez habilitado
+                contractBox.removeEventListener('scroll', contractBox.scrollHandler);
+            }
+        };
+        
+        contractBox.addEventListener('scroll', contractBox.scrollHandler);
+        
+        // Verificar inmediatamente por si el contenido es corto
+        setTimeout(() => {
+            if (contractBox.scrollHeight <= contractBox.clientHeight) {
+                checkbox.disabled = false;
+                if(indicator) {
+                    indicator.classList.add('completed');
+                    indicator.innerText = "Terms read completely";
+                }
+            }
+        }, 100);
+    }
+
     function render(o) {
         document.getElementById('loading-view').style.display = 'none';
         document.getElementById('order-view').style.display = 'block';
@@ -519,6 +612,10 @@
         document.getElementById('legacy-contract-content').innerHTML = renderLegacyContractText();
         document.getElementById('request-project-btn').style.display = 'block';
         document.querySelector('#legacy-request-area .accept-wrap').style.display = 'block';
+        
+        // Setup scroll detection para legacy
+        setupContractScroll('legacy-contract-content', 'legacy-accept-check', 'legacy-scroll-indicator');
+        
         toggleLegacyButton();
     }
 
@@ -534,6 +631,10 @@
             document.getElementById('payment-form-content').style.display = 'block';
             document.getElementById('first-payment-waiting').style.display = 'none';
             resetUploadForm();
+            
+            // Setup scroll detection para contrato normal
+            setupContractScroll('contract-content', 'accept-check', 'main-scroll-indicator');
+            
             toggleSubmitButton();
         }
     }
@@ -746,6 +847,7 @@
         document.getElementById('fileInput').value = '';
         document.getElementById('upload-label').innerText = "Upload payment proof (PNG/JPG)";
         document.getElementById('accept-check').checked = false;
+        // El scroll detection se encargará de deshabilitar el checkbox nuevamente
     }
 
     function resetSecondUploadForm() {
@@ -1108,3 +1210,5 @@
         });
     }
 </script>
+</body>
+</html>
