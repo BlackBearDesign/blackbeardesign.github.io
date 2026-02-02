@@ -26,27 +26,29 @@
       .pay-binance { background: #F3BA2F; color: #000; }
       .pay-link:hover { opacity: 0.8; transform: translateY(-2px); }
 
-      .contract-box { background: #000; border: 1px solid #333; padding: 15px; height: 140px; overflow-y: scroll; font-size: 11px; color: #ccc; margin-bottom: 0; text-align: left; line-height: 1.6; position: relative; }
-      .contract-box strong { color: #fff; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+      .contract-box { background: #000; border: 1px solid #333; padding: 20px; height: 200px; overflow-y: scroll; font-size: 11px; color: #fff; margin-bottom: 0; text-align: left; line-height: 1.8; position: relative; }
+      .contract-box strong { color: #fff; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+      .contract-box br { margin-bottom: 8px; display: block; content: ""; }
       
-      /* Indicador de scroll */
+      /* Indicador de scroll - AHORA EN BLANCO */
       .scroll-indicator { 
         text-align: center; 
-        padding: 8px; 
+        padding: 10px; 
         background: rgba(255,255,255,0.05); 
         border: 1px solid #333; 
         border-top: none; 
-        font-size: 10px; 
-        color: #666; 
+        font-size: 9px; 
+        color: #fff; 
         text-transform: uppercase; 
-        letter-spacing: 1px; 
-        margin-bottom: 15px;
+        letter-spacing: 2px; 
+        margin-bottom: 20px;
         transition: all 0.3s;
+        font-weight: 700;
       }
       .scroll-indicator.completed { 
-        background: rgba(0,255,0,0.1); 
-        color: #0f0; 
-        border-color: #0f0;
+        background: rgba(255,255,255,0.1); 
+        color: #fff; 
+        border-color: #fff;
       }
       .scroll-indicator::after {
         content: ' ↓';
@@ -148,7 +150,7 @@
       
       /* Checkbox deshabilitado visual */
       .accept-wrap input[type="checkbox"]:disabled + label { 
-        opacity: 0.5; 
+        opacity: 0.4; 
         cursor: not-allowed; 
       }
       .accept-wrap input[type="checkbox"]:disabled + label::before {
@@ -524,8 +526,8 @@
             const scrolled = contractBox.scrollTop + contractBox.clientHeight;
             const height = contractBox.scrollHeight;
             
-            // Si llegó al final (con margen de 5px)
-            if (scrolled >= height - 5) {
+            // Si llegó al final (con margen de 10px)
+            if (scrolled >= height - 10) {
                 checkbox.disabled = false;
                 if(indicator) {
                     indicator.classList.add('completed');
@@ -768,32 +770,328 @@
 
     function renderContractText(cat) {
         if (cat.includes('PREMIERE')) {
-            return `<strong>PREMIERE PASS AGREEMENT:</strong><br>
-                    <span style="color: #fff;">100% Upfront Payment | Priority Queue</span><br><br>
-                    1. Full payment required to enter production queue.<br>
-                    2. Administrator will verify payment manually.<br>
-                    3. Upon acceptance in Review, order completes automatically.<br>
-                    4. Master file delivered immediately upon acceptance.<br><br>
-                    <span style="color: #fff; font-size:11px;">5. After uploading your payment proof, your order will remain "Awaiting Payment" until the administrator manually verifies and moves it to "In Production". Please allow up to 24 hours for verification during business days.</span>`;
+            return `<strong>PREMIERE PASS AGREEMENT</strong><br><br>
+<strong>1 CORE PAYMENT TERMS</strong><br>
+a) Full payment (100%) required to enter production queue<br>
+b) Manual verification by administrator (MX Business Hours - up to 24 hours)<br>
+c) Immediate Master File delivery upon Review acceptance<br>
+d) Download available through web system for 30 days<br><br>
+<strong>2 PROJECT SETUP & REQUIREMENTS</strong><br>
+a) <strong>No Spec Work</strong><br>
+The editor does NOT perform trial work, free sample videos, or speculative work of any kind. Portfolio and testimonials available for quality evaluation at no cost.<br><br>
+b) <strong>Missing Assets</strong><br>
+Client responsible for providing ALL required materials BEFORE project start. Missing/late materials will adjust delivery timeline. Editor not responsible for delays from incomplete delivery. Rush fees non-refundable if delays caused by missing client materials.<br><br>
+c) <strong>Raw Footage Quality</strong><br>
+Editor not responsible if final quality compromised due to low-quality, poorly lit, or unusable source material from client.<br><br>
+d) <strong>Technical Specifications</strong><br>
+Client must specify dimensions before production. Default delivery MP4 if not specified.<br><br>
+<strong>3 PRODUCTION SCOPE & TIMELINE</strong><br>
+a) <strong>Delivery Timeline</strong><br>
+Editor works only on Mexico business days. Delivery time varies by project complexity. Only Rush Production (ADD-ON) processes outside standard calendar. Business day count begins when project moves to 'In Production', visible in web system.<br><br>
+b) <strong>Revision Review Window</strong><br>
+Upon receiving client's revision report/feedback through the web system, editor has <strong>24 hours</strong> to review, analyze, and acknowledge the requested changes before implementation begins. This review period allows editor to assess complexity and provide timeline estimate for completion. Implementation timeframe depends on complexity of requested changes.<br><br>
+c) <strong>Turnaround Time for Implementation</strong><br>
+After the 24-hour review period, editor requires additional time to implement changes based on complexity: standard revisions typically 48-72 business hours; complex revisions may require additional time. Rush revisions (under 24 hours implementation) available for additional fee, subject to availability. Each revision round is a separate work cycle processed according to queue and contract type.<br><br>
+d) <strong>Complexity Cap</strong><br>
+Quoted price strictly based on complexity and specifications discussed in initial consultation and original quote. <strong>Any requests for advanced effects (3D animations, complex motion graphics, extensive color grading, custom VFX, or techniques not explicitly included in the original quoted scope) will be treated as additional services requiring separate budget adjustment and payment before implementation.</strong> Editor will notify client through web system if request exceeds agreed complexity before proceeding. Client is responsible for clearly defining all required effects during the initial quote to avoid additional charges.<br><br>
+e) <strong>Scope Creep</strong><br>
+Significant changes to script, length, concept after production starts require new quote.<br><br>
+<strong>4 REVISIONS & APPROVALS</strong><br>
+a) <strong>Modification Limits</strong><br>
+Each revision round allows logical changes: trimming/extending clips, color adjustments, text corrections, audio adjustments, transition changes, repositioning elements, timing adjustments. Requests that fundamentally change project structure, require new footage selection, different creative direction, or effectively create a 'new video' are Scope Creep requiring new quote. Web system displays remaining revisions. Editor determines if changes exceed standard revision scope and notifies through system.<br><br>
+b) <strong>Revisions</strong><br>
+Extra revision rounds carry additional costs based on complexity. Web system displays remaining revisions in client's package.<br><br>
+c) <strong>Client Review Window</strong><br>
+Client has 3 business days to provide feedback via web system after receiving draft. No response = automatic acceptance.<br><br>
+d) <strong>Final Approval Policy</strong><br>
+Once client marks video as 'Approved' or 'Accepted' in web system, project officially complete and closed. Any changes after final approval subject to Post-Approval Policy: free if unused revisions remain (visible in web system), or billed as Re-render Fee if all revisions used. Clients strongly encouraged to review carefully during 3 business day review window.<br><br>
+e) <strong>Post-Approval Policy</strong><br>
+Unused revisions (visible in web system) can be used for post-delivery fixes at no cost. If all revisions used, modifications require Re-render Fee.<br><br>
+f) <strong>Disputed Work</strong><br>
+If dispute arises, both parties review original brief, written communications, and approved drafts. If delivered work matches agreed specifications and client approved previous drafts without objections, project considered complete. Disputes must be raised during 3 business day review window, NOT after final approval. If client approved as 'Accepted'/'Completed', work considered to have met expectations.<br><br>
+<strong>5 DELIVERABLES & TECHNICAL SPECS</strong><br>
+a) <strong>File Format Guarantee</strong><br>
+Standard delivery is <strong>MP4 (H.264)</strong> optimized for web/social media, compatible with all major platforms. Specific formats, codecs, or advanced technical specs (ProRes, DNxHD, specific bitrates, professional color profiles) must be stated BEFORE production. Format conversions after delivery may incur additional fees.<br><br>
+b) <strong>Final Deliverable Definition</strong><br>
+Final deliverable consists of: (1) ONE video file in specified format (default MP4); (2) in specified resolution/aspect ratio; (3) optimized for intended platform. Does NOT include: raw footage, project files (.prproj, .aep), individual assets, alternative versions, subtitle files (SRT/VTT), audio stems, or multi-format exports unless explicitly quoted separately. Additional deliverables must be requested and quoted BEFORE production. Web system indicates when Master File is ready for download.<br><br>
+c) <strong>Multi-Format Delivery</strong><br>
+Standard includes one (1) format/aspect ratio specified at start. Additional versions (16:9 to 9:16, 1:1, variants) must be requested and quoted BEFORE production. Additional formats after production starts billed as separate deliverables with extra fee.<br><br>
+d) <strong>Quality & Format Changes</strong><br>
+Requesting changes to resolution, aspect ratio, quality after production starts counts as paid revision.<br><br>
+e) <strong>Backup Copy & Download</strong><br>
+Client has 1 MONTH (30 days) to download Master File after it becomes available in the web system. After 30 days, file permanently deleted from servers and archives. Client responsible for downloading and backing up within timeframe. File recovery after 30 days requires 'Recovery & Re-render Fee' with no availability guarantee.<br><br>
+f) <strong>Archiving</strong><br>
+Project source files deleted 30 days after delivery.<br><br>
+<strong>6 LEGAL RIGHTS & RESPONSIBILITIES</strong><br>
+a) <strong>Copyright & Licensing</strong><br>
+Client 100% responsible for providing music, videos, images with correct commercial licenses. Editor not responsible for copyright strikes, claims, takedowns if client requests unlicensed material.<br><br>
+b) <strong>Client Material Licensing Indemnification</strong><br>
+Client agrees to indemnify, defend, and hold harmless editor from any/all legal claims, damages, costs, expenses (including attorney fees) arising from use of client-provided materials. Includes: copyright infringement, trademark violations, defamation, privacy violations, unauthorized third-party content use. Client warrants obtained all necessary rights, licenses, permissions, clearances to use content commercially. Legal disputes from client materials are client's sole responsibility. If editor faces legal action from client materials, client assumes all legal defense costs and resulting judgments/settlements.<br><br>
+c) <strong>Original Music/Soundtrack Rights</strong><br>
+Original music/soundtracks/audio created specifically for project licensed for delivered video only. Use in additional projects requires separate licensing and may incur fees. Stock/royalty-free music follows original license holder terms.<br><br>
+d) <strong>Ownership Transfer</strong><br>
+Upon full payment, client receives full commercial rights and ownership of Master File. Editor retains right to use work (or excerpts) for portfolio, social media, promotional materials unless client explicitly requests otherwise in writing. Client may not resell, redistribute as own work, or claim authorship of editor's creative work.<br><br>
+e) <strong>Portfolio Rights</strong><br>
+Editor retains right to showcase work (or excerpts) for portfolio, social media, and promotional materials <strong>unless client explicitly requests non-disclosure in writing</strong>. Client may request project privacy at no additional cost.<br><br>
+f) <strong>AI Asset Disclosure</strong><br>
+Editor may use AI tools for audio enhancement, upscaling, or generating visual assets to improve result.<br><br>
+<strong>7 PAYMENT & CANCELLATION</strong><br>
+a) <strong>Refund Policy</strong><br>
+Full refunds (100%) only available: (1) Before Production - if not yet moved to 'In Production' status (visible in web system), or (2) Expected Results Not Achieved - if editor determines cannot achieve expected results and notifies client. Once in active production, all payments non-refundable due to time/resources invested, unless situation #2 applies.<br><br>
+b) <strong>Kill Fee</strong><br>
+If client cancels project after production has started ('In Production' status visible in web system), editor retains 50% of total project price as compensation for time and resources invested. Remaining 50% will be refunded to client within 5-7 business days.<br><br>
+c) <strong>Third-Party Costs</strong><br>
+Client covers all external licenses (music, fonts, stock footage).<br><br>
+<strong>8 COMMUNICATION & PROJECT MANAGEMENT</strong><br>
+a) <strong>Written Approval Required</strong><br>
+All project approvals, scope changes, major decisions must be confirmed in writing (email, platform messages, system notifications visible in web dashboard). Verbal approvals via phone/video NOT binding unless followed by written confirmation within 24 hours.<br><br>
+b) <strong>Client Inactivity</strong><br>
+10 days no response via web system = project paused. Reactivation may incur fee.<br><br>
+c) <strong>Force Majeure</strong><br>
+Editor not liable for delays from events beyond reasonable control: natural disasters, power outages, internet failures, severe weather, pandemics, government restrictions, medical emergencies. Delivery timelines extended by reasonable period. Clients notified ASAP. No rush fees or penalties for force majeure delays.<br><br>
+<strong>9 DOCUMENTATION RIGHTS</strong><br>
+a) <strong>Client Copy Request</strong><br>
+Client has the right to request a complete copy of this agreement in Microsoft Word (.docx) format at any time during the active project period and up to 30 days after final project completion. Editor will provide the editable document within 2 business days of written request via email or web system.<br><br>
+<strong>10 RUSH PRODUCTION ADD-ON</strong> (When applied to Premiere Pass)<br>
+a) <strong>Rush Fee Structure</strong><br>
+Rush fee calculated as percentage of total project value (varies by complexity and timeline)<br><br>
+b) <strong>Payment Requirements</strong><br>
+100% of base price + 100% of rush fee required upfront to enter production queue<br><br>
+c) <strong>Priority Benefits</strong><br>
+- Bypasses ALL existing queues - immediate priority placement<br>
+- Works outside standard Mexico calendar (weekends/holidays if needed)<br>
+- Priority communication during MX business hours<br><br>
+d) <strong>Rush Availability & Force Majeure Exception</strong><br>
+Rush Production availability and expedited delivery are subject to Force Majeure events. If Force Majeure (natural disasters, severe weather, power outages, internet failures, pandemics, government restrictions) prevents delivery within the expedited Rush timeframe, the Rush fee will be <strong>fully refunded</strong> to the client. The base project continues under standard Force Majeure terms with extended timeline, but the premium paid for urgency is returned if the urgency cannot be fulfilled due to circumstances beyond the editor's control. No penalties or rush fees apply if Force Majeure delays Rush delivery.<br><br>
+e) <strong>Rush Delivery Clarification (CRITICAL)</strong><br>
+Rush Production grants <strong>priority queue placement</strong> and <strong>availability to work non-business days</strong> but does NOT guarantee specific delivery timelines for extensive projects. If project complexity requires substantial time to execute properly, delivery will occur as soon as technically possible, not by artificial deadline. Rush ensures your project is worked on BEFORE standard queue projects and that editor is available to work weekends/holidays if necessary, but does not compromise quality or feasibility for speed. By purchasing Rush, client acknowledges that extremely complex projects will take the time required to complete correctly, even with priority status.<br><br>
+f) <strong>Rush Fee Non-Transferable</strong><br>
+Rush Production fees non-refundable and non-transferable once project begins (except under Force Majeure as stated in section 10d). If client requests to pause, delay, or reschedule rush project after payment and production start, rush fee completely forfeited and project moved to standard queue. Resuming requires standard delivery timelines per Mexico calendar. Rush priority cannot be 'saved', 'transferred' to future projects, or 'paused' for later use. By requesting Rush, client confirms project ready for immediate start with all materials complete and available.<br><br>
+<strong>11 ELECTRONIC ACCEPTANCE</strong><br>
+By clicking "I Accept the Terms and Conditions" in the web system, or by submitting payment and proceeding to production, Client acknowledges they have read, understood, and agree to be legally bound by all terms, conditions, policies, and provisions contained in this Agreement. This electronic act of acceptance constitutes Client's legally binding signature, enforceable to the same extent as a handwritten signature.`;
         } else if (cat.includes('DIRECTOR')) {
-            return `<strong>DIRECTOR'S CUT AGREEMENT:</strong><br>
-                    <span style="color: #fff;">50/50 Payment Split | Standard Queue</span><br><br>
-                    1. 50% deposit required to enter production queue.<br>
-                    2. Administrator will verify first payment manually.<br>
-                    3. Final 50% required to unlock Master file.<br>
-                    4. Final payment also requires manual verification.<br>
-                    5. After uploading your payment proof, your order will remain "Awaiting Payment" until the administrator manually verifies and moves it to "In Production". Please allow up to 24 hours for verification during business days.</span>`;
+            return `<strong>DIRECTOR'S CUT AGREEMENT</strong><br><br>
+<strong>1 CORE PAYMENT TERMS</strong><br>
+a) 50% deposit required to enter production queue<br>
+b) Final 50% payment required to unlock clean Master File (watermarked until paid)<br>
+c) Manual verification for both payments (MX Business Hours - up to 24 hours)<br>
+d) Download available through web system for 30 days after final payment verification<br><br>
+<strong>2 PROJECT SETUP & REQUIREMENTS</strong><br>
+a) <strong>No Spec Work</strong><br>
+The editor does NOT perform trial work, free sample videos, or speculative work of any kind. Portfolio and testimonials available for quality evaluation at no cost.<br><br>
+b) <strong>Missing Assets</strong><br>
+Client responsible for providing ALL required materials BEFORE project start. Missing/late materials will adjust delivery timeline. Editor not responsible for delays from incomplete delivery. Rush fees non-refundable if delays caused by missing client materials.<br><br>
+c) <strong>Raw Footage Quality</strong><br>
+Editor not responsible if final quality compromised due to low-quality, poorly lit, or unusable source material from client.<br><br>
+d) <strong>Technical Specifications</strong><br>
+Client must specify dimensions before production. Default delivery MP4 if not specified.<br><br>
+<strong>3 PRODUCTION SCOPE & TIMELINE</strong><br>
+a) <strong>Delivery Timeline</strong><br>
+Editor works only on Mexico business days. Delivery time varies by project complexity. Only Rush Production (ADD-ON) processes outside standard calendar. Business day count begins when project moves to 'In Production', visible in web system.<br><br>
+b) <strong>Revision Review Window</strong><br>
+Upon receiving client's revision report/feedback through the web system, editor has <strong>24 hours</strong> to review, analyze, and acknowledge the requested changes before implementation begins. This review period allows editor to assess complexity and provide timeline estimate for completion. Implementation timeframe depends on complexity of requested changes.<br><br>
+c) <strong>Turnaround Time for Implementation</strong><br>
+After the 24-hour review period, editor requires additional time to implement changes based on complexity: standard revisions typically 48-72 business hours; complex revisions may require additional time. Rush revisions (under 24 hours implementation) available for additional fee, subject to availability. Each revision round is a separate work cycle processed according to queue and contract type.<br><br>
+d) <strong>Complexity Cap</strong><br>
+Quoted price strictly based on complexity and specifications discussed in initial consultation and original quote. <strong>Any requests for advanced effects (3D animations, complex motion graphics, extensive color grading, custom VFX, or techniques not explicitly included in the original quoted scope) will be treated as additional services requiring separate budget adjustment and payment before implementation.</strong> Editor will notify client through web system if request exceeds agreed complexity before proceeding. Client is responsible for clearly defining all required effects during the initial quote to avoid additional charges.<br><br>
+e) <strong>Scope Creep</strong><br>
+Significant changes to script, length, concept after production starts require new quote.<br><br>
+<strong>4 WATERMARK & PAYMENT POLICIES</strong><br>
+a) <strong>Watermark Policy (CRITICAL)</strong><br>
+All review drafts and preview versions contain visible watermark overlay. Watermark-free clean Master File ONLY released after full payment verification (final 50% + any late fees). IMPORTANT - Using, publishing, or distributing watermarked videos on public platforms (YouTube, Instagram, TikTok, Facebook, websites, etc.) before final payment constitutes breach of contract and may result in: immediate project cancellation with NO refund of initial 50% deposit, permanent withholding of clean Master File, and additional charges for unauthorized usage. Watermarked video EXCLUSIVELY for internal review and approval. Must NOT be shared publicly under any circumstances until full payment completed. Web system clearly indicates when clean file available for download.<br><br>
+b) <strong>Late Payment Policy (CRITICAL)</strong><br>
+Final 50% payment must be submitted within 7 business days after delivery of final watermarked review video (notification sent via web system). If payment NOT received within 7 business days:<br>
+- Week 1 Late (Days 8-14): 10% late fee on outstanding balance<br>
+- Week 2 Late (Days 15-21): 20% cumulative late fee on outstanding balance<br>
+- Week 3 Late (Days 22-28): 30% cumulative late fee on outstanding balance<br>
+- After 30 Days: Project may be considered abandoned, subject to Kill Fee policy<br><br>
+Clean Master File NOT released until full payment received including all accumulated late fees. Business day count begins day after final review video delivered. Web system displays payment deadline and accumulated fees.<br><br>
+<strong>5 REVISIONS & APPROVALS</strong><br>
+a) <strong>Modification Limits</strong><br>
+Each revision round allows logical changes: trimming/extending clips, color adjustments, text corrections, audio adjustments, transition changes, repositioning elements, timing adjustments. Requests that fundamentally change project structure, require new footage selection, different creative direction, or effectively create a 'new video' are Scope Creep requiring new quote. Web system displays remaining revisions. Editor determines if changes exceed standard revision scope and notifies through system.<br><br>
+b) <strong>Revisions</strong><br>
+Extra revision rounds carry additional costs based on complexity. Web system displays remaining revisions in client's package.<br><br>
+c) <strong>Client Review Window</strong><br>
+Client has 3 business days to provide feedback via web system after receiving draft. No response = automatic acceptance.<br><br>
+d) <strong>Final Approval Policy</strong><br>
+Once client marks video as 'Approved' or 'Accepted' in web system, project officially complete and closed. Any changes after final approval subject to Post-Approval Policy: free if unused revisions remain (visible in web system), or billed as Re-render Fee if all revisions used. Clients strongly encouraged to review carefully during 3 business day review window.<br><br>
+e) <strong>Post-Approval Policy</strong><br>
+Unused revisions (visible in web system) can be used for post-delivery fixes at no cost. If all revisions used, modifications require Re-render Fee.<br><br>
+f) <strong>Disputed Work</strong><br>
+If dispute arises, both parties review original brief, written communications, and approved drafts. If delivered work matches agreed specifications and client approved previous drafts without objections, project considered complete. Disputes must be raised during 3 business day review window, NOT after final approval. If client approved as 'Accepted'/'Completed', work considered to have met expectations.<br><br>
+<strong>6 DELIVERABLES & TECHNICAL SPECS</strong><br>
+a) <strong>File Format Guarantee</strong><br>
+Standard delivery is <strong>MP4 (H.264)</strong> optimized for web/social media, compatible with all major platforms. Specific formats, codecs, or advanced technical specs (ProRes, DNxHD, specific bitrates, professional color profiles) must be stated BEFORE production. Format conversions after delivery may incur additional fees.<br><br>
+b) <strong>Final Deliverable Definition</strong><br>
+Final deliverable consists of: (1) ONE video file in specified format (default MP4); (2) in specified resolution/aspect ratio; (3) optimized for intended platform. Does NOT include: raw footage, project files (.prproj, .aep), individual assets, alternative versions, subtitle files (SRT/VTT), audio stems, or multi-format exports unless explicitly quoted separately. Additional deliverables must be requested and quoted BEFORE production. Web system indicates when Master File is ready for download.<br><br>
+c) <strong>Multi-Format Delivery</strong><br>
+Standard includes one (1) format/aspect ratio specified at start. Additional versions (16:9 to 9:16, 1:1, variants) must be requested and quoted BEFORE production. Additional formats after production starts billed as separate deliverables with extra fee.<br><br>
+d) <strong>Quality & Format Changes</strong><br>
+Requesting changes to resolution, aspect ratio, quality after production starts counts as paid revision.<br><br>
+e) <strong>Backup Copy & Download</strong><br>
+Client has 1 MONTH (30 days) to download Master File after it becomes available in the web system. After 30 days, file permanently deleted from servers and archives. Client responsible for downloading and backing up within timeframe. File recovery after 30 days requires 'Recovery & Re-render Fee' with no availability guarantee.<br><br>
+f) <strong>Archiving</strong><br>
+Project source files deleted 30 days after delivery.<br><br>
+g) <strong>Project Files</strong><br>
+Editable source files (.prproj, .aep, etc.) not included, require additional fee if requested.<br><br>
+<strong>7 LEGAL RIGHTS & RESPONSIBILITIES</strong><br>
+a) <strong>Copyright & Licensing</strong><br>
+Client 100% responsible for providing music, videos, images with correct commercial licenses. Editor not responsible for copyright strikes, claims, takedowns if client requests unlicensed material.<br><br>
+b) <strong>Client Material Licensing Indemnification</strong><br>
+Client agrees to indemnify, defend, and hold harmless editor from any/all legal claims, damages, costs, expenses (including attorney fees) arising from use of client-provided materials. Includes: copyright infringement, trademark violations, defamation, privacy violations, unauthorized third-party content use. Client warrants obtained all necessary rights, licenses, permissions, clearances to use content commercially. Legal disputes from client materials are client's sole responsibility. If editor faces legal action from client materials, client assumes all legal defense costs and resulting judgments/settlements.<br><br>
+c) <strong>Original Music/Soundtrack Rights</strong><br>
+Original music/soundtracks/audio created specifically for project licensed for delivered video only. Use in additional projects requires separate licensing and may incur fees. Stock/royalty-free music follows original license holder terms.<br><br>
+d) <strong>Ownership Transfer</strong><br>
+Upon full payment, client receives full commercial rights and ownership of Master File. Editor retains right to use work (or excerpts) for portfolio, social media, promotional materials unless client explicitly requests otherwise in writing. Client may not resell, redistribute as own work, or claim authorship of editor's creative work.<br><br>
+e) <strong>Portfolio Rights</strong><br>
+Editor retains right to showcase work (or excerpts) for portfolio, social media, and promotional materials <strong>unless client explicitly requests non-disclosure in writing</strong>. Client may request project privacy at no additional cost.<br><br>
+f) <strong>AI Asset Disclosure</strong><br>
+Editor may use AI tools for audio enhancement, upscaling, or generating visual assets to improve result.<br><br>
+<strong>8 PAYMENT & CANCELLATION</strong><br>
+a) <strong>Refund Policy</strong><br>
+Full refunds (100%) only available: (1) Before Production - if not yet moved to 'In Production' status (visible in web system), or (2) Expected Results Not Achieved - if editor determines cannot achieve expected results and notifies client. Once in active production, all payments non-refundable due to time/resources invested, unless situation #2 applies.<br><br>
+b) <strong>Kill Fee</strong><br>
+The initial 50% deposit is <strong>completely non-refundable</strong> once work has commenced ('In Production' status visible in web system). <strong>No partial or full refund of the deposit will be issued upon cancellation.</strong> Client forfeits the entire deposit as compensation for time and resources allocated. No additional Kill Fee applies beyond retention of the initial 50% deposit.<br><br>
+c) <strong>Third-Party Costs</strong><br>
+Client covers all external licenses (music, fonts, stock footage).<br><br>
+<strong>9 COMMUNICATION & PROJECT MANAGEMENT</strong><br>
+a) <strong>Written Approval Required</strong><br>
+All project approvals, scope changes, major decisions must be confirmed in writing (email, platform messages, system notifications visible in web dashboard). Verbal approvals via phone/video NOT binding unless followed by written confirmation within 24 hours.<br><br>
+b) <strong>Client Inactivity</strong><br>
+10 days no response via web system = project paused. Reactivation may incur fee.<br><br>
+c) <strong>Force Majeure</strong><br>
+Editor not liable for delays from events beyond reasonable control: natural disasters, power outages, internet failures, severe weather, pandemics, government restrictions, medical emergencies. Delivery timelines extended by reasonable period. Clients notified ASAP. No rush fees or penalties for force majeure delays.<br><br>
+<strong>10 DOCUMENTATION RIGHTS</strong><br>
+a) <strong>Client Copy Request</strong><br>
+Client has the right to request a complete copy of this agreement in Microsoft Word (.docx) format at any time during the active project period and up to 30 days after final project completion. Editor will provide the editable document within 2 business days of written request via email or web system.<br><br>
+<strong>11 RUSH PRODUCTION ADD-ON</strong> (When applied to Director's Cut)<br>
+a) <strong>Rush Fee Structure</strong><br>
+Rush fee calculated as percentage of total project value (varies by complexity and timeline)<br><br>
+b) <strong>Payment Requirements</strong><br>
+50% deposit of base price + <strong>100% of rush fee required upfront</strong> to enter queue. Final 50% of base price due within 7 business days of watermarked delivery (clean file released only after final payment verification). Late fees apply as per standard Director's Cut Late Payment Policy.<br><br>
+c) <strong>Priority Benefits</strong><br>
+- Bypasses ALL existing queues - immediate priority placement<br>
+- Works outside standard Mexico calendar (weekends/holidays if needed)<br>
+- Priority communication during MX business hours<br><br>
+d) <strong>Rush Availability & Force Majeure Exception</strong><br>
+Rush Production availability and expedited delivery are subject to Force Majeure events. If Force Majeure prevents delivery within the expedited Rush timeframe, the Rush fee will be <strong>fully refunded</strong> to the client. The base project continues under standard Force Majeure terms with extended timeline, but the premium paid for urgency is returned if the urgency cannot be fulfilled due to circumstances beyond the editor's control.<br><br>
+e) <strong>Rush Delivery Clarification (CRITICAL)</strong><br>
+Rush Production grants <strong>priority queue placement</strong> and <strong>availability to work non-business days</strong> but does NOT guarantee specific delivery timelines for extensive projects. If project complexity requires substantial time to execute properly, delivery will occur as soon as technically possible, not by artificial deadline. Rush ensures your project is worked on BEFORE standard queue projects and that editor is available to work weekends/holidays if necessary, but does not compromise quality or feasibility for speed.<br><br>
+f) <strong>Rush Fee Non-Transferable</strong><br>
+Rush Production fees non-refundable and non-transferable once project begins (except under Force Majeure as stated in section 11d). If client requests to pause, delay, or reschedule rush project after payment and production start, rush fee completely forfeited and project moved to standard Director's Cut queue. Resuming requires standard delivery timelines per Mexico calendar. Rush priority cannot be 'saved', 'transferred' to future projects, or 'paused' for later use. By requesting Rush, client confirms project ready for immediate start with all materials complete and available.<br><br>
+<strong>12 ELECTRONIC ACCEPTANCE</strong><br>
+By clicking "I Accept the Terms and Conditions" in the web system, or by submitting payment and proceeding to production, Client acknowledges they have read, understood, and agree to be legally bound by all terms, conditions, policies, and provisions contained in this Agreement. This electronic act of acceptance constitutes Client's legally binding signature, enforceable to the same extent as a handwritten signature.`;
         }
-        return `<strong>SERVICE AGREEMENT:</strong><br>Standard terms apply.`;
+        return `<strong>SERVICE AGREEMENT</strong><br><br>Standard terms apply.`;
     }
 
     function renderLegacyContractText() {
-        return `<strong>LEGACY STATUS AGREEMENT:</strong><br>
-                <span style="color: #fff;">VIP Priority Queue | Flexible Terms</span><br><br>
-                1. Immediate priority queue placement upon request.<br>
-                2. Production begins automatically upon clicking "Request Project Start".<br>
-                3. Payment may be submitted before, during, or after production.<br>
-                4. Guaranteed delivery time regardless of standard queue.`;
+        return `<strong>LEGACY STATUS AGREEMENT</strong><br>
+<span style="color: #fff; font-size:10px; text-transform:uppercase; letter-spacing:1px;">Trusted Client Payment Plan | Standard Queue</span><br><br>
+<strong>1 CORE PAYMENT TERMS</strong><br>
+a) Payment Upon Review - No upfront payment required to start production<br>
+b) Production begins immediately upon Legacy approval<br>
+c) Payment due upon delivery of preview/review video (watermarked until paid)<br>
+d) Clean Master File delivered immediately after payment verification<br>
+e) Download available through web system for 30 days<br><br>
+<strong>2 PROJECT SETUP & REQUIREMENTS</strong><br>
+a) <strong>No Spec Work</strong><br>
+The editor does NOT perform trial work, free sample videos, or speculative work of any kind. Portfolio and testimonials available for quality evaluation at no cost.<br><br>
+b) <strong>Missing Assets</strong><br>
+Client responsible for providing ALL required materials BEFORE project start. Missing/late materials will adjust delivery timeline. Editor not responsible for delays from incomplete delivery.<br><br>
+c) <strong>Raw Footage Quality</strong><br>
+Editor not responsible if final quality compromised due to low-quality, poorly lit, or unusable source material from client.<br><br>
+d) <strong>Technical Specifications</strong><br>
+Client must specify dimensions before production. Default delivery MP4 if not specified.<br><br>
+<strong>3 PRODUCTION SCOPE & TIMELINE</strong><br>
+a) <strong>Delivery Timeline</strong><br>
+Editor works only on Mexico business days. Delivery time varies by project complexity. Only Rush Production (ADD-ON) processes outside standard calendar. Business day count begins when project moves to 'In Production', visible in web system.<br><br>
+b) <strong>Revision Review Window</strong><br>
+Upon receiving client's revision report/feedback through the web system, editor has 24 hours to review, analyze, and acknowledge the requested changes before implementation begins. This review period allows editor to assess complexity and provide timeline estimate for completion. Implementation timeframe depends on complexity of requested changes.<br><br>
+c) <strong>Turnaround Time for Implementation</strong><br>
+After the 24-hour review period, editor requires additional time to implement changes based on complexity: standard revisions typically 48-72 business hours; complex revisions may require additional time. Rush revisions (under 24 hours implementation) available for additional fee, subject to availability. Each revision round is a separate work cycle processed according to queue and contract type.<br><br>
+d) <strong>Complexity Cap</strong><br>
+Quoted price strictly based on complexity and specifications discussed in initial consultation and original quote. <strong>Any requests for advanced effects (3D animations, complex motion graphics, extensive color grading, custom VFX, or techniques not explicitly included in the original quoted scope) will be treated as additional services requiring separate budget adjustment and payment before implementation.</strong> Editor will notify client through web system if request exceeds agreed complexity before proceeding. Client is responsible for clearly defining all required effects during the initial quote to avoid additional charges.<br><br>
+e) <strong>Scope Creep</strong><br>
+Significant changes to script, length, concept after production starts require new quote.<br><br>
+<strong>4 WATERMARK & RELEASE POLICY</strong><br>
+a) <strong>Preview Watermark</strong><br>
+Review/preview versions contain visible watermark overlay. Clean Master File (watermark-free) released immediately upon full payment verification.<br><br>
+b) <strong>Trust-Based Terms</strong><br>
+This Legacy Status is offered exclusively to established clients with prior working history. Standard late penalties and Kill Fees do not apply due to established trust relationship. Client agrees to process payment promptly upon review delivery to maintain this privileged status.<br><br>
+<strong>5 REVISIONS & APPROVALS</strong><br>
+a) <strong>Modification Limits</strong><br>
+Each revision round allows logical changes: trimming/extending clips, color adjustments, text corrections, audio adjustments, transition changes, repositioning elements, timing adjustments. Requests that fundamentally change project structure, require new footage selection, different creative direction, or effectively create a 'new video' are Scope Creep requiring new quote. Web system displays remaining revisions. Editor determines if changes exceed standard revision scope and notifies through system.<br><br>
+b) <strong>Revisions</strong><br>
+Extra revision rounds carry additional costs based on complexity. Web system displays remaining revisions in client's package.<br><br>
+c) <strong>Client Review Window</strong><br>
+Client has 3 business days to provide feedback via web system after receiving draft. No response = automatic acceptance.<br><br>
+d) <strong>Final Approval Policy</strong><br>
+Once client marks video as 'Approved' or 'Accepted' in web system, project officially complete and closed. Any changes after final approval subject to Post-Approval Policy: free if unused revisions remain (visible in web system), or billed as Re-render Fee if all revisions used. Clients strongly encouraged to review carefully during 3 business day review window.<br><br>
+e) <strong>Post-Approval Policy</strong><br>
+Unused revisions (visible in web system) can be used for post-delivery fixes at no cost. If all revisions used, modifications require Re-render Fee.<br><br>
+f) <strong>Disputed Work</strong><br>
+If dispute arises, both parties review original brief, written communications, and approved drafts. If delivered work matches agreed specifications and client approved previous drafts without objections, project considered complete. Disputes must be raised during 3 business day review window, NOT after final approval. If client approved as 'Accepted'/'Completed', work considered to have met expectations.<br><br>
+<strong>6 DELIVERABLES & TECHNICAL SPECS</strong><br>
+a) <strong>File Format Guarantee</strong><br>
+Standard delivery is <strong>MP4 (H.264)</strong> optimized for web/social media, compatible with all major platforms. Specific formats, codecs, or advanced technical specs (ProRes, DNxHD, specific bitrates, professional color profiles) must be stated BEFORE production. Format conversions after delivery may incur additional fees.<br><br>
+b) <strong>Final Deliverable Definition</strong><br>
+Final deliverable consists of: (1) ONE video file in specified format (default MP4); (2) in specified resolution/aspect ratio; (3) optimized for intended platform. Does NOT include: raw footage, project files (.prproj, .aep), individual assets, alternative versions, subtitle files (SRT/VTT), audio stems, or multi-format exports unless explicitly quoted separately. Additional deliverables must be requested and quoted BEFORE production. Web system indicates when Master File is ready for download.<br><br>
+c) <strong>Multi-Format Delivery</strong><br>
+Standard includes one (1) format/aspect ratio specified at start. Additional versions (16:9 to 9:16, 1:1, variants) must be requested and quoted BEFORE production. Additional formats after production starts billed as separate deliverables with extra fee.<br><br>
+d) <strong>Quality & Format Changes</strong><br>
+Requesting changes to resolution, aspect ratio, quality after production starts counts as paid revision.<br><br>
+e) <strong>Backup Copy & Download</strong><br>
+Client has 1 MONTH (30 days) to download Master File after it becomes available in the web system. After 30 days, file permanently deleted from servers and archives. Client responsible for downloading and backing up within timeframe. File recovery after 30 days requires 'Recovery & Re-render Fee' with no availability guarantee.<br><br>
+f) <strong>Archiving</strong><br>
+Project source files deleted 30 days after delivery.<br><br>
+<strong>7 LEGAL RIGHTS & RESPONSIBILITIES</strong><br>
+a) <strong>Copyright & Licensing</strong><br>
+Client 100% responsible for providing music, videos, images with correct commercial licenses. Editor not responsible for copyright strikes, claims, takedowns if client requests unlicensed material.<br><br>
+b) <strong>Client Material Licensing Indemnification</strong><br>
+Client agrees to indemnify, defend, and hold harmless editor from any/all legal claims, damages, costs, expenses (including attorney fees) arising from use of client-provided materials. Includes: copyright infringement, trademark violations, defamation, privacy violations, unauthorized third-party content use. Client warrants obtained all necessary rights, licenses, permissions, clearances to use content commercially. Legal disputes from client materials are client's sole responsibility. If editor faces legal action from client materials, client assumes all legal defense costs and resulting judgments/settlements.<br><br>
+c) <strong>Original Music/Soundtrack Rights</strong><br>
+Original music/soundtracks/audio created specifically for project licensed for delivered video only. Use in additional projects requires separate licensing and may incur fees. Stock/royalty-free music follows original license holder terms.<br><br>
+d) <strong>Ownership Transfer</strong><br>
+Upon full payment, client receives full commercial rights and ownership of Master File. Editor retains right to use work (or excerpts) for portfolio, social media, promotional materials unless client explicitly requests otherwise in writing. Client may not resell, redistribute as own work, or claim authorship of editor's creative work.<br><br>
+e) <strong>Portfolio Rights</strong><br>
+Editor retains right to showcase work (or excerpts) for portfolio, social media, and promotional materials <strong>unless client explicitly requests non-disclosure in writing</strong>. Client may request project privacy at no additional cost.<br><br>
+f) <strong>AI Asset Disclosure</strong><br>
+Editor may use AI tools for audio enhancement, upscaling, or generating visual assets to improve result.<br><br>
+<strong>8 PAYMENT & CANCELLATION</strong><br>
+a) <strong>Refund Policy</strong><br>
+Full refunds (100%) only available if Expected Results Not Achieved - if editor determines cannot achieve expected results and notifies client. Once in active production, payments cover work completed to date.<br><br>
+b) <strong>Kill Fee</strong><br>
+Does not apply. No cancellation penalties for Legacy Status clients due to established trust relationship. However, client remains responsible for payment of work completed if project is cancelled after review delivery.<br><br>
+c) <strong>Third-Party Costs</strong><br>
+Client covers all external licenses (music, fonts, stock footage).<br><br>
+<strong>9 COMMUNICATION & PROJECT MANAGEMENT</strong><br>
+a) <strong>Written Approval Required</strong><br>
+All project approvals, scope changes, major decisions must be confirmed in writing (email, platform messages, system notifications visible in web dashboard). Verbal approvals via phone/video NOT binding unless followed by written confirmation within 24 hours.<br><br>
+b) <strong>Client Inactivity</strong><br>
+10 days no response via web system = project paused. Reactivation may incur fee.<br><br>
+c) <strong>Force Majeure</strong><br>
+Editor not liable for delays from events beyond reasonable control: natural disasters, power outages, internet failures, severe weather, pandemics, government restrictions, medical emergencies. Delivery timelines extended by reasonable period. Clients notified ASAP. No rush fees or penalties for force majeure delays.<br><br>
+<strong>10 DOCUMENTATION RIGHTS</strong><br>
+a) <strong>Client Copy Request</strong><br>
+Client has the right to request a complete copy of this agreement in Microsoft Word (.docx) format at any time during the active project period and up to 30 days after final project completion. Editor will provide the editable document within 2 business days of written request via email or web system.<br><br>
+<strong>11 RUSH PRODUCTION ADD-ON</strong> (When applied to Legacy Status)<br>
+a) <strong>Rush Fee Structure</strong><br>
+Rush fee calculated as percentage of total project value (varies by complexity and timeline). Rush fee payable upon delivery with base payment (flexible timing) or upfront if client prefers.<br><br>
+b) <strong>Payment Requirements</strong><br>
+Rush fee charged as percentage of final project value. If Rush selected, project receives priority processing but payment maintains flexible Legacy terms (due upon review unless client chooses to pay rush fee upfront).<br><br>
+c) <strong>Priority Benefits</strong><br>
+- Bypasses standard queue - immediate priority placement<br>
+- Works outside standard Mexico calendar (weekends/holidays if needed)<br>
+- Priority communication during MX business hours<br><br>
+d) <strong>Rush Availability & Force Majeure Exception</strong><br>
+Rush Production availability and expedited delivery are subject to Force Majeure events. If Force Majeure prevents delivery within the expedited Rush timeframe, the Rush fee will be fully refunded to the client. The base project continues under standard Force Majeure terms with extended timeline.<br><br>
+e) <strong>Rush Delivery Clarification (CRITICAL)</strong><br>
+Rush Production grants priority queue placement and availability to work non-business days but does NOT guarantee specific delivery timelines for extensive projects. If project complexity requires substantial time to execute properly, delivery will occur as soon as technically possible, not by artificial deadline. Rush ensures your project is worked on BEFORE standard queue projects and that editor is available to work weekends/holidays if necessary, but does not compromise quality or feasibility for speed.<br><br>
+f) <strong>Rush Fee Non-Transferable</strong><br>
+Rush Production fees non-refundable and non-transferable once project begins (except under Force Majeure as stated in section 11d). If client requests to pause, delay, or reschedule rush project after production start, rush fee completely forfeited and project moved to standard Legacy queue. Rush priority cannot be 'saved', 'transferred' to future projects, or 'paused' for later use. By requesting Rush, client confirms project ready for immediate start with all materials complete and available.<br><br>
+<strong>12 ELECTRONIC ACCEPTANCE</strong><br>
+By clicking "I Accept the Terms and Conditions" in the web system, or by submitting project request and proceeding to production under Legacy Status, Client acknowledges they have read, understood, and agree to be legally bound by all terms, conditions, policies, and provisions contained in this Agreement. This electronic act of acceptance constitutes Client's legally binding signature, enforceable to the same extent as a handwritten signature.`;
     }
 
     function getEmbedUrl(url) {
