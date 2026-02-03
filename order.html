@@ -19,10 +19,26 @@
       .order-section { padding: 180px 0 100px 0; min-height: 85vh; }
       .info-panel { background: rgba(10,10,10,0.95); padding: 40px; border: 1px solid #333; border-radius: 8px; backdrop-filter: blur(15px); }
 
-      .pay-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-      .pay-grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-      .pay-grid-banks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; margin-top: 10px; }
-      .pay-link { padding: 10px; font-size: 10px; font-weight: 900; text-align: center; border-radius: 4px; text-decoration: none !important; color: #fff; transition: 0.3s; cursor: pointer; border: none; display: inline-block; width: 100%; }
+      /* GRID DE PAGOS - 3 COLUMNAS PARA TODOS IGUALES */
+      .pay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+      .pay-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 20px; }
+      .pay-link { 
+        padding: 14px 10px; 
+        font-size: 10px; 
+        font-weight: 900; 
+        text-align: center; 
+        border-radius: 4px; 
+        text-decoration: none !important; 
+        color: #fff; 
+        transition: 0.3s; 
+        cursor: pointer; 
+        border: none; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        line-height: 1.2;
+      }
       .pay-paypal { background: #003087; }
       .pay-wise { background: #00b5ff; }
       .pay-binance { background: #F3BA2F; color: #000; }
@@ -54,7 +70,7 @@
       .contract-box strong { color: #fff; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
       .contract-box br { margin-bottom: 8px; display: block; content: ""; }
       
-      /* Indicador de scroll - AHORA EN BLANCO Y DENTRO DEL BORDE */
+      /* Indicador de scroll */
       .scroll-indicator { 
         text-align: center; 
         padding: 10px; 
@@ -125,17 +141,17 @@
       .copy-btn:hover { background: #ccc; }
       .copy-success { color: #4CAF50; font-size: 11px; margin-top: 8px; display: none; }
 
-      /* MENSAJES DE ESPERA */
+      /* MENSAJES DE ESPERA - ACTUALIZADO SIN AWAITING_PAYMENT */
       .waiting-verification-msg {
         padding: 40px 30px;
-        border: 2px solid #fff;
-        background: rgba(255,255,255,0.05);
+        border: 1px solid #fff;
+        background: rgba(255,255,255,0.02);
         text-align: center;
         margin-top: 0;
         border-radius: 8px;
       }
       .waiting-verification-msg h4 {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 3px;
@@ -146,20 +162,21 @@
         font-size: 13px;
         color: #ccc;
         margin: 0;
-        line-height: 1.8;
-        letter-spacing: 1px;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
       }
       .waiting-verification-msg .lock-icon {
-        font-size: 48px;
+        font-size: 40px;
         margin-bottom: 20px;
         display: block;
       }
       .waiting-verification-msg .status-text {
-        font-size: 11px;
-        color: #999;
-        margin-top: 15px;
+        font-size: 10px;
+        color: #666;
+        margin-top: 20px;
         text-transform: uppercase;
         letter-spacing: 2px;
+        line-height: 1.8;
       }
 
       .project-title-display { font-weight: 700; font-size: 1.8rem; color: #fff; margin-top: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; }
@@ -206,8 +223,7 @@
       
       @media (max-width: 768px) { 
         .pay-grid { grid-template-columns: 1fr; } 
-        .pay-grid-4 { grid-template-columns: 1fr; }
-        .pay-grid-banks { grid-template-columns: 1fr; }
+        .pay-grid-2 { grid-template-columns: 1fr; }
         .order-section { padding: 100px 0 50px 0; } 
       }
       
@@ -235,6 +251,14 @@
         background: rgba(255,255,255,0.1);
         border-radius: 4px;
         text-align: center;
+      }
+
+      /* ESTADO ESPECIAL PARA LEGACY - REQUEST PROJECT */
+      .status-request-project {
+        color: #fff !important;
+        font-size: 11px !important;
+        letter-spacing: 2px !important;
+        font-weight: 700 !important;
       }
     </style>
 <base target="_blank">
@@ -280,7 +304,7 @@
           <p><strong>IBAN:</strong></p>
           <p style="font-size: 14px; letter-spacing: 1px; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 4px;">ES74 3081 0018 8150 0038 2882</p>
           <p style="margin-top: 15px;"><strong>Titular:</strong> Sara Franceschy Temis</p>
-          <p><strong>Banco:</strong> Openbank (Santander)</p>
+          <p><strong>Banco:</strong> Eurocaja Rural</p>
         </div>
         <button class="copy-btn" onclick="copyToClipboard('ES7430810018815000382882', 'spain')">COPIAR IBAN</button>
         <p class="copy-success" id="spain-success">✓ Copiado al portapapeles</p>
@@ -388,15 +412,16 @@
                           <div id="actions-area">
                               <!-- Formulario de pago -->
                               <div id="payment-form-content">
+                                  <!-- PRIMERA FILA: PayPal, Wise, Binance -->
                                   <div class="pay-grid" id="main-pay-grid">
                                       <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
                                       <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
                                       <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
                                   </div>
                                   
-                                  <!-- BOTONES DE TRANSFERENCIA BANCARIA -->
-                                  <div class="pay-grid-banks">
-                                      <button onclick="openMexicoModal()" class="pay-link pay-mexico" type="button">🇲🇽 TRANSFER MÉXICO</button>
+                                  <!-- SEGUNDA FILA: Transferencias bancarias -->
+                                  <div class="pay-grid-2">
+                                      <button onclick="openMexicoModal()" class="pay-link pay-mexico" type="button">🇲🇽 MX TRANSFER<br>MÉXICO</button>
                                       <button onclick="openSpainModal()" class="pay-link pay-spain" type="button">🇪🇸 IBAN ESPAÑA</button>
                                   </div>
                                   
@@ -421,16 +446,16 @@
                                   <button class="btn-blackbear" id="upload-btn" onclick="submitFile()" disabled>SUBMIT PAYMENT</button>
                               </div>
 
-                              <!-- Mensaje comprobante enviado (AWAITING_PAYMENT bloqueado) - ACTUALIZADO -->
+                              <!-- Mensaje comprobante enviado (AWAITING_PAYMENT bloqueado) - SIN AWAITING_PAYMENT -->
                               <div id="first-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                 <span class="lock-icon">🔒</span>
                                 <h4>PAYMENT PROOF SENT</h4>
                                 <p>Projects are handled in order of request.</p>
-                                <p class="status-text">AWAITING_PAYMENT<br>Waiting for administrator verification.</p>
+                                <p class="status-text">WAITING FOR<br>ADMINISTRATOR<br>VERIFICATION.</p>
                               </div>
                           </div>
 
-                          <!-- ÁREA LEGACY (AWAITING_PAYMENT) -->
+                          <!-- ÁREA LEGACY (AWAITING_PAYMENT) - AHORA MUESTA "REQUEST PROJECT" EN STATUS -->
                           <div id="legacy-request-area" style="display: none;">
                               <!-- CONTAINER DEL CONTRATO CON BORDE BLANCO -->
                               <div class="contract-wrapper">
@@ -478,15 +503,16 @@
                                   <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Upload the second payment proof. Administrator verification required to unlock master file.</p>
                                   
                                   <div id="second-payment-form">
-                                      <div class="pay-grid" style="margin-bottom: 15px;">
+                                      <!-- PRIMERA FILA -->
+                                      <div class="pay-grid" style="margin-bottom: 12px;">
                                           <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
                                           <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
                                           <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
                                       </div>
                                       
-                                      <!-- BOTONES DE TRANSFERENCIA BANCARIA PARA SEGUNDO PAGO -->
-                                      <div class="pay-grid-banks" style="margin-bottom: 15px;">
-                                          <button onclick="openMexicoModal()" class="pay-link pay-mexico" type="button">🇲🇽 TRANSFER MÉXICO</button>
+                                      <!-- SEGUNDA FILA: Transferencias -->
+                                      <div class="pay-grid-2" style="margin-bottom: 15px;">
+                                          <button onclick="openMexicoModal()" class="pay-link pay-mexico" type="button">🇲🇽 MX TRANSFER<br>MÉXICO</button>
                                           <button onclick="openSpainModal()" class="pay-link pay-spain" type="button">🇪🇸 IBAN ESPAÑA</button>
                                       </div>
                                       
@@ -497,12 +523,12 @@
                                       <button class="btn-blackbear" id="second-upload-btn" onclick="submitSecondPayment()">SUBMIT FINAL PAYMENT</button>
                                   </div>
 
-                                  <!-- Mensaje espera segundo pago - ACTUALIZADO -->
+                                  <!-- Mensaje espera segundo pago - SIN AWAITING_PAYMENT -->
                                   <div id="second-payment-waiting" class="waiting-verification-msg" style="display: none;">
                                     <span class="lock-icon">🔒</span>
                                     <h4>FINAL PAYMENT SENT</h4>
                                     <p>Projects are handled in order of request.</p>
-                                    <p class="status-text">UNDER REVIEW<br>Waiting for administrator verification to complete order.</p>
+                                    <p class="status-text">WAITING FOR<br>ADMINISTRATOR<br>VERIFICATION.</p>
                                   </div>
                               </div>
 
@@ -512,15 +538,16 @@
                                   <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Submit your payment proof when ready.</p>
                                   
                                   <div id="legacy-payment-form">
-                                      <div class="pay-grid" style="margin-bottom: 15px;">
+                                      <!-- PRIMERA FILA -->
+                                      <div class="pay-grid" style="margin-bottom: 12px;">
                                           <a href="https://paypal.me/BlackBearVideos" target="_blank" class="pay-link pay-paypal">PAYPAL</a>
                                           <a href="https://wise.com/pay/me/maximol31" target="_blank" class="pay-link pay-wise">WISE</a>
                                           <button onclick="openBinanceModal()" class="pay-link pay-binance" type="button">BINANCE</button>
                                       </div>
                                       
-                                      <!-- BOTONES DE TRANSFERENCIA BANCARIA PARA LEGACY -->
-                                      <div class="pay-grid-banks" style="margin-bottom: 15px;">
-                                          <button onclick="openMexicoModal()" class="pay-link pay-mexico" type="button">🇲🇽 TRANSFER MÉXICO</button>
+                                      <!-- SEGUNDA FILA: Transferencias -->
+                                      <div class="pay-grid-2" style="margin-bottom: 15px;">
+                                          <button onclick="openMexicoModal()" class="pay-link pay-mexico" type="button">🇲🇽 MX TRANSFER<br>MÉXICO</button>
                                           <button onclick="openSpainModal()" class="pay-link pay-spain" type="button">🇪🇸 IBAN ESPAÑA</button>
                                       </div>
                                       
@@ -535,7 +562,7 @@
                                     <span class="lock-icon">🔒</span>
                                     <h4>PAYMENT SENT</h4>
                                     <p>Projects are handled in order of request.</p>
-                                    <p class="status-text">Payment proof received.</p>
+                                    <p class="status-text">WAITING FOR<br>ADMINISTRATOR<br>VERIFICATION.</p>
                                   </div>
                               </div>
                           </div>
@@ -651,7 +678,6 @@
     function closeMexicoModal(e) { 
         if (!e || e.target === document.getElementById('mexicoModal') || e.target.classList.contains('close-modal')) {
             document.getElementById('mexicoModal').style.display = 'none'; 
-            // Reset copy success message
             document.getElementById('mexico-success').style.display = 'none';
         }
     }
@@ -664,7 +690,6 @@
     function closeSpainModal(e) { 
         if (!e || e.target === document.getElementById('spainModal') || e.target.classList.contains('close-modal')) {
             document.getElementById('spainModal').style.display = 'none'; 
-            // Reset copy success message
             document.getElementById('spain-success').style.display = 'none';
         }
     }
@@ -678,7 +703,6 @@
                 successMsg.style.display = 'none';
             }, 3000);
         }).catch(err => {
-            // Fallback para navegadores antiguos
             const textArea = document.createElement("textarea");
             textArea.value = text;
             document.body.appendChild(textArea);
@@ -694,7 +718,6 @@
         });
     }
 
-    // Nueva función: Configurar scroll detection para contratos
     function setupContractScroll(contractBoxId, checkboxId, indicatorId) {
         const contractBox = document.getElementById(contractBoxId);
         const checkbox = document.getElementById(checkboxId);
@@ -702,7 +725,6 @@
         
         if (!contractBox || !checkbox) return;
         
-        // Resetear checkbox
         checkbox.checked = false;
         checkbox.disabled = true;
         if(indicator) {
@@ -710,29 +732,24 @@
             indicator.innerText = "Scroll down to read all terms";
         }
         
-        // Remover listener anterior si existe (para evitar duplicados)
         contractBox.removeEventListener('scroll', contractBox.scrollHandler);
         
-        // Crear nuevo handler
         contractBox.scrollHandler = function() {
             const scrolled = contractBox.scrollTop + contractBox.clientHeight;
             const height = contractBox.scrollHeight;
             
-            // Si llegó al final (con margen de 10px)
             if (scrolled >= height - 10) {
                 checkbox.disabled = false;
                 if(indicator) {
                     indicator.classList.add('completed');
                     indicator.innerText = "Terms read completely";
                 }
-                // Remover listener una vez habilitado
                 contractBox.removeEventListener('scroll', contractBox.scrollHandler);
             }
         };
         
         contractBox.addEventListener('scroll', contractBox.scrollHandler);
         
-        // Verificar inmediatamente por si el contenido es corto
         setTimeout(() => {
             if (contractBox.scrollHeight <= contractBox.clientHeight) {
                 checkbox.disabled = false;
@@ -760,11 +777,19 @@
         document.getElementById('order-description').innerText = (o.Descripción || o.Descripcion || "No description available.");
         document.getElementById('order-price').innerText = o.Precio_Total || "$0.00";
         
+        // LÓGICA DE STATUS ACTUALIZADA PARA LEGACY
         let statusDisplay = estatus.replace(/_/g, ' ');
-        if(estatus === "AWAITING_PAYMENT") statusDisplay = "AWAITING PAYMENT";
-        if(estatus === "IN_PRODUCTION") statusDisplay = "IN PRODUCTION";
-        if(estatus === "REVIEW") statusDisplay = "UNDER REVIEW";
-        if(estatus === "COMPLETED") statusDisplay = "COMPLETED";
+        if(estatus === "AWAITING_PAYMENT" && catUpper.includes('LEGACY')) {
+            statusDisplay = "REQUEST PROJECT"; // LEGACY muestra REQUEST PROJECT
+        } else if(estatus === "AWAITING_PAYMENT") {
+            statusDisplay = "AWAITING PAYMENT";
+        } else if(estatus === "IN_PRODUCTION") {
+            statusDisplay = "IN PRODUCTION";
+        } else if(estatus === "REVIEW") {
+            statusDisplay = "UNDER REVIEW";
+        } else if(estatus === "COMPLETED") {
+            statusDisplay = "COMPLETED";
+        }
         
         document.getElementById('order-status-text').innerText = statusDisplay;
         document.getElementById('order-category').innerText = categoria || "PAYMENT";
@@ -807,7 +832,6 @@
         document.getElementById('request-project-btn').style.display = 'block';
         document.querySelector('#legacy-request-area .accept-wrap').style.display = 'block';
         
-        // Setup scroll detection para legacy
         setupContractScroll('legacy-contract-content', 'legacy-accept-check', 'legacy-scroll-indicator');
         
         toggleLegacyButton();
@@ -826,7 +850,6 @@
             document.getElementById('first-payment-waiting').style.display = 'none';
             resetUploadForm();
             
-            // Setup scroll detection para contrato normal
             setupContractScroll('contract-content', 'accept-check', 'main-scroll-indicator');
             
             toggleSubmitButton();
@@ -1337,7 +1360,6 @@ By clicking "I Accept the Terms and Conditions" in the web system, or by submitt
         document.getElementById('fileInput').value = '';
         document.getElementById('upload-label').innerText = "Upload payment proof (PNG/JPG)";
         document.getElementById('accept-check').checked = false;
-        // El scroll detection se encargará de deshabilitar el checkbox nuevamente
     }
 
     function resetSecondUploadForm() {
@@ -1638,7 +1660,6 @@ By clicking "I Accept the Terms and Conditions" in the web system, or by submitt
         reader.readAsDataURL(file);
     }
 
-    // FUNCIÓN ACTUALIZADA: Enviar email en lugar de WhatsApp
     function requestExtraRevision() {
         const subject = `Extra Revision Request - Order ${orderId}`;
         const body = `Hi BlackBear Team,
@@ -1653,18 +1674,14 @@ Please contact me with the details for the additional revision.
 
 Best regards`;
         
-        // Abrir cliente de email
         window.location.href = `mailto:${REVISION_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         
-        // Mostrar mensaje de confirmación
         const successMsg = document.getElementById('email-success-msg');
         successMsg.style.display = 'block';
         
-        // Opcional: También puedes enviar a tu backend para notificación
         notifyExtraRevisionRequest();
     }
 
-    // Notificación opcional al backend
     function notifyExtraRevisionRequest() {
         const formData = new URLSearchParams();
         formData.append('action', 'notifyExtraRevision');
