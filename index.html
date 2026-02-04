@@ -1008,75 +1008,66 @@
         });
 
 // --- NUEVA FUNCIÓN CON ANIMACIÓN FLIP/REVEAL ---
-function renderPortfolioGrid(data) {
-  const $grid = $('#posts');
-  const moldClasses = ["", "item-portrait", "", "", "", "item-portrait", "item-portrait", "", ""];
-  
-  // 1. Primero crear el HTML sin animaciones de entrada
-  let html = "";
-  data.forEach((item, i) => {
-    let claseExtra = moldClasses[i % moldClasses.length];
-    let title = escapeHtml(item.Titulo);
-    let category = escapeHtml(item.Category || 'Video');
-    let thumbnail = escapeHtml(item.Thumbnail);
-    let id = escapeHtml(item.ID);
-    
-    // Agregamos clase 'portfolio-card' para el flip
-    html += `
-      <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${claseExtra} portfolio-card" data-id="${id}" style="perspective: 1000px;">
-        <div class="card-inner" style="transform-style: preserve-3d; position: relative; width: 100%; height: 100%;">
-          <a href="javascript:void(0)" onclick="openProject('${id}')" class="portfolio-item isotope-item" style="display: block; height: 100%;">
-            <div class="overlay">
-              <span class="wrap-icon icon-play_circle_filled"></span>
-              <div class="portfolio-item-content">
-                <h3>${title}</h3>
-                <p>${category}</p>
-              </div>
-            </div>
-            <img src="${thumbnail}" class="lazyload img-fluid" alt="${title}" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
-          </a>
-        </div>
-      </div>`;
-  });
+        function renderPortfolioGrid(data) {
+          const $grid = $('#posts');
+          const moldClasses = ["", "item-portrait", "", "", "", "item-portrait", "item-portrait", "", ""];
+          
+          let html = "";
+          data.forEach((item, i) => {
+            let claseExtra = moldClasses[i % moldClasses.length];
+            let title = escapeHtml(item.Titulo);
+            let category = escapeHtml(item.Category || 'Video');
+            let thumbnail = escapeHtml(item.ThumbnailURL);
+            let id = escapeHtml(item.ID);
+            
+            html += `
+              <div class="item col-sm-6 col-md-6 col-lg-4 isotope-mb-2 ${claseExtra} portfolio-card" data-id="${id}">
+                <div class="card-inner">
+                  <a href="javascript:void(0)" onclick="openProject('${id}')" class="portfolio-item isotope-item">
+                    <div class="overlay">
+                      <span class="wrap-icon icon-play_circle_filled"></span>
+                      <div class="portfolio-item-content">
+                        <h3>${title}</h3>
+                        <p>${category}</p>
+                      </div>
+                    </div>
+                    <img src="${thumbnail}" class="lazyload img-fluid" alt="${title}" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
+                  </a>
+                </div>
+              </div>`;
+          });
 
-  $grid.html(html);
+          $grid.html(html);
 
-  // 2. Inicializar Isotope PRIMERO (sin animaciones visibles)
-  $grid.imagesLoaded().done(function() {
-    $grid.isotope({
-      itemSelector: '.item',
-      layoutMode: 'masonry',
-      transitionDuration: 0, // Desactivar animaciones de Isotope
-      hiddenStyle: { opacity: 0 },
-      visibleStyle: { opacity: 1 }
-    });
+          // Animación Flip/Reveal con GSAP
+          const cards = $grid.find('.portfolio-card');
+          
+          gsap.set(cards, {
+            rotationX: 90,
+            opacity: 0,
+            transformOrigin: "center top",
+            transformPerspective: 1000
+          });
 
-    // 3. Animación Flip/Reveal con GSAP
-    const cards = $grid.find('.portfolio-card');
-    
-    // Set inicial: cards volteadas y transparentes
-    gsap.set(cards, {
-      rotationX: 90,
-      opacity: 0,
-      transformOrigin: "center top",
-      transformPerspective: 1000
-    });
+          $grid.imagesLoaded().done(function() {
+            $grid.isotope({
+              itemSelector: '.item',
+              layoutMode: 'masonry',
+              transitionDuration: 0
+            });
 
-    // Animación escalonada de reveal
-    gsap.to(cards, {
-      duration: 0.8,
-      rotationX: 0,
-      opacity: 1,
-      ease: "back.out(1.7)", // Efecto de rebote suave al aterrizar
-      stagger: {
-        amount: 0.6, // Tiempo total de escalonado
-        from: "start",
-        grid: "auto"
-      },
-      clearProps: "transform" // Limpiar transforms después para no afectar hover
-    });
-  });
-}
+            gsap.to(cards, {
+              duration: 0.8,
+              rotationX: 0,
+              opacity: 1,
+              ease: "back.out(1.7)",
+              stagger: {
+                amount: 0.6,
+                from: "start"
+              }
+            });
+          });
+        }
       });
 
       // --- PROJECT NAVIGATION ---
