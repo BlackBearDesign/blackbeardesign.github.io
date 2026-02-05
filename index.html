@@ -377,6 +377,31 @@
           background: url('images/cover_bg_1.jpg') center/cover no-repeat;
         }
       }
+      /* Estilos para botón de WhatsApp */
+.contact-info-val[href*="wa.me"] {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: #ffffff !important;
+  padding: 12px 24px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.contact-info-val[href*="wa.me"]:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+  background: #128C7E;
+}
+
+.contact-info-val[href*="wa.me"] span {
+  font-size: 18px;
+}
     </style>
     
     <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs " type="module"></script>
@@ -754,17 +779,33 @@
               </div>
 
               <div class="col-md-4">
-                <div class="contact-info-v1">
-                  <div class="gsap-reveal d-block">
-                    <span class="d-block contact-info-label">Email</span>
-                    <a href="mailto:maximolairdesign@gmail.com" class="contact-info-val">maximolairdesign@gmail.com</a>
-                  </div>
-                  <div class="gsap-reveal d-block">
-                    <span class="d-block contact-info-label">Phone</span>
-                    <a href="tel:+522211319056" class="contact-info-val">+52 2211319056</a>
-                  </div>
-                </div>
-              </div>
+  <div class="contact-info-v1">
+    <div class="gsap-reveal d-block mb-4">
+      <span class="d-block contact-info-label">Email</span>
+      <a href="mailto:maximolairdesign@gmail.com?subject=Contact%20from%20BlackBear%20Portfolio&body=Hi%20Maximo%2C%0A%0AI%20saw%20your%20portfolio%20and%20I'm%20interested%20in%20working%20with%20you.%0A%0A" 
+         class="contact-info-val">
+        maximolairdesign@gmail.com
+      </a>
+    </div>
+    
+    <!-- BOTÓN WHATSAPP NUEVO -->
+    <div class="gsap-reveal d-block mb-4">
+      <span class="d-block contact-info-label">WhatsApp</span>
+      <a href="https://wa.me/522211319056?text=Hi%20Maximo%2C%20I%20saw%20your%20portfolio%20and%20I'm%20interested%20in%20your%20video%20editing%20services." 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="contact-info-val"
+         style="display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: #fff; padding: 10px 20px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: transform 0.2s;">
+        <span>💬</span> Message on WhatsApp
+      </a>
+    </div>
+    
+    <div class="gsap-reveal d-block">
+      <span class="d-block contact-info-label">Phone</span>
+      <span class="contact-info-val" style="opacity: 0.7;">+52 2211319056</span>
+    </div>
+  </div>
+</div>
             </div>
           </div>
         </div>
