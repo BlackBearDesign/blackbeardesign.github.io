@@ -42,14 +42,6 @@
         opacity: 0.5;
       }
 
-      /* Hacemos transparentes las secciones negras para ver el video de fondo */
-      body, 
-      .unslate_co--site-wrap, 
-      .unslate_co--site-inner, 
-      .unslate_co--section, 
-      .cover-v1 {
-        background-color: transparent !important;
-      }
 
       /* EL FOOTER: Se queda al final de la web, NO se queda fijo en el monitor */
       .unslate_co--footer {
@@ -376,7 +368,64 @@
         .cover-v1 {
           background: url('images/cover_bg_1.jpg') center/cover no-repeat;
         }
-      }
+        
+      /* ===== NAVEGACIÓN SCROLL ===== */
+.unslate_co--site-nav {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  transition: all 0.4s ease;
+  padding: 20px 0;
+  background: transparent;
+}
+
+.unslate_co--site-nav .nav-link {
+  color: #ffffff !important;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 12px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  padding: 10px 15px !important;
+}
+
+.unslate_co--site-nav .nav-link:hover {
+  opacity: 0.7;
+}
+
+.unslate_co--site-nav.scrolled {
+  background-color: #ffffff !important;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  padding: 12px 0;
+}
+
+.unslate_co--site-nav.scrolled .nav-link {
+  color: #000000 !important;
+}
+
+.unslate_co--site-nav.scrolled .nav-link:hover {
+  opacity: 0.6;
+}
+
+.unslate_co--site-nav .nav-link.active {
+  font-weight: 800 !important;
+}
+
+.unslate_co--site-nav .nav-link.active::after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 50%;
+  margin: 4px auto 0;
+}
+
+.unslate_co--site-nav.scrolled .js-menu-toggle {
+  color: #000000 !important;
+}
     </style>
     
     <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
@@ -407,37 +456,36 @@
     <div class="unslate_co--site-wrap">
       <div class="unslate_co--site-inner">
         
-        <nav class="unslate_co--site-nav site-nav-target">
-          <div class="container">
-            <div class="row align-items-center justify-content-between text-left">
-              <div class="col-md-5 text-right">
-                <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
-                  <li><a href="#home-section" class="nav-link">Home</a></li>
-                  <li><a href="#portfolio-section" class="nav-link">Portfolio</a></li>
-                  <li><a href="#about-section" class="nav-link">About</a></li>
-                  <li><a href="#services-section" class="nav-link">Services</a></li>
-                </ul>
-              </div>
-              <div class="site-logo pos-absolute">
-                <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-                  <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px; width: auto; vertical-align: middle;">
-                </a>
-              </div>
-              <div class="col-md-5 text-right text-lg-left">
-                <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
-                  <li><a href="#skills-section" class="nav-link">Skills</a></li>
-                  <li><a href="#testimonial-section" class="nav-link">Testimonial</a></li>
-                  <li><a href="#journal-section" class="nav-link">Journal</a></li>
-                  <li><a href="#contact-section" class="nav-link">Contact</a></li>
-                </ul>
-
-                <ul class="site-nav-ul-none-onepage text-right d-inline-block d-lg-none">
-                  <li><a href="#" class="js-menu-toggle">Menu</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </nav>
+      <nav class="unslate_co--site-nav site-nav-target">
+  <div class="container">
+    <div class="row align-items-center justify-content-between text-left">
+      <div class="col-md-5 text-right">
+        <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+          <li><a href="#home-section" class="nav-link">Home</a></li>
+          <li><a href="#portfolio-section" class="nav-link">Portfolio</a></li>
+          <li><a href="#about-section" class="nav-link">About</a></li>
+          <li><a href="#services-section" class="nav-link">Services</a></li>
+        </ul>
+      </div>
+      <div class="site-logo pos-absolute">
+        <a href="index.html" class="unslate_co--site-logo" style="background: white; padding: 10px 15px; display: inline-block; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+          <img src="images/logo.png" alt="BlackBear Logo" style="height: 40px; width: auto; vertical-align: middle;">
+        </a>
+      </div>
+      <div class="col-md-5 text-right text-lg-left">
+        <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+          <li><a href="#skills-section" class="nav-link">Skills</a></li>
+          <li><a href="#testimonial-section" class="nav-link">Testimonial</a></li>
+          <li><a href="#journal-section" class="nav-link">Journal</a></li>
+          <li><a href="#contact-section" class="nav-link">Contact</a></li>
+        </ul>
+        <ul class="site-nav-ul-none-onepage text-right d-inline-block d-lg-none">
+          <li><a href="#" class="js-menu-toggle">Menu</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
 
         <div class="cover-v1" id="home-section" style="position: relative; overflow: hidden; background-color: #000; height: 100vh;">
           <video autoplay loop muted playsinline poster="images/video-poster.jpg" preload="metadata" style="position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; z-index: 0; transform: translate(-50%, -50%); opacity: 0.6;">
@@ -1137,5 +1185,35 @@
         });
       });
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const nav = document.querySelector('.unslate_co--site-nav');
+  const sections = document.querySelectorAll('div[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+    
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (scrollY >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
+    
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+});
+</script>
   </body>
 </html>
