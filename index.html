@@ -377,13 +377,56 @@
           background: url('images/cover_bg_1.jpg') center/cover no-repeat;
         }
       }
+      /* --- INDICADOR DE NAVEGACIÓN ACTIVA --- */
+.site-nav-ul li {
+  position: relative;
+}
+
+.site-nav-ul li a {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Punto indicador debajo del link activo */
+.site-nav-ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 6px;
+  height: 6px;
+  background: #000;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+}
+
+/* El punto aparece cuando está activo o hover */
+.site-nav-ul li a.active::after,
+.site-nav-ul li a:hover::after {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+
+/* En móvil, ajustamos el indicador */
+.unslate_co--site-mobile-menu .site-mobile-inner a.active {
+  color: #000;
+  font-weight: 700;
+}
+
+.unslate_co--site-mobile-menu .site-mobile-inner a.active::before {
+  content: '•';
+  margin-right: 8px;
+  color: #000;
+}
     </style>
     
     <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs " type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js "></script>
     <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js "></script>
   </head>
-  <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+<body>
 
     <div class="video-bg-global">
       <video autoplay loop muted playsinline poster="images/video-poster.jpg" preload="metadata">
@@ -1010,61 +1053,107 @@
         }
       });
 
-// --- PROJECT NAVIGATION ---
-window.openProject = function(id) {
-  const p = window.portfolioItems.find(x => x.ID == id);
-  if(!p) return;
+      // --- NAVEGACIÓN ACTIVA MEJORADA ---
+      document.addEventListener('DOMContentLoaded', function() {
+        const sections = document.querySelectorAll('section[id], div[id]');
+        const navLinks = document.querySelectorAll('.site-nav-ul a[href^="#"]');
+        
+        // Función para actualizar navegación activa
+        function updateActiveNav() {
+          let current = '';
+          const scrollPos = window.scrollY + 150;
+          
+          sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+              current = section.getAttribute('id');
+            }
+          });
+          
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+              link.classList.add('active');
+            }
+          });
+        }
+        
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav();
+        
+        // Smooth scroll
+        navLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+              window.scrollTo({
+                top: targetSection.offsetTop - 80,
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+      });
 
-  const title = escapeHtml(p.Titulo);
-  const desc = escapeHtml(p.Descripcion);
-  const date = escapeHtml(p.Fecha || "2024");
-  const client = escapeHtml(p.Cliente || "Private Client");
-  const url = p.VideoURL;
+      // --- PROJECT NAVIGATION ---
+      window.openProject = function(id) {
+        const p = window.portfolioItems.find(x => x.ID == id);
+        if(!p) return;
 
-  gsap.to("#portfolio-grid-container", { 
-    duration: 0.4, 
-    y: 20, 
-    opacity: 0, 
-    onComplete: () => {
-      document.getElementById('portfolio-grid-container').style.display = "none";
-      document.getElementById('project-title').textContent = title;
-      document.getElementById('project-desc').textContent = desc;
-      document.getElementById('project-date').textContent = date;
-      document.getElementById('project-client').textContent = client;
-      
-      let youtubeID = "";
-      if (url.includes('v=')) {
-        youtubeID = url.split('v=')[1].split('&')[0];
-      } else if (url.includes('youtu.be/')) {
-        youtubeID = url.split('youtu.be/')[1].split('?')[0];
-      } else {
-        youtubeID = url.split('/').pop();
-      }
-      
-      let content = (url.includes('youtube.com') || url.includes('youtu.be')) 
-        ? `<div style="position:relative;padding-bottom:56.25%;height:0;">
-            <iframe src="https://www.youtube.com/embed/${escapeHtml(youtubeID)}?modestbranding=1&rel=0&iv_load_policy=3&controls=1" 
-            style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" 
-            frameborder="0" 
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen></iframe>
-           </div>`
-        : `<video controls style="width:100%; border-radius:4px;"><source src="${escapeHtml(url)}" type="video/mp4"></video>`;
-      
-      document.getElementById('project-visual-content').innerHTML = content;
-      window.scrollTo({top: $('#portfolio-section').offset().top - 70, behavior: 'smooth'});
-      
-      gsap.fromTo("#project-single-view", 
-        { opacity: 0, y: 30, display: "block" }, 
-        { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" }
-      );
-      gsap.fromTo(".meta-item", 
-        { opacity: 0, x: 20 }, 
-        { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4, ease: "power2.out" }
-      );
-    }
-  });
-};
+        const title = escapeHtml(p.Titulo);
+        const desc = escapeHtml(p.Descripcion);
+        const date = escapeHtml(p.Fecha || "2024");
+        const client = escapeHtml(p.Cliente || "Private Client");
+        const url = p.VideoURL;
+
+        gsap.to("#portfolio-grid-container", { 
+          duration: 0.4, 
+          y: 20, 
+          opacity: 0, 
+          onComplete: () => {
+            document.getElementById('portfolio-grid-container').style.display = "none";
+            document.getElementById('project-title').textContent = title;
+            document.getElementById('project-desc').textContent = desc;
+            document.getElementById('project-date').textContent = date;
+            document.getElementById('project-client').textContent = client;
+            
+            let youtubeID = "";
+            if (url.includes('v=')) {
+              youtubeID = url.split('v=')[1].split('&')[0];
+            } else if (url.includes('youtu.be/')) {
+              youtubeID = url.split('youtu.be/')[1].split('?')[0];
+            } else {
+              youtubeID = url.split('/').pop();
+            }
+            
+            let content = (url.includes('youtube.com') || url.includes('youtu.be')) 
+              ? `<div style="position:relative;padding-bottom:56.25%;height:0;">
+                  <iframe src="https://www.youtube.com/embed/${escapeHtml(youtubeID)}?modestbranding=1&rel=0&iv_load_policy=3&controls=1" 
+                  style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" 
+                  frameborder="0" 
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen></iframe>
+                 </div>`
+              : `<video controls style="width:100%; border-radius:4px;"><source src="${escapeHtml(url)}" type="video/mp4"></video>`;
+            
+            document.getElementById('project-visual-content').innerHTML = content;
+            window.scrollTo({top: $('#portfolio-section').offset().top - 70, behavior: 'smooth'});
+            
+            gsap.fromTo("#project-single-view", 
+              { opacity: 0, y: 30, display: "block" }, 
+              { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" }
+            );
+            gsap.fromTo(".meta-item", 
+              { opacity: 0, x: 20 }, 
+              { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4, ease: "power2.out" }
+            );
+          }
+        });
+      };
 
       window.closeProject = function() {
         gsap.to("#project-single-view", { 
@@ -1101,7 +1190,7 @@ window.openProject = function(id) {
         const loader = document.getElementById('contact-loader');
         const success = document.getElementById('contact-success');
         
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPOKE4AQa_YioNPWNkmqt2i1aYbblJB6QWTgHmacTapkku_wG8ZG-rwnO0q7z-TmqU/exec ";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPOKE4AQa_YioNPWNkmqt2i1aYbblJB6QWTgHmacTapkku_wG8ZG-rwnO0q7z-TmqU/exec";
 
         btn.style.display = 'none';
         loader.style.display = 'inline-block';
