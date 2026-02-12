@@ -1504,43 +1504,51 @@ function getEmbedUrl(url) {
         form.style.display = form.style.display === 'block' ? 'none' : 'block';
     }
 
-    function submitChangesRequest() {
-        const text = document.getElementById('changes-text').value.trim();
-        if(!text) { alert("Describe the changes."); return; }
-        
-        const btn = document.querySelector('#changes-form-container button');
-        btn.disabled = true;
-        btn.innerText = "SENDING...";
-        
-        const formData = new URLSearchParams();
-        formData.append('action', 'requestChanges');
-        formData.append('orderId', orderId);
-        formData.append('changes', text);
-            formData.append('clientName', currentOrderData ? currentOrderData.Cliente : 'Cliente');
-        
-        fetch(SCRIPT_URL, { method: 'POST', body: formData })
-            .then(r => r.json())
-            .then(result => {
-                if(result.result === "success") {
-                    document.getElementById('changes-success-msg').style.display = 'inline';
-                    document.getElementById('changes-text').disabled = true;
-                                   btn.innerText = "SENT";
-                    
-                    // ✅ RECARGAR PÁGINA DESPUÉS DE 1 SEGUNDO
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-                    
-                } else {
-                    throw new Error(result.message);
-                }
-            })
-            .catch(err => {
-                alert("Error: " + err.message);
-                btn.disabled = false;
-                btn.innerText = "SEND REQUEST";
-            });
+function submitChangesRequest() {
+    const text = document.getElementById('changes-text').value.trim();
+    if(!text) { 
+        alert("Describe the changes."); 
+        return; 
     }
+    
+    // ✅ VENTANA DE CONFIRMACIÓN
+    if(!confirm("Are you sure you want to request these changes? This will use 1 revision and move your project back to production.")) {
+        return;
+    }
+    
+    const btn = document.querySelector('#changes-form-container button');
+    btn.disabled = true;
+    btn.innerText = "SENDING...";
+    
+    const formData = new URLSearchParams();
+    formData.append('action', 'requestChanges');
+    formData.append('orderId', orderId);
+    formData.append('changes', text);
+    formData.append('clientName', currentOrderData ? currentOrderData.Cliente : 'Cliente');
+    
+    fetch(SCRIPT_URL, { method: 'POST', body: formData })
+        .then(r => r.json())
+        .then(result => {
+            if(result.result === "success") {
+                document.getElementById('changes-success-msg').style.display = 'inline';
+                document.getElementById('changes-text').disabled = true;
+                btn.innerText = "SENT";
+                
+                // ✅ F5 DESPUÉS DE 1.5 SEGUNDOS
+                setTimeout(function() {
+                    window.location.reload();
+                }, 1500);
+                
+            } else {
+                throw new Error(result.message);
+            }
+        })
+        .catch(err => {
+            alert("Error: " + err.message);
+            btn.disabled = false;
+            btn.innerText = "SEND REQUEST";
+        });
+}
 
     function handleSecondFileSelected() {
         const file = document.getElementById('secondFileInput').files[0];
