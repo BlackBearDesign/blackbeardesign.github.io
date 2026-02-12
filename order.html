@@ -1524,9 +1524,13 @@ function getEmbedUrl(url) {
                 if(result.result === "success") {
                     document.getElementById('changes-success-msg').style.display = 'inline';
                     document.getElementById('changes-text').disabled = true;
-                    btn.innerText = "SENT";
-                    const currentRev = parseInt(document.getElementById('order-revisions').innerText) || 0;
-                    if(currentRev > 0) updateRevisionsDisplay(currentRev - 1);
+                                   btn.innerText = "SENT";
+                    
+                    // ✅ RECARGAR PÁGINA DESPUÉS DE 1 SEGUNDO
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                    
                 } else {
                     throw new Error(result.message);
                 }
