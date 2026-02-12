@@ -1516,6 +1516,7 @@ function getEmbedUrl(url) {
         formData.append('action', 'requestChanges');
         formData.append('orderId', orderId);
         formData.append('changes', text);
+            formData.append('clientName', currentOrderData ? currentOrderData.Cliente : 'Cliente');
         
         fetch(SCRIPT_URL, { method: 'POST', body: formData })
             .then(r => r.json())
