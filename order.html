@@ -1309,23 +1309,31 @@ Rush Production fees non-refundable and non-transferable once project begins (ex
 By clicking "I Accept the Terms and Conditions" in the web system, or by submitting project request and proceeding to production under Legacy Status, Client acknowledges they have read, understood, and agree to be legally bound by all terms, conditions, policies, and provisions contained in this Agreement. This electronic act of acceptance constitutes Client's legally binding signature, enforceable to the same extent as a handwritten signature.`;
     }
 
-    function getEmbedUrl(url) {
-        if(!url) return '';
-        try {
-            const urlObj = new URL(url);
-            let videoId = '';
-            
-            if (urlObj.hostname.includes('youtube.com')) {
-                videoId = urlObj.searchParams.get('v');
-            } else if (urlObj.hostname.includes('youtu.be')) {
-                videoId = urlObj.pathname.slice(1);
-            }
-            
-            return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
-        } catch (e) {
-            return url;
+function getEmbedUrl(url) {
+    if(!url) return '';
+    try {
+        const urlObj = new URL(url);
+        let videoId = '';
+        
+        // YouTube Shorts
+        if (urlObj.pathname.includes('/shorts/')) {
+            const shortsMatch = urlObj.pathname.match(/\/shorts\/([a-zA-Z0-9_-]+)/);
+            if (shortsMatch) videoId = shortsMatch[1];
         }
+        // YouTube normal
+        else if (urlObj.hostname.includes('youtube.com')) {
+            videoId = urlObj.searchParams.get('v');
+        } 
+        // Youtu.be
+        else if (urlObj.hostname.includes('youtu.be')) {
+            videoId = urlObj.pathname.slice(1);
+        }
+        
+        return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+    } catch (e) {
+        return url;
     }
+}
 
     function toggleSubmitButton() {
         const check = document.getElementById('accept-check');
