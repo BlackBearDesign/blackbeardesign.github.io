@@ -55,7 +55,10 @@
     /* categories.html */
     "VIDEO CATEGORIES": "CATEGORÍAS DE VIDEO", "Select a category to filter my work": "Elige una categoría para filtrar mi trabajo",
     "Back to Categories": "Volver a categorías", "Back to Category Grid": "Volver a la categoría",
-    "Description": "Descripción", "Date": "Fecha", "// BACK TO HOME //": "// VOLVER AL INICIO //"
+    "Description": "Descripción", "Date": "Fecha", "// BACK TO HOME //": "// VOLVER AL INICIO //",
+    /* blog-single.html */
+    "← PREVIOUS POST": "← ENTRADA ANTERIOR", "NEXT POST →": "SIGUIENTE ENTRADA →",
+    "Leave a comment": "Deja un comentario", "Name *": "Nombre *", "Message *": "Mensaje *"
   };
   var orig = new WeakMap(), lang = 'en';
   var BTN_ES = "Enviar mensaje", btnOrig = null;
@@ -82,8 +85,11 @@
         n.nodeValue = orig.get(n);
       }
     });
-    var sub = document.getElementById('contactSubmitBtn');
-    if (sub) { if (btnOrig === null) btnOrig = sub.value; sub.value = l === 'es' ? BTN_ES : btnOrig; }
+    [['contactSubmitBtn', 'Enviar mensaje'], ['submitBtn', 'Publicar comentario']].forEach(function (b) {
+      var el = document.getElementById(b[0]); if (!el) return;
+      if (!el.dataset.bbOrig) el.dataset.bbOrig = el.value;
+      el.value = l === 'es' ? b[1] : el.dataset.bbOrig;
+    });
     var t = document.querySelector('.lang-toggle'); if (t) t.textContent = l === 'es' ? 'EN' : 'ES';
     try { localStorage.setItem('bb_lang', l); } catch (e) {}
     window.dispatchEvent(new Event('bb-lang'));
