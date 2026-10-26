@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="css/vendor/jquery.fancybox.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="extras.css">
 
     <style>
       html, body { height: 100%; margin: 0; }
@@ -120,7 +121,7 @@
               </div>
               <div class="col-md-5 text-right text-lg-left">
                 <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
-                  <li><a href="index.html#skills-section" class="nav-link">Skills</a></li>
+                  <li><a href="index.html#skills-section" class="nav-link">Results</a></li>
                   <li><a href="index.html#testimonial-section" class="nav-link">Testimonial</a></li>
                   <li><a href="index.html#journal-section" class="nav-link">Journal</a></li>
                   <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
@@ -205,12 +206,39 @@
     <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="extras.js"></script>
 
     <script>
       const EXCEL_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
       let allItems = [];
       let categories = [];
       let currentCat = null;
+      let currentProject = null;
+      let dtok = 0;
+
+      // --- Traducción automática de lo que viene del Sheet (ES/EN) ---
+      // Columnas opcionales en el Sheet: Titulo_ES, Descripcion_ES
+      async function trEl(el, orig, my, manualES) {
+        if (!el) return;
+        el.innerText = orig;
+        if (window.bbLang !== 'es') return;
+        const t = manualES && manualES.trim() ? manualES : await window.bbTr(orig);
+        if (my === dtok) el.innerText = t;
+      }
+      function refreshDynamic() {
+        const my = ++dtok;
+        document.querySelectorAll('#categories-container h3[data-ci]').forEach(h => trEl(h, categories[h.dataset.ci], my));
+        if (currentCat) trEl(document.getElementById('current-category-title'), currentCat, my);
+        document.querySelectorAll('#filtered-posts h3[data-id]').forEach(h => {
+          const it = allItems.find(x => x.ID == h.dataset.id);
+          if (it) trEl(h, it.Titulo, my, it.Titulo_ES);
+        });
+        if (currentProject) {
+          trEl(document.getElementById('project-title'), currentProject.Titulo, my, currentProject.Titulo_ES);
+          trEl(document.getElementById('project-desc'), currentProject.Descripcion || '', my, currentProject.Descripcion_ES);
+        }
+      }
+      window.addEventListener('bb-lang', refreshDynamic);
 
       // --- Utilidades de URL ---
       function setHash(cat, id) {
@@ -242,10 +270,11 @@
         let html = "";
         categories.forEach((cat, i) => {
           html += `<div class="col-md-4 mb-4">
-                    <div class="category-card" onclick="openCategory(categories[${i}])"><h3>${cat}</h3></div>
+                    <div class="category-card" onclick="openCategory(categories[${i}])"><h3 data-ci="${i}">${cat}</h3></div>
                   </div>`;
         });
         document.getElementById('categories-container').innerHTML = html;
+        refreshDynamic();
 
         // Si la URL trae una categoría, abrirla directamente
         const { cat, id } = readHash();
@@ -280,12 +309,13 @@
           html += `
             <div class="col-sm-6 col-md-6 col-lg-4 mb-4">
               <a href="javascript:void(0)" onclick="openProject('${item.ID}')" class="portfolio-item">
-                <div class="overlay"><span class="wrap-icon icon-play_circle_filled"></span><div class="portfolio-item-content"><h3>${item.Titulo}</h3></div></div>
+                <div class="overlay"><span class="wrap-icon icon-play_circle_filled"></span><div class="portfolio-item-content"><h3 data-id="${item.ID}">${item.Titulo}</h3></div></div>
                 <img src="${item.ThumbnailURL}" class="img-fluid" style="width:100%; height:250px; object-fit:cover;">
               </a>
             </div>`;
         });
         document.getElementById('filtered-posts').innerHTML = html;
+        refreshDynamic();
 
         if (instant) {
           gsap.set("#selection-view, .home-button-container", { display: "none", opacity: 0 });
@@ -317,6 +347,8 @@
         document.getElementById('project-desc').innerText = p.Descripcion;
         document.getElementById('project-date').innerText = p.Fecha || "2026";
         document.getElementById('project-client').innerText = p.Cliente || "Private";
+        currentProject = p;
+        refreshDynamic();
 
         let url = p.VideoURL;
         let youtubeID = url.includes('v=') ? url.split('v=')[1].split('&')[0] : url.split('/').pop();
