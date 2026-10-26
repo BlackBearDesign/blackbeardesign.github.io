@@ -10,9 +10,17 @@
     <meta name="keywords" content="video editing, motion graphics, after effects, premiere pro">
     <meta name="author" content="BlackBear">
 
+    <!-- Open Graph: vista previa al compartir (CAMBIA TU-USUARIO y TU-REPO) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BlackBear | Professional Video Editor & Motion Designer">
+    <meta property="og:description" content="Video editing, motion graphics and visual effects. Let's make it together.">
+    <meta property="og:image" content="https://TU-USUARIO.github.io/TU-REPO/images/og-cover.jpg">
+    <meta property="og:url" content="https://TU-USUARIO.github.io/TU-REPO/">
+    <meta name="twitter:card" content="summary_large_image">
+
     <!-- Preconnect for fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com ">
-    <link rel="preconnect" href="https://fonts.gstatic.com " crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link rel="stylesheet" href="css/vendor/icomoon/style.css">
     <link rel="stylesheet" href="css/vendor/owl.carousel.min.css">
@@ -21,8 +29,9 @@
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="css/vendor/jquery.fancybox.min.css">
     <link rel="stylesheet" href="css/style.css">
-    
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400 ,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="extras.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap" rel="stylesheet">
 
     <style>
       /* Fondo de video fijo detrás de todo el contenido */
@@ -65,7 +74,6 @@
         -webkit-filter: brightness(0) invert(1) !important;
       }
 
-      /* COPIA DESDE AQUÍ */
       #testimonial-section {
         padding-bottom: 0 !important;
       }
@@ -379,9 +387,9 @@
       }
     </style>
     
-    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs " type="module"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js "></script>
-    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js "></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
   </head>
   <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
 
@@ -425,7 +433,7 @@
               </div>
               <div class="col-md-5 text-right text-lg-left">
                 <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
-                  <li><a href="#skills-section" class="nav-link">Skills</a></li>
+                  <li><a href="#skills-section" class="nav-link">Results</a></li>
                   <li><a href="#testimonial-section" class="nav-link">Testimonial</a></li>
                   <li><a href="#journal-section" class="nav-link">Journal</a></li>
                   <li><a href="#contact-section" class="nav-link">Contact</a></li>
@@ -449,6 +457,10 @@
               <div class="col-md-10 mx-auto text-center">
                 <h1 class="heading">BlackBear</h1>
                 <h2 class="subheading" style="font-weight: 700;"><span class="typed" data-typed-items="VIDEO EDITOR, VISUAL EFFECTS, DESIGNER, DESIGN MOTION, CREATIVE MIND, COMPOSITION"></span></h2>
+                <div class="hero-cta">
+                  <a href="#portfolio-section" class="btn btn-outline-pill btn-custom-light smoothscroll">View my work</a>
+                  <a href="#contact-section" class="btn btn-outline-pill btn-custom-light smoothscroll">Get a quote</a>
+                </div>
               </div>
             </div>
           </div>
@@ -530,9 +542,9 @@
               <div class="logo-v1 gsap-reveal">
                 <img src="images/logo-adobe.png" alt="Adobe" class="img-fluid">
               </div>
-          <div class="logo-v1 gsap-reveal">
-    <img src="images/logo-binance.png" alt="Binance" class="img-fluid" loading="lazy">
-    </div>
+              <div class="logo-v1 gsap-reveal">
+                <img src="images/logo-binance.png" alt="Binance" class="img-fluid" loading="lazy">
+              </div>
             </div>
           </div>
         </div>
@@ -630,10 +642,26 @@
           </div>
         </div>
 
+        <div class="unslate_co--section" id="process-section">
+          <div class="container">
+            <div class="section-heading-wrap text-center mb-5">
+              <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">How I Work</span></h2>
+              <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
+            </div>
+            <div class="process-grid">
+              <div class="process-step" data-aos="fade-up" data-aos-delay="0"><span class="step-num">01</span><h3>Brief</h3><p>You tell me your idea, references and deadline.</p></div>
+              <div class="process-step" data-aos="fade-up" data-aos-delay="100"><span class="step-num">02</span><h3>First Cut</h3><p>I deliver a first version for you to review.</p></div>
+              <div class="process-step" data-aos="fade-up" data-aos-delay="200"><span class="step-num">03</span><h3>Revisions</h3><p>We adjust together until it is exactly what you imagined.</p></div>
+              <div class="process-step" data-aos="fade-up" data-aos-delay="300"><span class="step-num">04</span><h3>Delivery</h3><p>Final files in the formats you need, ready to publish.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Números de ejemplo: cámbialos en data-number por los reales -->
         <div class="unslate_co--section section-counter" id="skills-section">
           <div class="container">
             <div class="section-heading-wrap text-center mb-5">
-              <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">My Skills</span></h2>
+              <h2 class="heading-h2 text-center divider"><span class="gsap-reveal">Results</span></h2>
               <span class="gsap-reveal"><img src="images/divider.png" alt="divider" width="76"></span>
             </div>
 
@@ -641,37 +669,37 @@
               <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
                 <div class="counter-v1 text-center">
                   <span class="number-wrap">
-                    <span class="number number-counter" data-number="95">0</span>
-                    <span class="append-text">%</span>
+                    <span class="number number-counter" data-number="150">0</span>
+                    <span class="append-text">+</span>
                   </span>
-                  <span class="counter-label">Premiere Pro</span>
+                  <span class="counter-label">Videos delivered</span>
                 </div>
               </div>
               <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
                 <div class="counter-v1 text-center">
                   <span class="number-wrap">
-                    <span class="number number-counter" data-number="90">0</span>
-                    <span class="append-text">%</span>
+                    <span class="number number-counter" data-number="30">0</span>
+                    <span class="append-text">+</span>
                   </span>
-                  <span class="counter-label">After Effects</span>
+                  <span class="counter-label">Happy clients</span>
                 </div>
               </div>
               <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
                 <div class="counter-v1 text-center">
                   <span class="number-wrap">
-                    <span class="number number-counter" data-number="85">0</span>
-                    <span class="append-text">%</span>
+                    <span class="number number-counter" data-number="5">0</span>
+                    <span class="append-text">+</span>
                   </span>
-                  <span class="counter-label">Photoshop</span>
+                  <span class="counter-label">Years of experience</span>
                 </div>
               </div>
               <div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
                 <div class="counter-v1 text-center">
                   <span class="number-wrap">
-                    <span class="number number-counter" data-number="80">0</span>
+                    <span class="number number-counter" data-number="100">0</span>
                     <span class="append-text">%</span>
                   </span>
-                  <span class="counter-label">Illustrator</span>
+                  <span class="counter-label">Client satisfaction</span>
                 </div>
               </div>
             </div>
@@ -796,8 +824,9 @@
 
     <script src="js/scripts-dist.js"></script>
     <script src="js/main.js"></script>
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js "></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js "></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="extras.js"></script>
 
     <script>
       // Security: Escape HTML to prevent XSS
@@ -832,7 +861,7 @@
 
       // --- TESTIMONIALS CAROUSEL ---
       document.addEventListener('DOMContentLoaded', function() {
-        const googleSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKmvmO9lY24-_9fMoPRSKJzApwjQKC69bVdwseuQjaAoGbvs1LtuUEJ9k26gaIvRo03gDMN8pXKMDS/pub?gid=0&single=true&output=csv ";
+        const googleSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKmvmO9lY24-_9fMoPRSKJzApwjQKC69bVdwseuQjaAoGbvs1LtuUEJ9k26gaIvRo03gDMN8pXKMDS/pub?gid=0&single=true&output=csv";
         const $carousel = $('#dynamic-carousel');
 
         Papa.parse(googleSheetURL, {
@@ -895,7 +924,7 @@
 
       // --- JOURNAL/POSTS GRID ---
       document.addEventListener('DOMContentLoaded', function() {
-        const URL_EXCEL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=0&single=true&output=csv ";
+        const URL_EXCEL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=0&single=true&output=csv";
         const $grid = document.getElementById('journal-grid');
 
         Papa.parse(URL_EXCEL, {
@@ -946,7 +975,7 @@
 
       // --- PORTFOLIO LOGIC ---
       document.addEventListener('DOMContentLoaded', function() {
-        const EXCEL_PORTFOLIO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv ";
+        const EXCEL_PORTFOLIO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
         
         window.portfolioItems = [];
 
@@ -1010,61 +1039,61 @@
         }
       });
 
-// --- PROJECT NAVIGATION ---
-window.openProject = function(id) {
-  const p = window.portfolioItems.find(x => x.ID == id);
-  if(!p) return;
+      // --- PROJECT NAVIGATION ---
+      window.openProject = function(id) {
+        const p = window.portfolioItems.find(x => x.ID == id);
+        if(!p) return;
 
-  const title = escapeHtml(p.Titulo);
-  const desc = escapeHtml(p.Descripcion);
-  const date = escapeHtml(p.Fecha || "2024");
-  const client = escapeHtml(p.Cliente || "Private Client");
-  const url = p.VideoURL;
+        const title = escapeHtml(p.Titulo);
+        const desc = escapeHtml(p.Descripcion);
+        const date = escapeHtml(p.Fecha || "2024");
+        const client = escapeHtml(p.Cliente || "Private Client");
+        const url = p.VideoURL;
 
-  gsap.to("#portfolio-grid-container", { 
-    duration: 0.4, 
-    y: 20, 
-    opacity: 0, 
-    onComplete: () => {
-      document.getElementById('portfolio-grid-container').style.display = "none";
-      document.getElementById('project-title').textContent = title;
-      document.getElementById('project-desc').textContent = desc;
-      document.getElementById('project-date').textContent = date;
-      document.getElementById('project-client').textContent = client;
-      
-      let youtubeID = "";
-      if (url.includes('v=')) {
-        youtubeID = url.split('v=')[1].split('&')[0];
-      } else if (url.includes('youtu.be/')) {
-        youtubeID = url.split('youtu.be/')[1].split('?')[0];
-      } else {
-        youtubeID = url.split('/').pop();
-      }
-      
-      let content = (url.includes('youtube.com') || url.includes('youtu.be')) 
-        ? `<div style="position:relative;padding-bottom:56.25%;height:0;">
-            <iframe src="https://www.youtube.com/embed/${escapeHtml(youtubeID)}?modestbranding=1&rel=0&iv_load_policy=3&controls=1" 
-            style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" 
-            frameborder="0" 
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen></iframe>
-           </div>`
-        : `<video controls style="width:100%; border-radius:4px;"><source src="${escapeHtml(url)}" type="video/mp4"></video>`;
-      
-      document.getElementById('project-visual-content').innerHTML = content;
-      window.scrollTo({top: $('#portfolio-section').offset().top - 70, behavior: 'smooth'});
-      
-      gsap.fromTo("#project-single-view", 
-        { opacity: 0, y: 30, display: "block" }, 
-        { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" }
-      );
-      gsap.fromTo(".meta-item", 
-        { opacity: 0, x: 20 }, 
-        { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4, ease: "power2.out" }
-      );
-    }
-  });
-};
+        gsap.to("#portfolio-grid-container", { 
+          duration: 0.4, 
+          y: 20, 
+          opacity: 0, 
+          onComplete: () => {
+            document.getElementById('portfolio-grid-container').style.display = "none";
+            document.getElementById('project-title').textContent = title;
+            document.getElementById('project-desc').textContent = desc;
+            document.getElementById('project-date').textContent = date;
+            document.getElementById('project-client').textContent = client;
+            
+            let youtubeID = "";
+            if (url.includes('v=')) {
+              youtubeID = url.split('v=')[1].split('&')[0];
+            } else if (url.includes('youtu.be/')) {
+              youtubeID = url.split('youtu.be/')[1].split('?')[0];
+            } else {
+              youtubeID = url.split('/').pop();
+            }
+            
+            let content = (url.includes('youtube.com') || url.includes('youtu.be')) 
+              ? `<div style="position:relative;padding-bottom:56.25%;height:0;">
+                  <iframe src="https://www.youtube.com/embed/${escapeHtml(youtubeID)}?modestbranding=1&rel=0&iv_load_policy=3&controls=1" 
+                  style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" 
+                  frameborder="0" 
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen></iframe>
+                 </div>`
+              : `<video controls style="width:100%; border-radius:4px;"><source src="${escapeHtml(url)}" type="video/mp4"></video>`;
+            
+            document.getElementById('project-visual-content').innerHTML = content;
+            window.scrollTo({top: $('#portfolio-section').offset().top - 70, behavior: 'smooth'});
+            
+            gsap.fromTo("#project-single-view", 
+              { opacity: 0, y: 30, display: "block" }, 
+              { duration: 0.6, opacity: 1, y: 0, ease: "power3.out" }
+            );
+            gsap.fromTo(".meta-item", 
+              { opacity: 0, x: 20 }, 
+              { duration: 0.5, opacity: 1, x: 0, stagger: 0.15, delay: 0.4, ease: "power2.out" }
+            );
+          }
+        });
+      };
 
       window.closeProject = function() {
         gsap.to("#project-single-view", { 
@@ -1101,7 +1130,7 @@ window.openProject = function(id) {
         const loader = document.getElementById('contact-loader');
         const success = document.getElementById('contact-success');
         
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPOKE4AQa_YioNPWNkmqt2i1aYbblJB6QWTgHmacTapkku_wG8ZG-rwnO0q7z-TmqU/exec ";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPOKE4AQa_YioNPWNkmqt2i1aYbblJB6QWTgHmacTapkku_wG8ZG-rwnO0q7z-TmqU/exec";
 
         btn.style.display = 'none';
         loader.style.display = 'inline-block';
