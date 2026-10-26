@@ -209,6 +209,23 @@
     <script>
       const EXCEL_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
       let allItems = [];
+      let categories = [];
+      let currentCat = null;
+
+      // --- Utilidades de URL ---
+      function setHash(cat, id) {
+        let h = "";
+        if (cat) h = "#" + encodeURIComponent(cat);
+        if (cat && id) h += "/" + encodeURIComponent(id);
+        history.replaceState(null, "", location.pathname + location.search + h);
+      }
+
+      function readHash() {
+        const raw = location.hash.slice(1);
+        if (!raw) return { cat: null, id: null };
+        const parts = raw.split("/").map(decodeURIComponent);
+        return { cat: parts[0] || null, id: parts[1] || null };
+      }
 
       document.addEventListener('DOMContentLoaded', function() {
         Papa.parse(EXCEL_URL, {
@@ -221,15 +238,25 @@
       });
 
       function renderCategoryMenu() {
-        const categories = [...new Set(allItems.map(item => item.Category || 'Video'))];
+        categories = [...new Set(allItems.map(item => item.Category || 'Video'))];
         let html = "";
-        categories.forEach((cat) => {
+        categories.forEach((cat, i) => {
           html += `<div class="col-md-4 mb-4">
-                    <div class="category-card" onclick="openCategory('${cat}')"><h3>${cat}</h3></div>
+                    <div class="category-card" onclick="openCategory(categories[${i}])"><h3>${cat}</h3></div>
                   </div>`;
         });
         document.getElementById('categories-container').innerHTML = html;
 
+        // Si la URL trae una categoría, abrirla directamente
+        const { cat, id } = readHash();
+        if (cat && categories.includes(cat)) {
+          gsap.set("#dynamic-footer-wrap", { opacity: 1 });
+          openCategory(cat, true);
+          if (id && allItems.some(x => x.ID == id)) openProject(id, true);
+          return;
+        }
+
+        // Animación normal del menú
         const tl = gsap.timeline();
         tl.to("#selection-view h1, #selection-view .wavy-divider, #selection-view p", {
           duration: 0.8, opacity: 1, y: 0, stagger: 0.2, ease: "power2.out"
@@ -243,9 +270,11 @@
         tl.to("#dynamic-footer-wrap", { duration: 1, opacity: 1, ease: "power2.out" }, "-=0.6");
       }
 
-      function openCategory(cat) {
+      function openCategory(cat, instant = false) {
+        currentCat = cat;
+        setHash(cat);
         document.getElementById('current-category-title').innerText = cat;
-        const filtered = allItems.filter(item => item.Category === cat);
+        const filtered = allItems.filter(item => (item.Category || 'Video') === cat);
         let html = "";
         filtered.forEach(item => {
           html += `
@@ -258,63 +287,74 @@
         });
         document.getElementById('filtered-posts').innerHTML = html;
 
+        if (instant) {
+          gsap.set("#selection-view, .home-button-container", { display: "none", opacity: 0 });
+          gsap.set("#grid-view", { display: "block", opacity: 1, y: 0 });
+          return;
+        }
+
         gsap.to("#selection-view, .home-button-container", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
           gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
         }});
       }
 
       function closeCategory() {
+        currentCat = null;
+        setHash(null);
         gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
           gsap.fromTo("#selection-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
           gsap.to(".home-button-container", { display: "block", opacity: 1 });
         }});
       }
 
- function openProject(id) {
-  const p = allItems.find(x => x.ID == id);
-  if(!p) return;
+      function openProject(id, instant = false) {
+        const p = allItems.find(x => x.ID == id);
+        if (!p) return;
 
-  document.getElementById('project-title').innerText = p.Titulo;
-  document.getElementById('project-desc').innerText = p.Descripcion;
-  document.getElementById('project-date').innerText = p.Fecha || "2026";
-  document.getElementById('project-client').innerText = p.Cliente || "Private";
-  
-  let url = p.VideoURL;
-  
-  // Extraemos el ID del video y aplicamos ÚNICAMENTE tus 4 parámetros
-  let youtubeID = url.includes('v=') ? url.split('v=')[1].split('&')[0] : url.split('/').pop();
+        setHash(currentCat, id);
 
-  let content = (url.includes('youtube.com') || url.includes('youtu.be')) 
-    ? `<div style="position:relative;padding-bottom:56.25%;height:0;">
-        <iframe src="https://www.youtube.com/embed/${youtubeID}?modestbranding=1&rel=0&iv_load_policy=3&controls=1" 
-        style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;" 
-        frameborder="0" 
-        allowfullscreen></iframe>
-       </div>`
-    : `<video controls style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
-  
-  document.getElementById('project-visual-content').innerHTML = content;
-  
-  gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
-    gsap.fromTo("#project-single-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
-  }});
-}
-function closeProject() {
-  // Esto detiene el video para que no siga sonando al cerrar
-  document.getElementById('project-visual-content').innerHTML = "";
+        document.getElementById('project-title').innerText = p.Titulo;
+        document.getElementById('project-desc').innerText = p.Descripcion;
+        document.getElementById('project-date').innerText = p.Fecha || "2026";
+        document.getElementById('project-client').innerText = p.Cliente || "Private";
 
-  gsap.to("#project-single-view", { 
-    duration: 0.4, 
-    opacity: 0, 
-    display: "none", 
-    onComplete: () => {
-      gsap.fromTo("#grid-view", 
-        { opacity: 0, display: "block", y: 20 }, 
-        { duration: 0.6, opacity: 1, y: 0 }
-      );
-    }
-  });
-}      
+        let url = p.VideoURL;
+        let youtubeID = url.includes('v=') ? url.split('v=')[1].split('&')[0] : url.split('/').pop();
+
+        let content = (url.includes('youtube.com') || url.includes('youtu.be'))
+          ? `<div style="position:relative;padding-bottom:56.25%;height:0;">
+              <iframe src="https://www.youtube.com/embed/${youtubeID}?modestbranding=1&rel=0&iv_load_policy=3&controls=1"
+              style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px;"
+              frameborder="0"
+              allowfullscreen></iframe>
+             </div>`
+          : `<video controls style="width:100%; border-radius:4px;"><source src="${url}" type="video/mp4"></video>`;
+
+        document.getElementById('project-visual-content').innerHTML = content;
+
+        if (instant) {
+          gsap.set("#grid-view", { display: "none", opacity: 0 });
+          gsap.set("#project-single-view", { display: "block", opacity: 1, y: 0 });
+          return;
+        }
+
+        gsap.to("#grid-view", { duration: 0.4, opacity: 0, display: "none", onComplete: () => {
+          gsap.fromTo("#project-single-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
+        }});
+      }
+
+      function closeProject() {
+        // Detiene el video para que no siga sonando al cerrar
+        document.getElementById('project-visual-content').innerHTML = "";
+        setHash(currentCat);
+
+        gsap.to("#project-single-view", {
+          duration: 0.4, opacity: 0, display: "none",
+          onComplete: () => {
+            gsap.fromTo("#grid-view", { opacity: 0, display: "block", y: 20 }, { duration: 0.6, opacity: 1, y: 0 });
+          }
+        });
+      }
     </script>
   </body>
 </html>
