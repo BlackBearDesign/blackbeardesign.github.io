@@ -1049,6 +1049,34 @@
         });
       });
 
+      // --- PORTAFOLIO: traducción ES/EN de títulos, categorías y detalle ---
+      // Columnas opcionales en el Sheet: Titulo_ES, Descripcion_ES, Category_ES
+      let currentProj = null, pTok = 0;
+      async function setTr(el, orig, manualES, my) {
+        if (!el) return;
+        el.textContent = orig || '';
+        if (window.bbLang !== 'es' || !orig) return;
+        const t = (manualES && manualES.trim()) ? manualES : await translateES(orig);
+        if (my === pTok) el.textContent = t;
+      }
+      function refreshPortfolioText() {
+        const my = ++pTok, list = window.portfolioItems || [], es = window.bbLang === 'es';
+        document.querySelectorAll('#posts h3[data-pid]').forEach(h => {
+          const it = list.find(x => x.ID == h.dataset.pid);
+          if (it) setTr(h, it.Titulo, it.Titulo_ES, my);
+        });
+        document.querySelectorAll('#posts p[data-pcid]').forEach(p => {
+          const it = list.find(x => x.ID == p.dataset.pcid);
+          if (!it) return;
+          p.textContent = (es && it.Category_ES && it.Category_ES.trim()) ? it.Category_ES : (it.Category || 'Video');
+        });
+        if (currentProj) {
+          setTr(document.getElementById('project-title'), currentProj.Titulo, currentProj.Titulo_ES, my);
+          setTr(document.getElementById('project-desc'), currentProj.Descripcion, currentProj.Descripcion_ES, my);
+        }
+      }
+      window.addEventListener('bb-lang', refreshPortfolioText);
+
       // --- PORTFOLIO LOGIC ---
       document.addEventListener('DOMContentLoaded', function() {
         const EXCEL_PORTFOLIO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9yghObfHQDI1wcM1g4gn2uMOSSd_w-qYkS1TFHAJXsnJDA-zi8A_4X9ymMGhtreM7f0sY8JRGqnBE/pub?gid=0&single=true&output=csv";
@@ -1094,8 +1122,8 @@
                   <div class="overlay">
                     <span class="wrap-icon icon-play_circle_filled"></span>
                     <div class="portfolio-item-content">
-                      <h3>${title}</h3>
-                      <p>${category}</p>
+                      <h3 data-pid="${id}">${title}</h3>
+                      <p data-pcid="${id}">${category}</p>
                     </div>
                   </div>
                   <img src="${thumbnail}" class="lazyload img-fluid" alt="${title}" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
@@ -1104,6 +1132,7 @@
           });
 
           $grid.html(html);
+          refreshPortfolioText();
 
           $grid.imagesLoaded().progress(function() {
             $grid.isotope('reloadItems').isotope({
@@ -1136,6 +1165,8 @@
             document.getElementById('project-desc').textContent = desc;
             document.getElementById('project-date').textContent = date;
             document.getElementById('project-client').textContent = client;
+            currentProj = p;
+            refreshPortfolioText();
             
             let youtubeID = "";
             if (url.includes('v=')) {
