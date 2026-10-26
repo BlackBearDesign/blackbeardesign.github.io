@@ -457,10 +457,6 @@
               <div class="col-md-10 mx-auto text-center">
                 <h1 class="heading">BlackBear</h1>
                 <h2 class="subheading" style="font-weight: 700;"><span class="typed" data-typed-items="VIDEO EDITOR, VISUAL EFFECTS, DESIGNER, DESIGN MOTION, CREATIVE MIND, COMPOSITION"></span></h2>
-                <div class="hero-cta">
-                  <a href="#portfolio-section" class="btn btn-outline-pill btn-custom-light smoothscroll">View my work</a>
-                  <a href="#contact-section" class="btn btn-outline-pill btn-custom-light smoothscroll">Get a quote</a>
-                </div>
               </div>
             </div>
           </div>
@@ -859,10 +855,63 @@
         }
       });
 
-      // --- TESTIMONIALS CAROUSEL ---
+      // --- TESTIMONIALS CAROUSEL (ES/EN) ---
+      // En el Sheet agrega columnas opcionales: Texto_ES y Cargo_ES
       document.addEventListener('DOMContentLoaded', function() {
         const googleSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKmvmO9lY24-_9fMoPRSKJzApwjQKC69bVdwseuQjaAoGbvs1LtuUEJ9k26gaIvRo03gDMN8pXKMDS/pub?gid=0&single=true&output=csv";
         const $carousel = $('#dynamic-carousel');
+        let reviews = [];
+
+        function pick(row, field) {
+          const es = row[field + '_ES'];
+          return (window.bbLang === 'es' && es && es.trim() !== '') ? es : (row[field] || '');
+        }
+
+        function renderTestimonials() {
+          let html = "";
+          reviews.forEach(review => {
+            let photoURL = review.Foto && review.Foto.trim() !== "" ? escapeHtml(review.Foto) : "images/person_man_1.jpg";
+            let name = escapeHtml(review.Nombre);
+            let text = escapeHtml(pick(review, 'Texto'));
+            let position = escapeHtml(pick(review, 'Cargo'));
+
+            html += `
+              <div>
+                <div class="testimonial-v1">
+                  <div class="testimonial-inner-bg">
+                    <span class="quote">&ldquo;</span>
+                    <blockquote>${text}</blockquote>
+                  </div>
+                  <div class="testimonial-author-info">
+                    <img src="${photoURL}" alt="${name}">
+                    <h3>${name}</h3>
+                    <span class="d-block position">${position}</span>
+                  </div>
+                </div>
+              </div>`;
+          });
+
+          if ($carousel.hasClass('owl-loaded')) {
+            $carousel.trigger('destroy.owl.carousel');
+            $carousel.removeClass('owl-loaded owl-hidden');
+          }
+          $carousel.html(html);
+
+          $carousel.owlCarousel({
+            items: 1,
+            loop: true,
+            margin: 30,
+            autoplay: true,
+            autoplayTimeout: 10000,
+            smartSpeed: 1000,
+            nav: false,
+            dots: true,
+            autoplayHoverPause: true
+          });
+        }
+
+        // Se vuelve a dibujar cuando el visitante cambia de idioma
+        window.addEventListener('bb-lang', function() { if (reviews.length) renderTestimonials(); });
 
         Papa.parse(googleSheetURL, {
           download: true,
@@ -872,52 +921,15 @@
             $carousel.html('<div class="error-message">Unable to load testimonials.</div>');
           },
           complete: function(results) {
-            let data = results.data;
-            const validReviews = data.filter(row => row.Texto && row.Texto.trim() !== "");
+            reviews = results.data.filter(row => row.Texto && row.Texto.trim() !== "");
 
-            if (validReviews.length === 0) {
+            if (reviews.length === 0) {
               $carousel.html('<div class="text-center p-5">No testimonials available.</div>');
               return;
             }
 
-            validReviews.sort(() => Math.random() - 0.5);
-
-            let html = "";
-            validReviews.forEach(review => {
-              let photoURL = review.Foto && review.Foto.trim() !== "" ? escapeHtml(review.Foto) : "images/person_man_1.jpg";
-              let name = escapeHtml(review.Nombre);
-              let text = escapeHtml(review.Texto);
-              let position = escapeHtml(review.Cargo || '');
-              
-              html += `
-                <div>
-                  <div class="testimonial-v1">
-                    <div class="testimonial-inner-bg">
-                      <span class="quote">&ldquo;</span>
-                      <blockquote>${text}</blockquote>
-                    </div>
-                    <div class="testimonial-author-info">
-                      <img src="${photoURL}" alt="${name}">
-                      <h3>${name}</h3>
-                      <span class="d-block position">${position}</span>
-                    </div>
-                  </div>
-                </div>`;
-            });
-
-            $carousel.html(html);
-
-            $carousel.owlCarousel({
-              items: 1,
-              loop: true,
-              margin: 30,
-              autoplay: true,
-              autoplayTimeout: 10000,
-              smartSpeed: 1000,
-              nav: false,
-              dots: true,
-              autoplayHoverPause: true
-            });
+            reviews.sort(() => Math.random() - 0.5);
+            renderTestimonials();
           }
         });
       });
