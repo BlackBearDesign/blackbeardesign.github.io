@@ -58,8 +58,39 @@
     "Description": "Descripción", "Date": "Fecha", "// BACK TO HOME //": "// VOLVER AL INICIO //",
     /* blog-single.html */
     "← PREVIOUS POST": "← ENTRADA ANTERIOR", "NEXT POST →": "SIGUIENTE ENTRADA →",
-    "Leave a comment": "Deja un comentario", "Name *": "Nombre *", "Message *": "Mensaje *"
+    "Leave a comment": "Deja un comentario", "Name *": "Nombre *", "Message *": "Mensaje *",
+    /* order.html */
+    "Synchronizing with studio...": "Sincronizando con el estudio...", "Project Title": "Título del proyecto",
+    "Preview (Demo)": "Vista previa (Demo)", "Production in Progress": "Producción en curso",
+    "Your project is currently being edited in queue order. You will receive a notification when the preview is ready for review.": "Tu proyecto se está editando por orden de llegada. Recibirás una notificación cuando la vista previa esté lista para revisión.",
+    "Status": "Estado", "AVAILABLE:": "DISPONIBLES:", "NO REVISIONS LEFT": "NO QUEDAN REVISIONES",
+    "REQUEST EXTRA REVISION": "SOLICITAR REVISIÓN EXTRA", "✓ Request sent via email": "✓ Solicitud enviada por correo",
+    "Check your inbox for confirmation": "Revisa tu bandeja para la confirmación", "Total Investment": "Inversión total",
+    "Loading agreement...": "Cargando acuerdo...", "Scroll down to read all terms": "Desplázate para leer todos los términos",
+    "Terms read completely": "Términos leídos por completo", "I ACCEPT THE TERMS AND CONDITIONS": "ACEPTO LOS TÉRMINOS Y CONDICIONES",
+    "Upload payment proof (PNG/JPG)": "Sube tu comprobante de pago (PNG/JPG)", "SUBMIT PAYMENT": "ENVIAR PAGO",
+    "PAYMENT PROOF SENT": "COMPROBANTE ENVIADO", "Projects are handled in order of request.": "Los proyectos se atienden por orden de solicitud.",
+    "WAITING FOR": "EN ESPERA DE", "ADMINISTRATOR": "LA VERIFICACIÓN DEL", "VERIFICATION.": "ADMINISTRADOR.",
+    "REQUEST PROJECT START": "SOLICITAR INICIO DEL PROYECTO",
+    "Projects are produced in order of request. Legacy clients receive priority queue placement.": "Los proyectos se producen por orden de solicitud. Los clientes Legacy tienen prioridad en la cola.",
+    "REQUEST CHANGES": "SOLICITAR CAMBIOS", "No revisions available. Please request an extra revision.": "No hay revisiones disponibles. Solicita una revisión extra.",
+    "Describe the changes needed": "Describe los cambios necesarios", "SEND REQUEST": "ENVIAR SOLICITUD", "✓ Changes requested!": "✓ ¡Cambios solicitados!",
+    "ACCEPT VIDEO": "ACEPTAR VIDEO", "Final Payment Required": "Pago final requerido",
+    "Upload the second payment proof. Administrator verification required to unlock master file.": "Sube el segundo comprobante de pago. Se requiere verificación del administrador para liberar el archivo maestro.",
+    "Upload second payment proof": "Sube el segundo comprobante de pago", "SUBMIT FINAL PAYMENT": "ENVIAR PAGO FINAL", "FINAL PAYMENT SENT": "PAGO FINAL ENVIADO",
+    "Optional Payment": "Pago opcional", "Submit your payment proof when ready.": "Envía tu comprobante de pago cuando estés listo.",
+    "Upload payment proof": "Sube tu comprobante de pago", "PAYMENT SENT": "PAGO ENVIADO",
+    "Binance Payment Details": "Datos de pago Binance", "Nickname:": "Alias:", "GO TO BINANCE PAY": "IR A BINANCE PAY", "CLOSE": "CERRAR",
+    "DOWNLOAD VIDEO": "DESCARGAR VIDEO", "LEAVE A REVIEW": "DEJAR UNA RESEÑA", "✓ THANK YOU FOR YOUR REVIEW": "✓ GRACIAS POR TU RESEÑA",
+    "Share your experience": "Comparte tu experiencia", "SUBMIT REVIEW": "ENVIAR RESEÑA", "✓ Thank you!": "✓ ¡Gracias!",
+    "Your Name": "Tu nombre", "Your Country": "Tu país", "Tell us about your experience...": "Cuéntanos tu experiencia...",
+    "Describe in detail what changes you need...": "Describe en detalle los cambios que necesitas...",
+    "AWAITING PAYMENT": "ESPERANDO PAGO", "REQUEST PROJECT": "SOLICITAR PROYECTO", "IN PRODUCTION": "EN PRODUCCIÓN",
+    "UNDER REVIEW": "EN REVISIÓN", "COMPLETED": "COMPLETADO", "No description available.": "Sin descripción disponible.",
+    "ORDER ID REQUIRED": "SE REQUIERE EL ID DEL PEDIDO", "ORDER NOT FOUND": "PEDIDO NO ENCONTRADO", "CONNECTION ERROR": "ERROR DE CONEXIÓN",
+    "SENDING...": "ENVIANDO...", "STARTING PRODUCTION...": "INICIANDO PRODUCCIÓN...", "COMPLETING ORDER...": "COMPLETANDO PEDIDO..."
   };
+  var PAT = [[/^ORDER FOR (.+)$/, 'PEDIDO DE $1'], [/^FILE: (.+)$/, 'ARCHIVO: $1']];
   var orig = new WeakMap(), lang = 'en';
   var BTN_ES = "Enviar mensaje", btnOrig = null;
 
@@ -67,24 +98,34 @@
     var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
         var p = n.parentNode && n.parentNode.nodeName;
-        return (p === 'SCRIPT' || p === 'STYLE' || !n.nodeValue.trim()) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+        var inContract = n.parentNode.closest && n.parentNode.closest('.contract-box');
+        return (p === 'SCRIPT' || p === 'STYLE' || inContract || !n.nodeValue.trim()) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
       }
     });
     var n; while ((n = w.nextNode())) fn(n);
   }
-  function applyLang(l) {
-    lang = l; window.bbLang = l;
-    document.documentElement.lang = l;
+  function translateDom(l) {
     walk(document.body, function (n) {
       var base = orig.has(n) ? orig.get(n) : n.nodeValue;
       var key = base.replace(/\s+/g, ' ').trim();
-      if (l === 'es' && ES[key]) {
+      var es = ES[key];
+      if (!es) for (var i = 0; i < PAT.length; i++) { if (PAT[i][0].test(key)) { es = key.replace(PAT[i][0], PAT[i][1]); break; } }
+      if (l === 'es' && es) {
         if (!orig.has(n)) orig.set(n, base);
-        n.nodeValue = base.match(/^\s*/)[0] + ES[key] + base.match(/\s*$/)[0];
+        n.nodeValue = base.match(/^\s*/)[0] + es + base.match(/\s*$/)[0];
       } else if (l === 'en' && orig.has(n)) {
         n.nodeValue = orig.get(n);
       }
     });
+    document.querySelectorAll('[placeholder]').forEach(function (el) {
+      if (!el.dataset.bbPh) el.dataset.bbPh = el.getAttribute('placeholder');
+      el.setAttribute('placeholder', (l === 'es' && ES[el.dataset.bbPh]) ? ES[el.dataset.bbPh] : el.dataset.bbPh);
+    });
+  }
+  function applyLang(l) {
+    lang = l; window.bbLang = l;
+    document.documentElement.lang = l;
+    translateDom(l);
     [['contactSubmitBtn', 'Enviar mensaje'], ['submitBtn', 'Publicar comentario']].forEach(function (b) {
       var el = document.getElementById(b[0]); if (!el) return;
       if (!el.dataset.bbOrig) el.dataset.bbOrig = el.value;
@@ -142,8 +183,50 @@
     if (a && !a.contains(e.relatedTarget)) { var v = a.querySelector('.hv-preview'); if (v) v.remove(); }
   });
 
+  /* ---------- Traductor global EN->ES (window.bbTr) ---------- */
+  function hash(str) { var h = 0; for (var i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0; return h; }
+  function decode(t) { var x = document.createElement('textarea'); x.innerHTML = t; return x.value; }
+  function chunks(text) {
+    var out = [], cur = '';
+    (text.match(/[^.!?]+[.!?]*\s*/g) || [text]).forEach(function (sn) {
+      if ((cur + sn).length > 450 && cur) { out.push(cur); cur = ''; }
+      while (sn.length > 450) { out.push(sn.slice(0, 450)); sn = sn.slice(450); }
+      cur += sn;
+    });
+    if (cur) out.push(cur);
+    return out;
+  }
+  window.bbTr = async function (text) {
+    if (!text || !String(text).trim()) return text;
+    var key = 'bb_tr_' + hash(text);
+    try { var c = localStorage.getItem(key); if (c) return c; } catch (e) {}
+    try {
+      var parts = [], cs = chunks(text);
+      for (var i = 0; i < cs.length; i++) {
+        var r = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(cs[i]) + '&langpair=en|es');
+        var jn = await r.json();
+        var t = jn && jn.responseData && jn.responseData.translatedText;
+        if (!t || jn.responseStatus != 200 || /MYMEMORY WARNING/i.test(t)) return text;
+        parts.push(decode(t).trim());
+      }
+      var res = parts.join(' ');
+      try { localStorage.setItem(key, res); } catch (e) {}
+      return res;
+    } catch (e) { return text; }
+  };
+
+  /* ---------- Páginas con contenido dinámico (data-bb-observe) ---------- */
+  if (document.body.hasAttribute('data-bb-observe')) {
+    var tmr;
+    new MutationObserver(function () {
+      clearTimeout(tmr);
+      tmr = setTimeout(function () { if (lang === 'es') translateDom('es'); }, 120);
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+
   /* ---------- Inicio ---------- */
   build(); honeypot();
+  if (document.body.hasAttribute('data-bb-nowa')) { var w = document.querySelector('.wa-float'); if (w) w.remove(); }
   var saved = null; try { saved = localStorage.getItem('bb_lang'); } catch (e) {}
   applyLang(saved || ((navigator.language || '').toLowerCase().indexOf('es') === 0 ? 'es' : 'en'));
   updateWA();
