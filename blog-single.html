@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="css/vendor/jquery.fancybox.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="extras.css">
 
     <style>
       /* FIX ESTRUCTURAL PARA EL FOOTER AL FONDO */
@@ -80,12 +81,12 @@
         border: none !important;
       }
       /* Fuerza a que las negritas dentro del post brillen y pesen */
-.post-content b, .post-content strong {
-  font-weight: 900 !important; /* El máximo grosor */
-  color: #ffffff !important;   /* Blanco puro para que resalte */
-  display: inline-block;
-  margin-top: 10px;            /* Un pequeño respiro arriba */
-}
+      .post-content b, .post-content strong {
+        font-weight: 900 !important; /* El máximo grosor */
+        color: #ffffff !important;   /* Blanco puro para que resalte */
+        display: inline-block;
+        margin-top: 10px;            /* Un pequeño respiro arriba */
+      }
     </style>
   </head>
   <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
@@ -115,7 +116,7 @@
               </div>
               <div class="col-md-5 text-right text-lg-left">
                 <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
-                  <li><a href="index.html#skills-section" class="nav-link">Skills</a></li>
+                  <li><a href="index.html#skills-section" class="nav-link">Results</a></li>
                   <li><a href="index.html#testimonial-section" class="nav-link">Testimonial</a></li>
                   <li><a href="index.html#journal-section" class="nav-link active">Journal</a></li>
                   <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
@@ -129,7 +130,7 @@
           <div class="container">
             <div class="row align-items-center justify-content-center" style="height: 70vh;">
               <div class="col-md-10 text-center" style="z-index: 2;">
-                <h1 class="heading" id="post-title" style="font-size: 3.8rem; font-weight: 900; color: #fff;">Cargando...</h1>
+                <h1 class="heading" id="post-title" style="font-size: 3.8rem; font-weight: 900; color: #fff;">...</h1>
                 <div id="post-meta" style="color: #fff; opacity: 0.8; font-size: 1.1rem; margin-bottom: 20px;"></div>
                 <div class="scroll-container-blog">
                   <span class="mouse"><span class="scroll"></span></span>
@@ -192,6 +193,7 @@
     </div> <script src="js/scripts-dist.js"></script>
     <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="extras.js"></script>
 
     <script>
       const URL_POSTS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=0&single=true&output=csv";
@@ -200,9 +202,48 @@
 
       const currentID = new URLSearchParams(window.location.search).get('id') || 1;
 
+      // --- TRADUCCIÓN AUTOMÁTICA EN->ES (MyMemory, con caché en el navegador) ---
+      function hash(str) { let h = 0; for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0; return h; }
+      function decode(t) { const x = document.createElement('textarea'); x.innerHTML = t; return x.value; }
+      function chunks(text) {
+        const out = []; let cur = '';
+        (text.match(/[^.!?]+[.!?]*\s*/g) || [text]).forEach(sn => {
+          if ((cur + sn).length > 450 && cur) { out.push(cur); cur = ''; }
+          while (sn.length > 450) { out.push(sn.slice(0, 450)); sn = sn.slice(450); }
+          cur += sn;
+        });
+        if (cur) out.push(cur);
+        return out;
+      }
+      async function translateES(text) {
+        if (!text || !text.trim()) return text;
+        const key = 'bb_tr_' + hash(text);
+        try { const c = localStorage.getItem(key); if (c) return c; } catch (e) {}
+        try {
+          const parts = [];
+          for (const ch of chunks(text)) {
+            const r = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(ch) + '&langpair=en|es');
+            const j = await r.json();
+            const t = j && j.responseData && j.responseData.translatedText;
+            if (!t || j.responseStatus != 200 || /MYMEMORY WARNING/i.test(t)) return text;
+            parts.push(decode(t).trim());
+          }
+          const res = parts.join(' ');
+          try { localStorage.setItem(key, res); } catch (e) {}
+          return res;
+        } catch (e) { return text; }
+      }
+      // Traduce el contenido párrafo por párrafo y deja intactos los links de video
+      async function translateContent(text) {
+        const out = [];
+        for (const line of text.split('\n')) {
+          out.push((!line.trim() || /youtu|drive\.google\.com/.test(line)) ? line : await translateES(line));
+        }
+        return out.join('\n');
+      }
+
       function parseVideos(text) {
         // 1. YouTube (Detecta normales y Shorts + Limpieza de interfaz)
-        // Parámetros: controls=1 (barra), modestbranding=1 (quita logo), rel=0 (solo tus videos al final), fs=1 (zoom)
         text = text.replace(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})(?:\S*)?/g, 
           '<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/$1?controls=1&modestbranding=1&rel=0&iv_load_policy=3&fs=1" allowfullscreen></iframe></div>');
         
@@ -216,32 +257,66 @@
         }).join('');
       }
 
+      // --- ESTADO + RENDER (ES/EN) ---
+      let CUR = null, PREV = null, NEXT = null, COMMENTS_N = 0, tok = 0;
+
+      function manual(row, f) { const v = row[f + '_ES']; return (v && v.trim() !== '') ? v : null; }
+
+      function setCommentCount() {
+        const es = window.bbLang === 'es';
+        const label = es ? (COMMENTS_N === 1 ? 'Comentario' : 'Comentarios') : 'Comments';
+        document.getElementById('comment-count').innerText = `${COMMENTS_N} ${label}`;
+      }
+
+      async function renderPost() {
+        if (!CUR) return;
+        const my = ++tok, es = window.bbLang === 'es', post = CUR;
+        document.getElementById('post-meta').innerText = `${es ? 'Por' : 'By'} ${post.Autor} • ${post.Fecha}`;
+        setCommentCount();
+
+        // Primero se pinta lo que ya hay (original o traducción manual)
+        const t0 = (es && manual(post, 'Titulo')) || post.Titulo;
+        const c0 = (es && manual(post, 'Contenido')) || post.Contenido;
+        document.getElementById('post-title').innerText = t0;
+        document.getElementById('post-content').innerHTML = parseVideos(c0);
+        const pt = (es && manual(PREV, 'Titulo')) || PREV.Titulo, nt = (es && manual(NEXT, 'Titulo')) || NEXT.Titulo;
+        document.getElementById('prev-title').innerText = pt;
+        document.getElementById('next-title').innerText = nt;
+        if (!es) return;
+
+        // Después se reemplaza por la traducción automática, si hace falta
+        if (!manual(post, 'Titulo')) { const t = await translateES(post.Titulo); if (my !== tok) return; document.getElementById('post-title').innerText = t; }
+        if (!manual(PREV, 'Titulo')) { const t = await translateES(PREV.Titulo); if (my !== tok) return; document.getElementById('prev-title').innerText = t; }
+        if (!manual(NEXT, 'Titulo')) { const t = await translateES(NEXT.Titulo); if (my !== tok) return; document.getElementById('next-title').innerText = t; }
+        if (!manual(post, 'Contenido')) { const c = await translateContent(post.Contenido); if (my !== tok) return; document.getElementById('post-content').innerHTML = parseVideos(c); }
+      }
+
+      window.addEventListener('bb-lang', renderPost);
+
       Papa.parse(URL_POSTS, { download: true, header: true, complete: function(res) {
         const posts = res.data.filter(p => p.ID && p.ID.trim() !== "");
-        const post = posts.find(p => p.ID == currentID) || posts[0];
-        document.getElementById('post-title').innerText = post.Titulo;
-        document.getElementById('post-meta').innerText = `By ${post.Autor} • ${post.Fecha}`;
-        document.getElementById('post-content').innerHTML = parseVideos(post.Contenido);
-        document.getElementById('post-header').style.backgroundImage = `url('${post.ImagenPortada}')`;
-        
-        let idx = posts.findIndex(p => p.ID == currentID);
-        let prev = posts[(idx - 1 + posts.length) % posts.length], next = posts[(idx + 1) % posts.length];
-        document.getElementById('prev-link').href = `blog-single.html?id=${prev.ID}`;
-        document.getElementById('prev-title').innerText = prev.Titulo;
-        document.getElementById('next-link').href = `blog-single.html?id=${next.ID}`;
-        document.getElementById('next-title').innerText = next.Titulo;
+        CUR = posts.find(p => p.ID == currentID) || posts[0];
+        document.getElementById('post-header').style.backgroundImage = `url('${CUR.ImagenPortada}')`;
+
+        let idx = posts.findIndex(p => p.ID == CUR.ID);
+        PREV = posts[(idx - 1 + posts.length) % posts.length];
+        NEXT = posts[(idx + 1) % posts.length];
+        document.getElementById('prev-link').href = `blog-single.html?id=${PREV.ID}`;
+        document.getElementById('next-link').href = `blog-single.html?id=${NEXT.ID}`;
+        renderPost();
       }});
 
       Papa.parse(URL_COMS, { download: true, header: true, complete: function(res) {
         const comments = res.data.filter(c => c.PostID == currentID);
-        document.getElementById('comment-count').innerText = `${comments.length} Comments`;
+        COMMENTS_N = comments.length;
+        setCommentCount();
         document.getElementById('dynamic-comments').innerHTML = comments.reverse().map(c => `
           <li class="comment-v1"><h4>${c.Nombre}</h4><div style="opacity:0.5; font-size:12px;">${c.Fecha}</div><p>${c.Mensaje}</p></li>`).join('');
       }});
 
       document.getElementById('commentForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const btn = document.getElementById('submitBtn'); btn.value = "Sending..."; btn.disabled = true;
+        const btn = document.getElementById('submitBtn'); btn.value = (window.bbLang === 'es') ? "Enviando..." : "Sending..."; btn.disabled = true;
         const fd = new URLSearchParams(); fd.append('postID', currentID); fd.append('name', document.getElementById('name').value); fd.append('message', document.getElementById('message').value);
         fetch(URL_SCRIPT, { method: 'POST', mode: 'no-cors', body: fd }).then(() => { location.reload(); });
       });
