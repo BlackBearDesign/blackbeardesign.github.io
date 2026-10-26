@@ -855,6 +855,39 @@
         }
       });
 
+      // --- TRADUCCIÓN AUTOMÁTICA EN->ES (compartida) ---
+      function hash(str) { let h = 0; for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0; return h; }
+      function decode(t) { const x = document.createElement('textarea'); x.innerHTML = t; return x.value; }
+      function chunks(text) {
+        const out = []; let cur = '';
+        (text.match(/[^.!?]+[.!?]*\s*/g) || [text]).forEach(sn => {
+          if ((cur + sn).length > 450 && cur) { out.push(cur); cur = ''; }
+          while (sn.length > 450) { out.push(sn.slice(0, 450)); sn = sn.slice(450); }
+          cur += sn;
+        });
+        if (cur) out.push(cur);
+        return out;
+      }
+
+      async function translateES(text) {
+        const key = 'bb_tr_' + hash(text);
+        try { const c = localStorage.getItem(key); if (c) return c; } catch (e) {}
+        try {
+          const parts = [];
+          for (const ch of chunks(text)) {
+            const r = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(ch) + '&langpair=en|es');
+            const j = await r.json();
+            const t = j && j.responseData && j.responseData.translatedText;
+            if (!t || j.responseStatus != 200 || /MYMEMORY WARNING/i.test(t)) return text;
+            parts.push(decode(t).trim());
+          }
+          const res = parts.join(' ');
+          try { localStorage.setItem(key, res); } catch (e) {}
+          return res;
+        } catch (e) { return text; }
+      }
+
+
       // --- TESTIMONIALS CAROUSEL (ES/EN con traducción automática) ---
       // Si el Sheet tiene la columna Texto_ES se usa esa (traducción manual).
       // Si no, se traduce solo al español con MyMemory y se guarda en el navegador.
@@ -863,37 +896,6 @@
         const $carousel = $('#dynamic-carousel');
         let reviews = [];
         let token = 0;
-
-        function hash(str) { let h = 0; for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0; return h; }
-        function decode(t) { const x = document.createElement('textarea'); x.innerHTML = t; return x.value; }
-        function chunks(text) {
-          const out = []; let cur = '';
-          (text.match(/[^.!?]+[.!?]*\s*/g) || [text]).forEach(sn => {
-            if ((cur + sn).length > 450 && cur) { out.push(cur); cur = ''; }
-            while (sn.length > 450) { out.push(sn.slice(0, 450)); sn = sn.slice(450); }
-            cur += sn;
-          });
-          if (cur) out.push(cur);
-          return out;
-        }
-
-        async function translateES(text) {
-          const key = 'bb_tr_' + hash(text);
-          try { const c = localStorage.getItem(key); if (c) return c; } catch (e) {}
-          try {
-            const parts = [];
-            for (const ch of chunks(text)) {
-              const r = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(ch) + '&langpair=en|es');
-              const j = await r.json();
-              const t = j && j.responseData && j.responseData.translatedText;
-              if (!t || j.responseStatus != 200 || /MYMEMORY WARNING/i.test(t)) return text;
-              parts.push(decode(t).trim());
-            }
-            const res = parts.join(' ');
-            try { localStorage.setItem(key, res); } catch (e) {}
-            return res;
-          } catch (e) { return text; }
-        }
 
         async function renderTestimonials() {
           const my = ++token;
@@ -972,10 +974,58 @@
         });
       });
 
-      // --- JOURNAL/POSTS GRID ---
+      // --- JOURNAL/POSTS GRID (ES/EN con traducción automática) ---
+      // Columnas opcionales en el Sheet: Titulo_ES (traducción manual)
       document.addEventListener('DOMContentLoaded', function() {
         const URL_EXCEL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBApKJcrHq_sBa2EA4YDyj4GeFrGJ-uH6HzYjGaMbw_tQAIg1Ll6h_w42HbyC2Wuz5uVIDAG0nvbo0/pub?gid=0&single=true&output=csv";
         const $grid = document.getElementById('journal-grid');
+        let selectedPosts = [];
+        let jToken = 0;
+
+        function readTimeES(t) {
+          return t.replace(/min(ute)?s?\s*read/i, 'min de lectura')
+                  .replace(/\bminutes\b/i, 'minutos')
+                  .replace(/\bminute\b/i, 'minuto');
+        }
+
+        async function renderJournal() {
+          const my = ++jToken;
+          const es = window.bbLang === 'es';
+          const titles = await Promise.all(selectedPosts.map(p => {
+            if (!es) return Promise.resolve(p.Titulo);
+            return (p.Titulo_ES && p.Titulo_ES.trim() !== '') ? Promise.resolve(p.Titulo_ES) : translateES(p.Titulo);
+          }));
+          if (my !== jToken) return;
+
+          let html = "";
+          selectedPosts.forEach((post, index) => {
+            let colSize = (index === 0) ? "col-lg-8" : "col-lg-4";
+            let title = escapeHtml(titles[index]);
+            let author = escapeHtml(post.Autor);
+            let rt = post.TiempoLectura || '5 min read';
+            let readTime = escapeHtml(es ? readTimeES(rt) : rt);
+            let by = es ? 'Por' : 'By';
+            let image = escapeHtml(post.ImagenPortada);
+            let id = escapeHtml(post.ID);
+
+            html += `
+              <div class="col-sm-6 col-md-6 ${colSize} blog-post-entry" data-aos="fade-up" data-aos-delay="${index * 100}">
+                <a href="blog-single.html?id=${id}" class="grid-item blog-item w-100 h-100">
+                  <div class="overlay">
+                    <div class="portfolio-item-content">
+                      <h3>${title}</h3>
+                      <p class="post-meta">${by} ${author} <span class="small">&bullet;</span> ${readTime}</p>
+                    </div>
+                  </div>
+                  <img src="${image}" class="lazyload img-fluid" alt="${title}" style="height: 100%; width: 100%; object-fit: cover;" loading="lazy" />
+                </a>
+              </div>`;
+          });
+
+          $grid.innerHTML = html;
+        }
+
+        window.addEventListener('bb-lang', function() { if (selectedPosts.length) renderJournal(); });
 
         Papa.parse(URL_EXCEL, {
           download: true,
@@ -986,39 +1036,15 @@
           },
           complete: function(results) {
             let posts = results.data.filter(p => p.ID && p.Titulo);
-            
+
             if (posts.length === 0) {
               $grid.innerHTML = '<div class="col-12 text-center"><p>No posts found.</p></div>';
               return;
             }
 
             posts.sort(() => Math.random() - 0.5);
-            const selectedPosts = posts.slice(0, 5);
-
-            let html = "";
-            selectedPosts.forEach((post, index) => {
-              let colSize = (index === 0) ? "col-lg-8" : "col-lg-4";
-              let title = escapeHtml(post.Titulo);
-              let author = escapeHtml(post.Autor);
-              let readTime = escapeHtml(post.TiempoLectura || '5 min read');
-              let image = escapeHtml(post.ImagenPortada);
-              let id = escapeHtml(post.ID);
-              
-              html += `
-                <div class="col-sm-6 col-md-6 ${colSize} blog-post-entry" data-aos="fade-up" data-aos-delay="${index * 100}">
-                  <a href="blog-single.html?id=${id}" class="grid-item blog-item w-100 h-100">
-                    <div class="overlay">
-                      <div class="portfolio-item-content">
-                        <h3>${title}</h3>
-                        <p class="post-meta">By ${author} <span class="small">&bullet;</span> ${readTime}</p>
-                      </div>
-                    </div>
-                    <img src="${image}" class="lazyload img-fluid" alt="${title}" style="height: 100%; width: 100%; object-fit: cover;" loading="lazy" />
-                  </a>
-                </div>`;
-            });
-
-            $grid.innerHTML = html;
+            selectedPosts = posts.slice(0, 5);
+            renderJournal();
           }
         });
       });
