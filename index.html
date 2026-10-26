@@ -855,25 +855,63 @@
         }
       });
 
-      // --- TESTIMONIALS CAROUSEL (ES/EN) ---
-      // En el Sheet agrega columnas opcionales: Texto_ES y Cargo_ES
+      // --- TESTIMONIALS CAROUSEL (ES/EN con traducción automática) ---
+      // Si el Sheet tiene la columna Texto_ES se usa esa (traducción manual).
+      // Si no, se traduce solo al español con MyMemory y se guarda en el navegador.
       document.addEventListener('DOMContentLoaded', function() {
         const googleSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKmvmO9lY24-_9fMoPRSKJzApwjQKC69bVdwseuQjaAoGbvs1LtuUEJ9k26gaIvRo03gDMN8pXKMDS/pub?gid=0&single=true&output=csv";
         const $carousel = $('#dynamic-carousel');
         let reviews = [];
+        let token = 0;
 
-        function pick(row, field) {
-          const es = row[field + '_ES'];
-          return (window.bbLang === 'es' && es && es.trim() !== '') ? es : (row[field] || '');
+        function hash(str) { let h = 0; for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0; return h; }
+        function decode(t) { const x = document.createElement('textarea'); x.innerHTML = t; return x.value; }
+        function chunks(text) {
+          const out = []; let cur = '';
+          (text.match(/[^.!?]+[.!?]*\s*/g) || [text]).forEach(sn => {
+            if ((cur + sn).length > 450 && cur) { out.push(cur); cur = ''; }
+            while (sn.length > 450) { out.push(sn.slice(0, 450)); sn = sn.slice(450); }
+            cur += sn;
+          });
+          if (cur) out.push(cur);
+          return out;
         }
 
-        function renderTestimonials() {
+        async function translateES(text) {
+          const key = 'bb_tr_' + hash(text);
+          try { const c = localStorage.getItem(key); if (c) return c; } catch (e) {}
+          try {
+            const parts = [];
+            for (const ch of chunks(text)) {
+              const r = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(ch) + '&langpair=en|es');
+              const j = await r.json();
+              const t = j && j.responseData && j.responseData.translatedText;
+              if (!t || j.responseStatus != 200 || /MYMEMORY WARNING/i.test(t)) return text;
+              parts.push(decode(t).trim());
+            }
+            const res = parts.join(' ');
+            try { localStorage.setItem(key, res); } catch (e) {}
+            return res;
+          } catch (e) { return text; }
+        }
+
+        async function renderTestimonials() {
+          const my = ++token;
+          const es = window.bbLang === 'es';
+          const texts = await Promise.all(reviews.map(r => {
+            const manual = r.Texto_ES && r.Texto_ES.trim() !== '';
+            if (!es) return Promise.resolve(r.Texto);
+            return manual ? Promise.resolve(r.Texto_ES) : translateES(r.Texto);
+          }));
+          if (my !== token) return; // llegó un cambio de idioma más reciente
+
           let html = "";
-          reviews.forEach(review => {
+          reviews.forEach((review, i) => {
             let photoURL = review.Foto && review.Foto.trim() !== "" ? escapeHtml(review.Foto) : "images/person_man_1.jpg";
             let name = escapeHtml(review.Nombre);
-            let text = escapeHtml(pick(review, 'Texto'));
-            let position = escapeHtml(pick(review, 'Cargo'));
+            let text = escapeHtml(texts[i]);
+            let cargoES = review.Cargo_ES && review.Cargo_ES.trim() !== '' ? review.Cargo_ES : null;
+            let position = escapeHtml((es && cargoES) ? cargoES : (review.Cargo || ''));
 
             html += `
               <div>
