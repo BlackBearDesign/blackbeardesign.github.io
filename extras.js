@@ -70,7 +70,7 @@
     var n; while ((n = w.nextNode())) fn(n);
   }
   function applyLang(l) {
-    lang = l;
+    lang = l; window.bbLang = l;
     document.documentElement.lang = l;
     walk(document.body, function (n) {
       var base = orig.has(n) ? orig.get(n) : n.nodeValue;
@@ -86,6 +86,7 @@
     if (sub) { if (btnOrig === null) btnOrig = sub.value; sub.value = l === 'es' ? BTN_ES : btnOrig; }
     var t = document.querySelector('.lang-toggle'); if (t) t.textContent = l === 'es' ? 'EN' : 'ES';
     try { localStorage.setItem('bb_lang', l); } catch (e) {}
+    window.dispatchEvent(new Event('bb-lang'));
   }
 
   /* ---------- 3. Botones flotantes (se inyectan solos) ---------- */
