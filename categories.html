@@ -225,10 +225,16 @@
         const t = manualES && manualES.trim() ? manualES : await window.bbTr(orig);
         if (my === dtok) el.innerText = t;
       }
+      // Las categorías son palabras cortas (ej. "Reel"): solo se traducen con la columna Category_ES
+      function catLabel(cat) {
+        if (window.bbLang !== 'es') return cat;
+        const row = allItems.find(x => (x.Category || 'Video') === cat && x.Category_ES && x.Category_ES.trim());
+        return row ? row.Category_ES : cat;
+      }
       function refreshDynamic() {
         const my = ++dtok;
-        document.querySelectorAll('#categories-container h3[data-ci]').forEach(h => trEl(h, categories[h.dataset.ci], my));
-        if (currentCat) trEl(document.getElementById('current-category-title'), currentCat, my);
+        document.querySelectorAll('#categories-container h3[data-ci]').forEach(h => { h.innerText = catLabel(categories[h.dataset.ci]); });
+        if (currentCat) document.getElementById('current-category-title').innerText = catLabel(currentCat);
         document.querySelectorAll('#filtered-posts h3[data-id]').forEach(h => {
           const it = allItems.find(x => x.ID == h.dataset.id);
           if (it) trEl(h, it.Titulo, my, it.Titulo_ES);
