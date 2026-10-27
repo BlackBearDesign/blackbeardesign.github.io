@@ -91,6 +91,14 @@
     "SENDING...": "ENVIANDO...", "STARTING PRODUCTION...": "INICIANDO PRODUCCIÓN...", "COMPLETING ORDER...": "COMPLETANDO PEDIDO..."
   };
   var PAT = [[/^ORDER FOR (.+)$/, 'PEDIDO DE $1'], [/^FILE: (.+)$/, 'ARCHIVO: $1']];
+  /* Textos que ya están en español en la página (ej. modales de banco): se pasan a inglés si el visitante está en EN */
+  var EN = {
+    "🏦 Transferencia Interbancaria México": "🏦 Mexico Bank Transfer", "CLABE Interbancaria:": "Interbank CLABE:",
+    "Banco:": "Bank:", "Titular:": "Account holder:", "COPIAR CLABE": "COPY CLABE", "COPIAR IBAN": "COPY IBAN",
+    "✓ Copiado al portapapeles": "✓ Copied to clipboard", "CERRAR": "CLOSE",
+    "🇪🇸 Transferencia IBAN España": "🇪🇸 Spain IBAN Transfer", "TRANSFER MÉXICO": "MEXICO TRANSFER",
+    "IBAN ESPAÑA": "IBAN SPAIN", "🇪🇸 IBAN ESPAÑA": "🇪🇸 IBAN SPAIN", "MÉXICO": "MEXICO"
+  };
   var orig = new WeakMap(), lang = 'en';
   var BTN_ES = "Enviar mensaje", btnOrig = null;
 
@@ -110,10 +118,11 @@
       var key = base.replace(/\s+/g, ' ').trim();
       var es = ES[key];
       if (!es) for (var i = 0; i < PAT.length; i++) { if (PAT[i][0].test(key)) { es = key.replace(PAT[i][0], PAT[i][1]); break; } }
-      if (l === 'es' && es) {
+      var tgt = (l === 'es') ? es : EN[key];
+      if (tgt) {
         if (!orig.has(n)) orig.set(n, base);
-        n.nodeValue = base.match(/^\s*/)[0] + es + base.match(/\s*$/)[0];
-      } else if (l === 'en' && orig.has(n)) {
+        n.nodeValue = base.match(/^\s*/)[0] + tgt + base.match(/\s*$/)[0];
+      } else if (orig.has(n)) {
         n.nodeValue = orig.get(n);
       }
     });
@@ -203,7 +212,7 @@
     try {
       var parts = [], cs = chunks(text);
       for (var i = 0; i < cs.length; i++) {
-        var r = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(cs[i]) + '&langpair=en|es');
+        var r = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(cs[i]) + '&langpair=en|es&de=maximolairdesign@gmail.com');
         var jn = await r.json();
         var t = jn && jn.responseData && jn.responseData.translatedText;
         if (!t || jn.responseStatus != 200 || /MYMEMORY WARNING/i.test(t)) return text;
