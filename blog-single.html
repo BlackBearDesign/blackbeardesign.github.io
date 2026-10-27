@@ -222,7 +222,7 @@
         try {
           const parts = [];
           for (const ch of chunks(text)) {
-            const r = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(ch) + '&langpair=en|es');
+            const r = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(ch) + '&langpair=en|es&de=maximolairdesign@gmail.com');
             const j = await r.json();
             const t = j && j.responseData && j.responseData.translatedText;
             if (!t || j.responseStatus != 200 || /MYMEMORY WARNING/i.test(t)) return text;
