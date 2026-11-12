@@ -1,7 +1,7 @@
 /* BlackBear extras: fix del header, idioma ES/EN, WhatsApp, antispam, preview en hover.
    Se carga en index.html y categories.html */
 (function () {
-  var WA_NUMBER = "522211319056"; // sin + ni espacios
+  var WA_NUMBER = "522216703899"; // sin + ni espacios
 
   /* ---------- 1. FIX HEADER (link activo invisible sobre blanco) ---------- */
   var nav = document.querySelector('.unslate_co--site-nav');
